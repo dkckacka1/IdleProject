@@ -3,6 +3,7 @@
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.kimhawon.engine": "https://github.com/dkckacka1/Engine.git",
     "com.unity.addressables": "2.2.2",
+    "com.unity.ai.navigation": "2.0.5",
     "com.unity.cinemachine": "3.1.2",
     "com.unity.collab-proxy": "2.6.0",
     "com.unity.feature.development": "1.0.2",

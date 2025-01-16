@@ -74,3 +74,6 @@ crashlytics-build.properties
 # TestSetting
 Test.meta
 */[Aa]ssets/Test
+
+# OriginAsset
+*/[Aa]ssets/99. OriginAsset/*

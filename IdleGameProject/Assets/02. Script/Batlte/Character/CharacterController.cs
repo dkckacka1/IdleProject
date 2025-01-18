@@ -1,4 +1,4 @@
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -32,25 +32,37 @@ namespace IdleProject.Battle.Character
 
         }
 
+
+        #region 이동 관련
         public virtual void Move(Vector3 destination)
         {
             animator.SetTrigger(moveAnimHash);
             agent.SetDestination(destination);
         }
+        #endregion
 
-        public virtual void Attack(CharacterController character)
+        #region Attack
+        public virtual void Attack(CharacterController characterController)
         {
             animator.SetTrigger(attackAnimHash);
         }
 
+
+        #endregion
+
+        #region Death
         public virtual void Death()
         {
             animator.SetTrigger(deathAnimHash);
         }
 
+        #endregion
+
+        #region Skill
         public virtual void Skill()
         {
             animator.SetTrigger(skillAnimHash);
-        }
+        } 
+        #endregion
     }
 }

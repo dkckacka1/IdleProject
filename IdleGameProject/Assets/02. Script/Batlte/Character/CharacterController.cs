@@ -6,6 +6,8 @@ namespace IdleProject.Battle.Character
 {
     public class CharacterController : MonoBehaviour, ITakeDamagedAble
     {
+        public StatSystem statSystem;
+
         protected Rigidbody rb;
         protected NavMeshAgent agent;
         protected Animator animator;
@@ -33,6 +35,7 @@ namespace IdleProject.Battle.Character
             Initialized();
         }
 
+        #region 초기화 부문
         public virtual void Initialized()
         {
             SetAnimationEvent();
@@ -43,6 +46,11 @@ namespace IdleProject.Battle.Character
 
         }
 
+        protected virtual void SetCharacterData(CharacterData data)
+        {
+            statSystem = new StatSystem(data);
+        }
+        #endregion
 
         #region 이동 관련
         public virtual void Move(Vector3 destination)
@@ -65,7 +73,7 @@ namespace IdleProject.Battle.Character
 
         public virtual void TakeDamage(float attackDamage)
         {
-
+            Debug.Log($"{name}이 {attackDamage} 만큼 데미지를 입었습니다.");
         }
 
 
@@ -83,7 +91,18 @@ namespace IdleProject.Battle.Character
         public virtual void Skill()
         {
             animator.SetTrigger(skillAnimHash);
-        } 
+        }
         #endregion
+
+        [SerializeField] bool isTest;
+
+        private void OnDrawGizmos()
+        {
+            if (Application.isPlaying && isTest)
+            {
+                if (statSystem is not null)
+                    Gizmos.DrawWireSphere(this.transform.position, statSystem.stat.attackRange);
+            }
+        }
     }
 }

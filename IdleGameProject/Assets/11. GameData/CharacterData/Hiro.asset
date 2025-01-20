@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee708b51cec1264fbb31a84dce962ef, type: 3}
   m_Name: Hiro
   m_EditorClassIdentifier: 
-  name: 
+  prefabValue:
+    characterName: Hiro
+  stat:
+    healthPoint: 100
+    movementSpeed: 3.5
+    attackDamage: 10
+    attackRange: 1

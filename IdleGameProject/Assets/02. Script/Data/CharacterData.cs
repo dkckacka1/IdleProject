@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 [Serializable]
-public struct statData
+public struct StatData
 {
     public float healthPoint;
     public float movementSpeed;
@@ -20,7 +20,7 @@ public struct CharacterPrefabValue
 public class CharacterData : ScriptableObject
 {
     public CharacterPrefabValue prefabValue;
-    public statData stat;
+    public StatData stat;
 }
 
 

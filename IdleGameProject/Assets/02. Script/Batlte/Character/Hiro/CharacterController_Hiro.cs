@@ -18,5 +18,7 @@ namespace IdleProject.Battle.Character.Hiro
 
             AnimEventHandler.AttackEvent += Attack;
         }
+
+
     }
 }

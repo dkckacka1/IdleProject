@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using UniRx;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +19,7 @@ namespace IdleProject.Battle.Character
         private readonly int attackAnimHash = Animator.StringToHash("Attack");
         private readonly int deathAnimHash = Animator.StringToHash("Death");
         private readonly int moveAnimHash = Animator.StringToHash("Move");
+        private readonly int idleAnimHash = Animator.StringToHash("Idle");
 
         public ITargetedAble Target;
 
@@ -28,6 +30,8 @@ namespace IdleProject.Battle.Character
             animator = GetComponentInChildren<Animator>();
 
             animEventHandler = GetComponentInChildren<AnimationEventHandler>();
+
+            statSystem = new StatSystem();
         }
 
         private void Start()
@@ -43,12 +47,14 @@ namespace IdleProject.Battle.Character
 
         protected virtual void SetAnimationEvent()
         {
-
         }
 
-        protected virtual void SetCharacterData(CharacterData data)
+        public virtual void SetCharacterData(CharacterData data)
         {
-            statSystem = new StatSystem(data);
+            statSystem.SetStatData(data.stat);
+
+            statSystem.movementSpeed.DistinctUntilChanged().Subscribe(SetMovementSpeed);
+            statSystem.attackRange.DistinctUntilChanged().Subscribe(SetAttackRange);
         }
         #endregion
 
@@ -57,6 +63,20 @@ namespace IdleProject.Battle.Character
         {
             animator.SetTrigger(moveAnimHash);
             agent.SetDestination(destination);
+
+            // TODO : 목적지에 도착했을때의 행동 매개변수 정의
+            System.IDisposable dispose = null;
+            dispose = Observable.EveryFixedUpdate().Where(_ => agent.remainingDistance < statSystem.attackRange.Value).Subscribe(_ =>
+            {
+                Debug.Log("목표지점 도착");
+                animator.SetTrigger(idleAnimHash);
+                dispose.Dispose();
+            });
+        }
+
+        public virtual void SetMovementSpeed(float movementSpeed)
+        {
+            agent.speed = movementSpeed;
         }
         #endregion
 
@@ -76,6 +96,10 @@ namespace IdleProject.Battle.Character
             Debug.Log($"{name}이 {attackDamage} 만큼 데미지를 입었습니다.");
         }
 
+        public virtual void SetAttackRange(float attackRange)
+        {
+            agent.stoppingDistance = attackRange;
+        }
 
         #endregion
 
@@ -101,7 +125,7 @@ namespace IdleProject.Battle.Character
             if (Application.isPlaying && isTest)
             {
                 if (statSystem is not null)
-                    Gizmos.DrawWireSphere(this.transform.position, statSystem.stat.attackRange);
+                    Gizmos.DrawWireSphere(this.transform.position, statSystem.attackRange.Value);
             }
         }
     }

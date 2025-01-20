@@ -23,6 +23,8 @@ namespace IdleProject.Battle.Character
 
         public ITargetedAble Target;
 
+        public Transform GetTransform => transform;
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();

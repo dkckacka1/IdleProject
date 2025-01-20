@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5522763911141060018}
   - component: {fileID: 5775443281729569426}
   - component: {fileID: 5360023868313072483}
-  - component: {fileID: 444636801894622990}
+  - component: {fileID: 2829869613059905669}
   m_Layer: 0
   m_Name: Hiro
   m_TagString: Untagged
@@ -108,7 +108,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &444636801894622990
+--- !u!114 &2829869613059905669
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2820153934415670583}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a299af681d340ee409f908f792388383, type: 3}
+  m_Script: {fileID: 11500000, guid: 516641dad3b5dbd4c9ffbe94353cb5a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1984738365375623154
@@ -186,10 +186,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 483062, guid: e012052f109bd9643b09577e3d4fe935, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7890987564081249263}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 162860, guid: e012052f109bd9643b09577e3d4fe935, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4015167856314822387}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e012052f109bd9643b09577e3d4fe935, type: 3}
 --- !u!4 &1984738365375438524 stripped
 Transform:
@@ -201,23 +198,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 483062, guid: e012052f109bd9643b09577e3d4fe935, type: 3}
   m_PrefabInstance: {fileID: 1984738365375623154}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1984738365375763422 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 162860, guid: e012052f109bd9643b09577e3d4fe935, type: 3}
-  m_PrefabInstance: {fileID: 1984738365375623154}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4015167856314822387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984738365375763422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 425db669f1e15a446bb8ce8433551cd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &7890987564080899583
 PrefabInstance:
   m_ObjectHideFlags: 0

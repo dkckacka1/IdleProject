@@ -5,9 +5,20 @@ using UnityEngine.AI;
 
 namespace IdleProject.Battle.Character
 {
+    public enum CharacterState
+    {
+        None = -1,
+        Idle,
+        Chase,
+        Battle,
+        Die,
+    }
+
+    [System.Serializable]
     public class CharacterController : MonoBehaviour, ITakeDamagedAble
     {
         public StatSystem statSystem;
+        public CharacterState currentState;
 
         protected Rigidbody rb;
         protected NavMeshAgent agent;

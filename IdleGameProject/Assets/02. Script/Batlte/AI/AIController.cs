@@ -11,6 +11,9 @@ namespace IdleProject.Battle.AI
 
         private CharacterController characaterController;
 
-
+        private void Update()
+        {
+            
+        }
     }
 }

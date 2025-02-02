@@ -3,6 +3,7 @@ using UniRx;
 
 namespace IdleProject.Battle.Character
 {
+    [System.Serializable]
     public class StatSystem
     {
         public ReactiveProperty<float> healthPoint;

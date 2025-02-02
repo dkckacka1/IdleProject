@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7520450342609639747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11a9bd20376a7bd49ae2b5db1cd7017e, type: 3}
+  m_Name: CheckCharacterStateNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: c9f328e88db586c469115dd9cba38082
+  position: {x: 21, y: 139}
+  description: "\uD604\uC7AC \uCE90\uB9AD\uD130 \uC2A4\uD14C\uC774\uD2B8\uAC00 IDLE
+    \uC0C1\uD0DC\uB77C\uBA74"
+  child: {fileID: 0}
+  checkState: 0
+--- !u!114 &-3690610777526036722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c41910e488e6d4dbe9cdf3bf0e3d8d, type: 3}
+  m_Name: RootNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 519ababc0fc27e341abb23f2ada606ea
+  position: {x: 0, y: 0}
+  description: 
+  child: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f89b79529057c62498e1b63c3fcffbd2, type: 3}
+  m_Name: New Behaviour Tree
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: -3690610777526036722}
+  treeState: 0
+  nodes:
+  - {fileID: -3690610777526036722}
+  - {fileID: -7520450342609639747}
+  blackboard:
+    rid: 149811807549128704
+  references:
+    version: 2
+    RefIds:
+    - rid: 149811807549128704
+      type: {class: Blackboard, ns: Engine.AI.BehaviourTree, asm: kimhawon.engine.Runtime}
+      data: 

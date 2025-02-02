@@ -12,9 +12,20 @@ namespace IdleProject.Battle
         Battle,
     }
 
+    public enum GameStateType
+    {
+        Play,
+        Pause
+    }
+
     public class BattleManager : SingletonMonoBehaviour<BattleManager>
     {
         public List<CharacterController> playerCharacterList = new List<CharacterController>();
         public List<CharacterController> enemyCharacterList = new List<CharacterController>();
+
+        private void Update()
+        {
+            
+        }
     }
 }

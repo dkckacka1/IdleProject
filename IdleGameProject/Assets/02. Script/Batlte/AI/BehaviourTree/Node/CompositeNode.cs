@@ -2,15 +2,15 @@ namespace IdleProject.Battle.AI
 {
     public abstract class CompositeNode : Engine.AI.BehaviourTree.CompositeNode
     {
-        private new Blackboard_CharacterController blackboard;
-        protected Blackboard_CharacterController Blackboard
+        private Blackboard_Character blackboard_Character;
+        protected Blackboard_Character Blackboard_Character
         {
             get
             {
-                if (blackboard is null)
-                    TryGetBlackboard(out blackboard);
+                if (blackboard_Character is null)
+                    TryGetBlackboard(out blackboard_Character);
 
-                return blackboard;
+                return blackboard_Character;
             }
         }
     }

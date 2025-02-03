@@ -32,7 +32,10 @@ namespace IdleProject.Battle.AI
             {
                 return State.Success;
             }
-
+            else
+            {
+                child.Update();
+            }
             return State.Running;
         }
     }

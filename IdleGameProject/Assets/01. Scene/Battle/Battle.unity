@@ -247,6 +247,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCharacterList: []
   enemyCharacterList: []
+  battleStateType: 0
+  gameStateType: 0
 --- !u!4 &655757440
 Transform:
   m_ObjectHideFlags: 0
@@ -809,6 +811,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1884405229}
     m_Modifications:
+    - target: {fileID: 1409568612974720098, guid: 0162f5f0afab8bd4b949f4ab929fd73b, type: 3}
+      propertyPath: tree
+      value: 
+      objectReference: {fileID: 11400000, guid: 7927b2e1aace996468c5cd045ca8221a, type: 2}
     - target: {fileID: 2820153934415670583, guid: 0162f5f0afab8bd4b949f4ab929fd73b, type: 3}
       propertyPath: m_Name
       value: Hiro
@@ -871,6 +877,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1884405229}
     m_Modifications:
+    - target: {fileID: 1409568612974720098, guid: 0162f5f0afab8bd4b949f4ab929fd73b, type: 3}
+      propertyPath: tree
+      value: 
+      objectReference: {fileID: 11400000, guid: 7927b2e1aace996468c5cd045ca8221a, type: 2}
     - target: {fileID: 2820153934415670583, guid: 0162f5f0afab8bd4b949f4ab929fd73b, type: 3}
       propertyPath: m_Name
       value: enemy

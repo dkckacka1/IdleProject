@@ -20,17 +20,13 @@ namespace IdleProject.Battle.Character
         public StatSystem statSystem;
         public CharacterState currentState;
 
+        public CharacterMovement movement;
+
         protected Rigidbody rb;
         protected NavMeshAgent agent;
         protected Animator animator;
 
-        protected AnimationEventHandler animEventHandler;
-
-        private readonly int skillAnimHash = Animator.StringToHash("Skill");
-        private readonly int attackAnimHash = Animator.StringToHash("Attack");
-        private readonly int deathAnimHash = Animator.StringToHash("Death");
-        private readonly int moveAnimHash = Animator.StringToHash("Move");
-        private readonly int idleAnimHash = Animator.StringToHash("Idle");
+        protected AnimationController animController;
 
         public ITargetedAble Target;
 
@@ -42,9 +38,9 @@ namespace IdleProject.Battle.Character
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponentInChildren<Animator>();
 
-            animEventHandler = GetComponentInChildren<AnimationEventHandler>();
-
             statSystem = new StatSystem();
+            movement = new CharacterMovement(agent);
+            animController = new AnimationController(animator, GetComponentInChildren<AnimationEventHandler>());
         }
 
         private void Start()
@@ -74,16 +70,12 @@ namespace IdleProject.Battle.Character
         #region 이동 관련
         public virtual void Move(Vector3 destination)
         {
-            animator.SetTrigger(moveAnimHash);
-            agent.SetDestination(destination);
+            animController.SetMove();
 
-            // TODO : 목적지에 도착했을때의 행동 매개변수 정의
-            System.IDisposable dispose = null;
-            dispose = Observable.EveryFixedUpdate().Where(_ => agent.remainingDistance < statSystem.attackRange.Value).Subscribe(_ =>
+            movement.Move(destination, () =>
             {
+                animController.SetIdle();
                 Debug.Log("목표지점 도착");
-                animator.SetTrigger(idleAnimHash);
-                dispose.Dispose();
             });
         }
 
@@ -96,7 +88,7 @@ namespace IdleProject.Battle.Character
         #region 공격 관련
         public virtual void Attack()
         {
-            animator.SetTrigger(attackAnimHash);
+            animController.SetAttack();
         }
 
         public void Hit(ITakeDamagedAble iTakeDamage)
@@ -119,7 +111,7 @@ namespace IdleProject.Battle.Character
         #region 사망 관련
         public virtual void Death()
         {
-            animator.SetTrigger(deathAnimHash);
+            animController.SetDeath();
         }
 
         #endregion
@@ -127,7 +119,6 @@ namespace IdleProject.Battle.Character
         #region 스킬 관련
         public virtual void Skill()
         {
-            animator.SetTrigger(skillAnimHash);
         }
         #endregion
 

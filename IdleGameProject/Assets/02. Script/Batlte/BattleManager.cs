@@ -2,6 +2,8 @@ using UnityEngine;
 
 using Engine.Util;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace IdleProject.Battle
 {
@@ -23,9 +25,25 @@ namespace IdleProject.Battle
         public List<CharacterController> playerCharacterList = new List<CharacterController>();
         public List<CharacterController> enemyCharacterList = new List<CharacterController>();
 
+        public BattleStateType battleStateType;
+        public GameStateType gameStateType;
+
+
+
         private void Update()
         {
-            
+        }
+
+        public IEnumerable<CharacterController> GetCharacterList(bool isEnemy, Func<CharacterController, bool> whereFunc = null)
+        {
+            IEnumerable<CharacterController> result = isEnemy ? enemyCharacterList : playerCharacterList;
+
+            if (whereFunc is not null)
+            {
+                result = result.Where(whereFunc);
+            }
+
+            return result;
         }
     }
 }

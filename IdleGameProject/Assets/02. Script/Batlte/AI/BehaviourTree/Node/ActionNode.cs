@@ -1,3 +1,5 @@
+using IdleProject.Battle.Character;
+
 namespace IdleProject.Battle.AI
 {
     public abstract class ActionNode : Engine.AI.BehaviourTree.ActionNode
@@ -11,6 +13,14 @@ namespace IdleProject.Battle.AI
                     TryGetBlackboard(out blackboard_Character);
 
                 return blackboard_Character;
+            }
+        }
+
+        protected CharacterController CharacterController
+        {
+            get
+            {
+                return Blackboard_Character?.Controller;
             }
         }
     }

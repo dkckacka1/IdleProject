@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
+using CharacterController = IdleProject.Battle.Character.CharacterController;
+using IdleProject.Battle.AI;
+using Sirenix.OdinInspector;
+
 namespace IdleProject.Battle
 {
     public enum BattleStateType
@@ -24,14 +28,21 @@ namespace IdleProject.Battle
     {
         public List<CharacterController> playerCharacterList = new List<CharacterController>();
         public List<CharacterController> enemyCharacterList = new List<CharacterController>();
+        public List<BattleAIAble> battleAIList = new List<BattleAIAble>();
 
         public BattleStateType battleStateType;
         public GameStateType gameStateType;
 
-
-
         private void Update()
         {
+            // TODO : FixedUpdate로 수정 (10 ~ 20 프레임정도로)
+            if (gameStateType is GameStateType.Play)
+            {
+                foreach (var AI in battleAIList)
+                {
+                    AI.UpdateAI();
+                }
+            }
         }
 
         public IEnumerable<CharacterController> GetCharacterList(bool isEnemy, Func<CharacterController, bool> whereFunc = null)
@@ -44,6 +55,12 @@ namespace IdleProject.Battle
             }
 
             return result;
+        }
+
+        [Button]
+        public void TestPlay()
+        {
+            gameStateType = GameStateType.Play;
         }
     }
 }

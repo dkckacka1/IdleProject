@@ -7,12 +7,10 @@ using IdleProject.Battle.Character;
 
 namespace IdleProject.Battle.AI
 {
-    public class CharacterAIController : BehaviourTreeRunner
+    public class CharacterAIController : BehaviourTreeRunner, BattleAIAble
     {
         public bool isEnemy;
         public bool isPlay = false;
-
-        public ITargetedAble target;
 
         protected override void Initialized()
         {
@@ -20,20 +18,23 @@ namespace IdleProject.Battle.AI
             tree.Bind();
 
             tree.SetBlackboard(new Blackboard_Character(GetComponent<CharacterController>(), this));
-        }
 
-        private void Update()
-        {
-            if (isPlay)
+            BattleManager.Instance.battleAIList.Add(this);
+
+            if (isEnemy)
             {
-                tree.Update();
+                BattleManager.Instance.enemyCharacterList.Add(GetComponent<CharacterController>());
             }
+            else
+            {
+                BattleManager.Instance.playerCharacterList.Add(GetComponent<CharacterController>());
+            }
+
         }
 
-        [Button]
-        public void Play()
+        public void UpdateAI()
         {
-            isPlay = !isPlay;
+            tree.Update();
         }
     }
 }

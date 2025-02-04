@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface BattleAI
+namespace IdleProject.Battle.AI
 {
-
+    public interface BattleAIAble
+    {
+        public void UpdateAI();
+    }
 }

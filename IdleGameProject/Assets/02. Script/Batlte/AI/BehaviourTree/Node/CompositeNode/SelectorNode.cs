@@ -25,7 +25,6 @@ namespace IdleProject.Battle.AI
                 {
                     case State.Success:
                         return State.Success;
-                        break;
                     case State.Running:
                     case State.Failure:
                         continue;

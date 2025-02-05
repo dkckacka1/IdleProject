@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7275789366622162108
+--- !u!114 &-7107445899971266857
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,16 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ff3e7e2a0e5966429c2d72dc26db634, type: 3}
-  m_Name: CharacterActionNode
+  m_Script: {fileID: 11500000, guid: 48d11550a4170b34482612b2af0572ae, type: 3}
+  m_Name: '[1] CompareTargetNode'
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 3b58b85659501ea46995d69235abd03f
-  position: {x: -46, y: 619}
-  description: 
-  actionType: 2
---- !u!114 &-5227815393307272107
+  guid: 5eb5c7e63d0f1c04c8e9665f0f8a5e60
+  position: {x: -620, y: 603}
+  description: "\uB300\uC0C1\uACFC \uC790\uC2E0\uC758 \uAC70\uB9AC\uC640 \uACF5\uACA9
+    \uAC70\uB9AC\uB97C \uBE44\uAD50\uD569\uB2C8\uB2E4"
+  nodeType: 0
+--- !u!114 &-4815606450016891447
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -28,17 +29,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f39186cac793b4f4eb994b83b3b13134, type: 3}
-  m_Name: SelectorNode
+  m_Name: '[2] SelectorNode'
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: d473c68ea3a1a48419529bf1726a76af
-  position: {x: -243.99957, y: 620.00006}
+  guid: 7b65915c771810f4f94b6ff12a087101
+  position: {x: -609, y: 396}
   description: "\uC790\uC2DD \uB178\uB4DC\uAC00 Success\uAC00 \uB098\uC62C \uB54C\uAE4C\uC9C0
     \uC88C\uCE21\uC5D0\uC11C \uC6B0\uCE21\uC73C\uB85C \uC2E4\uD589"
   children:
-  - {fileID: -417503600648120486}
-  - {fileID: 4143279094360445626}
+  - {fileID: -7107445899971266857}
+  - {fileID: -1687060239371663402}
 --- !u!114 &-2747633845772517936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,12 +55,31 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 6372e0abc5868b840ac843c4c8c666e9
-  position: {x: -2.9999695, y: 235.77}
+  position: {x: -423.5552, y: -8.927017}
   description: "\uD69F\uC218 \uB9CC\uD07C \uBC18\uBCF5\uD558\uB294 \uB178\uB4DC (-1
     \uC77C\uC2DC \uBB34\uD55C \uBC18\uBCF5)"
-  child: {fileID: 4483623069186896606}
+  child: {fileID: 5415551662309434920}
   loopCount: -1
   remainCount: 0
+--- !u!114 &-2044692062316657949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4838de2475b7d448a503d464d2952f, type: 3}
+  m_Name: '[1] TargetActionNode'
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: a02eda61a772a4d4f8a7f789213eb966
+  position: {x: -843, y: 396}
+  description: "\uAC00\uC7A5 \uAC00\uAE4C\uC6B4 \uC801\uC744 \uD655\uC778\uD574 \uB300\uC0C1\uC73C\uB85C
+    \uC785\uB825\uD569\uB2C8\uB2E4."
+  nodeType: 1
 --- !u!114 &-1880578358009041678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,10 +95,10 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: f0ee743999d96874d8a68262ad3334b9
-  position: {x: -2.9999812, y: 93.999985}
+  position: {x: -423.5552, y: -150.92703}
   description: 
   child: {fileID: -2747633845772517936}
---- !u!114 &-417503600648120486
+--- !u!114 &-1687060239371663402
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,14 +108,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ff3e7e2a0e5966429c2d72dc26db634, type: 3}
-  m_Name: CharacterActionNode
+  m_Name: '[2] CharacterActionNode'
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: 93edcf514066f0d408c68dc5b8ce4e6b
-  position: {x: -472, y: 834}
-  description: 
-  actionType: 0
+  guid: c969e4329d8fd1c49972ca1e99124c71
+  position: {x: -395, y: 603}
+  description: "\uB300\uC0C1\uC744 \uD5A5\uD574 \uC774\uB3D9\uD569\uB2C8\uB2E4."
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,12 +132,11 @@ MonoBehaviour:
   nodes:
   - {fileID: -1880578358009041678}
   - {fileID: -2747633845772517936}
-  - {fileID: 4483623069186896606}
-  - {fileID: 3253868024928520543}
-  - {fileID: -417503600648120486}
-  - {fileID: 4143279094360445626}
-  - {fileID: -7275789366622162108}
-  - {fileID: -5227815393307272107}
+  - {fileID: 5415551662309434920}
+  - {fileID: -2044692062316657949}
+  - {fileID: -4815606450016891447}
+  - {fileID: -7107445899971266857}
+  - {fileID: -1687060239371663402}
   blackboard:
     rid: 149811830637985987
   references:
@@ -127,44 +145,7 @@ MonoBehaviour:
     - rid: 149811830637985987
       type: {class: Blackboard, ns: Engine.AI.BehaviourTree, asm: kimhawon.engine.Runtime}
       data: 
---- !u!114 &3253868024928520543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 785b93438b356cc4fbb99da448290ca3, type: 3}
-  m_Name: CheckStateNode
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 8da2bea9b81145c4bb5d932fe4dc5dbd
-  position: {x: -485.24, y: 619}
-  description: "checkState\uAC00 \uD604\uC7AC \uCE90\uB9AD\uD130\uC758 state\uC640
-    \uAC19\uB2E4\uBA74 Success \uBC18\uD658 \uC544\uB2D0\uC2DC Fail \uBC18\uD658"
-  checkState: 0
---- !u!114 &4143279094360445626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ff3e7e2a0e5966429c2d72dc26db634, type: 3}
-  m_Name: CharacterActionNode
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 9a99521c755a4544b9654c3759adeb76
-  position: {x: -251, y: 834}
-  description: 
-  actionType: 1
---- !u!114 &4483623069186896606
+--- !u!114 &5415551662309434920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,11 +159,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   started: 0
-  guid: a432d3cdd01002d4dac4f93d580206f4
-  position: {x: -3, y: 398}
+  guid: 06f373f555f324c4da21ba90bee3a9ab
+  position: {x: -419, y: 192.35501}
   description: "\uC790\uC2DD \uB178\uB4DC\uAC00 \uC2E4\uD328\uD560 \uB54C\uAE4C\uC9C0
     \uC88C\uCE21\uC5D0\uC11C \uC6B0\uCE21\uC73C\uB85C \uC2E4\uD589"
   children:
-  - {fileID: 3253868024928520543}
-  - {fileID: -7275789366622162108}
-  - {fileID: -5227815393307272107}
+  - {fileID: -2044692062316657949}
+  - {fileID: -4815606450016891447}

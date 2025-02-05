@@ -6,6 +6,8 @@ namespace IdleProject.Battle.Character
     [System.Serializable]
     public class StatSystem
     {
+        StatData defaultStat;
+
         public ReactiveProperty<float> healthPoint;
         public ReactiveProperty<float> movementSpeed;
         public ReactiveProperty<float> attackDamage;
@@ -21,10 +23,14 @@ namespace IdleProject.Battle.Character
 
         public void SetStatData(StatData statData)
         {
+            defaultStat = statData;
+
             healthPoint.Value = statData.healthPoint;
             movementSpeed.Value = statData.movementSpeed;
             attackDamage.Value = statData.attackDamage;
             attackRange.Value = statData.attackRange;
+
+            Debug.Log(attackRange.Value);
         }
     }
 }

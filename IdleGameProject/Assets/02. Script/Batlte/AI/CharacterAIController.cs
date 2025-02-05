@@ -36,5 +36,15 @@ namespace IdleProject.Battle.AI
         {
             tree.Update();
         }
+
+        public void PauseAI()
+        {
+            tree.Pause();
+        }
+
+        public void PlayAI()
+        {
+            tree.Play();
+        }
     }
 }

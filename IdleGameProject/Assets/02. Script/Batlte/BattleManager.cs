@@ -33,9 +33,8 @@ namespace IdleProject.Battle
         public BattleStateType battleStateType;
         public GameStateType gameStateType;
 
-        private void Update()
+        private void FixedUpdate()
         {
-            // TODO : FixedUpdate로 수정 (10 ~ 20 프레임정도로)
             if (gameStateType is GameStateType.Play)
             {
                 foreach (var AI in battleAIList)
@@ -60,7 +59,10 @@ namespace IdleProject.Battle
         [Button]
         public void TestPlay()
         {
-            gameStateType = GameStateType.Play;
+            foreach (var battleAI in battleAIList)
+            {
+                battleAI.PlayAI();
+            }
         }
     }
 }

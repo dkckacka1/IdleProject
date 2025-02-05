@@ -226,6 +226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 655757440}
   - component: {fileID: 655757439}
+  - component: {fileID: 655757441}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -248,7 +249,7 @@ MonoBehaviour:
   playerCharacterList: []
   enemyCharacterList: []
   battleStateType: 2
-  gameStateType: 1
+  gameStateType: 0
 --- !u!4 &655757440
 Transform:
   m_ObjectHideFlags: 0
@@ -264,6 +265,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &655757441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655757438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cc90041e7d1eec42b23bc063003e11f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterController: {fileID: 2087020874}
+  enemy: {fileID: 1995875759}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,6 +818,17 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &1995875759 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2829869613059905669, guid: 0162f5f0afab8bd4b949f4ab929fd73b, type: 3}
+  m_PrefabInstance: {fileID: 2109492779}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516641dad3b5dbd4c9ffbe94353cb5a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2087020871
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -814,6 +840,10 @@ PrefabInstance:
     - target: {fileID: 2820153934415670583, guid: 0162f5f0afab8bd4b949f4ab929fd73b, type: 3}
       propertyPath: m_Name
       value: Hiro
+      objectReference: {fileID: 0}
+    - target: {fileID: 5360023868313072483, guid: 0162f5f0afab8bd4b949f4ab929fd73b, type: 3}
+      propertyPath: m_Acceleration
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7661463250506162820, guid: 0162f5f0afab8bd4b949f4ab929fd73b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -865,6 +895,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7661463250506162820, guid: 0162f5f0afab8bd4b949f4ab929fd73b, type: 3}
   m_PrefabInstance: {fileID: 2087020871}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2087020874 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2829869613059905669, guid: 0162f5f0afab8bd4b949f4ab929fd73b, type: 3}
+  m_PrefabInstance: {fileID: 2087020871}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 516641dad3b5dbd4c9ffbe94353cb5a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2109492779
 PrefabInstance:
   m_ObjectHideFlags: 0

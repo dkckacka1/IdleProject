@@ -16,11 +16,19 @@ namespace IdleProject.Battle.AI
             }
         }
 
-        protected CharacterController CharacterController
+        protected CharacterController Character
         {
             get
             {
                 return Blackboard_Character?.Controller;
+            }
+        }
+
+        protected CharacterController Target
+        {
+            get
+            {
+                return Blackboard_Character?.Target;
             }
         }
     }

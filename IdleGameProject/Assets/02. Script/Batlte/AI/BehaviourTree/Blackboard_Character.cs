@@ -13,10 +13,6 @@ namespace IdleProject.Battle.AI
     {
         public CharacterController Controller { get; private set; }
         [ShowInInspector]
-        public StatSystem Stat { get; private set; }
-        public CharacterAIController CharacterAI { get; private set; }
-
-        [ShowInInspector]
         public CharacterState currentState
         {
             get
@@ -29,9 +25,16 @@ namespace IdleProject.Battle.AI
                 return CharacterState.None;
             }
         }
+        [Header("CharacterStat")]
+        [ShowInInspector]
+        public StatSystem Stat { get; private set; }
+
+
+        [Header("AI")]
+        public CharacterAIController CharacterAI { get; private set; }
 
         [ShowInInspector]
-        public ITargetedAble target;
+        public CharacterController Target { get => CharacterAI is not null ? CharacterAI.target : null; set => CharacterAI.target = value; }
 
         public Blackboard_Character(CharacterController controller, CharacterAIController characterAI)
         {

@@ -15,14 +15,5 @@ namespace IdleProject.Battle.Character.Hiro
                 return animEventHandler;
             }
         }
-
-        protected override void SetAnimationEvent()
-        {
-            base.SetAnimationEvent();
-
-            AnimEventHandler.AttackEvent += Attack;
-        }
-
-
     }
 }

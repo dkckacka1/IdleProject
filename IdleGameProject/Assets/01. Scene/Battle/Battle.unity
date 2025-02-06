@@ -249,7 +249,7 @@ MonoBehaviour:
   playerCharacterList: []
   enemyCharacterList: []
   battleStateType: 2
-  gameStateType: 0
+  gameStateType: 1
 --- !u!4 &655757440
 Transform:
   m_ObjectHideFlags: 0
@@ -841,10 +841,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hiro
       objectReference: {fileID: 0}
-    - target: {fileID: 5360023868313072483, guid: 0162f5f0afab8bd4b949f4ab929fd73b, type: 3}
-      propertyPath: m_Acceleration
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 7661463250506162820, guid: 0162f5f0afab8bd4b949f4ab929fd73b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -940,7 +936,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7661463250506162820, guid: 0162f5f0afab8bd4b949f4ab929fd73b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.23
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7661463250506162820, guid: 0162f5f0afab8bd4b949f4ab929fd73b, type: 3}
       propertyPath: m_LocalRotation.w

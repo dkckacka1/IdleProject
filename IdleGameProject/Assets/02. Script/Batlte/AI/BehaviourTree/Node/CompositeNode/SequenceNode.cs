@@ -31,7 +31,7 @@ namespace IdleProject.Battle.AI
                 }
             }
 
-            return State.Success;
+            return State.Running;
         }
     }
 }

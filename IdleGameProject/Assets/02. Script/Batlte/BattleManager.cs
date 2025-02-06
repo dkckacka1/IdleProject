@@ -61,6 +61,7 @@ namespace IdleProject.Battle
         {
             foreach (var battleAI in battleAIList)
             {
+                gameStateType = GameStateType.Play;
                 battleAI.PlayAI();
             }
         }

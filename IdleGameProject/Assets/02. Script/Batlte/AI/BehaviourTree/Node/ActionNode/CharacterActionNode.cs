@@ -1,3 +1,4 @@
+using Engine.AI.BehaviourTree;
 using Sirenix.OdinInspector;
 using System;
 using System.Linq;
@@ -11,26 +12,18 @@ namespace IdleProject.Battle.AI
         {
             None = -1,
             MoveToTarget,
+            AttackToTarget,
         }
 
-        [HideInInspector]
         [SerializeField]
-        private CharacterAction actionType;
+        private CharacterAction nodeType;
 
-        [ShowInInspector]
-        private CharacterAction ActionType
+        public override string GetTitleName => base.GetTitleName + $"({nodeType})";
+
+        private void OnValidate()
         {
-            get
-            {
-                return actionType;
-            }
-            set
-            {
-                actionType = value;
-                description = GetDescription(actionType);
-            }
+            description = GetDescription(nodeType);
         }
-
 
         protected override void OnStart()
         {
@@ -42,10 +35,10 @@ namespace IdleProject.Battle.AI
 
         protected override State OnUpdate()
         {
-            switch (actionType)
+            switch (nodeType)
             {
-                case CharacterAction.MoveToTarget:
-                    return MoveToTarget();
+                case CharacterAction.MoveToTarget: return MoveToTarget();
+                case CharacterAction.AttackToTarget: return AttackToTarget();
                 default:
                     Debug.LogError("Invaild Node Error");
                     return State.Failure;
@@ -54,25 +47,30 @@ namespace IdleProject.Battle.AI
 
         private State MoveToTarget()
         {
-            if (Blackboard_Character.target is null) return State.Failure;
+            if (Target is null) return State.Failure;
 
-            CharacterController.Move(Blackboard_Character.target.GetTransform.position);
+            Character.Move(Target.transform.position);
+
+            return State.Running;
+        }
+
+        private State AttackToTarget()
+        {
+            if (Target is null) return State.Failure;
+
+            Character.Attack();
 
             return State.Running;
         }
 
         private string GetDescription(CharacterAction actionType)
         {
-            var result = "";
-
             switch (actionType)
             {
-                case CharacterAction.MoveToTarget:
-                    result = "대상을 향해 이동합니다.";
-                    break;
+                case CharacterAction.MoveToTarget: return "대상을 향해 이동합니다.";
+                case CharacterAction.AttackToTarget: return "대상을 공격합니다.";
+                default: return "";
             }
-
-            return result;
         }
     }
 }

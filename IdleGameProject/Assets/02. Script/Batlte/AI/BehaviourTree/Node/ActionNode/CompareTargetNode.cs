@@ -1,5 +1,9 @@
+using Engine.AI.BehaviourTree;
 using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
+
+using CharacterStatType = IdleProject.Battle.Character.CharacterStatType;
 
 namespace IdleProject.Battle.AI
 {
@@ -8,28 +12,16 @@ namespace IdleProject.Battle.AI
         private enum CompareType
         {
             None = -1,
-            CompareAttackRange,
+            TargetInsideInAttackRange,
+            IsTargetLive,
         }
 
-        [HideInInspector]
         [SerializeField]
         private CompareType nodeType;
-        
-        [ShowInInspector]
-        private CompareType NodeType
-        {
-            get
-            {
-                return nodeType;
-            }
-            set
-            {
-                nodeType = value;
-                description = GetDescription(nodeType);
-            }
-        }
 
-        public CompareTargetNode()
+        public override string GetTitleName => base.GetTitleName + $"({nodeType})";
+
+        private void OnValidate()
         {
             description = GetDescription(nodeType);
         }
@@ -46,34 +38,41 @@ namespace IdleProject.Battle.AI
         {
             switch (nodeType)
             {
-                case CompareType.CompareAttackRange: return CompareAttackRangeWithDistance();
+                case CompareType.TargetInsideInAttackRange: return TargetInsideInAttackRange();
+                case CompareType.IsTargetLive: return IsTargetLive();
                 default:
                     Debug.LogError("Invaild Node Error");
                     return State.Failure;
             }
         }
 
-        private State CompareAttackRangeWithDistance()
+        private State TargetInsideInAttackRange()
         {
-            if (Blackboard_Character.target is null) return State.Failure;
+            if (Target is null) return State.Failure;
 
             return 
-                Blackboard_Character.Stat.attackRange.Value <= Vector3.Distance(Blackboard_Character.Controller.transform.position, Blackboard_Character.target.GetTransform.position) ? 
-                State.Running : 
-                State.Success;
+                Character.statSystem.GetStatValue(CharacterStatType.AttackRange) >= Vector3.Distance(Character.transform.position, Target.transform.position) ? 
+                State.Success : 
+                State.Failure;
+        }
+
+        private State IsTargetLive()
+        {
+            if (Target is null) return State.Failure;
+
+            return Target.statSystem.isLive ? State.Success : State.Failure;
         }
 
         private string GetDescription(CompareType compareType)
         {
-            var result = "";
-
-            switch(compareType)
+            switch (compareType)
             {
-                case CompareType.CompareAttackRange: result = "대상과 자신의 거리와 공격 거리를 비교합니다.";
-                        break;
+                case CompareType.TargetInsideInAttackRange:
+                    return "대상과 자신의 거리가 공격 사거리 이내에 있다면 Success, 밖에 있다면 Failure.";
+                case CompareType.IsTargetLive:
+                    return "대상이 살아있는지 여부를 확인합니다. 살아있다면 Success, 죽어있다면 Failure";
+                default: return "";
             }
-
-            return result;
         }
     }
 }

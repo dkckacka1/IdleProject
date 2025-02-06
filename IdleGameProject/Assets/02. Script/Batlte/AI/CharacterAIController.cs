@@ -2,8 +2,6 @@ using UnityEngine;
 
 using Engine.AI.BehaviourTree;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
-using Sirenix.OdinInspector;
-using IdleProject.Battle.Character;
 
 namespace IdleProject.Battle.AI
 {
@@ -11,6 +9,8 @@ namespace IdleProject.Battle.AI
     {
         public bool isEnemy;
         public bool isPlay = false;
+
+        public CharacterController target;
 
         protected override void Initialized()
         {

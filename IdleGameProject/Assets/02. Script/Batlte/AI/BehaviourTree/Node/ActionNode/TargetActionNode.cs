@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Engine.AI.BehaviourTree;
 
 namespace IdleProject.Battle.AI
 {
@@ -10,28 +11,15 @@ namespace IdleProject.Battle.AI
         {
             None = -1,
             CheckTarget,
-            FoundNearestTarget
+            FoundNearestEnemyTarget
         }
 
-        [HideInInspector]
         [SerializeField]
         private CheckTargetType nodeType;
 
-        [ShowInInspector]
-        private CheckTargetType NodeType
-        {
-            get
-            {
-                return nodeType;
-            }
-            set
-            {
-                nodeType = value;
-                description = GetDescription(nodeType);
-            }
-        }
+        public override string GetTitleName => base.GetTitleName + $"({nodeType})"; 
 
-        public TargetActionNode()
+        private void OnValidate()
         {
             description = GetDescription(nodeType);
         }
@@ -49,7 +37,7 @@ namespace IdleProject.Battle.AI
             switch(nodeType)
             {
                 case CheckTargetType.CheckTarget: return CheckTarget();
-                case CheckTargetType.FoundNearestTarget: return FindingNearestTarget();
+                case CheckTargetType.FoundNearestEnemyTarget: return FindingNearestEnemyTarget();
                 default:
                     Debug.LogError("Invaild Node Error");
                     return State.Failure;
@@ -58,16 +46,16 @@ namespace IdleProject.Battle.AI
 
         private State CheckTarget()
         {
-            return Blackboard_Character.target is null ? State.Failure : State.Success;
+            return Target is null ? State.Failure : State.Success;
         }
 
-        private State FindingNearestTarget()
+        private State FindingNearestEnemyTarget()
         {
             var targetList = BattleManager.Instance.GetCharacterList(!Blackboard_Character.CharacterAI.isEnemy);
 
-            Blackboard_Character.target = targetList.OrderBy(character => Vector3.Distance(CharacterController.transform.position, character.transform.position)).Single();
+            Blackboard_Character.Target = targetList.OrderBy(character => Vector3.Distance(Character.transform.position, character.transform.position)).Single();
 
-            return Blackboard_Character.target is not null ? State.Success : State.Failure;
+            return Blackboard_Character.Target is not null ? State.Success : State.Failure;
         }
 
         private string GetDescription(CheckTargetType type)
@@ -79,7 +67,7 @@ namespace IdleProject.Battle.AI
                 case CheckTargetType.CheckTarget:
                     result = "현재 대상이 있는지 확인합니다.";
                     break;
-                case CheckTargetType.FoundNearestTarget:
+                case CheckTargetType.FoundNearestEnemyTarget:
                     result = "가장 가까운 적을 확인해 대상으로 입력합니다.";
                     break;
             }

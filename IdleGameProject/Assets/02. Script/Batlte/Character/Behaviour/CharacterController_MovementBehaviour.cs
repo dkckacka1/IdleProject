@@ -1,23 +1,30 @@
 using System;
 using UniRx;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace IdleProject.Battle.Character
 {
-    public class CharacterMovement
+    public partial class CharacterController
     {
-        NavMeshAgent agent;
-
         public bool canMove = true;
 
         private IDisposable moveEndCallback = null;
 
-        public CharacterMovement(NavMeshAgent agent)
+        public virtual void Move(Vector3 destination)
         {
-            this.agent = agent;
+            animController.SetMove();
+            currentState = CharacterState.Chase;
+
+            Move(destination, () =>
+            {
+                animController.SetIdle();
+            });
         }
 
+        public virtual void SetMovementSpeed(float movementSpeed)
+        {
+            agent.speed = movementSpeed;
+        }
 
         public void Move(Vector3 destination, Action moveEndAction)
         {
@@ -40,6 +47,7 @@ namespace IdleProject.Battle.Character
 
             moveEndCallback = Observable.EveryFixedUpdate().Where(_ => agent.remainingDistance < agent.stoppingDistance).Subscribe(_ =>
             {
+                agent.isStopped = true;
                 moveEndAction?.Invoke();
                 moveEndCallback.Dispose();
             });

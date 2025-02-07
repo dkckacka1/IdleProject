@@ -35,7 +35,7 @@ namespace IdleProject.Battle.Character
 
         public void Stop()
         {
-            agent.isStopped = false;
+            agent.ResetPath();
         }
 
         private void SetMoveEndAction(Action moveEndAction)
@@ -47,7 +47,7 @@ namespace IdleProject.Battle.Character
 
             moveEndCallback = Observable.EveryFixedUpdate().Where(_ => agent.remainingDistance < agent.stoppingDistance).Subscribe(_ =>
             {
-                agent.isStopped = true;
+                agent.ResetPath();
                 moveEndAction?.Invoke();
                 moveEndCallback.Dispose();
             });

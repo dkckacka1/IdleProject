@@ -2,15 +2,12 @@ using UnityEngine;
 
 namespace IdleProject.Battle.AI
 {
-    public class ConversionNode : DecoratorNode
+    public class ConverterNode : DecoratorNode
     {
         [SerializeField] private State targetState;
         [SerializeField] private State conversionState;
 
-        private void OnValidate()
-        {
-            description = $"{targetState} State를 {conversionState} State로 변환합니다.";
-        }
+        public override string GetDescription => $"{targetState} State를 {conversionState} State로 변환합니다.";
 
         protected override void OnStart()
         {

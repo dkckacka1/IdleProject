@@ -46,12 +46,11 @@ namespace IdleProject.Battle.AI
         private float compareValue; 
         #endregion
 
-        public override string GetTitleName => base.GetTitleName + $"({nodeType})";
+        public override string GetTitleName => base.GetTitleName;
 
-        private void OnValidate()
-        {
-            description = GetDescription(nodeType);
-        }
+        public override string GetSubTitleName => nodeType.ToString();
+
+        public override string GetDescription => GetNodeDescription(nodeType);
 
         protected override void OnStart()
         {
@@ -102,7 +101,7 @@ namespace IdleProject.Battle.AI
             return State.Failure;
         }
 
-        private string GetDescription(CheckType nodeType)
+        private string GetNodeDescription(CheckType nodeType)
         {
             switch (nodeType)
             {

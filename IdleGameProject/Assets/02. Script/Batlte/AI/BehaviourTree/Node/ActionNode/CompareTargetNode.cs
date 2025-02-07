@@ -19,12 +19,8 @@ namespace IdleProject.Battle.AI
         [SerializeField]
         private CompareType nodeType;
 
-        public override string GetTitleName => base.GetTitleName + $"({nodeType})";
-
-        private void OnValidate()
-        {
-            description = GetDescription(nodeType);
-        }
+        public override string GetSubTitleName => nodeType.ToString();
+        public override string GetDescription => GetNodeDescription(nodeType);
 
         protected override void OnStart()
         {
@@ -63,7 +59,7 @@ namespace IdleProject.Battle.AI
             return Target.statSystem.isLive ? State.Success : State.Failure;
         }
 
-        private string GetDescription(CompareType compareType)
+        private string GetNodeDescription(CompareType compareType)
         {
             switch (compareType)
             {

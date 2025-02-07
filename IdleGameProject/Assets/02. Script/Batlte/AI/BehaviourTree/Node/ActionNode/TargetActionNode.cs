@@ -17,12 +17,8 @@ namespace IdleProject.Battle.AI
         [SerializeField]
         private CheckTargetType nodeType;
 
-        public override string GetTitleName => base.GetTitleName + $"({nodeType})"; 
-
-        private void OnValidate()
-        {
-            description = GetDescription(nodeType);
-        }
+        public override string GetSubTitleName => nodeType.ToString();
+        public override string GetDescription => GetNodeDescription(nodeType);
 
         protected override void OnStart()
         {
@@ -58,7 +54,7 @@ namespace IdleProject.Battle.AI
             return Blackboard_Character.Target is not null ? State.Success : State.Failure;
         }
 
-        private string GetDescription(CheckTargetType type)
+        private string GetNodeDescription(CheckTargetType type)
         {
             var result = "";
 

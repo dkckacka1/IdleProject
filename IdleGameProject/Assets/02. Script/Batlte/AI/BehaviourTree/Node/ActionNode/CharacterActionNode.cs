@@ -18,12 +18,9 @@ namespace IdleProject.Battle.AI
         [SerializeField]
         private CharacterAction nodeType;
 
-        public override string GetTitleName => base.GetTitleName + $"({nodeType})";
+        public override string GetSubTitleName => nodeType.ToString();
 
-        private void OnValidate()
-        {
-            description = GetDescription(nodeType);
-        }
+        public override string GetDescription => GetNodeDescription(nodeType);
 
         protected override void OnStart()
         {
@@ -63,7 +60,7 @@ namespace IdleProject.Battle.AI
             return State.Running;
         }
 
-        private string GetDescription(CharacterAction actionType)
+        private string GetNodeDescription(CharacterAction actionType)
         {
             switch (actionType)
             {

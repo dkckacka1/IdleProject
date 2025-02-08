@@ -8,7 +8,7 @@ namespace IdleProject.Battle.AI
 
         public DebugLogNode()
         {
-            description = "Log의 내용을 디버그 로그로 출력 무조건 Success 반환 (Editor에서만 작동)";
+            description = "Log의 내용을 디버그 로그로 출력 무조건 Running 반환 (Editor에서만 작동)";
         }
 
         protected override void OnStart()
@@ -24,7 +24,7 @@ namespace IdleProject.Battle.AI
 #if UNITY_EDITOR
             Debug.Log(log);
 #endif
-            return State.Success;
+            return State.Running;
         }
     }
 }

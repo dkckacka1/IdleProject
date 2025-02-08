@@ -35,5 +35,13 @@ namespace IdleProject.Battle.Character
         {
             statSystem.SetStatValue(CharacterStatType.HealthPoint, statSystem.GetStatValue(CharacterStatType.HealthPoint) - takeDamage);
         }
+
+        #region 사망 관련
+        public virtual void Death()
+        {
+            animController.SetDeath();
+        }
+
+        #endregion
     }
 }

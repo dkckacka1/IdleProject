@@ -12,19 +12,7 @@ namespace IdleProject.Battle.AI
     public class Blackboard_Character : Blackboard
     {
         public CharacterController Controller { get; private set; }
-        [ShowInInspector]
-        public CharacterState currentState
-        {
-            get
-            {
-                if (Application.isPlaying && Controller is not null)
-                {
-                    return Controller.currentState;
-                }
 
-                return CharacterState.None;
-            }
-        }
         [Header("CharacterStat")]
         [ShowInInspector]
         public StatSystem Stat { get; private set; }

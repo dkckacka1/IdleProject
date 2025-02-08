@@ -13,7 +13,6 @@ namespace IdleProject.Battle.Character
         public virtual void Move(Vector3 destination)
         {
             animController.SetMove();
-            currentState = CharacterState.Chase;
 
             Move(destination, () =>
             {

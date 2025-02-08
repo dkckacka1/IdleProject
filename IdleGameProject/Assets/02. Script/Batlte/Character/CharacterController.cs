@@ -5,20 +5,11 @@ using UnityEngine.AI;
 
 namespace IdleProject.Battle.Character
 {
-    public enum CharacterState
-    {
-        None = -1,
-        Idle,
-        Chase,
-        Battle,
-        Die,
-    }
 
     [System.Serializable]
     public partial class CharacterController : MonoBehaviour, ITargetedAble
     {
         public StatSystem statSystem;
-        public CharacterState currentState;
         public CharacterAIController ai;
 
         protected Rigidbody rb;
@@ -26,7 +17,6 @@ namespace IdleProject.Battle.Character
         protected Animator animator;
 
         protected AnimationController animController;
-        
 
         public Transform GetTransform => transform;
 
@@ -55,7 +45,8 @@ namespace IdleProject.Battle.Character
         }
         private void SetStatModifedEvent()
         {
-            statSystem.attackRange.Subscribe(value => agent.stoppingDistance = value);
+            statSystem.PublishValueChangedEvent(CharacterStatType.MovementSpeed, SetMovementSpeed);
+            statSystem.DeathEvent += Death;
         }
 
         private void SetAnimationEvent()
@@ -67,18 +58,10 @@ namespace IdleProject.Battle.Character
         public virtual void SetCharacterData(CharacterData data)
         {
             statSystem.SetStatData(data.stat);
-
-            statSystem.movementSpeed.DistinctUntilChanged().Subscribe(SetMovementSpeed);
         }
         #endregion
 
-        #region 사망 관련
-        public virtual void Death()
-        {
-            animController.SetDeath();
-        }
 
-        #endregion
 
         #region 스킬 관련
         public virtual void Skill()
@@ -94,7 +77,7 @@ namespace IdleProject.Battle.Character
             if (Application.isPlaying && isTest)
             {
                 if (statSystem is not null)
-                    Gizmos.DrawWireSphere(this.transform.position, statSystem.attackRange.Value);
+                    Gizmos.DrawWireSphere(this.transform.position, statSystem.GetStatValue(CharacterStatType.AttackRange));
             }
         } 
         #endregion

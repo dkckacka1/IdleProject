@@ -7,15 +7,6 @@
       "dependencies": {},
       "hash": "8042b29ff87dd5506d7aad72bd6d8d7405985f27"
     },
-    "com.kimhawon.engine": {
-      "version": "https://github.com/dkckacka1/Engine.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.addressables": "2.2.2"
-      },
-      "hash": "7bda63216c0de637adf29e18deccf8561bd53b41"
-    },
     "com.unity.addressables": {
       "version": "2.2.2",
       "depth": 0,

@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 5522763911141060018}
   - component: {fileID: 5775443281729569426}
   - component: {fileID: 5360023868313072483}
-  - component: {fileID: 2829869613059905669}
-  - component: {fileID: 1409568612974720098}
+  - component: {fileID: 8762174061068708745}
+  - component: {fileID: 2925693084570982342}
+  - component: {fileID: 1113909965958651385}
   m_Layer: 0
   m_Name: Hiro
   m_TagString: Untagged
@@ -97,8 +98,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1372625422
   m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 1
+  m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 360
   m_StoppingDistance: 0
@@ -109,7 +110,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2829869613059905669
+--- !u!114 &8762174061068708745
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,24 +119,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2820153934415670583}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 516641dad3b5dbd4c9ffbe94353cb5a2, type: 3}
+  m_Script: {fileID: 11500000, guid: a299af681d340ee409f908f792388383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canAttack: 0
   canMove: 1
-  statSystem:
-    healthPoint:
-      value: 0
-    movementSpeed:
-      value: 0
-    attackDamage:
-      value: 0
-    attackRange:
-      value: 0
-  currentState: 0
-  ai: {fileID: 0}
-  isTest: 1
---- !u!114 &1409568612974720098
+  isTest: 0
+--- !u!114 &2925693084570982342
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,10 +137,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4323e69816a0c7a4f850c6e07adfc2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tree: {fileID: 11400000, guid: 7927b2e1aace996468c5cd045ca8221a, type: 2}
   isEnemy: 0
-  isPlay: 0
-  target: {fileID: 0}
+--- !u!114 &1113909965958651385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2820153934415670583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cfef36970002ff42bed64d0c8a92a97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1984738365375623154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -220,7 +219,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 162860, guid: e012052f109bd9643b09577e3d4fe935, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8918291398849492825}
+      addedObject: {fileID: 5488185541119141184}
   m_SourcePrefab: {fileID: 100100000, guid: e012052f109bd9643b09577e3d4fe935, type: 3}
 --- !u!4 &1984738365375438524 stripped
 Transform:
@@ -237,7 +236,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 162860, guid: e012052f109bd9643b09577e3d4fe935, type: 3}
   m_PrefabInstance: {fileID: 1984738365375623154}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8918291398849492825
+--- !u!114 &5488185541119141184
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -246,7 +245,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1984738365375763422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55c5b81c96b168943b29c272ae09cf41, type: 3}
+  m_Script: {fileID: 11500000, guid: 425db669f1e15a446bb8ce8433551cd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7890987564080899583

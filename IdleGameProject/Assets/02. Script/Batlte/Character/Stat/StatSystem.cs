@@ -1,5 +1,3 @@
-using UnityEngine;
-using UniRx;
 using System;
 using System.Collections.Generic;
 
@@ -24,8 +22,6 @@ namespace IdleProject.Battle.Character
 
         public bool isLive => GetStatValue(CharacterStatType.HealthPoint) > 0;
 
-        public Action DeathEvent;
-
         public StatSystem()
         {
             characterStatDic = new Dictionary<CharacterStatType, BattleCharacterStat>();
@@ -34,13 +30,6 @@ namespace IdleProject.Battle.Character
             {
                 characterStatDic.Add(type, new BattleCharacterStat());
             });
-
-            SetDefaultStatEvent();
-        }
-
-        private void SetDefaultStatEvent()
-        {
-            characterStatDic[CharacterStatType.HealthPoint].OnValueChanged += OnDeath;
         }
 
         public void SetStatData(StatData statData)
@@ -65,20 +54,12 @@ namespace IdleProject.Battle.Character
 
         public void PublishValueChangedEvent(CharacterStatType statType, Action<float> OnValueChanged)
         {
-            characterStatDic[CharacterStatType.HealthPoint].OnValueChanged += OnValueChanged;
+            characterStatDic[statType].OnValueChanged += OnValueChanged;
         }
 
         public void RemoveValueChangedEvent(CharacterStatType statType, Action<float> OnValueChanged)
         {
             characterStatDic[CharacterStatType.HealthPoint].OnValueChanged -= OnValueChanged;
-        }
-
-        private void OnDeath(float healthPoint)
-        {
-            if (healthPoint <= 0)
-            {
-                DeathEvent?.Invoke();
-            }
         }
     }
 }

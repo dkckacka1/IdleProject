@@ -29,6 +29,7 @@ namespace IdleProject.Battle.Character
         {
             defaultStatValue = stat;
             statValue = stat;
+            OnValueChanged?.Invoke(stat);
         }
     }
 }

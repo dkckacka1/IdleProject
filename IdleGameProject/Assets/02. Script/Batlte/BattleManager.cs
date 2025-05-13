@@ -8,6 +8,7 @@ using System;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 using IdleProject.Battle.AI;
 using Sirenix.OdinInspector;
+using IdleProject.Battle.Spawn;
 
 namespace IdleProject.Battle
 {
@@ -24,29 +25,41 @@ namespace IdleProject.Battle
         Pause
     }
 
+    public enum CharacterAIType
+    {
+        Playerable,
+        Enemy,
+        //Ally,
+        //Neutral,
+    }
+
     public class BattleManager : SingletonMonoBehaviour<BattleManager>
     {
+        public SpawnController spawnController;
+
         public List<CharacterController> playerCharacterList = new List<CharacterController>();
         public List<CharacterController> enemyCharacterList = new List<CharacterController>();
-        public List<BattleAIAble> battleAIList = new List<BattleAIAble>();
 
         public BattleStateType battleStateType;
         public GameStateType gameStateType;
+
+        public override void Initialized()
+        {
+            base.Initialized();
+            spawnController = GetComponent<SpawnController>();
+        }
+
 
         private void FixedUpdate()
         {
             if (gameStateType is GameStateType.Play)
             {
-                foreach (var AI in battleAIList)
-                {
-                    AI.UpdateAI();
-                }
             }
         }
 
-        public IEnumerable<CharacterController> GetCharacterList(bool isEnemy, Func<CharacterController, bool> whereFunc = null)
+        public IEnumerable<CharacterController> GetCharacterList(CharacterAIType aiType, Func<CharacterController, bool> whereFunc = null)
         {
-            IEnumerable<CharacterController> result = isEnemy ? enemyCharacterList : playerCharacterList;
+            IEnumerable<CharacterController> result = ChooseCharacterList(aiType);
 
             if (whereFunc is not null)
             {
@@ -56,14 +69,21 @@ namespace IdleProject.Battle
             return result;
         }
 
-        [Button]
-        public void TestPlay()
+        private IEnumerable<CharacterController> ChooseCharacterList(CharacterAIType aiType)
         {
-            foreach (var battleAI in battleAIList)
+            IEnumerable<CharacterController> result = null;
+
+            switch (aiType)
             {
-                gameStateType = GameStateType.Play;
-                battleAI.PlayAI();
+                case CharacterAIType.Playerable:
+                    result = playerCharacterList;
+                    break;
+                case CharacterAIType.Enemy:
+                    result = enemyCharacterList;
+                    break;
             }
+
+            return result;
         }
     }
 }

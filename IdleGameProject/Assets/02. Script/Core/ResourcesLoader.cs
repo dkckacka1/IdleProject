@@ -16,14 +16,14 @@ namespace IdleProject.Core
 
         private const char SplitSegement = '/';
 
-        public async static UniTask<CharacterController> GetCharacter(string name)
+        public async static UniTask<CharacterController> InstantiateCharacter(string name)
         {
-            var character = await AddressableManager.Instance.Controller.LoadAssetAsync<GameObject>($"{JoinWithSlash(PrefabPath, CharacterPath, name)}.prefab");
-
-            return character.GetComponent<CharacterController>();
+            string address = $"{JoinWithSlash(PrefabPath, CharacterPath, name)}.prefab";
+            var characterObj = await AddressableManager.Instance.Controller.InstantiateObject<GameObject>(address);
+            return characterObj.GetComponent<CharacterController>();
         }
 
-        public async static UniTask<CharacterData> GetCharacterData(string name)
+        public async static UniTask<CharacterData> LoadCharacterData(string name)
         {
             var data = await AddressableManager.Instance.Controller.LoadAssetAsync<CharacterData>($"{JoinWithSlash(DataPath, CharacterDataPath, name)}.asset");
 

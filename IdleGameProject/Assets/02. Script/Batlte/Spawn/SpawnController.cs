@@ -30,15 +30,26 @@ namespace IdleProject.Battle.Spawn
 
         public async UniTaskVoid SpawnCharacter(CharacterAIType aiType, SpawnPositionType spawnPositionType, string characterName)
         {
-            var controller = await ResourcesLoader.GetCharacter(characterName);
-            //var data = await ResourcesLoader.GetCharacterData(characterName);
+            var character = await ResourcesLoader.InstantiateCharacter(characterName);
+            SetCharacterPosition(character, aiType, spawnPositionType);
 
-            //SpawnDatas datas = aiType == CharacterAIType.Playerable ? player : enemy;
-            //var spawnPosition = datas.spawn.GetSpawnPosition(spawnPositionType);
+            var data = await ResourcesLoader.LoadCharacterData(characterName);
+            character.SetCharacterData(data);
 
-            //CharacterController character = Instantiate<CharacterController>(controller, spawnPosition, datas.spawn.transform.rotation, datas.spawnObject);
-            //character.SetCharacterData(data);
-            //character.GetComponent<CharacterAIController>().aiType = aiType;
+            var ai = character.gameObject.GetComponent<CharacterAIController>();
+            ai.aiType = aiType;
+
+            BattleManager.Instance.AddCharacterController(character, aiType);
+        }
+
+        private void SetCharacterPosition(CharacterController character, CharacterAIType aiType, SpawnPositionType spawnPositionType)
+        {
+            SpawnDatas spawnData = aiType == CharacterAIType.Playerable ? player : enemy;
+
+            var spawnPosition = spawnData.spawn.GetSpawnPosition(spawnPositionType);
+
+            character.transform.SetParent(spawnData.spawnObject);
+            character.transform.position = spawnPosition;
         }
     }
 }

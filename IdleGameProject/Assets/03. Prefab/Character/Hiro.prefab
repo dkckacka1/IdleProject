@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 5522763911141060018}
   - component: {fileID: 5775443281729569426}
   - component: {fileID: 5360023868313072483}
-  - component: {fileID: 8762174061068708745}
-  - component: {fileID: 2925693084570982342}
-  - component: {fileID: 1113909965958651385}
+  - component: {fileID: -8640009194804324458}
+  - component: {fileID: 1586863265073297392}
   m_Layer: 0
   m_Name: Hiro
   m_TagString: Untagged
@@ -110,7 +109,7 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8762174061068708745
+--- !u!114 &-8640009194804324458
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,7 +124,7 @@ MonoBehaviour:
   canAttack: 0
   canMove: 1
   isTest: 0
---- !u!114 &2925693084570982342
+--- !u!114 &1586863265073297392
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,19 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4323e69816a0c7a4f850c6e07adfc2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnemy: 0
---- !u!114 &1113909965958651385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2820153934415670583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cfef36970002ff42bed64d0c8a92a97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  aiType: 0
 --- !u!1001 &1984738365375623154
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -36,7 +36,6 @@ namespace IdleProject.Battle.Character
         #region 초기화 부문
         public virtual void Initialized()
         {
-            Debug.Log("ModifiedEvent");
             SetStatModifedEvent();
             SetAnimationEvent();
         }
@@ -57,19 +56,6 @@ namespace IdleProject.Battle.Character
         public virtual void Skill()
         {
         }
-        #endregion
-
-        #region 테스트 항목
-        [SerializeField] bool isTest;
-
-        private void OnDrawGizmos()
-        {
-            if (Application.isPlaying && isTest)
-            {
-                if (statSystem is not null)
-                    Gizmos.DrawWireSphere(this.transform.position, statSystem.GetStatValue(CharacterStatType.AttackRange));
-            }
-        } 
         #endregion
 
         public static implicit operator Vector3(CharacterController controller) => controller.transform.position;

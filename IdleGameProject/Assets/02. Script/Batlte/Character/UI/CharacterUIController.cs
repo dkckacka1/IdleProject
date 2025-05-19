@@ -29,6 +29,7 @@ namespace IdleProject.Battle.UI
         public void BattleAction()
         {
             fluidHealthBar.transform.position = UIManager.GetUIInScreen(Camera.main.WorldToScreenPoint(transform.position) + fluidHealthBarOffset);
+            fluidHealthBar.PlayDamageSlider();
         }
     }
 }

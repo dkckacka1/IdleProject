@@ -63,7 +63,7 @@ namespace IdleProject.Battle
 
         private void LateUpdate()
         {
-            if (gameStateEventBus.CurrentType is GameStateType.Play && battleStateEventBus.CurrentType is BattleStateType.Battle)
+            if (gameStateEventBus.CurrentType is GameStateType.Play)
             {
                 battleUIEvent?.Invoke();
             }

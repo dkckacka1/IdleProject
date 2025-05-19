@@ -341,6 +341,9 @@ MonoBehaviour:
   battleEvent:
     m_PersistentCalls:
       m_Calls: []
+  battleUIEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &279851054
 Transform:
   m_ObjectHideFlags: 0

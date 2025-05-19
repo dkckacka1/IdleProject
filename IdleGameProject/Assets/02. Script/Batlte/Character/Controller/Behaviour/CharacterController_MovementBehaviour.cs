@@ -6,7 +6,6 @@ namespace IdleProject.Battle.Character
 {
     public partial class CharacterController
     {
-        public bool canMove = true;
 
         private IDisposable moveEndCallback = null;
 

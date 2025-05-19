@@ -34,10 +34,8 @@ namespace IdleProject.Battle.Spawn
             SetCharacterPosition(character, aiType, spawnPositionType);
 
             var data = await ResourcesLoader.LoadCharacterData(characterName);
-            character.SetCharacterData(data);
-
-            var ai = character.gameObject.GetComponent<CharacterAIController>();
-            ai.aiType = aiType;
+            await character.Initialized(data);
+            character.characterAI.aiType = aiType;
 
             BattleManager.Instance.AddCharacterController(character, aiType);
         }
@@ -45,11 +43,11 @@ namespace IdleProject.Battle.Spawn
         private void SetCharacterPosition(CharacterController character, CharacterAIType aiType, SpawnPositionType spawnPositionType)
         {
             SpawnDatas spawnData = aiType == CharacterAIType.Playerable ? player : enemy;
-
             var spawnPosition = spawnData.spawn.GetSpawnPosition(spawnPositionType);
 
             character.transform.SetParent(spawnData.spawnObject);
             character.transform.position = spawnPosition;
+            character.transform.Rotate(spawnData.spawn.transform.rotation.eulerAngles);
         }
     }
 }

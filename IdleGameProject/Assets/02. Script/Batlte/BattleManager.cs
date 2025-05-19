@@ -11,14 +11,16 @@ using CharacterController = IdleProject.Battle.Character.CharacterController;
 using IdleProject.Battle.AI;
 using Sirenix.OdinInspector;
 using IdleProject.Battle.Spawn;
+using UnityEngine.Events;
 
 namespace IdleProject.Battle
 {
     public enum BattleStateType
     {
+        Ready,
+        Battle,
         Win,
         Defeat,
-        Battle,
     }
 
     public enum GameStateType
@@ -27,13 +29,7 @@ namespace IdleProject.Battle
         Pause
     }
 
-    public enum CharacterAIType
-    {
-        Playerable,
-        Enemy,
-        //Ally,
-        //Neutral,
-    }
+
 
     public class BattleManager : SingletonMonoBehaviour<BattleManager>
     {
@@ -42,11 +38,13 @@ namespace IdleProject.Battle
         public List<CharacterController> playerCharacterList = new List<CharacterController>();
         public List<CharacterController> enemyCharacterList = new List<CharacterController>();
 
-        public BattleStateType battleStateType;
-        public GameStateType gameStateType;
+        public EnumEventBus<GameStateType> gameStateEventBus = new();
+        public EnumEventBus<BattleStateType> battleStateEventBus = new();
 
-        public EventBusController<GameStateType> gameStateEventBus;
-        public EventBusController<BattleStateType> battleStateEventBus;
+        public UnityEvent battleEvent = new UnityEvent();
+        public UnityEvent battleUIEvent = new UnityEvent();
+
+        private List<CharacterController> GetCharacterList(CharacterAIType aiType) => (aiType == CharacterAIType.Playerable) ? playerCharacterList : enemyCharacterList;
 
         public override void Initialized()
         {
@@ -57,21 +55,30 @@ namespace IdleProject.Battle
 
         private void FixedUpdate()
         {
-            if (gameStateType is GameStateType.Play)
+            if (gameStateEventBus.CurrentType is GameStateType.Play && battleStateEventBus.CurrentType is BattleStateType.Battle)
             {
+                battleEvent?.Invoke();
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if (gameStateEventBus.CurrentType is GameStateType.Play && battleStateEventBus.CurrentType is BattleStateType.Battle)
+            {
+                battleUIEvent?.Invoke();
             }
         }
 
         public void AddCharacterController(CharacterController controller, CharacterAIType aiType)
         {
-            var characterControllerList = (aiType == CharacterAIType.Playerable) ? playerCharacterList : enemyCharacterList;
+            var characterControllerList = GetCharacterList(aiType);
 
             characterControllerList.Add(controller);
         }
 
         public IEnumerable<CharacterController> GetCharacterList(CharacterAIType aiType, Func<CharacterController, bool> whereFunc = null)
         {
-            IEnumerable<CharacterController> result = ChooseCharacterList(aiType);
+            IEnumerable<CharacterController> result = GetCharacterList(aiType);
 
             if (whereFunc is not null)
             {
@@ -81,21 +88,33 @@ namespace IdleProject.Battle
             return result;
         }
 
-        private IEnumerable<CharacterController> ChooseCharacterList(CharacterAIType aiType)
+        public void DeathCharacter(CharacterController characterController, CharacterAIType aiType)
         {
-            IEnumerable<CharacterController> result = null;
+            var characterList = GetCharacterList(aiType);
+            characterList.Remove(characterController);
 
-            switch (aiType)
+            if (characterList.Count <= 0)
             {
-                case CharacterAIType.Playerable:
-                    result = playerCharacterList;
-                    break;
-                case CharacterAIType.Enemy:
-                    result = enemyCharacterList;
-                    break;
+                if(aiType == CharacterAIType.Playerable)
+                {
+                    Defeat();
+                }
+                else
+                {
+                    Win();
+                }
             }
+        }
 
-            return result;
+
+        private void Win()
+        {
+            battleStateEventBus.ChangeEvent(BattleStateType.Win);
+        }
+
+        private void Defeat()
+        {
+            battleStateEventBus.ChangeEvent(BattleStateType.Defeat);
         }
     }
 }

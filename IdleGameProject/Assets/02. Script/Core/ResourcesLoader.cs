@@ -1,5 +1,7 @@
 using Cysharp.Threading.Tasks;
+using Engine.Util.Extension;
 using IdleProject.Battle.Character;
+using IdleProject.Core.UI;
 using UnityEngine;
 
 using CharacterController = IdleProject.Battle.Character.CharacterController;
@@ -10,6 +12,7 @@ namespace IdleProject.Core
     {
         private const string PrefabPath = "Prefab";
         private const string CharacterPath = "Character";
+        private const string UIPath = "UI";
 
         private const string DataPath = "GameData";
         private const string CharacterDataPath = "CharacterData";
@@ -21,6 +24,13 @@ namespace IdleProject.Core
             string address = $"{JoinWithSlash(PrefabPath, CharacterPath, name)}.prefab";
             var characterObj = await AddressableManager.Instance.Controller.InstantiateObject<GameObject>(address);
             return characterObj.GetComponent<CharacterController>();
+        }
+
+        public async static UniTask<T> InstantiateUI<T>(SceneType sceneType) where T : UIBase
+        {
+            string address = $"{JoinWithSlash(PrefabPath, UIPath, sceneType.ToString(), typeof(T).Name)}.prefab";
+            var uiObj = await AddressableManager.Instance.Controller.InstantiateObject<GameObject>(address);
+            return uiObj.GetComponent<T>();
         }
 
         public async static UniTask<CharacterData> LoadCharacterData(string name)

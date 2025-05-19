@@ -5,8 +5,10 @@ using UnityEngine;
 public struct StatData
 {
     public float healthPoint;
-    public float movementSpeed;
     public float attackDamage;
+    [Range(1f, 10f)]
+    public float movementSpeed;
+    [Range(3f, 10f)]
     public float attackRange;
 }
 

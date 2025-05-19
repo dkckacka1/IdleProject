@@ -6,6 +6,14 @@ using System.Linq;
 
 namespace IdleProject.Battle.AI
 {
+    public enum CharacterAIType
+    {
+        Playerable,
+        Enemy,
+        //Ally,
+        //Neutral,
+    }
+
     [RequireComponent(typeof(CharacterController))]
     public class CharacterAIController : MonoBehaviour
     {
@@ -25,7 +33,7 @@ namespace IdleProject.Battle.AI
             controller.GetTargetCharacter = GetTargetController;
         }
 
-        private void Update()
+        public void BattleAction()
         {
             currentTarget = GetNealyTarget();
             controller.Move(currentTarget);
@@ -44,7 +52,6 @@ namespace IdleProject.Battle.AI
         private CharacterController GetNealyTarget()
         {
             var enemyCharacterList = BattleManager.Instance.GetCharacterList(EnemyType());
-
             var target = enemyCharacterList.OrderBy(character => Vector3.Distance(character.transform.position, controller.transform.position)).FirstOrDefault();
             return target;
         }

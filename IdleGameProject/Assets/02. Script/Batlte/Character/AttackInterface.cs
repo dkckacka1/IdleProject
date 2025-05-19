@@ -9,6 +9,7 @@ namespace IdleProject.Battle.Character
 
     public interface ITakeDamagedAble : ITargetedAble
     {
+        public bool CanTakeDamage { get; }
         public void TakeDamage(float attackDamage);
     }
 }

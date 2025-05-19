@@ -1,13 +1,30 @@
+using Cysharp.Threading.Tasks;
+using IdleProject.Battle.AI;
+using IdleProject.Battle.UI;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace IdleProject.Battle.Character
 {
+    public partial struct CharacterState
+    {
+        public bool canMove;
+        public bool canAttack;
+        public bool isDead;
+
+        public void Initialize()
+        {
+            canMove = true;
+            canAttack = true;
+            isDead = false;
+        }
+    }
 
     [System.Serializable]
     public partial class CharacterController : MonoBehaviour, ITargetedAble
     {
         public StatSystem statSystem;
+        public CharacterState state;
 
         protected Rigidbody rb;
         protected NavMeshAgent agent;
@@ -16,6 +33,9 @@ namespace IdleProject.Battle.Character
         protected AnimationController animController;
 
         public Transform GetTransform => transform;
+
+        public CharacterUIController characterUI;
+        public CharacterAIController characterAI;
 
         private void Awake()
         {
@@ -26,29 +46,44 @@ namespace IdleProject.Battle.Character
             statSystem = new StatSystem();
 
             animController = new AnimationController(animator, GetComponentInChildren<AnimationEventHandler>());
-        }
 
-        private void Start()
-        {
-            Initialized();
+            characterUI = GetComponent<CharacterUIController>();
+            characterAI = GetComponent<CharacterAIController>();
         }
 
         #region 초기화 부문
-        public virtual void Initialized()
+        public async virtual UniTask Initialized(CharacterData data)
         {
             SetStatModifedEvent();
             SetAnimationEvent();
-        }
+            state.Initialize();
 
+            SetCharacterData(data);
+
+            SetCharacterAI();
+            await SetCharacterUI();
+        }
 
         private void SetAnimationEvent()
         {
             SetBattleAnimEvent();
         }
 
-        public virtual void SetCharacterData(CharacterData data)
+        protected virtual void SetCharacterData(CharacterData data)
         {
             statSystem.SetStatData(data.stat);
+        }
+
+        private void SetCharacterAI()
+        {
+            BattleManager.Instance.battleEvent.AddListener(characterAI.BattleAction);
+        }
+
+        private async UniTask SetCharacterUI()
+        {
+            await characterUI.SpawnCharacterUI();
+            characterUI.SetCharacterUI(statSystem);
+            BattleManager.Instance.battleUIEvent.AddListener(characterUI.BattleAction);
         }
         #endregion
 

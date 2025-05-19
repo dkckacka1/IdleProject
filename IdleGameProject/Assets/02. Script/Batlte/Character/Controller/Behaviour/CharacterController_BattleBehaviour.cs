@@ -5,10 +5,9 @@ namespace IdleProject.Battle.Character
 {
     public partial class CharacterController : ITakeDamagedAble
     {
-        public bool canAttack;
-
         public Func<ITakeDamagedAble> GetTargetCharacter;
 
+        public bool CanTakeDamage => !state.isDead; 
 
         protected virtual void SetBattleAnimEvent()
         {
@@ -31,7 +30,10 @@ namespace IdleProject.Battle.Character
 
         public virtual void Hit(ITakeDamagedAble iTakeDamage)
         {
-            iTakeDamage.TakeDamage(statSystem.GetStatValue(CharacterStatType.AttackDamage));
+            if (iTakeDamage.CanTakeDamage)
+            {
+                iTakeDamage.TakeDamage(statSystem.GetStatValue(CharacterStatType.AttackDamage));
+            }
         }
 
         public virtual void TakeDamage(float takeDamage)
@@ -41,11 +43,13 @@ namespace IdleProject.Battle.Character
             if (statSystem.GetStatValue(CharacterStatType.HealthPoint) <= 0)
             {
                 Death();
+                BattleManager.Instance.DeathCharacter(this, characterAI.aiType);
             }
         }
 
         private void Death()
         {
+            state.isDead = true;
             animController.SetDeath();
         }
     }

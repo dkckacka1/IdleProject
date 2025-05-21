@@ -8,11 +8,12 @@ namespace IdleProject.Battle.Character
 
         private Animator animator;
 
-        private readonly int skillAnimHash = Animator.StringToHash("Skill");
-        private readonly int attackAnimHash = Animator.StringToHash("Attack");
-        private readonly int deathAnimHash = Animator.StringToHash("Death");
-        private readonly int moveAnimHash = Animator.StringToHash("Move");
-        private readonly int idleAnimHash = Animator.StringToHash("Idle");
+        private readonly int SkillAnimHash = Animator.StringToHash("Skill");
+        private readonly int AttackAnimHash = Animator.StringToHash("Attack");
+        private readonly int DeathAnimHash = Animator.StringToHash("Death");
+        private readonly int MoveAnimHash = Animator.StringToHash("Move");
+        private readonly int IdleAnimHash = Animator.StringToHash("Idle");
+        private readonly int WinAnimHash = Animator.StringToHash("Win");
 
         public AnimationController(Animator animator, AnimationEventHandler animEventHandler)
         {
@@ -22,27 +23,45 @@ namespace IdleProject.Battle.Character
 
         public void SetSkill()
         {
-            animator.SetTrigger(skillAnimHash);
+            animator.SetTrigger(SkillAnimHash);
         }
 
         public void SetAttack()
         {
-            animator.SetTrigger(attackAnimHash);
+            animator.SetTrigger(AttackAnimHash);
         }
 
         public void SetDeath()
         {
-            animator.SetTrigger(deathAnimHash);
+            ResetAnimation();
+            animator.SetTrigger(DeathAnimHash);
         }
 
         public void SetMove()
         {
-            animator.SetTrigger(moveAnimHash);
+            animator.SetTrigger(MoveAnimHash);
         }
 
         public void SetIdle()
         {
-            animator.SetTrigger(idleAnimHash);
+            animator.SetTrigger(IdleAnimHash);
+        }
+
+        public void SetWin()
+        {
+            ResetAnimation();
+            animator.SetTrigger(WinAnimHash);
+        }
+
+        private void ResetAnimation()
+        {
+            foreach (var trigger in animator.parameters)
+            {
+                if (trigger.type == AnimatorControllerParameterType.Trigger)
+                {
+                    animator.ResetTrigger(trigger.name);
+                }
+            }
         }
     }
 }

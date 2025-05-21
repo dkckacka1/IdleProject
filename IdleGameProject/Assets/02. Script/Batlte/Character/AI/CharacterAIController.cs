@@ -1,8 +1,9 @@
+using System.Linq;
 using UnityEngine;
 
 using Engine.AI.BehaviourTree;
+using IdleProject.Battle.AI.State;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
-using System.Linq;
 
 namespace IdleProject.Battle.AI
 {
@@ -14,6 +15,7 @@ namespace IdleProject.Battle.AI
         //Neutral,
     }
 
+
     [RequireComponent(typeof(CharacterController))]
     public class CharacterAIController : MonoBehaviour
     {
@@ -21,6 +23,13 @@ namespace IdleProject.Battle.AI
 
         private CharacterController controller;
         private CharacterController currentTarget;
+
+        private StateContext context;
+        private IdleState IdleState;
+        private ChaseState chaseState;
+        private DeathState deathState;
+        private BattleState battleState;
+
 
         private void Awake()
         {
@@ -31,17 +40,50 @@ namespace IdleProject.Battle.AI
         {
             controller = GetComponent<CharacterController>();
             controller.GetTargetCharacter = GetTargetController;
+
+            IdleState = new IdleState(controller, GetTargetController);
+            chaseState = new ChaseState(controller, GetTargetController);
+            deathState = new DeathState(controller, GetTargetController);
+            battleState = new BattleState(controller, GetTargetController);
+            context = new StateContext(IdleState);
         }
 
-        public void BattleAction()
+        public void OnBatteEvent()
         {
-            currentTarget = GetNealyTarget();
-            controller.Move(currentTarget);
+            context.ChangeState(CheckState());
+            context.ExcuteState();
+        }
 
-            if (Vector3.Distance(currentTarget, controller) < controller.statSystem.GetStatValue(Character.CharacterStatType.AttackRange))
+        public void OnWinEvent()
+        {
+            if(aiType == CharacterAIType.Playerable)
+                controller.Win();
+        }
+
+        public void OnDefeatEvent()
+        {
+
+        }
+
+        private IState CheckState()
+        {
+            if (controller.state.isDead)
+                return deathState;
+
+            currentTarget = GetNealyTarget();
+            if (currentTarget is not null)
             {
-                controller.Attack();
+                if (Vector3.Distance(currentTarget, controller) >= controller.statSystem.GetStatValue(Character.CharacterStatType.AttackRange))
+                {
+                    return chaseState;
+                }
+                else
+                {
+                    return battleState;
+                }
             }
+
+            return IdleState;
         }
 
         private CharacterController GetTargetController()

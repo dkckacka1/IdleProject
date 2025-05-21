@@ -21,7 +21,7 @@ namespace IdleProject.Battle.Character
     }
 
     [System.Serializable]
-    public partial class CharacterController : MonoBehaviour, ITargetedAble
+    public partial class CharacterController : MonoBehaviour
     {
         public StatSystem statSystem;
         public CharacterState state;
@@ -76,7 +76,9 @@ namespace IdleProject.Battle.Character
 
         private void SetCharacterAI()
         {
-            BattleManager.Instance.battleEvent.AddListener(characterAI.BattleAction);
+            BattleManager.Instance.battleEvent.AddListener(characterAI.OnBatteEvent);
+            BattleManager.Instance.battleStateEventBus.PublishEvent(BattleStateType.Win, characterAI.OnWinEvent);
+            BattleManager.Instance.battleStateEventBus.PublishEvent(BattleStateType.Defeat, characterAI.OnDefeatEvent);
         }
 
         private async UniTask SetCharacterUI()
@@ -92,6 +94,16 @@ namespace IdleProject.Battle.Character
         {
         }
         #endregion
+
+        public void Win()
+        {
+            animController.SetWin();
+        }
+
+        public void Idle()
+        {
+            animController.SetIdle();
+        }
 
         public static implicit operator Vector3(CharacterController controller) => controller.transform.position;
     }

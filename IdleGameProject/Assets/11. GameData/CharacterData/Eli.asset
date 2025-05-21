@@ -16,6 +16,6 @@ MonoBehaviour:
     characterName: Eli
   stat:
     healthPoint: 70
+    attackDamage: 30
     movementSpeed: 4.5
-    attackDamage: 15
     attackRange: 3

@@ -1,5 +1,6 @@
 using IdleProject.Battle.Effect;
 using IdleProject.Core.ObjectPool;
+using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
@@ -7,9 +8,12 @@ namespace IdleProject.Battle.Character
 {
     public partial class CharacterController : ITakeDamagedAble
     {
-        public Func<ITakeDamagedAble> GetTargetCharacter;
+        [BoxGroup("ITakeDamage"), SerializeField] private Transform hitEffectPosition;
 
-        public bool CanTakeDamage => !state.isDead; 
+        public Func<ITakeDamagedAble> GetTargetCharacter;
+        public bool CanTakeDamage => !state.isDead;
+
+        public Transform HitEffectPosition => hitEffectPosition;
 
         protected virtual void SetBattleAnimEvent()
         {
@@ -34,10 +38,10 @@ namespace IdleProject.Battle.Character
         {
             if (iTakeDamage.CanTakeDamage)
             {
-                if (GetAttackHitEffect is not null)
+                if (GetAttackHitEffect is not null && iTakeDamage.HitEffectPosition is not null)
                 {
                     var attackHitEffect =GetAttackHitEffect?.Invoke();
-                    attackHitEffect.transform.position = iTakeDamage.GetTransform.position;
+                    attackHitEffect.transform.position = iTakeDamage.HitEffectPosition.position;
                 }
                 iTakeDamage.TakeDamage(statSystem.GetStatValue(CharacterStatType.AttackDamage));
             }

@@ -13,7 +13,6 @@ namespace IdleProject.Battle.Character
         AttackRange,
     }
 
-    [System.Serializable]
     public class StatSystem
     {
         StatData defaultStat;

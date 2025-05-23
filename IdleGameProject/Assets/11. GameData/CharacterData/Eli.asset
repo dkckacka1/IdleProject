@@ -15,9 +15,9 @@ MonoBehaviour:
   addressValue:
     characterName: Eli
     attackProjectileAddress: 
-    attackEffectAddress: 
+    attackHitEffectAddress: 
   stat:
     healthPoint: 70
-    attackDamage: 30
+    attackDamage: 1
     movementSpeed: 4.5
     attackRange: 3

@@ -38,8 +38,8 @@ namespace IdleProject.Battle.Character
 
         public Transform GetTransform => transform;
 
-        public CharacterUIController characterUI;
-        public CharacterAIController characterAI;
+        [HideInInspector] public CharacterUIController characterUI;
+        [HideInInspector] public CharacterAIController characterAI;
 
         private bool isUIInit = false;
         private bool isPoolObject = false;

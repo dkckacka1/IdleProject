@@ -64,6 +64,12 @@ namespace IdleProject.Core
             await ObjectPoolManager.Instance.CreatePool<PoolableObject>(address, GetBattleTransformParent(poolableType));
         }
 
+        public async static UniTask CreatePool(PoolableType poolableType, string name, Transform parent)
+        {
+            var address = $"{JoinWithSlash(PoolablePath, poolableType.ToString(), name)}.prefab";
+            await ObjectPoolManager.Instance.CreatePool<PoolableObject>(address, parent);
+        }
+
         private static string JoinWithSlash(params string[] parts)
         {
             if (parts == null || parts.Length == 0)

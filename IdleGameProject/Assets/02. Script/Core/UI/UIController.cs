@@ -4,8 +4,7 @@ namespace IdleProject.Core.UI
 {
     public abstract class UIController : MonoBehaviour
     {
-
-        protected void Start()
+        protected void Awake()
         {
             UIManager.Instance.AddUIController(this);
         }

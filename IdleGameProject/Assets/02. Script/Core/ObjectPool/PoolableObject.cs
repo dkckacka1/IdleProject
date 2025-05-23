@@ -6,7 +6,7 @@ namespace IdleProject.Core.ObjectPool
     [RequireComponent(typeof(IPoolable))]
     public class PoolableObject : MonoBehaviour
     {
-        public string address;
+        [HideInInspector] public string address;
 
         private List<IPoolable> poolableList;
 

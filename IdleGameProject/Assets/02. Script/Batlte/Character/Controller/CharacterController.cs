@@ -99,7 +99,7 @@ namespace IdleProject.Battle.Character
         {
             await characterUI.SpawnCharacterUI();
             characterUI.SetCharacterUI(statSystem);
-            BattleManager.Instance.battleUIEvent.AddListener(characterUI.BattleAction);
+            BattleManager.Instance.battleUIEvent.AddListener(characterUI.OnBattleUIEvent);
             isUIInit = true;
         }
 

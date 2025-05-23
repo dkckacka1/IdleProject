@@ -12,10 +12,15 @@ namespace IdleProject.Battle.UI
         [BoxGroup("FluidHealthBar"), SerializeField] Vector3 fluidHealthBarOffset;
         private FluidHealthBar fluidHealthBar;
 
+        [BoxGroup("BattleText"), SerializeField] Vector3 battleTextOffset;
+        [BoxGroup("BattleText"), SerializeField] float battleTextRadius = 70f;
+
+
+
         public async UniTask SpawnCharacterUI()
         {
             fluidHealthBar = await ResourcesLoader.InstantiateUI<FluidHealthBar>(SceneType.Battle);
-            fluidHealthBar.transform.SetParent(UIManager.Instance.GetUIController<BattleUIController>().FluidCanvas.transform);
+            fluidHealthBar.transform.SetParent(UIManager.Instance.GetUIController<BattleUIController>().FluidHealthBarParent);
         }
 
         public virtual void SetCharacterUI(StatSystem characterStat)
@@ -26,10 +31,18 @@ namespace IdleProject.Battle.UI
             characterStat.PublishValueChangedEvent(CharacterStatType.HealthPoint, fluidHealthBar.ChangeCurrentHealthPoint);
         }
 
-        public void BattleAction()
+        public void OnBattleUIEvent()
         {
             fluidHealthBar.transform.position = UIManager.GetUIInScreen(Camera.main.WorldToScreenPoint(transform.position) + fluidHealthBarOffset);
             fluidHealthBar.PlayDamageSlider();
+        }
+
+        public void ShowBattleText(string text)
+        {
+            var battleText = UIManager.Instance.GetUIController<BattleUIController>().GetBattleText.Invoke();
+            Vector3 randomPos = Random.insideUnitCircle * battleTextRadius;
+            var textPosition = UIManager.GetUIInScreen(Camera.main.WorldToScreenPoint(transform.position) + battleTextOffset + randomPos);
+            battleText.ShowText(textPosition, text);
         }
     }
 }

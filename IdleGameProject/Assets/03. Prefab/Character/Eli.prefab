@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fluidHealthBarOffset: {x: 0, y: 160, z: 0}
+  battleTextOffset: {x: 0, y: 50, z: 0}
+  battleTextRadius: 30
 --- !u!1 &4319756452256458989
 GameObject:
   m_ObjectHideFlags: 0

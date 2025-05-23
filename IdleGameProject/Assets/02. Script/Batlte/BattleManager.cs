@@ -12,6 +12,8 @@ using IdleProject.Battle.AI;
 using Sirenix.OdinInspector;
 using IdleProject.Battle.Spawn;
 using UnityEngine.Events;
+using IdleProject.Core.UI;
+using IdleProject.Battle.UI;
 
 namespace IdleProject.Battle
 {
@@ -28,8 +30,6 @@ namespace IdleProject.Battle
         Play,
         Pause
     }
-
-
 
     public class BattleManager : SingletonMonoBehaviour<BattleManager>
     {
@@ -53,6 +53,7 @@ namespace IdleProject.Battle
         {
             base.Initialized();
             spawnController = GetComponent<SpawnController>();
+            UIManager.Instance.GetUIController<BattleUIController>().initialized();
         }
 
         private void FixedUpdate()

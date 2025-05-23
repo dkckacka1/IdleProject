@@ -40,15 +40,19 @@ namespace IdleProject.Battle.Character
             {
                 if (GetAttackHitEffect is not null && iTakeDamage.HitEffectPosition is not null)
                 {
-                    var attackHitEffect =GetAttackHitEffect?.Invoke();
+                    var attackHitEffect = GetAttackHitEffect?.Invoke();
                     attackHitEffect.transform.position = iTakeDamage.HitEffectPosition.position;
                 }
-                iTakeDamage.TakeDamage(statSystem.GetStatValue(CharacterStatType.AttackDamage));
+
+                var attackDamage = statSystem.GetStatValue(CharacterStatType.AttackDamage);
+
+                iTakeDamage.TakeDamage(attackDamage);
             }
         }
 
         public virtual void TakeDamage(float takeDamage)
         {
+            characterUI.ShowBattleText(takeDamage.ToString());
             statSystem.SetStatValue(CharacterStatType.HealthPoint, statSystem.GetStatValue(CharacterStatType.HealthPoint) - takeDamage);
 
             if (statSystem.GetStatValue(CharacterStatType.HealthPoint) <= 0)

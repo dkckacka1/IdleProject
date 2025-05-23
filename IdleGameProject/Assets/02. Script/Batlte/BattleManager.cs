@@ -33,16 +33,19 @@ namespace IdleProject.Battle
 
     public class BattleManager : SingletonMonoBehaviour<BattleManager>
     {
-        public SpawnController spawnController;
+        [HideInInspector] public SpawnController spawnController;
 
-        public List<CharacterController> playerCharacterList = new List<CharacterController>();
-        public List<CharacterController> enemyCharacterList = new List<CharacterController>();
+        [HideInInspector] public List<CharacterController> playerCharacterList = new List<CharacterController>();
+        [HideInInspector] public List<CharacterController> enemyCharacterList = new List<CharacterController>();
+
+        [HideInInspector] public UnityEvent battleEvent = new UnityEvent();
+        [HideInInspector] public UnityEvent battleUIEvent = new UnityEvent();
 
         public EnumEventBus<GameStateType> gameStateEventBus = new();
         public EnumEventBus<BattleStateType> battleStateEventBus = new();
 
-        public UnityEvent battleEvent = new UnityEvent();
-        public UnityEvent battleUIEvent = new UnityEvent();
+        public Transform effectParent;
+        public Transform projectileParent;
 
         private List<CharacterController> GetCharacterList(CharacterAIType aiType) => (aiType == CharacterAIType.Playerable) ? playerCharacterList : enemyCharacterList;
 
@@ -51,7 +54,6 @@ namespace IdleProject.Battle
             base.Initialized();
             spawnController = GetComponent<SpawnController>();
         }
-
 
         private void FixedUpdate()
         {
@@ -75,7 +77,6 @@ namespace IdleProject.Battle
 
             characterControllerList.Add(controller);
         }
-
         public IEnumerable<CharacterController> GetCharacterList(CharacterAIType aiType, Func<CharacterController, bool> whereFunc = null)
         {
             IEnumerable<CharacterController> result = GetCharacterList(aiType);
@@ -116,5 +117,26 @@ namespace IdleProject.Battle
         {
             battleStateEventBus.ChangeEvent(BattleStateType.Defeat);
         }
+
+        public void Test()
+        {
+            foreach (var c in playerCharacterList)
+            {
+                Destroy(c.gameObject    );
+            }
+
+            foreach (var c in enemyCharacterList)
+            {
+                Destroy(c.gameObject);
+            }
+
+            playerCharacterList.Clear();
+            enemyCharacterList.Clear();
+            battleEvent.RemoveAllListeners();
+            battleUIEvent.RemoveAllListeners();
+            gameStateEventBus = new();
+            battleStateEventBus = new();
+        }
     }
 }
+

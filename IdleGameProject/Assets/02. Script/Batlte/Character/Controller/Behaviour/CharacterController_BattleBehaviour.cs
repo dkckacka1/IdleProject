@@ -1,3 +1,5 @@
+using IdleProject.Battle.Effect;
+using IdleProject.Core.ObjectPool;
 using System;
 using UnityEngine;
 
@@ -32,6 +34,11 @@ namespace IdleProject.Battle.Character
         {
             if (iTakeDamage.CanTakeDamage)
             {
+                if (GetAttackHitEffect is not null)
+                {
+                    var attackHitEffect =GetAttackHitEffect?.Invoke();
+                    attackHitEffect.transform.position = iTakeDamage.GetTransform.position;
+                }
                 iTakeDamage.TakeDamage(statSystem.GetStatValue(CharacterStatType.AttackDamage));
             }
         }

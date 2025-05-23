@@ -1,6 +1,10 @@
 using Cysharp.Threading.Tasks;
 using IdleProject.Battle.AI;
+using IdleProject.Battle.Effect;
 using IdleProject.Battle.UI;
+using IdleProject.Core;
+using IdleProject.Core.ObjectPool;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -37,6 +41,13 @@ namespace IdleProject.Battle.Character
         public CharacterUIController characterUI;
         public CharacterAIController characterAI;
 
+        private bool isUIInit = false;
+        private bool isPoolObject = false;
+
+        private Func<BattleEffect> GetAttackHitEffect;
+
+        private bool IsInitComplete => isUIInit && isPoolObject;
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
@@ -56,12 +67,15 @@ namespace IdleProject.Battle.Character
         {
             SetStatModifedEvent();
             SetAnimationEvent();
+
+            SetCharacterData(data.stat);
+            SetCharacterAI();
+            SetCharacterUI().Forget();
+            CreatePoolableObject(data.addressValue).Forget();
+
             state.Initialize();
 
-            SetCharacterData(data);
-
-            SetCharacterAI();
-            await SetCharacterUI();
+            await UniTask.WaitUntil(() => IsInitComplete);
         }
 
         private void SetAnimationEvent()
@@ -69,9 +83,9 @@ namespace IdleProject.Battle.Character
             SetBattleAnimEvent();
         }
 
-        protected virtual void SetCharacterData(CharacterData data)
+        protected virtual void SetCharacterData(StatData stat)
         {
-            statSystem.SetStatData(data.stat);
+            statSystem.SetStatData(stat);
         }
 
         private void SetCharacterAI()
@@ -81,11 +95,23 @@ namespace IdleProject.Battle.Character
             BattleManager.Instance.battleStateEventBus.PublishEvent(BattleStateType.Defeat, characterAI.OnDefeatEvent);
         }
 
-        private async UniTask SetCharacterUI()
+        private async UniTaskVoid SetCharacterUI()
         {
             await characterUI.SpawnCharacterUI();
             characterUI.SetCharacterUI(statSystem);
             BattleManager.Instance.battleUIEvent.AddListener(characterUI.BattleAction);
+            isUIInit = true;
+        }
+
+        private async UniTaskVoid CreatePoolableObject(CharacterAddressValue addressValues)
+        {
+            if (string.IsNullOrEmpty(addressValues.attackHitEffectAddress) is false)
+            {
+                await  ResourcesLoader.CreatePool(PoolableType.Effect, addressValues.attackHitEffectAddress);
+
+                GetAttackHitEffect = () => ResourcesLoader.GetPoolableObject<BattleEffect>(PoolableType.Effect, addressValues.attackHitEffectAddress);
+            }
+            isPoolObject = true;
         }
         #endregion
 

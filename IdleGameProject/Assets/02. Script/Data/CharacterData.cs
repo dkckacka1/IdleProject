@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -10,18 +11,21 @@ public struct StatData
     public float movementSpeed;
     [Range(3f, 10f)]
     public float attackRange;
+
 }
 
 [Serializable]
-public struct CharacterPrefabValue
+public struct CharacterAddressValue
 {
     public string characterName;
+    public string attackProjectileAddress;
+    public string attackHitEffectAddress;
 }
 
 [CreateAssetMenu(fileName = "CharacterData", menuName = "Scriptable Objects/CharacterData")]
 public class CharacterData : ScriptableObject
 {
-    public CharacterPrefabValue prefabValue;
+    public CharacterAddressValue addressValue;
     public StatData stat;
 }
 

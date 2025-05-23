@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee708b51cec1264fbb31a84dce962ef, type: 3}
   m_Name: Eli
   m_EditorClassIdentifier: 
-  prefabValue:
+  addressValue:
     characterName: Eli
+    attackProjectileAddress: 
+    attackEffectAddress: 
   stat:
     healthPoint: 70
     attackDamage: 30

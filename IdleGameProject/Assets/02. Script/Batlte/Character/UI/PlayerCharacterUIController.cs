@@ -8,15 +8,24 @@ namespace IdleProject.Battle.UI
     {
         private PlayerCharacterBanner banner;
 
-        public override void Initialized(CharacterData data)
+        public override void Initialized(CharacterData data, StatSystem stat)
         {
-            base.Initialized(data);
+            base.Initialized(data, stat);
+
+            SetPlayerCharacterBanner(data, stat);
         }
 
-        private async UniTaskVoid SetPlayerCharacterBanner(StatSystem stat)
+        public override void OnBattleUIEvent()
         {
-            banner = null;
-            // TODO
+            base.OnBattleUIEvent();
+
+            banner.CharacterHealthBar.PlayDamageSlider();
+        }
+
+        private void SetPlayerCharacterBanner(CharacterData data, StatSystem stat)
+        {
+            banner = GetBattleUI.GetPlayerCharacterBanner();
+            banner.Initialized(data, stat);
         }
     }
 }

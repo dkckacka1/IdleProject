@@ -4,6 +4,8 @@ using Sirenix.OdinInspector;
 using IdleProject.Core.ObjectPool;
 using IdleProject.Core;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace IdleProject.Battle.UI
 {
@@ -14,6 +16,8 @@ namespace IdleProject.Battle.UI
         [BoxGroup("FluidGroup"), SerializeField] private Canvas fluidCanvas;
         [BoxGroup("FluidGroup"), SerializeField] private Transform fluidHealthBarParent;
         [BoxGroup("FluidGroup"), SerializeField] private Transform battleTextParent;
+
+        [BoxGroup("PlayerBanner"), SerializeField] private List<PlayerCharacterBanner> playerCharacterBannerList; 
 
 
         public Canvas FluidCanvas { get => fluidCanvas; }
@@ -34,6 +38,13 @@ namespace IdleProject.Battle.UI
             GetBattleText = () => ResourcesLoader.GetPoolableObject<BattleText>(PoolableType.UI, "BattleText");
 
             isInitialize = true;
+        }
+
+        public PlayerCharacterBanner GetPlayerCharacterBanner()
+        {
+            var targetBanner = playerCharacterBannerList.Where(banner => banner.gameObject.activeInHierarchy is false).First(); ;
+            targetBanner.gameObject.SetActive(true);
+            return targetBanner;
         }
     }
 }

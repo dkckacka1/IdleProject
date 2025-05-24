@@ -11,14 +11,12 @@ namespace IdleProject.Battle.UI
         private HealthBar fluidHealthBar;
         protected CharacterUIOffsetValue uiOffset;
 
-        protected StatSystem characterStat => GetComponent<Character.CharacterController>().statSystem;
-
         protected static BattleUIController GetBattleUI => UIManager.Instance.GetUIController<BattleUIController>();
 
-        public virtual void Initialized(CharacterData data)
+        public virtual void Initialized(CharacterData data, StatSystem stat)
         {
             uiOffset = data.uiOffset;
-            SetFluidHealthBar(characterStat).Forget();
+            SetFluidHealthBar(stat).Forget();
         }
 
         public virtual void OnBattleUIEvent()

@@ -93,7 +93,7 @@ namespace IdleProject.Battle.Character
                     break;
             }
 
-            uiController.Initialized(data);
+            uiController.Initialized(data, statSystem);
             BattleManager.Instance.battleUIEvent.AddListener(uiController.OnBattleUIEvent);
 
             GetCharacterUI = () => uiController;

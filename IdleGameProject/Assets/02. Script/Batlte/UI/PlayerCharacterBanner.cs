@@ -1,4 +1,4 @@
-using System;
+using IdleProject.Battle.Character;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,9 +11,14 @@ namespace IdleProject.Battle.UI
         [SerializeField] private TextMeshProUGUI characterNameText;
         [SerializeField] private HealthBar characterHealthBar;
 
-        public void Initialized(CharacterData data)
-        {
+        public HealthBar CharacterHealthBar => characterHealthBar;
 
+        public void Initialized(CharacterData data, StatSystem characterStat)
+        {
+            characterIconImage.sprite = null;
+            characterNameText.text = data.addressValue.characterName;
+            characterHealthBar.Initialized(characterStat.GetStatValue(CharacterStatType.HealthPoint, true));
+            characterStat.PublishValueChangedEvent(CharacterStatType.HealthPoint, characterHealthBar.ChangeCurrentHealthPoint);
         }
     }
 }

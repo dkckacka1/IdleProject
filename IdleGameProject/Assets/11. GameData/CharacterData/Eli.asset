@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   addressValue:
     characterName: Eli
-    attackProjectileAddress: 
-    attackHitEffectAddress: 
+    attackProjectileAddress: Eli_Attack_Projectile
+    attackHitEffectAddress: BloodExplosionRound
   stat:
     healthPoint: 70
     attackDamage: 1
     movementSpeed: 4.5
-    attackRange: 3
+    attackRange: 10

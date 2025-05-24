@@ -15,9 +15,9 @@ MonoBehaviour:
   addressValue:
     characterName: Hiro
     attackProjectileAddress: 
-    attackHitEffectAddress: BloodExplosionRound
+    attackHitEffectAddress: SharpExplosionFire
   stat:
     healthPoint: 100
     attackDamage: 1
     movementSpeed: 3.5
-    attackRange: 3
+    attackRange: 2

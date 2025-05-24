@@ -10,10 +10,12 @@ namespace IdleProject.Battle.Character
     {
         [BoxGroup("ITakeDamage"), SerializeField] private Transform hitEffectPosition;
 
+        [SerializeField] private Transform projectileCreatePosition;
+
         public Func<ITakeDamagedAble> GetTargetCharacter;
         public bool CanTakeDamage => !state.isDead;
 
-        public Transform HitEffectPosition => hitEffectPosition;
+        public Transform HitEffectTransform => hitEffectPosition;
 
         protected virtual void SetBattleAnimEvent()
         {
@@ -22,15 +24,28 @@ namespace IdleProject.Battle.Character
 
         public virtual void Attack()
         {
+            transform.LookAt(GetTargetCharacter?.Invoke().GetTransform);
             animController.SetAttack();
         }
+
 
         public void HitTarget()
         {
             var targetCharacter = GetTargetCharacter?.Invoke();
-            if (targetCharacter is not null)
+
+            if (GetAttackProjectile is not null)
             {
-                Hit(targetCharacter);
+                var projectile = GetAttackProjectile.Invoke();
+                projectile.transform.position = projectileCreatePosition.position;
+                projectile.target = targetCharacter;
+                projectile.hitEvent.AddListener(Hit);
+            }
+            else
+            {
+                if (targetCharacter is not null)
+                {
+                    Hit(targetCharacter);
+                }
             }
         }
 
@@ -38,10 +53,10 @@ namespace IdleProject.Battle.Character
         {
             if (iTakeDamage.CanTakeDamage)
             {
-                if (GetAttackHitEffect is not null && iTakeDamage.HitEffectPosition is not null)
+                if (GetAttackHitEffect is not null && iTakeDamage.HitEffectTransform is not null)
                 {
                     var attackHitEffect = GetAttackHitEffect?.Invoke();
-                    attackHitEffect.transform.position = iTakeDamage.HitEffectPosition.position;
+                    attackHitEffect.transform.position = iTakeDamage.HitEffectTransform.position;
                 }
 
                 var attackDamage = statSystem.GetStatValue(CharacterStatType.AttackDamage);

@@ -9,7 +9,7 @@ namespace IdleProject.Battle.Character
 
     public interface ITakeDamagedAble : ITargetedAble
     {
-        public Transform HitEffectPosition { get; }
+        public Transform HitEffectTransform { get; }
         public bool CanTakeDamage { get; }
         public void TakeDamage(float attackDamage);
     }

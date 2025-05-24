@@ -9,7 +9,7 @@ public struct StatData
     public float attackDamage;
     [Range(1f, 10f)]
     public float movementSpeed;
-    [Range(3f, 10f)]
+    [Range(2f, 10f)]
     public float attackRange;
 
 }

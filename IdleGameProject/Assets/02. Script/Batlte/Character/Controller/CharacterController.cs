@@ -4,6 +4,7 @@ using IdleProject.Battle.Effect;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
+using IdleProject.Battle.Projectile;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
@@ -45,6 +46,7 @@ namespace IdleProject.Battle.Character
         private bool isPoolObject = false;
 
         private Func<BattleEffect> GetAttackHitEffect;
+        private Func<BattleProjectile> GetAttackProjectile;
 
         private bool IsInitComplete => isUIInit && isPoolObject;
 
@@ -111,6 +113,13 @@ namespace IdleProject.Battle.Character
 
                 GetAttackHitEffect = () => ResourcesLoader.GetPoolableObject<BattleEffect>(PoolableType.Effect, addressValues.attackHitEffectAddress);
             }
+
+            if (string.IsNullOrEmpty(addressValues.attackProjectileAddress) is false)
+            {
+                await ResourcesLoader.CreatePool(PoolableType.Projectile, addressValues.attackProjectileAddress);
+
+                GetAttackProjectile = () => ResourcesLoader.GetPoolableObject<BattleProjectile>(PoolableType.Projectile, addressValues.attackProjectileAddress);
+            }
             isPoolObject = true;
         }
         #endregion
@@ -132,5 +141,7 @@ namespace IdleProject.Battle.Character
         }
 
         public static implicit operator Vector3(CharacterController controller) => controller.transform.position;
+
+        public static implicit operator Transform(CharacterController controller) => controller.transform;
     }
 }

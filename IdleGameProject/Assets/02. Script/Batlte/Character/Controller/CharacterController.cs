@@ -39,16 +39,11 @@ namespace IdleProject.Battle.Character
 
         public Transform GetTransform => transform;
 
-        [HideInInspector] public CharacterUIController characterUI;
-        [HideInInspector] public CharacterAIController characterAI;
+        public Func<CharacterUIController> GetCharacterUI;
+        public Func<CharacterAIController> GetCharacterAI;
 
-        private bool isUIInit = false;
-        private bool isPoolObject = false;
-
-        private Func<BattleEffect> GetAttackHitEffect;
-        private Func<BattleProjectile> GetAttackProjectile;
-
-        private bool IsInitComplete => isUIInit && isPoolObject;
+        public Func<BattleEffect> GetAttackHitEffect;
+        public Func<BattleProjectile> GetAttackProjectile;
 
         private void Awake()
         {
@@ -59,68 +54,75 @@ namespace IdleProject.Battle.Character
             statSystem = new StatSystem();
 
             animController = new AnimationController(animator, GetComponentInChildren<AnimationEventHandler>());
-
-            characterUI = GetComponent<CharacterUIController>();
-            characterAI = GetComponent<CharacterAIController>();
         }
 
         #region 초기화 부문
-        public async virtual UniTask Initialized(CharacterData data)
+        public virtual void Initialized(CharacterData data, CharacterAIType aiType)
         {
             SetStatModifedEvent();
             SetAnimationEvent();
 
             SetCharacterData(data.stat);
-            SetCharacterAI();
-            SetCharacterUI().Forget();
-            CreatePoolableObject(data.addressValue).Forget();
+            InitUIController(data, aiType);
+            InitAIController(aiType);
+            InitPoolableObject(data);
 
             state.Initialize();
-
-            await UniTask.WaitUntil(() => IsInitComplete);
         }
 
         private void SetAnimationEvent()
         {
             SetBattleAnimEvent();
         }
-
         protected virtual void SetCharacterData(StatData stat)
         {
             statSystem.SetStatData(stat);
         }
 
-        private void SetCharacterAI()
+        private void InitUIController(CharacterData data, CharacterAIType aiType)
         {
-            BattleManager.Instance.battleEvent.AddListener(characterAI.OnBatteEvent);
-            BattleManager.Instance.battleStateEventBus.PublishEvent(BattleStateType.Win, characterAI.OnWinEvent);
-            BattleManager.Instance.battleStateEventBus.PublishEvent(BattleStateType.Defeat, characterAI.OnDefeatEvent);
-        }
+            CharacterUIController uiController = null;
 
-        private async UniTaskVoid SetCharacterUI()
-        {
-            await characterUI.SpawnCharacterUI();
-            characterUI.SetCharacterUI(statSystem);
-            BattleManager.Instance.battleUIEvent.AddListener(characterUI.OnBattleUIEvent);
-            isUIInit = true;
-        }
-
-        private async UniTaskVoid CreatePoolableObject(CharacterAddressValue addressValues)
-        {
-            if (string.IsNullOrEmpty(addressValues.attackHitEffectAddress) is false)
+            switch (aiType)
             {
-                await  ResourcesLoader.CreatePool(PoolableType.Effect, addressValues.attackHitEffectAddress);
-
-                GetAttackHitEffect = () => ResourcesLoader.GetPoolableObject<BattleEffect>(PoolableType.Effect, addressValues.attackHitEffectAddress);
+                case CharacterAIType.Playerable:
+                    uiController = gameObject.AddComponent<PlayerCharacterUIController>();
+                    break;
+                case CharacterAIType.Enemy:
+                    uiController = gameObject.AddComponent<CharacterUIController>();
+                    break;
             }
 
-            if (string.IsNullOrEmpty(addressValues.attackProjectileAddress) is false)
-            {
-                await ResourcesLoader.CreatePool(PoolableType.Projectile, addressValues.attackProjectileAddress);
+            uiController.Initialized(data);
+            BattleManager.Instance.battleUIEvent.AddListener(uiController.OnBattleUIEvent);
 
-                GetAttackProjectile = () => ResourcesLoader.GetPoolableObject<BattleProjectile>(PoolableType.Projectile, addressValues.attackProjectileAddress);
-            }
-            isPoolObject = true;
+            GetCharacterUI = () => uiController;
+        }
+
+        private void InitAIController(CharacterAIType aiType)
+        {
+            var aiController = gameObject.AddComponent<CharacterAIController>();
+            aiController.aiType = aiType;
+
+            BattleManager.Instance.battleEvent.AddListener(aiController.OnBatteEvent);
+            BattleManager.Instance.battleStateEventBus.PublishEvent(BattleStateType.Win, aiController.OnWinEvent);
+            BattleManager.Instance.battleStateEventBus.PublishEvent(BattleStateType.Defeat, aiController.OnDefeatEvent);
+
+            GetCharacterAI = () => aiController;
+        }
+
+        private async UniTaskVoid InitPoolableObject(CharacterData data)
+        {
+            GetAttackHitEffect = await CreatePool<BattleEffect>(PoolableType.Effect, data.addressValue.attackHitEffectAddress);
+            GetAttackProjectile = await CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.attackProjectileAddress);
+        }
+
+        private async UniTask<Func<T>> CreatePool<T>(PoolableType poolableType, string address) where T : IPoolable
+        {
+            if (string.IsNullOrEmpty(address) is true) return null;
+
+            await ResourcesLoader.CreatePool(poolableType, address);
+            return () => ResourcesLoader.GetPoolableObject<T>(poolableType, address);
         }
         #endregion
 

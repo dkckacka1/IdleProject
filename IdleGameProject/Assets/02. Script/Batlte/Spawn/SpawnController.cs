@@ -1,5 +1,8 @@
 using Cysharp.Threading.Tasks;
 using IdleProject.Battle.AI;
+using IdleProject.Battle.Effect;
+using IdleProject.Battle.Projectile;
+using IdleProject.Battle.UI;
 using IdleProject.Core;
 using UnityEngine;
 
@@ -30,16 +33,16 @@ namespace IdleProject.Battle.Spawn
 
         public async UniTask<CharacterController> SpawnCharacter(CharacterAIType aiType, SpawnPositionType spawnPositionType, string characterName)
         {
-            var character = await ResourcesLoader.InstantiateCharacter(characterName);
-            SetCharacterPosition(character, aiType, spawnPositionType);
-
+            var controller = await ResourcesLoader.InstantiateCharacter(characterName);
             var data = await ResourcesLoader.LoadCharacterData(characterName);
-            await character.Initialized(data);
-            character.characterAI.aiType = aiType;
+            controller.Initialized(data, aiType);
 
-            BattleManager.Instance.AddCharacterController(character, aiType);
 
-            return character;
+            BattleManager.Instance.AddCharacterController(controller);
+
+            SetCharacterPosition(controller, aiType, spawnPositionType);
+
+            return controller;
         }
 
         private void SetCharacterPosition(CharacterController character, CharacterAIType aiType, SpawnPositionType spawnPositionType)
@@ -51,5 +54,7 @@ namespace IdleProject.Battle.Spawn
             character.transform.position = spawnPosition;
             character.transform.Rotate(spawnData.spawn.transform.rotation.eulerAngles);
         }
+
+
     }
 }

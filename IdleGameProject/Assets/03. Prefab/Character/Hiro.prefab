@@ -44,8 +44,6 @@ GameObject:
   - component: {fileID: 5775443281729569426}
   - component: {fileID: 5360023868313072483}
   - component: {fileID: 4070869422072588749}
-  - component: {fileID: 1586863265073297392}
-  - component: {fileID: -1491789609368049657}
   m_Layer: 0
   m_Name: Hiro
   m_TagString: Untagged
@@ -155,36 +153,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitEffectPosition: {fileID: 3429333532301889173}
+  projectileCreatePosition: {fileID: 0}
   characterUI: {fileID: 0}
   characterAI: {fileID: 0}
---- !u!114 &1586863265073297392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2820153934415670583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4323e69816a0c7a4f850c6e07adfc2e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aiType: 0
---- !u!114 &-1491789609368049657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2820153934415670583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cfef36970002ff42bed64d0c8a92a97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fluidHealthBarOffset: {x: 0, y: 160, z: 0}
-  battleTextOffset: {x: 0, y: 50, z: 0}
-  battleTextRadius: 30
 --- !u!1001 &1984738365375623154
 PrefabInstance:
   m_ObjectHideFlags: 0

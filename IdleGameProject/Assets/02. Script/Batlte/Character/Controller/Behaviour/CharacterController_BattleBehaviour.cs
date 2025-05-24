@@ -67,18 +67,18 @@ namespace IdleProject.Battle.Character
 
         public virtual void TakeDamage(float takeDamage)
         {
-            characterUI.ShowBattleText(takeDamage.ToString());
+            GetCharacterUI?.Invoke().ShowBattleText(takeDamage.ToString());
             statSystem.SetStatValue(CharacterStatType.HealthPoint, statSystem.GetStatValue(CharacterStatType.HealthPoint) - takeDamage);
 
             if (statSystem.GetStatValue(CharacterStatType.HealthPoint) <= 0)
             {
                 Death();
-                BattleManager.Instance.DeathCharacter(this, characterAI.aiType);
             }
         }
 
         private void Death()
         {
+            BattleManager.Instance.DeathCharacter(this);
             state.isDead = true;
             animController.SetDeath();
         }

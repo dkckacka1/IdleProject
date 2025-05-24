@@ -38,9 +38,9 @@ namespace IdleProject.Core
             return await AddressableManager.Instance.InstantiateObject<CharacterController>(address);
         }
 
-        public async static UniTask<T> InstantiateUI<T>(SceneType sceneType) where T : UIBase
+        public async static UniTask<T> InstantiateUI<T>(SceneType sceneType, string name) where T : UIBase
         {
-            string address = $"{JoinWithSlash(PrefabPath, PrefabType.UI.ToString(), sceneType.ToString(), typeof(T).Name)}.prefab";
+            string address = $"{JoinWithSlash(PrefabPath, PrefabType.UI.ToString(), sceneType.ToString(), name)}.prefab";
             var uiObj = await AddressableManager.Instance.InstantiateObject<UIBase>(address);
             return uiObj.GetComponent<T>();
         }

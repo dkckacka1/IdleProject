@@ -66,18 +66,19 @@ namespace IdleProject.Battle
 
         private void LateUpdate()
         {
-            if (gameStateEventBus.CurrentType is GameStateType.Play)
+            if (gameStateEventBus.CurrentType is GameStateType.Play && battleStateEventBus.CurrentType is BattleStateType.Battle)
             {
                 battleUIEvent?.Invoke();
             }
         }
 
-        public void AddCharacterController(CharacterController controller, CharacterAIType aiType)
+        public void AddCharacterController(CharacterController controller)
         {
-            var characterControllerList = GetCharacterList(aiType);
+            var characterControllerList = GetCharacterList(controller.GetCharacterAI.Invoke().aiType);
 
             characterControllerList.Add(controller);
         }
+
         public IEnumerable<CharacterController> GetCharacterList(CharacterAIType aiType, Func<CharacterController, bool> whereFunc = null)
         {
             IEnumerable<CharacterController> result = GetCharacterList(aiType);
@@ -90,14 +91,16 @@ namespace IdleProject.Battle
             return result;
         }
 
-        public void DeathCharacter(CharacterController characterController, CharacterAIType aiType)
+        public void DeathCharacter(CharacterController characterController)
         {
+            CharacterAIType aiType = characterController.GetCharacterAI.Invoke().aiType;
+
             var characterList = GetCharacterList(aiType);
             characterList.Remove(characterController);
 
             if (characterList.Count <= 0)
             {
-                if(aiType == CharacterAIType.Playerable)
+                if (aiType == CharacterAIType.Playerable)
                 {
                     Defeat();
                 }
@@ -117,26 +120,6 @@ namespace IdleProject.Battle
         private void Defeat()
         {
             battleStateEventBus.ChangeEvent(BattleStateType.Defeat);
-        }
-
-        public void Test()
-        {
-            foreach (var c in playerCharacterList)
-            {
-                Destroy(c.gameObject    );
-            }
-
-            foreach (var c in enemyCharacterList)
-            {
-                Destroy(c.gameObject);
-            }
-
-            playerCharacterList.Clear();
-            enemyCharacterList.Clear();
-            battleEvent.RemoveAllListeners();
-            battleUIEvent.RemoveAllListeners();
-            gameStateEventBus = new();
-            battleStateEventBus = new();
         }
     }
 }

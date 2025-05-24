@@ -414,7 +414,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4351505811975392690}
-  - component: {fileID: 735053182628915621}
+  - component: {fileID: 5154315781893242482}
   m_Layer: 5
   m_Name: FluidHealthBar
   m_TagString: Untagged
@@ -445,7 +445,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 130, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &735053182628915621
+--- !u!114 &5154315781893242482
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -454,11 +454,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5694681876934830218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7440a26127ea6c5469ddd266d99c4627, type: 3}
+  m_Script: {fileID: 11500000, guid: f8cc3547a27f1de4f91728de166ca40f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthFillSlider: {fileID: 3032615451228434726}
   damageFillSlider: {fileID: 2709095148675422320}
+  damagePlayDuration: 0.5
 --- !u!1 &7184575338171601840
 GameObject:
   m_ObjectHideFlags: 0

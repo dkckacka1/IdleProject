@@ -21,3 +21,7 @@ MonoBehaviour:
     attackDamage: 1
     movementSpeed: 4.5
     attackRange: 10
+  uiOffset:
+    fluidHealthBarOffset: {x: 0, y: 160, z: 0}
+    battleTextOffset: {x: 0, y: 50, z: 0}
+    battleTextRadius: 30

@@ -9744,6 +9744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   address: 
+  defaultPoolCount: 5
 --- !u!198 &198158662045118438
 ParticleSystem:
   m_ObjectHideFlags: 0

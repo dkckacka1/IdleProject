@@ -59,9 +59,10 @@ namespace IdleProject.Core.ObjectPool
             if (poolableDic.ContainsKey(address)) return;
 
             poolableDic.Add(address, new());
-
             var pool = poolableDic[address];
-            for (int i = 0; i < DefaultPoolCount; ++i)
+            var poolableObj = await AddressableManager.Instance.LoadAssetAsync<PoolableObject>(address);
+
+            for (int i = 0; i < poolableObj.defaultPoolCount; ++i)
             {
                 await CreateObj<T>(address, pool, parent);
             }

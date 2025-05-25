@@ -8,6 +8,8 @@ namespace IdleProject.Core.ObjectPool
     {
         [HideInInspector] public string address;
 
+        public uint defaultPoolCount = 10;
+
         private List<IPoolable> poolableList;
 
         private void Awake()

@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   address: 
+  defaultPoolCount: 30
 --- !u!114 &1751177755282826239
 MonoBehaviour:
   m_ObjectHideFlags: 0

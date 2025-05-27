@@ -31,7 +31,7 @@ namespace IdleProject.Battle.Spawn
         [SerializeField] private SpawnDatas player;
         [SerializeField] private SpawnDatas enemy;
 
-        public async UniTask<CharacterController> SpawnCharacter(CharacterAIType aiType, SpawnPositionType spawnPositionType, string characterName)
+        public async UniTask SpawnCharacter(CharacterAIType aiType, SpawnPositionType spawnPositionType, string characterName)
         {
             var controller = await ResourcesLoader.InstantiateCharacter(characterName);
             var data = await ResourcesLoader.LoadCharacterData(characterName);
@@ -41,8 +41,6 @@ namespace IdleProject.Battle.Spawn
             BattleManager.Instance.AddCharacterController(controller);
 
             SetCharacterPosition(controller, aiType, spawnPositionType);
-
-            return controller;
         }
 
         private void SetCharacterPosition(CharacterController character, CharacterAIType aiType, SpawnPositionType spawnPositionType)

@@ -8,6 +8,8 @@ using IdleProject.Battle.Projectile;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using IdleProject.Battle.Character.Skill;
+using Engine.Core;
 
 namespace IdleProject.Battle.Character
 {
@@ -37,19 +39,26 @@ namespace IdleProject.Battle.Character
 
         protected AnimationController animController;
 
+        private CharacterOffset offset;
+
         public Transform GetTransform => transform;
 
-        public Func<CharacterUIController> GetCharacterUI;
-        public Func<CharacterAIController> GetCharacterAI;
+        public CharacterUIController characterUI;
+        public CharacterAIController characterAI;
 
         public Func<BattleEffect> GetAttackHitEffect;
+        public Func<BattleEffect> GetSkillHitEffect;
         public Func<BattleProjectile> GetAttackProjectile;
+
+        private CharacterSkill skill;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponentInChildren<Animator>();
+
+            offset = GetComponent<CharacterOffset>();
 
             statSystem = new StatSystem();
 
@@ -59,15 +68,20 @@ namespace IdleProject.Battle.Character
         #region 초기화 부문
         public virtual void Initialized(CharacterData data, CharacterAIType aiType)
         {
+            string skillName = $"{typeof(CharacterSkill).FullName}{data.addressValue.characterName}, {typeof(CharacterSkill).Assembly}";
+            skill = ReflectionController.CreateInstance<CharacterSkill>(skillName);
+
             SetStatModifedEvent();
             SetAnimationEvent();
 
             SetCharacterData(data.stat);
+
             InitUIController(data, aiType);
             InitAIController(aiType);
             InitPoolableObject(data);
 
             state.Initialize();
+            statSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
         }
 
         private void SetAnimationEvent()
@@ -79,7 +93,7 @@ namespace IdleProject.Battle.Character
             statSystem.SetStatData(stat);
         }
 
-        private void InitUIController(CharacterData data, CharacterAIType aiType)
+        private async UniTask InitUIController(CharacterData data, CharacterAIType aiType)
         {
             CharacterUIController uiController = null;
 
@@ -96,10 +110,10 @@ namespace IdleProject.Battle.Character
             uiController.Initialized(data, statSystem);
             BattleManager.Instance.battleUIEvent.AddListener(uiController.OnBattleUIEvent);
 
-            GetCharacterUI = () => uiController;
+            characterUI = uiController;
         }
 
-        private void InitAIController(CharacterAIType aiType)
+        private async UniTask InitAIController(CharacterAIType aiType)
         {
             var aiController = gameObject.AddComponent<CharacterAIController>();
             aiController.aiType = aiType;
@@ -108,12 +122,13 @@ namespace IdleProject.Battle.Character
             BattleManager.Instance.battleStateEventBus.PublishEvent(BattleStateType.Win, aiController.OnWinEvent);
             BattleManager.Instance.battleStateEventBus.PublishEvent(BattleStateType.Defeat, aiController.OnDefeatEvent);
 
-            GetCharacterAI = () => aiController;
+            characterAI = aiController;
         }
 
-        private async UniTaskVoid InitPoolableObject(CharacterData data)
+        private async UniTask InitPoolableObject(CharacterData data)
         {
             GetAttackHitEffect = await CreatePool<BattleEffect>(PoolableType.Effect, data.addressValue.attackHitEffectAddress);
+            GetSkillHitEffect = await CreatePool<BattleEffect>(PoolableType.Effect, data.addressValue.skillHitEffectAddress);
             GetAttackProjectile = await CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.attackProjectileAddress);
         }
 
@@ -126,11 +141,7 @@ namespace IdleProject.Battle.Character
         }
         #endregion
 
-        #region 스킬 관련
-        public virtual void Skill()
-        {
-        }
-        #endregion
+
 
         public void Win()
         {
@@ -145,5 +156,6 @@ namespace IdleProject.Battle.Character
         public static implicit operator Vector3(CharacterController controller) => controller.transform.position;
 
         public static implicit operator Transform(CharacterController controller) => controller.transform;
+
     }
 }

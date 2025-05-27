@@ -74,7 +74,7 @@ namespace IdleProject.Battle
 
         public void AddCharacterController(CharacterController controller)
         {
-            var characterControllerList = GetCharacterList(controller.GetCharacterAI.Invoke().aiType);
+            var characterControllerList = GetCharacterList(controller.characterAI.aiType);
 
             characterControllerList.Add(controller);
         }
@@ -93,7 +93,7 @@ namespace IdleProject.Battle
 
         public void DeathCharacter(CharacterController characterController)
         {
-            CharacterAIType aiType = characterController.GetCharacterAI.Invoke().aiType;
+            CharacterAIType aiType = characterController.characterAI.aiType;
 
             var characterList = GetCharacterList(aiType);
             characterList.Remove(characterController);

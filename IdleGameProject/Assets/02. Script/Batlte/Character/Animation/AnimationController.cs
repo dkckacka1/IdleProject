@@ -28,6 +28,7 @@ namespace IdleProject.Battle.Character
 
         public void SetAttack()
         {
+            ResetAnimation();
             animator.SetTrigger(AttackAnimHash);
         }
 

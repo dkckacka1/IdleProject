@@ -21,6 +21,7 @@ namespace IdleProject.Battle.Effect
 
         public void OnReleaseAction()
         {
+            this.transform.position = Vector3.zero;
         }
     }
 }

@@ -8,9 +8,11 @@ namespace IdleProject.Battle.Character
     public enum CharacterStatType
     {
         HealthPoint,
+        ManaPoint,
         MovementSpeed,
         AttackDamage,
         AttackRange,
+        AttackCooltime,
     }
 
     public class StatSystem
@@ -20,6 +22,7 @@ namespace IdleProject.Battle.Character
         private Dictionary<CharacterStatType, BattleCharacterStat> characterStatDic;
 
         public bool isLive => GetStatValue(CharacterStatType.HealthPoint) > 0;
+        public bool canUseSkill => GetStatValue(CharacterStatType.ManaPoint) >= GetStatValue(CharacterStatType.ManaPoint, true);
 
         public StatSystem()
         {
@@ -39,6 +42,8 @@ namespace IdleProject.Battle.Character
             characterStatDic[CharacterStatType.MovementSpeed].SetStat(statData.movementSpeed);
             characterStatDic[CharacterStatType.AttackDamage].SetStat(statData.attackDamage);
             characterStatDic[CharacterStatType.AttackRange].SetStat(statData.attackRange);
+            characterStatDic[CharacterStatType.AttackCooltime].SetStat(statData.attackCooltime);
+            characterStatDic[CharacterStatType.ManaPoint].SetStat(statData.manaPoint);
         }
 
         public float GetStatValue(CharacterStatType statType, bool isDefault = false)

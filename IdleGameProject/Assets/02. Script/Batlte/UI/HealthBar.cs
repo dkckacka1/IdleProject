@@ -23,7 +23,7 @@ namespace IdleProject.Battle.UI
             damageAmount = 0f;
         }
 
-        public void ChangeCurrentHealthPoint(float currentHealthPoint)
+        public void OnChangeHealthPoint(float currentHealthPoint)
         {
             healthFillSlider.value = currentHealthPoint;
 

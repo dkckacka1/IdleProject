@@ -16,12 +16,11 @@ MonoBehaviour:
     characterName: Hiro
     attackProjectileAddress: 
     attackHitEffectAddress: SharpExplosionFire
+    skillHitEffectAddress: SwordSlashMiniWhite
   stat:
     healthPoint: 100
+    manaPoint: 10
     attackDamage: 1
     movementSpeed: 3.5
     attackRange: 2
-  uiOffset:
-    fluidHealthBarOffset: {x: 0, y: 160, z: 0}
-    battleTextOffset: {x: 0, y: 50, z: 0}
-    battleTextRadius: 30
+    attackCooltime: 0.1

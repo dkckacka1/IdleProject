@@ -34,6 +34,7 @@ namespace IdleProject.Battle.UI
 
         public void OnReleaseAction()
         {
+            battleText.transform.position = Vector3.zero;
         }
 
         public async void ShowText(Vector3 textPosition, string text)

@@ -30,7 +30,6 @@ namespace IdleProject.Battle.AI
         private DeathState deathState;
         private BattleState battleState;
 
-
         private void Awake()
         {
             Initialized();

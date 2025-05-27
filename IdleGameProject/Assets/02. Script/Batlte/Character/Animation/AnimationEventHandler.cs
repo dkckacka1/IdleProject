@@ -8,8 +8,9 @@ namespace IdleProject.Battle.Character
     {
         public event AnimationEventHandle AttackStartEvent;
         public event AnimationEventHandle AttackEndEvent;
-        public event AnimationEventHandle AttackEvent;
+        public event AnimationEventHandle AttackHitEvent;
         public event AnimationEventHandle DeathEndEvent;
+        public event AnimationEventHandle SkillEvent;
         public event AnimationEventHandle SkillStartEvent;
         public event AnimationEventHandle SkillEndEvent;
 
@@ -23,14 +24,19 @@ namespace IdleProject.Battle.Character
             AttackEndEvent?.Invoke();
         }
 
-        private void Attack()
+        private void AttackHit()
         {
-            AttackEvent?.Invoke();
+            AttackHitEvent?.Invoke();
         }
 
         private void DeathEnd()
         {
             DeathEndEvent?.Invoke();
+        }
+
+        private void Skill()
+        {
+            SkillEvent?.Invoke();
         }
 
         private void SkillStart()

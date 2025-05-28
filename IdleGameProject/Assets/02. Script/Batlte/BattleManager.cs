@@ -4,12 +4,11 @@ using Engine.Util;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-
+using Cysharp.Threading.Tasks;
 using Engine.Core.EventBus;
-
+using Engine.Core.Time;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 using IdleProject.Battle.AI;
-using Sirenix.OdinInspector;
 using IdleProject.Battle.Spawn;
 using UnityEngine.Events;
 using IdleProject.Core.UI;
@@ -31,6 +30,13 @@ namespace IdleProject.Battle
         Pause
     }
 
+    public enum BattleSpeedType
+    {
+        Default = 1,
+        Double = 2,
+        Threefold = 3
+    }
+
     public class BattleManager : SingletonMonoBehaviour<BattleManager>
     {
         [HideInInspector] public SpawnController spawnController;
@@ -41,11 +47,20 @@ namespace IdleProject.Battle
         [HideInInspector] public UnityEvent battleEvent = new UnityEvent();
         [HideInInspector] public UnityEvent battleUIEvent = new UnityEvent();
 
-        public EnumEventBus<GameStateType> gameStateEventBus = new();
-        public EnumEventBus<BattleStateType> battleStateEventBus = new();
+        public readonly EnumEventBus<GameStateType> GameStateEventBus = new();
+        public readonly EnumEventBus<BattleStateType> BattleStateEventBus = new();
 
         public Transform effectParent;
         public Transform projectileParent;
+
+        public const string BattleSpeedTimeKey = "BattleSpeed";
+
+        public static float GetCurrentBattleSpeed => TimeManager.Instance.GetTimeScaleFactor(BattleSpeedTimeKey);
+        public static float GetCurrentBattleDeltaTime => TimeManager.Instance.GetDeltaTimeScale(BattleSpeedTimeKey);
+        public static UnityEvent<float> GetChangeBattleSpeedEvent =>
+            TimeManager.Instance.GetFactorChangeEvent(BattleSpeedTimeKey);
+        public static UniTask GetBattleTimer(float waitTime) =>
+            TimeManager.Instance.StartTimer(waitTime, BattleSpeedTimeKey);
 
         private List<CharacterController> GetCharacterList(CharacterAIType aiType) => (aiType == CharacterAIType.Playerable) ? playerCharacterList : enemyCharacterList;
 
@@ -58,7 +73,7 @@ namespace IdleProject.Battle
 
         private void FixedUpdate()
         {
-            if (gameStateEventBus.CurrentType is GameStateType.Play && battleStateEventBus.CurrentType is BattleStateType.Battle)
+            if (GameStateEventBus.CurrentType is GameStateType.Play && BattleStateEventBus.CurrentType is BattleStateType.Battle)
             {
                 battleEvent?.Invoke();
             }
@@ -66,7 +81,7 @@ namespace IdleProject.Battle
 
         private void LateUpdate()
         {
-            if (gameStateEventBus.CurrentType is GameStateType.Play && battleStateEventBus.CurrentType is BattleStateType.Battle)
+            if (GameStateEventBus.CurrentType is GameStateType.Play && BattleStateEventBus.CurrentType is BattleStateType.Battle)
             {
                 battleUIEvent?.Invoke();
             }
@@ -93,7 +108,7 @@ namespace IdleProject.Battle
 
         public void DeathCharacter(CharacterController characterController)
         {
-            CharacterAIType aiType = characterController.characterAI.aiType;
+            var aiType = characterController.characterAI.aiType;
 
             var characterList = GetCharacterList(aiType);
             characterList.Remove(characterController);
@@ -111,16 +126,21 @@ namespace IdleProject.Battle
             }
         }
 
+        public void SetBattleSpeed(BattleSpeedType battleSpeedType)
+        {
+            TimeManager.Instance.SetTimeScaleFactor(BattleSpeedTimeKey, (float)battleSpeedType);
+        }
 
         private void Win()
         {
-            battleStateEventBus.ChangeEvent(BattleStateType.Win);
+            BattleStateEventBus.ChangeEvent(BattleStateType.Win);
         }
 
         private void Defeat()
         {
-            battleStateEventBus.ChangeEvent(BattleStateType.Defeat);
+            BattleStateEventBus.ChangeEvent(BattleStateType.Defeat);
         }
+        
     }
 }
 

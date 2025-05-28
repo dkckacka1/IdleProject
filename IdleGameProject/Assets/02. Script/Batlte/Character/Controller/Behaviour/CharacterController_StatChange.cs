@@ -10,15 +10,22 @@ namespace IdleProject.Battle.Character
         {
             statSystem.PublishValueChangedEvent(CharacterStatType.MovementSpeed, SetMovementSpeed);
             statSystem.PublishValueChangedEvent(CharacterStatType.AttackRange, SetAttackRange);
+            BattleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
+            OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
         }
 
         public virtual void SetMovementSpeed(float movementSpeed)
         {
-            agent.speed = movementSpeed;
+            agent.speed = movementSpeed * BattleManager.GetCurrentBattleSpeed;
         }
         private void SetAttackRange(float attackRange)
         {
             agent.stoppingDistance = attackRange - AttackRangeCorrectionValue;
+        }
+
+        public void OnTimeFactorChange(float timeFactor)
+        {
+            agent.speed = statSystem.GetStatValue(CharacterStatType.MovementSpeed) * timeFactor;
         }
     }
 }

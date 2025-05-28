@@ -19,6 +19,7 @@ namespace IdleProject.Battle.Character
         {
             this.animator = animator;
             AnimEventHandler = animEventHandler;
+
         }
 
         public void SetSkill()
@@ -63,6 +64,11 @@ namespace IdleProject.Battle.Character
                     animator.ResetTrigger(trigger.name);
                 }
             }
+        }
+
+        public void OnTimeFactorChange(float timeFactor)
+        {
+            animator.speed = timeFactor;
         }
     }
 }

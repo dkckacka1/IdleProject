@@ -1,3 +1,4 @@
+using Engine.Core.Time;
 using IdleProject.Core.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,7 +40,7 @@ namespace IdleProject.Battle.UI
         {
             if (damageAmount > 0)
             {
-                damageFillSlider.value -= damageAmount * Time.deltaTime / damagePlayDuration;
+                damageFillSlider.value -= damageAmount / damagePlayDuration * BattleManager.GetCurrentBattleSpeed * Time.deltaTime;
             }
 
             if(healthFillSlider.value >= damageFillSlider.value)

@@ -90,7 +90,9 @@ namespace IdleProject.Battle.Character
         }
         private void SetAnimationEvent()
         {
+            BattleManager.GetChangeBattleSpeedEvent.AddListener(animController.OnTimeFactorChange);
             SetBattleAnimEvent();
+            animController.OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
         }
         protected virtual void SetCharacterData(StatData stat)
         {
@@ -123,8 +125,8 @@ namespace IdleProject.Battle.Character
             aiController.aiType = aiType;
 
             BattleManager.Instance.battleEvent.AddListener(aiController.OnBatteEvent);
-            BattleManager.Instance.battleStateEventBus.PublishEvent(BattleStateType.Win, aiController.OnWinEvent);
-            BattleManager.Instance.battleStateEventBus.PublishEvent(BattleStateType.Defeat, aiController.OnDefeatEvent);
+            BattleManager.Instance.BattleStateEventBus.PublishEvent(BattleStateType.Win, aiController.OnWinEvent);
+            BattleManager.Instance.BattleStateEventBus.PublishEvent(BattleStateType.Defeat, aiController.OnDefeatEvent);
 
             characterAI = aiController;
         }

@@ -1,3 +1,4 @@
+using Engine.Core.Time;
 using IdleProject.Battle.Character;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace IdleProject.Battle.Projectile
         {
             Vector3 directionVector = (target.HitEffectOffset - transform.position).normalized;
             transform.LookAt(target.HitEffectOffset);
-            transform.position += directionVector * projectileSpeed * Time.deltaTime;
+            transform.position += directionVector * projectileSpeed * BattleManager.GetCurrentBattleDeltaTime;
         }
 
         private void OnTriggerEnter(Collider other)

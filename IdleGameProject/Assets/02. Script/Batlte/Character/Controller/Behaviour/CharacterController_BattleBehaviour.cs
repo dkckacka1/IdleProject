@@ -3,6 +3,7 @@ using IdleProject.Battle.Effect;
 using IdleProject.Core.ObjectPool;
 using Sirenix.OdinInspector;
 using System;
+using Engine.Core.Time;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character
@@ -103,11 +104,9 @@ namespace IdleProject.Battle.Character
         private async UniTaskVoid StartAttackCooltime()
         {
             state.canAttack = false;
-            await UniTask.WaitForSeconds(statSystem.GetStatValue(CharacterStatType.AttackCooltime));
+            await BattleManager.GetBattleTimer(statSystem.GetStatValue(CharacterStatType.AttackCooltime));
             state.canAttack = true;
         }
-
-
 
         #region 스킬 관련
         public virtual void Skill()

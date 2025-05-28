@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Engine.Core.Time;
 
 namespace IdleProject.Battle.UI
 {
@@ -37,13 +38,13 @@ namespace IdleProject.Battle.UI
             battleText.transform.position = Vector3.zero;
         }
 
-        public async void ShowText(Vector3 textPosition, string text)
+        public async UniTaskVoid ShowText(Vector3 textPosition, string text)
         {
             transform.position = textPosition;
             battleText.text = text;
-            battleText.transform.DOPunchScale(punchScaleVector, punchDuration);
-            battleText.transform.DOMoveY(transform.position.y + floatingYPos, floatingDuration);
-            await UniTask.WaitForSeconds(floatingDuration);
+            battleText.transform.DOPunchScale(punchScaleVector, punchDuration / BattleManager.GetCurrentBattleSpeed);
+            battleText.transform.DOMoveY(transform.position.y + floatingYPos, floatingDuration  / BattleManager.GetCurrentBattleSpeed);
+            await BattleManager.GetBattleTimer(floatingDuration);
             ObjectPoolManager.Instance.Release(GetComponent<PoolableObject>());
         }
     }

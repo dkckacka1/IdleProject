@@ -7,17 +7,16 @@ namespace IdleProject.Battle.AI.State
 {
     public abstract class State : IState
     {
-        private CharacterController controller;
-        private Func<CharacterController> targetController;
+        private readonly Func<CharacterController> _targetController;
 
-        protected CharacterController Target => targetController?.Invoke();
+        protected CharacterController Target => _targetController?.Invoke();
 
-        protected CharacterController Controller { get => controller; }
+        protected CharacterController Controller { get; }
 
         protected State(CharacterController controller, Func<CharacterController> targetController)
         {
-            this.controller = controller;
-            this.targetController = targetController;
+            Controller = controller;
+            _targetController = targetController;
         }
 
         public abstract void Excute();

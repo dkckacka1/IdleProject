@@ -13,7 +13,7 @@ namespace IdleProject.Battle.Character.Skill
         private void SkillFirstHit()
         {
             var target = controller.GetTargetCharacter.Invoke();
-            var attackDamage = controller.statSystem.GetStatValue(CharacterStatType.AttackDamage) * 2f;
+            var attackDamage = controller.StatSystem.GetStatValue(CharacterStatType.AttackDamage) * 2f;
             var skillProjectile = controller.GetSkillProjectile?.Invoke();
 
             skillProjectile.transform.position = controller.offset.CreateProjectileOffset;

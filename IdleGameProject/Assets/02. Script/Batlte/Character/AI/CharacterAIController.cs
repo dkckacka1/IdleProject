@@ -66,13 +66,13 @@ namespace IdleProject.Battle.AI
 
         private IState CheckState()
         {
-            if (controller.state.isDead)
+            if (controller.State.isDead)
                 return deathState;
 
             currentTarget = GetNealyTarget();
             if (currentTarget is not null)
             {
-                if (Vector3.Distance(currentTarget, controller) >= controller.statSystem.GetStatValue(Character.CharacterStatType.AttackRange))
+                if (Vector3.Distance(currentTarget, controller) >= controller.StatSystem.GetStatValue(Character.CharacterStatType.AttackRange))
                 {
                     return chaseState;
                 }

@@ -8,24 +8,24 @@ namespace IdleProject.Battle.Character
 
         private void SetStatModifedEvent()
         {
-            statSystem.PublishValueChangedEvent(CharacterStatType.MovementSpeed, SetMovementSpeed);
-            statSystem.PublishValueChangedEvent(CharacterStatType.AttackRange, SetAttackRange);
+            StatSystem.PublishValueChangedEvent(CharacterStatType.MovementSpeed, SetMovementSpeed);
+            StatSystem.PublishValueChangedEvent(CharacterStatType.AttackRange, SetAttackRange);
             BattleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
             OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
         }
 
         public virtual void SetMovementSpeed(float movementSpeed)
         {
-            agent.speed = movementSpeed * BattleManager.GetCurrentBattleSpeed;
+            Agent.speed = movementSpeed * BattleManager.GetCurrentBattleSpeed;
         }
         private void SetAttackRange(float attackRange)
         {
-            agent.stoppingDistance = attackRange - AttackRangeCorrectionValue;
+            Agent.stoppingDistance = attackRange - AttackRangeCorrectionValue;
         }
 
         public void OnTimeFactorChange(float timeFactor)
         {
-            agent.speed = statSystem.GetStatValue(CharacterStatType.MovementSpeed) * timeFactor;
+            Agent.speed = StatSystem.GetStatValue(CharacterStatType.MovementSpeed) * timeFactor;
         }
     }
 }

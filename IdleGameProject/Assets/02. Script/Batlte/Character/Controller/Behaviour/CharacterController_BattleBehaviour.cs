@@ -16,16 +16,16 @@ namespace IdleProject.Battle.Character
         [ShowInInspector] private bool isNowAttack;
         [ShowInInspector] private bool isNowSkill;
 
-        public bool CanTakeDamage => !state.isDead;
+        public bool CanTakeDamage => !State.isDead;
         public Vector3 HitEffectOffset => offset.HitEffecOffset;
 
         protected virtual void SetBattleAnimEvent()
         {
-            animController.AnimEventHandler.AttackStartEvent += OnAttackStart;
-            animController.AnimEventHandler.AttackHitEvent += OnAttackHit;
-            animController.AnimEventHandler.AttackEndEvent += OnAttackEnd;
-            animController.AnimEventHandler.SkillStartEvent += OnSkillStart;
-            animController.AnimEventHandler.SkillEndEvent += OnSkillEnd;
+            _animController.AnimEventHandler.AttackStartEvent += OnAttackStart;
+            _animController.AnimEventHandler.AttackHitEvent += OnAttackHit;
+            _animController.AnimEventHandler.AttackEndEvent += OnAttackEnd;
+            _animController.AnimEventHandler.SkillStartEvent += OnSkillStart;
+            _animController.AnimEventHandler.SkillEndEvent += OnSkillEnd;
         }
 
         private void OnAttackStart()
@@ -39,7 +39,7 @@ namespace IdleProject.Battle.Character
             transform.LookAt(GetTargetCharacter?.Invoke().GetTransform);
             if (isNowAttack is false && isNowSkill is false)
             {
-                animController.SetAttack();
+                _animController.SetAttack();
             }
         }
 
@@ -49,7 +49,7 @@ namespace IdleProject.Battle.Character
 
             if (targetCharacter is not null)
             {
-                var attackDamage = statSystem.GetStatValue(CharacterStatType.AttackDamage);
+                var attackDamage = StatSystem.GetStatValue(CharacterStatType.AttackDamage);
                 if (GetAttackProjectile is not null)
                 {
                     var projectile = GetAttackProjectile.Invoke();
@@ -86,9 +86,9 @@ namespace IdleProject.Battle.Character
         public virtual void TakeDamage(float takeDamage)
         {
             characterUI.ShowBattleText(takeDamage.ToString());
-            statSystem.SetStatValue(CharacterStatType.HealthPoint, statSystem.GetStatValue(CharacterStatType.HealthPoint) - takeDamage);
+            StatSystem.SetStatValue(CharacterStatType.HealthPoint, StatSystem.GetStatValue(CharacterStatType.HealthPoint) - takeDamage);
 
-            if (statSystem.GetStatValue(CharacterStatType.HealthPoint) <= 0)
+            if (StatSystem.GetStatValue(CharacterStatType.HealthPoint) <= 0)
             {
                 Death();
             }
@@ -103,9 +103,9 @@ namespace IdleProject.Battle.Character
 
         private async UniTaskVoid StartAttackCooltime()
         {
-            state.canAttack = false;
-            await BattleManager.GetBattleTimer(statSystem.GetStatValue(CharacterStatType.AttackCooltime));
-            state.canAttack = true;
+            State.canAttack = false;
+            await BattleManager.GetBattleTimer(StatSystem.GetStatValue(CharacterStatType.AttackCooltime));
+            State.canAttack = true;
         }
 
         #region 스킬 관련
@@ -113,7 +113,7 @@ namespace IdleProject.Battle.Character
         {
             if (isNowAttack is false && isNowSkill is false)
             {
-                animController.SetSkill();
+                _animController.SetSkill();
             }
 
         }
@@ -121,7 +121,7 @@ namespace IdleProject.Battle.Character
         private void OnSkillStart()
         {
             isNowSkill = true;
-            statSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
+            StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
         }
 
         private void OnSkillEnd()
@@ -132,7 +132,7 @@ namespace IdleProject.Battle.Character
 
         private void GetMana()
         {
-            statSystem.SetStatValue(CharacterStatType.ManaPoint, statSystem.GetStatValue(CharacterStatType.ManaPoint) + DefaultGetManaPoint);
+            StatSystem.SetStatValue(CharacterStatType.ManaPoint, StatSystem.GetStatValue(CharacterStatType.ManaPoint) + DefaultGetManaPoint);
         }
         #endregion
 
@@ -140,8 +140,8 @@ namespace IdleProject.Battle.Character
         private void Death()
         {
             BattleManager.Instance.DeathCharacter(this);
-            state.isDead = true;
-            animController.SetDeath();
+            State.isDead = true;
+            _animController.SetDeath();
         }
     }
 }

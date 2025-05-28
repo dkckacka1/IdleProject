@@ -13,7 +13,7 @@ using Engine.Core;
 
 namespace IdleProject.Battle.Character
 {
-    public partial struct CharacterState
+    public struct CharacterState
     {
         public bool canMove;
         public bool canAttack;
@@ -30,19 +30,17 @@ namespace IdleProject.Battle.Character
     [System.Serializable]
     public partial class CharacterController : MonoBehaviour
     {
-        public StatSystem statSystem;
-        public CharacterState state;
+        public StatSystem StatSystem;
+        public CharacterState State;
         public CharacterOffset offset;
 
         public CharacterUIController characterUI;
         public CharacterAIController characterAI;
-        protected AnimationController animController;
+        private AnimationController _animController;
 
-        private CharacterSkill skill;
+        private CharacterSkill _skill;
 
-        protected Rigidbody rb;
-        protected NavMeshAgent agent;
-        protected Animator animator;
+        protected NavMeshAgent Agent;
 
         public Func<BattleEffect> GetAttackHitEffect;
         public Func<BattleEffect> GetSkillHitEffect;
@@ -53,15 +51,13 @@ namespace IdleProject.Battle.Character
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody>();
-            agent = GetComponent<NavMeshAgent>();
-            animator = GetComponentInChildren<Animator>();
+            Agent = GetComponent<NavMeshAgent>();
 
             offset = GetComponent<CharacterOffset>();
 
-            statSystem = new StatSystem();
+            StatSystem = new StatSystem();
 
-            animController = new AnimationController(animator, GetComponentInChildren<AnimationEventHandler>());
+            _animController = new AnimationController(GetComponentInChildren<Animator>(), GetComponentInChildren<AnimationEventHandler>());
         }
 
         #region 초기화 부문
@@ -77,26 +73,26 @@ namespace IdleProject.Battle.Character
             InitAIController(aiType);
             InitPoolableObject(data);
 
-            state.Initialize();
-            statSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
+            State.Initialize();
+            StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
         }
 
         private void SetSkill(CharacterData data)
         {
-            string skillName = $"{typeof(CharacterSkill).FullName}{data.addressValue.characterName}, {typeof(CharacterSkill).Assembly}";
-            skill = ReflectionController.CreateInstance<CharacterSkill>(skillName);
-            skill.controller = this;
-            skill.SetAnimationEvent(animController.AnimEventHandler);
+            var skillName = $"{typeof(CharacterSkill).FullName}{data.addressValue.characterName}, {typeof(CharacterSkill).Assembly}";
+            _skill = ReflectionController.CreateInstance<CharacterSkill>(skillName);
+            _skill.controller = this;
+            _skill.SetAnimationEvent(_animController.AnimEventHandler);
         }
         private void SetAnimationEvent()
         {
-            BattleManager.GetChangeBattleSpeedEvent.AddListener(animController.OnTimeFactorChange);
+            BattleManager.GetChangeBattleSpeedEvent.AddListener(_animController.OnTimeFactorChange);
             SetBattleAnimEvent();
-            animController.OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
+            _animController.OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
         }
         protected virtual void SetCharacterData(StatData stat)
         {
-            statSystem.SetStatData(stat);
+            StatSystem.SetStatData(stat);
         }
 
         private async UniTask InitUIController(CharacterData data, CharacterAIType aiType)
@@ -113,7 +109,7 @@ namespace IdleProject.Battle.Character
                     break;
             }
 
-            uiController.Initialized(data, statSystem);
+            uiController.Initialized(data, StatSystem);
             BattleManager.Instance.battleUIEvent.AddListener(uiController.OnBattleUIEvent);
 
             characterUI = uiController;
@@ -148,21 +144,18 @@ namespace IdleProject.Battle.Character
         }
         #endregion
 
-
-
         public void Win()
         {
-            animController.SetWin();
+            _animController.SetWin();
         }
 
         public void Idle()
         {
-            animController.SetIdle();
+            _animController.SetIdle();
         }
 
         public static implicit operator Vector3(CharacterController controller) => controller.transform.position;
 
         public static implicit operator Transform(CharacterController controller) => controller.transform;
-
     }
 }

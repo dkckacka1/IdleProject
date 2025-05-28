@@ -1,6 +1,4 @@
-using Cysharp.Threading.Tasks;
 using System;
-using UnityEngine;
 
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
@@ -11,9 +9,9 @@ namespace IdleProject.Battle.AI.State
         public BattleState(CharacterController controller, Func<CharacterController> targetController) : base(controller, targetController) { }
         public override void Excute()
         {
-            if (Controller.state.canAttack)
+            if (Controller.State.canAttack)
             {
-                if (Controller.statSystem.canUseSkill)
+                if (Controller.StatSystem.canUseSkill)
                 {
                     Controller.Skill();
                 }

@@ -7,26 +7,29 @@ using System;
 using Cysharp.Threading.Tasks;
 using Engine.Core.EventBus;
 using Engine.Core.Time;
+using Engine.Util.Extension;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Spawn;
 using UnityEngine.Events;
 using IdleProject.Core.UI;
 using IdleProject.Battle.UI;
+using UnityEngine.InputSystem.Switch;
 
 namespace IdleProject.Battle
 {
     public enum BattleStateType
     {
-        Ready,
+        Ready = default,
         Battle,
+        Skill,
         Win,
         Defeat,
     }
 
     public enum GameStateType
     {
-        Play,
+        Play = default,
         Pause
     }
 
@@ -36,6 +39,14 @@ namespace IdleProject.Battle
         Double = 2,
         Threefold = 3
     }
+    
+    public enum BattleObjectType
+    {
+        Character,
+        Projectile,
+        Effect,
+        UI
+    }
 
     public class BattleManager : SingletonMonoBehaviour<BattleManager>
     {
@@ -44,23 +55,26 @@ namespace IdleProject.Battle
         [HideInInspector] public List<CharacterController> playerCharacterList = new List<CharacterController>();
         [HideInInspector] public List<CharacterController> enemyCharacterList = new List<CharacterController>();
 
-        [HideInInspector] public UnityEvent battleEvent = new UnityEvent();
-        [HideInInspector] public UnityEvent battleUIEvent = new UnityEvent();
-
+        public readonly Dictionary<BattleObjectType, UnityEvent> BattleObjectEventDic = new();
         public readonly EnumEventBus<GameStateType> GameStateEventBus = new();
         public readonly EnumEventBus<BattleStateType> BattleStateEventBus = new();
 
         public Transform effectParent;
         public Transform projectileParent;
 
-        public const string BattleSpeedTimeKey = "BattleSpeed";
+        #region 전투 배속 관련
 
+        public const string BattleSpeedTimeKey = "BattleSpeed";
         public static float GetCurrentBattleSpeed => TimeManager.Instance.GetTimeScaleFactor(BattleSpeedTimeKey);
         public static float GetCurrentBattleDeltaTime => TimeManager.Instance.GetDeltaTimeScale(BattleSpeedTimeKey);
         public static UnityEvent<float> GetChangeBattleSpeedEvent =>
             TimeManager.Instance.GetFactorChangeEvent(BattleSpeedTimeKey);
         public static UniTask GetBattleTimer(float waitTime) =>
             TimeManager.Instance.StartTimer(waitTime, BattleSpeedTimeKey);
+
+        #endregion
+
+        private readonly Queue<CharacterController> _skillQueue = new Queue<CharacterController>(); 
 
         private List<CharacterController> GetCharacterList(CharacterAIType aiType) => (aiType == CharacterAIType.Playerable) ? playerCharacterList : enemyCharacterList;
 
@@ -69,13 +83,40 @@ namespace IdleProject.Battle
             base.Initialized();
             spawnController = GetComponent<SpawnController>();
             UIManager.Instance.GetUIController<BattleUIController>().initialized();
+            EnumExtension.Foreach<BattleObjectType>((type) =>
+            {
+                BattleObjectEventDic.Add(type, new());
+            });
         }
 
         private void FixedUpdate()
         {
-            if (GameStateEventBus.CurrentType is GameStateType.Play && BattleStateEventBus.CurrentType is BattleStateType.Battle)
+            if (GameStateEventBus.CurrentType is GameStateType.Play)
             {
-                battleEvent?.Invoke();
+                switch (BattleStateEventBus.CurrentType)
+                {
+                    case BattleStateType.Ready:
+                        break;
+                    case BattleStateType.Battle:
+                        if (_skillQueue.Count > 0)
+                        {
+                            UseSkill(_skillQueue.Dequeue());
+                        }
+                        BattleObjectEventDic[BattleObjectType.Character].Invoke();
+                        BattleObjectEventDic[BattleObjectType.Projectile].Invoke();
+                        BattleObjectEventDic[BattleObjectType.Effect].Invoke();
+                        break;
+                    case BattleStateType.Skill:
+                        BattleObjectEventDic[BattleObjectType.Projectile].Invoke();
+                        BattleObjectEventDic[BattleObjectType.Effect].Invoke();
+                        break;
+                    case BattleStateType.Win:
+                        break;
+                    case BattleStateType.Defeat:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
         }
 
@@ -83,7 +124,7 @@ namespace IdleProject.Battle
         {
             if (GameStateEventBus.CurrentType is GameStateType.Play && BattleStateEventBus.CurrentType is BattleStateType.Battle)
             {
-                battleUIEvent?.Invoke();
+                BattleObjectEventDic[BattleObjectType.UI].Invoke();
             }
         }
 
@@ -140,7 +181,49 @@ namespace IdleProject.Battle
         {
             BattleStateEventBus.ChangeEvent(BattleStateType.Defeat);
         }
+
+        public void AddSkillQueue(CharacterController useCharacter)
+        {
+            _skillQueue.Enqueue(useCharacter);
+        }
         
+        public void UseSkill(CharacterController useCharacter)
+        {
+            BattleStateEventBus.ChangeEvent(BattleStateType.Skill);
+            TimeManager.Instance.SettingTimer(BattleSpeedTimeKey, true);
+            
+            foreach (var character in GetCharacterList(CharacterAIType.Playerable))
+            {
+                if (useCharacter != character)
+                {
+                    character.AnimController.SetAnimationSpeed(0f);
+                }
+            }
+            
+            foreach (var character in GetCharacterList(CharacterAIType.Enemy))
+            {
+                if (useCharacter != character)
+                {
+                    character.AnimController.SetAnimationSpeed(0f);
+                }
+            }
+        }
+
+        public void ExitSkill()
+        {
+            BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
+            TimeManager.Instance.SettingTimer(BattleSpeedTimeKey, false);
+            
+            foreach (var character in GetCharacterList(CharacterAIType.Playerable))
+            {
+                character.AnimController.SetAnimationSpeed(GetCurrentBattleSpeed);
+            }
+
+            foreach (var character in GetCharacterList(CharacterAIType.Enemy))
+            {
+                character.AnimController.SetAnimationSpeed(GetCurrentBattleSpeed);
+            }
+        }
     }
 }
 

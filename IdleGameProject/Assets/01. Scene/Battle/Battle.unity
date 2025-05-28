@@ -211,7 +211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc90041e7d1eec42b23bc063003e11f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleSpeedType: 0
+  gameStateType: 1
+  battleStateType: 1
 --- !u!4 &79959889
 Transform:
   m_ObjectHideFlags: 0

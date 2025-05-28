@@ -65,10 +65,15 @@ namespace IdleProject.Battle.Character
                 }
             }
         }
+        
+        public void SetAnimationSpeed(float speed)
+        {
+            animator.speed = speed;
+        }
 
         public void OnTimeFactorChange(float timeFactor)
         {
-            animator.speed = timeFactor;
+            SetAnimationSpeed(timeFactor);
         }
     }
 }

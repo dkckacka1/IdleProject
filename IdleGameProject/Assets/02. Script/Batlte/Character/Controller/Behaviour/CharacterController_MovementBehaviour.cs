@@ -11,11 +11,11 @@ namespace IdleProject.Battle.Character
 
         public virtual void Move(Vector3 destination)
         {
-            _animController.SetMove();
+            AnimController.SetMove();
 
             Move(destination, () =>
             {
-                _animController.SetIdle();
+                AnimController.SetIdle();
             });
         }
 

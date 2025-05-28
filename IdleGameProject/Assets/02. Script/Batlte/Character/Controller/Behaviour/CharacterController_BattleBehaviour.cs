@@ -21,11 +21,11 @@ namespace IdleProject.Battle.Character
 
         protected virtual void SetBattleAnimEvent()
         {
-            _animController.AnimEventHandler.AttackStartEvent += OnAttackStart;
-            _animController.AnimEventHandler.AttackHitEvent += OnAttackHit;
-            _animController.AnimEventHandler.AttackEndEvent += OnAttackEnd;
-            _animController.AnimEventHandler.SkillStartEvent += OnSkillStart;
-            _animController.AnimEventHandler.SkillEndEvent += OnSkillEnd;
+            AnimController.AnimEventHandler.AttackStartEvent += OnAttackStart;
+            AnimController.AnimEventHandler.AttackHitEvent += OnAttackHit;
+            AnimController.AnimEventHandler.AttackEndEvent += OnAttackEnd;
+            AnimController.AnimEventHandler.SkillStartEvent += OnSkillStart;
+            AnimController.AnimEventHandler.SkillEndEvent += OnSkillEnd;
         }
 
         private void OnAttackStart()
@@ -39,7 +39,7 @@ namespace IdleProject.Battle.Character
             transform.LookAt(GetTargetCharacter?.Invoke().GetTransform);
             if (isNowAttack is false && isNowSkill is false)
             {
-                _animController.SetAttack();
+                AnimController.SetAttack();
             }
         }
 
@@ -113,21 +113,26 @@ namespace IdleProject.Battle.Character
         {
             if (isNowAttack is false && isNowSkill is false)
             {
-                _animController.SetSkill();
+                AnimController.SetSkill();
             }
-
         }
 
         private void OnSkillStart()
         {
             isNowSkill = true;
             StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
+            BattleManager.Instance.AddSkillQueue(this);
         }
 
         private void OnSkillEnd()
         {
             isNowSkill = false;
             StartAttackCooltime().Forget();
+
+            if (GetSkillProjectile is null)
+            {
+                BattleManager.Instance.ExitSkill();
+            }
         }
 
         private void GetMana()
@@ -141,7 +146,7 @@ namespace IdleProject.Battle.Character
         {
             BattleManager.Instance.DeathCharacter(this);
             State.isDead = true;
-            _animController.SetDeath();
+            AnimController.SetDeath();
         }
     }
 }

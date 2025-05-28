@@ -3,7 +3,6 @@ using UnityEngine;
 using TMPro;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using Engine.Core.Time;
 
 namespace IdleProject.Battle.UI
 {
@@ -17,11 +16,13 @@ namespace IdleProject.Battle.UI
         [SerializeField] private float floatingDuration = 0.5f;
         [SerializeField] private float floatingYPos = 100f;
 
-
-
+        private Sequence floatingSequence;
+        
         private void Awake()
         {
             battleText = GetComponent<TextMeshProUGUI>();
+
+            floatingSequence = DOTween.Sequence();
         }
 
         public void OnCreateAction()
@@ -30,22 +31,55 @@ namespace IdleProject.Battle.UI
 
         public void OnGetAction()
         {
-
+            BattleManager.Instance.GameStateEventBus.PublishEvent(GameStateType.Play, OnGamePlay);
+            BattleManager.Instance.GameStateEventBus.PublishEvent(GameStateType.Pause, OnGamePause);
         }
 
         public void OnReleaseAction()
         {
             battleText.transform.position = Vector3.zero;
+            floatingSequence = null;
+            
+            BattleManager.Instance.GameStateEventBus.RemoveEvent(GameStateType.Play, OnGamePlay);
+            BattleManager.Instance.GameStateEventBus.RemoveEvent(GameStateType.Pause, OnGamePause);
         }
 
-        public async UniTaskVoid ShowText(Vector3 textPosition, string text)
+        public void ShowText(Vector3 textPosition, string text)
         {
             transform.position = textPosition;
             battleText.text = text;
-            battleText.transform.DOPunchScale(punchScaleVector, punchDuration / BattleManager.GetCurrentBattleSpeed);
-            battleText.transform.DOMoveY(transform.position.y + floatingYPos, floatingDuration  / BattleManager.GetCurrentBattleSpeed);
-            await BattleManager.GetBattleTimer(floatingDuration);
-            ObjectPoolManager.Instance.Release(GetComponent<PoolableObject>());
+            SetSequence();
+        }
+
+        private void SetSequence()
+        {
+            floatingSequence = DOTween.Sequence();
+            
+            floatingSequence.Append(battleText.transform.DOPunchScale(punchScaleVector,
+                punchDuration / BattleManager.GetCurrentBattleSpeed));
+            floatingSequence.Join(battleText.transform.DOMoveY(transform.position.y + floatingYPos,
+                floatingDuration / BattleManager.GetCurrentBattleSpeed));
+
+            floatingSequence.OnComplete(() =>
+            {
+                ObjectPoolManager.Instance.Release(GetComponent<PoolableObject>());
+            });
+        }
+
+        private void OnGamePause()
+        {
+            if (floatingSequence is not null)
+            {
+                floatingSequence.Pause();
+            }
+        }
+        
+        private void OnGamePlay()
+        {
+            if (floatingSequence is not null)
+            {
+                floatingSequence.Play();
+            }
         }
     }
 }

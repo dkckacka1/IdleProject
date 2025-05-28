@@ -20,14 +20,14 @@ namespace IdleProject.Battle.Projectile
 
         public void OnGetAction()
         {
-            BattleManager.Instance.battleEvent.AddListener(OnBattleEvent);
+            BattleManager.Instance.BattleObjectEventDic[BattleObjectType.Projectile].AddListener(OnBattleEvent);
         }
 
         public void OnReleaseAction()
         {
             hitEvent.RemoveAllListeners();
             target = null;
-            BattleManager.Instance.battleEvent.RemoveListener(OnBattleEvent);
+            BattleManager.Instance.BattleObjectEventDic[BattleObjectType.Projectile].RemoveListener(OnBattleEvent);
         }
 
         public void OnBattleEvent()

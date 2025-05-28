@@ -23,6 +23,7 @@ namespace IdleProject.Battle.Character.Skill
                 controller.Hit(target, attackDamage);
                 var attackHitEffect = controller.GetAttackHitEffect?.Invoke();
                 attackHitEffect.transform.position = target.HitEffectOffset;
+                BattleManager.Instance.ExitSkill();
             });
         }
     }

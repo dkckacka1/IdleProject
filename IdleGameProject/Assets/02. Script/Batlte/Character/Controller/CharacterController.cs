@@ -36,7 +36,7 @@ namespace IdleProject.Battle.Character
 
         public CharacterUIController characterUI;
         public CharacterAIController characterAI;
-        private AnimationController _animController;
+        public AnimationController AnimController;
 
         private CharacterSkill _skill;
 
@@ -57,7 +57,7 @@ namespace IdleProject.Battle.Character
 
             StatSystem = new StatSystem();
 
-            _animController = new AnimationController(GetComponentInChildren<Animator>(), GetComponentInChildren<AnimationEventHandler>());
+            AnimController = new AnimationController(GetComponentInChildren<Animator>(), GetComponentInChildren<AnimationEventHandler>());
         }
 
         #region 초기화 부문
@@ -82,13 +82,13 @@ namespace IdleProject.Battle.Character
             var skillName = $"{typeof(CharacterSkill).FullName}{data.addressValue.characterName}, {typeof(CharacterSkill).Assembly}";
             _skill = ReflectionController.CreateInstance<CharacterSkill>(skillName);
             _skill.controller = this;
-            _skill.SetAnimationEvent(_animController.AnimEventHandler);
+            _skill.SetAnimationEvent(AnimController.AnimEventHandler);
         }
         private void SetAnimationEvent()
         {
-            BattleManager.GetChangeBattleSpeedEvent.AddListener(_animController.OnTimeFactorChange);
+            BattleManager.GetChangeBattleSpeedEvent.AddListener(AnimController.OnTimeFactorChange);
             SetBattleAnimEvent();
-            _animController.OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
+            AnimController.OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
         }
         protected virtual void SetCharacterData(StatData stat)
         {
@@ -110,7 +110,7 @@ namespace IdleProject.Battle.Character
             }
 
             uiController.Initialized(data, StatSystem);
-            BattleManager.Instance.battleUIEvent.AddListener(uiController.OnBattleUIEvent);
+            BattleManager.Instance.BattleObjectEventDic[BattleObjectType.UI].AddListener(uiController.OnBattleUIEvent);
 
             characterUI = uiController;
         }
@@ -120,7 +120,7 @@ namespace IdleProject.Battle.Character
             var aiController = gameObject.AddComponent<CharacterAIController>();
             aiController.aiType = aiType;
 
-            BattleManager.Instance.battleEvent.AddListener(aiController.OnBatteEvent);
+            BattleManager.Instance.BattleObjectEventDic[BattleObjectType.Character].AddListener(aiController.OnBatteEvent);
             BattleManager.Instance.BattleStateEventBus.PublishEvent(BattleStateType.Win, aiController.OnWinEvent);
             BattleManager.Instance.BattleStateEventBus.PublishEvent(BattleStateType.Defeat, aiController.OnDefeatEvent);
 
@@ -146,12 +146,12 @@ namespace IdleProject.Battle.Character
 
         public void Win()
         {
-            _animController.SetWin();
+            AnimController.SetWin();
         }
 
         public void Idle()
         {
-            _animController.SetIdle();
+            AnimController.SetIdle();
         }
 
         public static implicit operator Vector3(CharacterController controller) => controller.transform.position;

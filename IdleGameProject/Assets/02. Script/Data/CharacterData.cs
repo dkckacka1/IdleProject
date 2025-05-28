@@ -23,6 +23,7 @@ public struct CharacterAddressValue
     public string attackProjectileAddress;
     public string attackHitEffectAddress;
     public string skillHitEffectAddress;
+    public string skillProjectileAddress;
 }
 
 [CreateAssetMenu(fileName = "CharacterData", menuName = "Scriptable Objects/CharacterData")]

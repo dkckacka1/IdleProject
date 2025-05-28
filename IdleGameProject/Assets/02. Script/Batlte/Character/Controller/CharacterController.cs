@@ -32,25 +32,24 @@ namespace IdleProject.Battle.Character
     {
         public StatSystem statSystem;
         public CharacterState state;
+        public CharacterOffset offset;
+
+        public CharacterUIController characterUI;
+        public CharacterAIController characterAI;
+        protected AnimationController animController;
+
+        private CharacterSkill skill;
 
         protected Rigidbody rb;
         protected NavMeshAgent agent;
         protected Animator animator;
 
-        protected AnimationController animController;
-
-        private CharacterOffset offset;
-
-        public Transform GetTransform => transform;
-
-        public CharacterUIController characterUI;
-        public CharacterAIController characterAI;
-
         public Func<BattleEffect> GetAttackHitEffect;
         public Func<BattleEffect> GetSkillHitEffect;
         public Func<BattleProjectile> GetAttackProjectile;
+        public Func<BattleProjectile> GetSkillProjectile;
 
-        private CharacterSkill skill;
+        public Transform GetTransform => transform;
 
         private void Awake()
         {
@@ -68,9 +67,7 @@ namespace IdleProject.Battle.Character
         #region 초기화 부문
         public virtual void Initialized(CharacterData data, CharacterAIType aiType)
         {
-            string skillName = $"{typeof(CharacterSkill).FullName}{data.addressValue.characterName}, {typeof(CharacterSkill).Assembly}";
-            skill = ReflectionController.CreateInstance<CharacterSkill>(skillName);
-
+            SetSkill(data);
             SetStatModifedEvent();
             SetAnimationEvent();
 
@@ -84,6 +81,13 @@ namespace IdleProject.Battle.Character
             statSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
         }
 
+        private void SetSkill(CharacterData data)
+        {
+            string skillName = $"{typeof(CharacterSkill).FullName}{data.addressValue.characterName}, {typeof(CharacterSkill).Assembly}";
+            skill = ReflectionController.CreateInstance<CharacterSkill>(skillName);
+            skill.controller = this;
+            skill.SetAnimationEvent(animController.AnimEventHandler);
+        }
         private void SetAnimationEvent()
         {
             SetBattleAnimEvent();
@@ -130,6 +134,7 @@ namespace IdleProject.Battle.Character
             GetAttackHitEffect = await CreatePool<BattleEffect>(PoolableType.Effect, data.addressValue.attackHitEffectAddress);
             GetSkillHitEffect = await CreatePool<BattleEffect>(PoolableType.Effect, data.addressValue.skillHitEffectAddress);
             GetAttackProjectile = await CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.attackProjectileAddress);
+            GetSkillProjectile = await CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.skillProjectileAddress);
         }
 
         private async UniTask<Func<T>> CreatePool<T>(PoolableType poolableType, string address) where T : IPoolable

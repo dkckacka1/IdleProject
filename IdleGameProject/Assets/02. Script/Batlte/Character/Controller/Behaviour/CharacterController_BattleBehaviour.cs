@@ -48,34 +48,37 @@ namespace IdleProject.Battle.Character
 
             if (targetCharacter is not null)
             {
+                var attackDamage = statSystem.GetStatValue(CharacterStatType.AttackDamage);
                 if (GetAttackProjectile is not null)
                 {
                     var projectile = GetAttackProjectile.Invoke();
                     projectile.transform.position = offset.CreateProjectileOffset;
                     projectile.target = targetCharacter;
-                    projectile.hitEvent.AddListener(Hit);
+                    projectile.hitEvent.AddListener(target =>
+                    {
+                        Hit(target, attackDamage);
+                    });
                 }
                 else
                 {
-                    Hit(targetCharacter);
+                    Hit(targetCharacter, attackDamage);
                 }
+            }
+
+            void Hit(ITakeDamagedAble target, float attackDamage)
+            {
+                this.Hit(target, attackDamage);
+                var attackHitEffect = GetAttackHitEffect?.Invoke();
+                attackHitEffect.transform.position = target.HitEffectOffset;
+                GetMana();
             }
         }
 
-        public virtual void Hit(ITakeDamagedAble iTakeDamage)
+        public virtual void Hit(ITakeDamagedAble iTakeDamage, float attackDamage)
         {
             if (iTakeDamage.CanTakeDamage)
             {
-                if (GetAttackHitEffect is not null)
-                {
-                    var attackHitEffect = GetAttackHitEffect?.Invoke();
-                    attackHitEffect.transform.position = iTakeDamage.HitEffectOffset;
-                }
-
-                var attackDamage = statSystem.GetStatValue(CharacterStatType.AttackDamage);
-
                 iTakeDamage.TakeDamage(attackDamage);
-                GetMana();
             }
         }
 

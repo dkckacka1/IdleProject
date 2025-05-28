@@ -10,7 +10,10 @@ namespace IdleProject.Battle.Character
         public event AnimationEventHandle AttackEndEvent;
         public event AnimationEventHandle AttackHitEvent;
         public event AnimationEventHandle DeathEndEvent;
-        public event AnimationEventHandle SkillEvent;
+        public event AnimationEventHandle SkillFirstEvent;
+        public event AnimationEventHandle SkillSecondEvent;
+        public event AnimationEventHandle SkillThirdEvent;
+        public event AnimationEventHandle SkillFourthEvent;
         public event AnimationEventHandle SkillStartEvent;
         public event AnimationEventHandle SkillEndEvent;
 
@@ -34,9 +37,24 @@ namespace IdleProject.Battle.Character
             DeathEndEvent?.Invoke();
         }
 
-        private void Skill()
+        private void SkillHitFirst()
         {
-            SkillEvent?.Invoke();
+            SkillFirstEvent?.Invoke();
+        }
+
+        private void SkillHitSecond()
+        {
+            SkillSecondEvent?.Invoke();
+        }
+
+        private void SkillHitThird()
+        {
+            SkillThirdEvent?.Invoke();
+        }
+
+        private void SkillHitFourth()
+        {
+            SkillFourthEvent?.Invoke();
         }
 
         private void SkillStart()

@@ -1,26 +1,27 @@
 using System;
+using System.Data;
 
 namespace IdleProject.Battle.Character
 {
     public partial class CharacterController
     {
-        private const float AttackRangeCorrectionValue = 0.1f;
+        private const float ATTACK_RANGE_CORRECTION_VALUE = 0.1f;
 
         private void SetStatModifedEvent()
         {
-            StatSystem.PublishValueChangedEvent(CharacterStatType.MovementSpeed, SetMovementSpeed);
-            StatSystem.PublishValueChangedEvent(CharacterStatType.AttackRange, SetAttackRange);
+            StatSystem.PublishValueChangedEvent(CharacterStatType.MovementSpeed, ChangeMovementSpeed);
+            StatSystem.PublishValueChangedEvent(CharacterStatType.AttackRange, ChangeAttackRange);
             BattleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
             OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
         }
 
-        public virtual void SetMovementSpeed(float movementSpeed)
+        public virtual void ChangeMovementSpeed(float movementSpeed)
         {
             Agent.speed = movementSpeed * BattleManager.GetCurrentBattleSpeed;
         }
-        private void SetAttackRange(float attackRange)
+        private void ChangeAttackRange(float attackRange)
         {
-            Agent.stoppingDistance = attackRange - AttackRangeCorrectionValue;
+            Agent.stoppingDistance = attackRange - ATTACK_RANGE_CORRECTION_VALUE;
         }
 
         public void OnTimeFactorChange(float timeFactor)

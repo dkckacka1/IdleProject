@@ -55,13 +55,10 @@ namespace IdleProject.Battle.AI
 
         public void OnWinEvent()
         {
-            if(aiType == CharacterAIType.Playerable)
-                controller.Win();
         }
 
         public void OnDefeatEvent()
         {
-
         }
 
         private IState CheckState()
@@ -92,7 +89,7 @@ namespace IdleProject.Battle.AI
 
         private CharacterController GetNealyTarget()
         {
-            var enemyCharacterList = BattleManager.Instance.GetCharacterList(EnemyType());
+            var enemyCharacterList = BattleManager.Instance.GetCharacterList(EnemyType(), character => character.StatSystem.isLive);
             var target = enemyCharacterList.OrderBy(character => Vector3.Distance(character.transform.position, controller.transform.position)).FirstOrDefault();
             return target;
         }

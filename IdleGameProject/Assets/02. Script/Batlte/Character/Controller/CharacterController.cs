@@ -41,6 +41,7 @@ namespace IdleProject.Battle.Character
         private CharacterSkill _skill;
 
         protected NavMeshAgent Agent;
+        private Collider collider;
 
         public Func<BattleEffect> GetAttackHitEffect;
         public Func<BattleEffect> GetSkillHitEffect;
@@ -51,9 +52,10 @@ namespace IdleProject.Battle.Character
 
         private void Awake()
         {
-            Agent = GetComponent<NavMeshAgent>();
-
             offset = GetComponent<CharacterOffset>();
+            
+            Agent = GetComponent<NavMeshAgent>();
+            collider = GetComponent<Collider>();
 
             StatSystem = new StatSystem();
 

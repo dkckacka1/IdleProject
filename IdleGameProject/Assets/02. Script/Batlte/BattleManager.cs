@@ -150,11 +150,9 @@ namespace IdleProject.Battle
         public void DeathCharacter(CharacterController characterController)
         {
             var aiType = characterController.characterAI.aiType;
-
             var characterList = GetCharacterList(aiType);
-            characterList.Remove(characterController);
 
-            if (characterList.Count <= 0)
+            if (characterList.Any(character => character.StatSystem.isLive) is false)
             {
                 if (aiType == CharacterAIType.Playerable)
                 {

@@ -148,6 +148,7 @@ namespace IdleProject.Battle.Character
             characterUI.OnCharacterDeath();
             State.isDead = true;
             AnimController.SetDeath();
+            collider.enabled = false;
         }
     }
 }

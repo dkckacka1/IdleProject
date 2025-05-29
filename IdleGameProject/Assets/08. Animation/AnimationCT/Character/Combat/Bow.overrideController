@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Bow
+  m_Controller: {fileID: 9100000, guid: 12081aea278120045a1028e018223431, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 0ea596284bc018743ba9479beccf8517, type: 3}
+    m_OverrideClip: {fileID: 1827226128182048838, guid: 99a2c7ca91c19404da0023dfaaa0ba7c, type: 3}
+  - m_OriginalClip: {fileID: 1827226128182048838, guid: 530092fcb9b69ff4b975d146897eecd4, type: 3}
+    m_OverrideClip: {fileID: 1827226128182048838, guid: 9e0d76d4a975ddb40b2eeddd418d8703, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 31efeadd95011304a9c72e26dddfc0f2, type: 3}
+    m_OverrideClip: {fileID: 1827226128182048838, guid: 88e58baa533157a46b17a73eced5448f, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: e0b92a8dc0ec0ac45b96fbf0b820fbf4, type: 3}
+    m_OverrideClip: {fileID: 1827226128182048838, guid: b5a7bb8620a5692448c74a10cc56014b, type: 3}

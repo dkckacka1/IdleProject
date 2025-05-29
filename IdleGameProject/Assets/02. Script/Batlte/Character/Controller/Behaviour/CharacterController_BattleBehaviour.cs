@@ -17,6 +17,7 @@ namespace IdleProject.Battle.Character
         [ShowInInspector] private bool isNowSkill;
 
         public bool CanTakeDamage => !State.isDead;
+        public bool HasSkill => _skill is not null;
         public Vector3 HitEffectOffset => offset.HitEffecOffset;
 
         protected virtual void SetBattleAnimEvent()
@@ -69,8 +70,11 @@ namespace IdleProject.Battle.Character
             void Hit(ITakeDamagedAble target, float attackDamage)
             {
                 this.Hit(target, attackDamage);
+                
                 var attackHitEffect = GetAttackHitEffect?.Invoke();
-                attackHitEffect.transform.position = target.HitEffectOffset;
+                if (attackHitEffect != null) 
+                    attackHitEffect.transform.position = target.HitEffectOffset;
+                
                 GetMana();
             }
         }

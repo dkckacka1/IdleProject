@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ee708b51cec1264fbb31a84dce962ef, type: 3}
-  m_Name: Hiro
+  m_Name: GoblinMale
   m_EditorClassIdentifier: 
   addressValue:
-    characterName: Hiro
+    characterName: GoblinMale
     attackProjectileAddress: 
-    attackHitEffectAddress: SharpExplosionFire
-    skillHitEffectAddress: SwordSlashMiniWhite
+    attackHitEffectAddress: 
+    skillHitEffectAddress: 
     skillProjectileAddress: 
   stat:
-    healthPoint: 100
-    manaPoint: 30
+    healthPoint: 100000
+    manaPoint: 10
     attackDamage: 10
-    movementSpeed: 3.5
+    movementSpeed: 4.5
     attackRange: 2
     attackCooltime: 0.1

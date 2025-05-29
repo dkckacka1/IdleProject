@@ -34,9 +34,9 @@ namespace IdleProject.Battle.Character
         public CharacterState State;
         public CharacterOffset offset;
 
-        public CharacterUIController characterUI;
-        public CharacterAIController characterAI;
-        public AnimationController AnimController;
+        [HideInInspector] public CharacterUIController characterUI;
+        [HideInInspector] public CharacterAIController characterAI;
+        [HideInInspector] public AnimationController AnimController;
 
         private CharacterSkill _skill;
 
@@ -82,9 +82,13 @@ namespace IdleProject.Battle.Character
         private void SetSkill(CharacterData data)
         {
             var skillName = $"{typeof(CharacterSkill).FullName}{data.addressValue.characterName}, {typeof(CharacterSkill).Assembly}";
-            _skill = ReflectionController.CreateInstance<CharacterSkill>(skillName);
-            _skill.controller = this;
-            _skill.SetAnimationEvent(AnimController.AnimEventHandler);
+
+            if (Type.GetType(skillName) is not null)
+            {
+                _skill = ReflectionController.CreateInstance<CharacterSkill>(skillName);
+                _skill.controller = this;
+                _skill.SetAnimationEvent(AnimController.AnimEventHandler);
+            }
         }
         private void SetAnimationEvent()
         {

@@ -11,7 +11,7 @@ namespace IdleProject.Battle.AI.State
         {
             if (Controller.State.canAttack)
             {
-                if (Controller.StatSystem.canUseSkill)
+                if (Controller.HasSkill && Controller.StatSystem.canUseSkill)
                 {
                     Controller.Skill();
                 }

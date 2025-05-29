@@ -29,6 +29,11 @@ namespace IdleProject.Battle.UI
             fluidHealthBar.PlayDamageSlider();
         }
 
+        public virtual void OnCharacterDeath()
+        {
+            fluidHealthBar.gameObject.SetActive(false);
+        }
+
         public void ShowBattleText(string text)
         {
             var battleText = GetBattleUI.GetBattleText.Invoke();

@@ -145,6 +145,7 @@ namespace IdleProject.Battle.Character
         private void Death()
         {
             BattleManager.Instance.DeathCharacter(this);
+            characterUI.OnCharacterDeath();
             State.isDead = true;
             AnimController.SetDeath();
         }

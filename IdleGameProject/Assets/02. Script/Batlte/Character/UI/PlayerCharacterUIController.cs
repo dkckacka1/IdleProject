@@ -25,7 +25,7 @@ namespace IdleProject.Battle.UI
         private void SetPlayerCharacterBanner(CharacterData data, StatSystem stat)
         {
             banner = GetBattleUI.GetPlayerCharacterBanner();
-            banner.Initialized(data, stat);
+            banner.Initialized(data, stat).Forget();
         }
     }
 }

@@ -22,60 +22,76 @@ namespace IdleProject.Core
         Projectile,
     }
 
+    public enum IconType
+    {
+        Character,
+    }
+    
     public static class ResourcesLoader
     {
-        private const string PrefabPath = "Prefab";
-        private const string PoolablePath = "Poolable";
+        private const string PREFAB_PATH = "Prefab";
+        private const string POOLABLE_PATH = "Poolable";
 
-        private const string DataPath = "GameData";
-        private const string CharacterDataPath = "CharacterData";
+        private const string DATA_PATH = "GameData";
+        private const string CHARACTER_DATA_PATH = "CharacterData";
 
-        private const char SplitSegement = '/';
+        private const char PATH_SEGEMENT = '/';
+        private const char SPRITE_NAME_SEGEMENT = '_';
 
-        public async static UniTask<CharacterController> InstantiateCharacter(string name)
+        public static async UniTask<CharacterController> InstantiateCharacter(string name)
         {
-            string address = $"{JoinWithSlash(PrefabPath, PrefabType.Character.ToString(), name)}.prefab";
+            var address = $"{JoinSegement(PATH_SEGEMENT, PREFAB_PATH, nameof(PrefabType.Character), name)}.prefab";
             return await AddressableManager.Instance.InstantiateObject<CharacterController>(address);
         }
 
-        public async static UniTask<T> InstantiateUI<T>(SceneType sceneType, string name) where T : UIBase
+        public static async UniTask<T> InstantiateUI<T>(SceneType sceneType, string name) where T : UIBase
         {
-            string address = $"{JoinWithSlash(PrefabPath, PrefabType.UI.ToString(), sceneType.ToString(), name)}.prefab";
+            var address = $"{JoinSegement(PATH_SEGEMENT,PREFAB_PATH, nameof(PrefabType.UI), sceneType.ToString(), name)}.prefab";
             var uiObj = await AddressableManager.Instance.InstantiateObject<UIBase>(address);
             return uiObj.GetComponent<T>();
         }
 
-        public async static UniTask<CharacterData> LoadCharacterData(string name)
+        public static async UniTask<CharacterData> LoadCharacterData(string name)
         {
-            var address = $"{JoinWithSlash(DataPath, CharacterDataPath, name)}.asset";
+            var address = $"{JoinSegement(PATH_SEGEMENT, DATA_PATH, CHARACTER_DATA_PATH, name)}.asset";
             var data = await AddressableManager.Instance.LoadAssetAsync<CharacterData>(address);
             return data;
         }
 
         public static T GetPoolableObject<T>(PoolableType poolableType, string name) where T : IPoolable
         {
-            var address = $"{JoinWithSlash(PoolablePath, poolableType.ToString(), name)}.prefab";
+            var address = $"{JoinSegement(PATH_SEGEMENT, POOLABLE_PATH, poolableType.ToString(), name)}.prefab";
             return ObjectPoolManager.Instance.Get<T>(address, GetBattleTransformParent(poolableType));
         }
 
-        public async static UniTask CreatePool(PoolableType poolableType, string name)
+        public static async UniTask CreatePool(PoolableType poolableType, string name)
         {
-            var address = $"{JoinWithSlash(PoolablePath, poolableType.ToString(), name)}.prefab";
+            var address = $"{JoinSegement(PATH_SEGEMENT, POOLABLE_PATH, poolableType.ToString(), name)}.prefab";
             await ObjectPoolManager.Instance.CreatePool<PoolableObject>(address, GetBattleTransformParent(poolableType));
         }
 
-        public async static UniTask CreatePool(PoolableType poolableType, string name, Transform parent)
+        public static async UniTask CreatePool(PoolableType poolableType, string name, Transform parent)
         {
-            var address = $"{JoinWithSlash(PoolablePath, poolableType.ToString(), name)}.prefab";
+            var address = $"{JoinSegement(PATH_SEGEMENT, POOLABLE_PATH, poolableType.ToString(), name)}.prefab";
             await ObjectPoolManager.Instance.CreatePool<PoolableObject>(address, parent);
         }
+        
+        public static async UniTask<Sprite> GetIcon(IconType iconType, string name, string type)
+        {
+            var spriteName = JoinSegement(SPRITE_NAME_SEGEMENT, iconType.ToString(), name, type, "Icon");
+            var address = $"{JoinSegement(PATH_SEGEMENT, "Icon", spriteName)}.png";
 
-        private static string JoinWithSlash(params string[] parts)
+            var sprite = await AddressableManager.Instance.LoadAssetAsync<Sprite>(address);
+            
+            return sprite;
+        }
+
+        private static string JoinSegement(char segement ,params string[] parts)
         {
             if (parts == null || parts.Length == 0)
                 return string.Empty;
 
-            return string.Join(SplitSegement, parts);
+            return string.Join(segement, parts);
         }
 
         private static Transform GetBattleTransformParent(PoolableType poolableType)

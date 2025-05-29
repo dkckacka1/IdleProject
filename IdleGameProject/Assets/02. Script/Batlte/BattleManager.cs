@@ -64,6 +64,7 @@ namespace IdleProject.Battle
 
         #region 전투 배속 관련
 
+        public BattleSpeedType CurrentBattleSpeed = BattleSpeedType.Default;
         public const string BattleSpeedTimeKey = "BattleSpeed";
         public static float GetCurrentBattleSpeed => TimeManager.Instance.GetTimeScaleFactor(BattleSpeedTimeKey);
         public static float GetCurrentBattleDeltaTime => TimeManager.Instance.GetDeltaTimeScale(BattleSpeedTimeKey);
@@ -167,6 +168,8 @@ namespace IdleProject.Battle
 
         public void SetBattleSpeed(BattleSpeedType battleSpeedType)
         {
+            CurrentBattleSpeed = battleSpeedType;
+            
             TimeManager.Instance.SetTimeScaleFactor(BattleSpeedTimeKey, (float)battleSpeedType);
         }
 

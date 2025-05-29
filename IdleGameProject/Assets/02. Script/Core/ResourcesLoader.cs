@@ -4,7 +4,6 @@ using IdleProject.Battle;
 using IdleProject.Core.ObjectPool;
 using IdleProject.Core.UI;
 using UnityEngine;
-
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Core
@@ -26,7 +25,7 @@ namespace IdleProject.Core
     {
         Character,
     }
-    
+
     public static class ResourcesLoader
     {
         private const string PREFAB_PATH = "Prefab";
@@ -44,10 +43,11 @@ namespace IdleProject.Core
             return await AddressableManager.Instance.InstantiateObject<CharacterController>(address);
         }
 
-        public static async UniTask<T> InstantiateUI<T>(SceneType sceneType, string name) where T : UIBase
+        public static async UniTask<T> InstantiateUI<T>(SceneType sceneType, string name) where T : Component
         {
-            var address = $"{JoinSegement(PATH_SEGEMENT,PREFAB_PATH, nameof(PrefabType.UI), sceneType.ToString(), name)}.prefab";
-            var uiObj = await AddressableManager.Instance.InstantiateObject<UIBase>(address);
+            var address =
+                $"{JoinSegement(PATH_SEGEMENT, PREFAB_PATH, nameof(PrefabType.UI), sceneType.ToString(), name)}.prefab";
+            var uiObj = await AddressableManager.Instance.InstantiateObject<GameObject>(address);
             return uiObj.GetComponent<T>();
         }
 
@@ -67,7 +67,8 @@ namespace IdleProject.Core
         public static async UniTask CreatePool(PoolableType poolableType, string name)
         {
             var address = $"{JoinSegement(PATH_SEGEMENT, POOLABLE_PATH, poolableType.ToString(), name)}.prefab";
-            await ObjectPoolManager.Instance.CreatePool<PoolableObject>(address, GetBattleTransformParent(poolableType));
+            await ObjectPoolManager.Instance.CreatePool<PoolableObject>(address,
+                GetBattleTransformParent(poolableType));
         }
 
         public static async UniTask CreatePool(PoolableType poolableType, string name, Transform parent)
@@ -75,18 +76,18 @@ namespace IdleProject.Core
             var address = $"{JoinSegement(PATH_SEGEMENT, POOLABLE_PATH, poolableType.ToString(), name)}.prefab";
             await ObjectPoolManager.Instance.CreatePool<PoolableObject>(address, parent);
         }
-        
+
         public static async UniTask<Sprite> GetIcon(IconType iconType, string name, string type)
         {
             var spriteName = JoinSegement(SPRITE_NAME_SEGEMENT, iconType.ToString(), name, type, "Icon");
             var address = $"{JoinSegement(PATH_SEGEMENT, "Icon", spriteName)}.png";
 
             var sprite = await AddressableManager.Instance.LoadAssetAsync<Sprite>(address);
-            
+
             return sprite;
         }
 
-        private static string JoinSegement(char segement ,params string[] parts)
+        private static string JoinSegement(char segement, params string[] parts)
         {
             if (parts == null || parts.Length == 0)
                 return string.Empty;

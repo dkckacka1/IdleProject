@@ -7,26 +7,43 @@ namespace IdleProject.Core.UI
 {
     public class UIManager : SingletonMonoBehaviour<UIManager>
     {
-        Dictionary<Type, UIController> uiControllerDic = new Dictionary<Type, UIController>();
+        private readonly Dictionary<Type, UIController> _uiControllerDic = new Dictionary<Type, UIController>();
+        private readonly Dictionary<string, UIBase> _uiBaseDic = new();
 
         public void AddUIController(UIController controller)
         {
             var uiControllerType = controller.GetType();
-            uiControllerDic.Add(uiControllerType, controller);
+            _uiControllerDic.Add(uiControllerType, controller);
         }
 
         public void RemoveUIController(UIController controller)
         {
             var uiControllerType = controller.GetType();
-            uiControllerDic.Remove(uiControllerType);
+            _uiControllerDic.Remove(uiControllerType);
         }
 
         public T GetUIController<T>() where T : UIController
         {
-            if (uiControllerDic.TryGetValue(typeof(T), out var ctrl))
+            if (_uiControllerDic.TryGetValue(typeof(T), out var ctrl))
                 return ctrl as T;
 
             return null;
+        }
+
+        public void AddUIBase(string name, UIBase ui)
+        {
+            _uiBaseDic.Add(name,ui);
+        }
+
+        public T GetUI<T>(string name) where T : UIBase
+        {
+            _uiBaseDic.TryGetValue(name, out var result);
+            return result as T;
+        }
+
+        public void RemoveUIBase(string name)
+        {
+            _uiBaseDic.Remove(name);
         }
 
         public static Vector3 GetUIInScreen(Vector3 position)

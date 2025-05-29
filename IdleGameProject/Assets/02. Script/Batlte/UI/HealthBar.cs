@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace IdleProject.Battle.UI
 {
-    public class HealthBar : UIBase
+    public class HealthBar : MonoBehaviour
     {
         [SerializeField] private Slider healthFillSlider;
         [SerializeField] private Slider damageFillSlider;

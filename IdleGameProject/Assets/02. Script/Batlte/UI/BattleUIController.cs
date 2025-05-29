@@ -6,6 +6,7 @@ using IdleProject.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Engine.Util.Extension;
 
 namespace IdleProject.Battle.UI
 {
@@ -37,6 +38,10 @@ namespace IdleProject.Battle.UI
             await ResourcesLoader.CreatePool(PoolableType.UI, "BattleText", battleTextParent);
             GetBattleText = () => ResourcesLoader.GetPoolableObject<BattleText>(PoolableType.UI, "BattleText");
 
+            SetSpeedText();
+            var button = UIManager.Instance.GetUI<UIButton>("SpeedButton");
+            button.Button.onClick.AddListener(ChangeBattleSpped);
+            
             isInitialize = true;
         }
 
@@ -45,6 +50,19 @@ namespace IdleProject.Battle.UI
             var targetBanner = playerCharacterBannerList.Where(banner => banner.gameObject.activeInHierarchy is false).First(); ;
             targetBanner.gameObject.SetActive(true);
             return targetBanner;
+        }
+        
+        
+        private void ChangeBattleSpped()
+        {
+            BattleManager.Instance.SetBattleSpeed(BattleManager.Instance.CurrentBattleSpeed.GetMoveNext());
+
+            SetSpeedText();
+        }
+
+        private static void SetSpeedText()
+        {
+            UIManager.Instance.GetUI<UIText>("BattleSpeedText").Text.text = $"{BattleManager.Instance.CurrentBattleSpeed.ToString()} X";
         }
     }
 }

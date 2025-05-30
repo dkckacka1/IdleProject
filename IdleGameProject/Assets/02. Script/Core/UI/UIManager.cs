@@ -35,6 +35,25 @@ namespace IdleProject.Core.UI
             _uiBaseDic.Add(uiName,ui);
         }
 
+        public T GetUI<T>() where T : UIBase
+        {
+            var uiName = typeof(T).Name;
+            _uiBaseDic.TryGetValue(uiName, out var result);
+
+            if (result is null)
+            {
+                Debug.LogError($"{uiName} UI is null");
+            }
+
+            var ui = result as T;
+            if (ui is null)
+            {
+                Debug.LogError($"{uiName} is not {typeof(T).Name}");
+            }            
+            
+            return ui;
+        }
+        
         public T GetUI<T>(string uiName) where T : UIBase
         {
             _uiBaseDic.TryGetValue(uiName, out var result);

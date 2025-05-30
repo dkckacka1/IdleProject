@@ -41,6 +41,9 @@ namespace IdleProject.Battle.UI
             SetSpeedText();
             UIManager.Instance.GetUI<UIButton>("SpeedButton").Button.onClick.AddListener(ChangeBattleSpeed);
             UIManager.Instance.GetUI<UIButton>("PauseButton").Button.onClick.AddListener(PauseGame);
+            UIManager.Instance.GetUI<UIButton>("PausePopupContinueButton").Button.onClick.AddListener(ClosePausePopup);
+            UIManager.Instance.GetUI<UIButton>("PausePopupRetryButton").Button.onClick.AddListener(RetryBattle);
+            UIManager.Instance.GetUI<UIButton>("PausePopupExitButton").Button.onClick.AddListener(ExitBattle);
             
             _isInitialize = true;
         }
@@ -62,12 +65,29 @@ namespace IdleProject.Battle.UI
 
         private void SetSpeedText()
         {
-            UIManager.Instance.GetUI<UIText>("BattleSpeedText").Text.text = $"{BattleManager.Instance.currentBattleSpeed:N0}";
+            UIManager.Instance.GetUI<UIText>("BattleSpeedText").Text.text = $"<size=70%>x</size>{BattleManager.Instance.currentBattleSpeed:N0}";
         }
 
         private void PauseGame()
         {
             BattleManager.Instance.GameStateEventBus.ChangeEvent(GameStateType.Pause);
+            UIManager.Instance.GetUI<PausePopup>().OpenPopup();
+        }
+        
+        
+        private void ExitBattle()
+        {
+        }
+
+        private void RetryBattle()
+        {
+            
+        }
+
+        private void ClosePausePopup()
+        {
+            BattleManager.Instance.GameStateEventBus.ChangeEvent(GameStateType.Play);
+            UIManager.Instance.GetUI<PausePopup>().ClosePopup();
         }
     }
 }

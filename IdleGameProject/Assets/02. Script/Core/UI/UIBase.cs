@@ -7,12 +7,12 @@ namespace IdleProject.Core.UI
     {
         protected virtual void Awake()
         {
-            UIManager.Instance.AddUIBase(name, this);
+            UIManager.Instance.AddUI(name, this);
         }
 
         protected void OnDestroy()
         {
-            UIManager.Instance.RemoveUIBase(name);
+            UIManager.Instance.RemoveUI(name);
         }
     }
 }

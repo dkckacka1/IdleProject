@@ -30,7 +30,7 @@ namespace IdleProject.Core.UI
             return null;
         }
 
-        public void AddUIBase(string name, UIBase ui)
+        public void AddUI(string name, UIBase ui)
         {
             _uiBaseDic.Add(name,ui);
         }
@@ -38,10 +38,22 @@ namespace IdleProject.Core.UI
         public T GetUI<T>(string name) where T : UIBase
         {
             _uiBaseDic.TryGetValue(name, out var result);
-            return result as T;
+
+            if (result is null)
+            {
+                Debug.LogError($"{name} UI is null");
+            }
+
+            var ui = result as T;
+            if (ui is null)
+            {
+                Debug.LogError($"{name} is not {typeof(T).Name}");
+            }            
+            
+            return ui;
         }
 
-        public void RemoveUIBase(string name)
+        public void RemoveUI(string name)
         {
             _uiBaseDic.Remove(name);
         }

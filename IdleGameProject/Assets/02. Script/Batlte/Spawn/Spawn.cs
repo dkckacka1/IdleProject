@@ -12,21 +12,15 @@ namespace IdleProject.Battle.Spawn
 
         public Vector3 GetSpawnPosition(SpawnPositionType positionType)
         {
-            switch (positionType)
+            return positionType switch
             {
-                case SpawnPositionType.FrontMiddle:
-                    return frontMiddlePosition.position;
-                case SpawnPositionType.FrontRight:
-                    return frontRightPosition.position;
-                case SpawnPositionType.FrontLeft:
-                    return frontLeftPosition.position;
-                case SpawnPositionType.RearRight:
-                    return rearRightPosition.position;
-                case SpawnPositionType.RearLeft:
-                    return rearLeftPosition.position;
-            }
-
-            return Vector3.zero;
+                SpawnPositionType.FrontMiddle => frontMiddlePosition.position,
+                SpawnPositionType.FrontRight => frontRightPosition.position,
+                SpawnPositionType.FrontLeft => frontLeftPosition.position,
+                SpawnPositionType.RearRight => rearRightPosition.position,
+                SpawnPositionType.RearLeft => rearLeftPosition.position,
+                _ => Vector3.zero
+            };
         }
     }
 }

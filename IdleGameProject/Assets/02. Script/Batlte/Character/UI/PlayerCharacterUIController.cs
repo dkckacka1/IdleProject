@@ -6,7 +6,7 @@ namespace IdleProject.Battle.UI
 {
     public class PlayerCharacterUIController : CharacterUIController
     {
-        private PlayerCharacterBanner banner;
+        private PlayerCharacterBanner _banner;
 
         public override void Initialized(CharacterData data, StatSystem stat)
         {
@@ -19,13 +19,13 @@ namespace IdleProject.Battle.UI
         {
             base.OnBattleUIEvent();
 
-            banner.CharacterHealthBar.PlayDamageSlider();
+            _banner.CharacterHealthBar.PlayDamageSlider();
         }
 
         private void SetPlayerCharacterBanner(CharacterData data, StatSystem stat)
         {
-            banner = GetBattleUI.GetPlayerCharacterBanner();
-            banner.Initialized(data, stat).Forget();
+            _banner = GetBattleUI.GetPlayerCharacterBanner();
+            _banner.Initialized(data, stat).Forget();
         }
     }
 }

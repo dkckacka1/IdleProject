@@ -12,13 +12,13 @@ namespace IdleProject.Battle.Character
     {
         public Func<ITakeDamagedAble> GetTargetCharacter;
 
-        private const float DefaultGetManaPoint = 10;
-        [ShowInInspector] private bool isNowAttack;
-        [ShowInInspector] private bool isNowSkill;
+        private const float DEFAULT_GET_MANA_POINT = 10;
+        private bool _isNowAttack;
+        private bool _isNowSkill;
 
-        public bool CanTakeDamage => !State.isDead;
+        public bool CanTakeDamage => !State.IsDead;
         public bool HasSkill => _skill is not null;
-        public Vector3 HitEffectOffset => offset.HitEffecOffset;
+        public Vector3 HitEffectOffset => offset.HitEffectOffset;
 
         protected virtual void SetBattleAnimEvent()
         {
@@ -31,14 +31,14 @@ namespace IdleProject.Battle.Character
 
         private void OnAttackStart()
         {
-            isNowAttack = true;
+            _isNowAttack = true;
         }
 
 
         public virtual void Attack()
         {
             transform.LookAt(GetTargetCharacter?.Invoke().GetTransform);
-            if (isNowAttack is false && isNowSkill is false)
+            if (_isNowAttack is false && _isNowSkill is false)
             {
                 AnimController.SetAttack();
             }
@@ -55,24 +55,26 @@ namespace IdleProject.Battle.Character
                 {
                     var projectile = GetAttackProjectile.Invoke();
                     projectile.transform.position = offset.CreateProjectileOffset;
-                    projectile.target = targetCharacter;
+                    projectile.Target = targetCharacter;
                     projectile.hitEvent.AddListener(target =>
                     {
-                        Hit(target, attackDamage);
+                        HitTarget(target, attackDamage);
                     });
                 }
                 else
                 {
-                    Hit(targetCharacter, attackDamage);
+                    HitTarget(targetCharacter, attackDamage);
                 }
             }
 
-            void Hit(ITakeDamagedAble target, float attackDamage)
+            return;
+
+            void HitTarget(ITakeDamagedAble target, float attackDamage)
             {
-                this.Hit(target, attackDamage);
+                Hit(target, attackDamage);
                 
                 var attackHitEffect = GetAttackHitEffect?.Invoke();
-                if (attackHitEffect != null) 
+                if (attackHitEffect) 
                     attackHitEffect.transform.position = target.HitEffectOffset;
                 
                 GetMana();
@@ -101,21 +103,21 @@ namespace IdleProject.Battle.Character
 
         private void OnAttackEnd()
         {
-            isNowAttack = false;
+            _isNowAttack = false;
             StartAttackCooltime().Forget();
         }
 
         private async UniTaskVoid StartAttackCooltime()
         {
-            State.canAttack = false;
-            await BattleManager.GetBattleTimer(StatSystem.GetStatValue(CharacterStatType.AttackCooltime));
-            State.canAttack = true;
+            State.CanAttack = false;
+            await BattleManager.GetBattleTimer(StatSystem.GetStatValue(CharacterStatType.AttackCoolTime));
+            State.CanAttack = true;
         }
 
         #region 스킬 관련
         public virtual void Skill()
         {
-            if (isNowAttack is false && isNowSkill is false)
+            if (_isNowAttack is false && _isNowSkill is false)
             {
                 AnimController.SetSkill();
             }
@@ -123,14 +125,14 @@ namespace IdleProject.Battle.Character
 
         private void OnSkillStart()
         {
-            isNowSkill = true;
+            _isNowSkill = true;
             StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
             BattleManager.Instance.AddSkillQueue(this);
         }
 
         private void OnSkillEnd()
         {
-            isNowSkill = false;
+            _isNowSkill = false;
             StartAttackCooltime().Forget();
 
             if (GetSkillProjectile is null)
@@ -141,7 +143,7 @@ namespace IdleProject.Battle.Character
 
         private void GetMana()
         {
-            StatSystem.SetStatValue(CharacterStatType.ManaPoint, StatSystem.GetStatValue(CharacterStatType.ManaPoint) + DefaultGetManaPoint);
+            StatSystem.SetStatValue(CharacterStatType.ManaPoint, StatSystem.GetStatValue(CharacterStatType.ManaPoint) + DEFAULT_GET_MANA_POINT);
         }
         #endregion
 
@@ -150,9 +152,9 @@ namespace IdleProject.Battle.Character
         {
             BattleManager.Instance.DeathCharacter(this);
             characterUI.OnCharacterDeath();
-            State.isDead = true;
+            State.IsDead = true;
             AnimController.SetDeath();
-            collider.enabled = false;
+            GetComponent<Collider>().enabled = false;
         }
     }
 }

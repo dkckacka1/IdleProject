@@ -6,9 +6,6 @@ namespace IdleProject.Battle.Character
 {
     public partial class CharacterController
     {
-
-        private IDisposable moveEndCallback = null;
-
         public virtual void Move(Vector3 destination)
         {
             AnimController.SetMove();

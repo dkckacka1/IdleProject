@@ -10,16 +10,16 @@ namespace IdleProject.Core.ObjectPool
 
         public uint defaultPoolCount = 10;
 
-        private List<IPoolable> poolableList;
+        private List<IPoolable> _poolableList;
 
         private void Awake()
         {
-            poolableList = new(GetComponents<IPoolable>());
+            _poolableList = new(GetComponents<IPoolable>());
         }
 
         public void OnGet()
         {
-            foreach (var poolable in poolableList)
+            foreach (var poolable in _poolableList)
             {
                 poolable.OnGetAction();
             }
@@ -27,7 +27,7 @@ namespace IdleProject.Core.ObjectPool
 
         public void OnRelease()
         {
-            foreach (var poolable in poolableList)
+            foreach (var poolable in _poolableList)
             {
                 poolable.OnReleaseAction();
             }
@@ -35,7 +35,7 @@ namespace IdleProject.Core.ObjectPool
 
         public void OnCreate()
         {
-            foreach (var poolable in poolableList)
+            foreach (var poolable in _poolableList)
             {
                 poolable.OnCreateAction();
             }

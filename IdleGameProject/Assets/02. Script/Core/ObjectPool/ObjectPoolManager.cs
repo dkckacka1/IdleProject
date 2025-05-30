@@ -1,8 +1,6 @@
 using Cysharp.Threading.Tasks;
-using Engine.Core;
 using Engine.Core.Addressable;
 using Engine.Util;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,32 +8,32 @@ namespace IdleProject.Core.ObjectPool
 {
     public class ObjectPoolManager : SingletonMonoBehaviour<ObjectPoolManager>
     {
-        Dictionary<string, Queue<PoolableObject>> poolableDic;
+        private Dictionary<string, Queue<PoolableObject>> _poolableDic;
 
-        private const int DefaultPoolCount = 10;
-        private const int CreateCount = 5;
-        private const int MaxPoolCap = 1000;
+        private const int DEFAULT_POOL_COUNT = 10;
+        private const int CREATE_COUNT = 5;
+        private const int MAX_POOL_CAP = 1000;
 
-        private Transform defaultParent;
+        private Transform _defaultParent;
 
-        public override void Initialized()
+        protected override void Initialized()
         {
             base.Initialized();
-            poolableDic = new();
+            _poolableDic = new();
 
-            defaultParent = new GameObject("defaultParent").transform;
-            defaultParent.SetParent(transform);
+            _defaultParent = new GameObject("defaultParent").transform;
+            _defaultParent.SetParent(transform);
         }
 
         public T Get<T>(string address, Transform parent = null) where T : IPoolable
         {
-            if (!poolableDic.ContainsKey(address))
+            if (!_poolableDic.ContainsKey(address))
             {
                 CreatePool<PoolableObject>(address);
             }
 
-            var pool = poolableDic[address];
-            if (pool.Count <= CreateCount)
+            var pool = _poolableDic[address];
+            if (pool.Count <= CREATE_COUNT)
             {
                 CreateObj<PoolableObject>(address, pool, parent).Forget();
             }
@@ -51,15 +49,15 @@ namespace IdleProject.Core.ObjectPool
         {
             poolable.OnRelease();
             poolable.gameObject.SetActive(false);
-            poolableDic[poolable.address].Enqueue(poolable);
+            _poolableDic[poolable.address].Enqueue(poolable);
         }
 
         public async UniTask CreatePool<T>(string address, Transform parent = null) where T : PoolableObject
         {
-            if (poolableDic.ContainsKey(address)) return;
+            if (_poolableDic.ContainsKey(address)) return;
 
-            poolableDic.Add(address, new());
-            var pool = poolableDic[address];
+            _poolableDic.Add(address, new());
+            var pool = _poolableDic[address];
             var poolableObj = await AddressableManager.Instance.LoadAssetAsync<PoolableObject>(address);
 
             for (int i = 0; i < poolableObj.defaultPoolCount; ++i)
@@ -70,10 +68,7 @@ namespace IdleProject.Core.ObjectPool
 
         private async UniTask CreateObj<T>(string address, Queue<PoolableObject> pool, Transform parent = null) where T : PoolableObject
         {
-            if (parent is null)
-            {
-                parent = defaultParent;
-            }
+            parent ??= _defaultParent;
 
             var instObj = await AddressableManager.Instance.InstantiateObject<T>(address, parent);
             instObj.address = address;

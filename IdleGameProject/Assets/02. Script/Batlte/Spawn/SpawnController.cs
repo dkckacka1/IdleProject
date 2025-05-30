@@ -45,7 +45,7 @@ namespace IdleProject.Battle.Spawn
 
         private void SetCharacterPosition(CharacterController character, CharacterAIType aiType, SpawnPositionType spawnPositionType)
         {
-            SpawnDatas spawnData = aiType == CharacterAIType.Playerable ? player : enemy;
+            SpawnDatas spawnData = aiType == CharacterAIType.Player ? player : enemy;
             var spawnPosition = spawnData.spawn.GetSpawnPosition(spawnPositionType);
 
             character.transform.SetParent(spawnData.spawnObject);

@@ -12,58 +12,58 @@ namespace IdleProject.Battle.Character
         MovementSpeed,
         AttackDamage,
         AttackRange,
-        AttackCooltime,
+        AttackCoolTime,
     }
 
     public class StatSystem
     {
-        StatData defaultStat;
+        private StatData _defaultStat;
 
-        private Dictionary<CharacterStatType, BattleCharacterStat> characterStatDic;
+        private readonly Dictionary<CharacterStatType, BattleCharacterStat> _characterStatDic;
 
-        public bool isLive => GetStatValue(CharacterStatType.HealthPoint) > 0;
-        public bool canUseSkill => GetStatValue(CharacterStatType.ManaPoint) >= GetStatValue(CharacterStatType.ManaPoint, true);
+        public bool IsLive => GetStatValue(CharacterStatType.HealthPoint) > 0;
+        public bool CanUseSkill => GetStatValue(CharacterStatType.ManaPoint) >= GetStatValue(CharacterStatType.ManaPoint, true);
 
         public StatSystem()
         {
-            characterStatDic = new Dictionary<CharacterStatType, BattleCharacterStat>();
+            _characterStatDic = new Dictionary<CharacterStatType, BattleCharacterStat>();
 
             EnumExtension.Foreach<CharacterStatType>(type =>
             {
-                characterStatDic.Add(type, new BattleCharacterStat());
+                _characterStatDic.Add(type, new BattleCharacterStat());
             });
         }
 
         public void SetStatData(StatData statData)
         {
-            defaultStat = statData;
+            _defaultStat = statData;
 
-            characterStatDic[CharacterStatType.HealthPoint].SetStat(statData.healthPoint);
-            characterStatDic[CharacterStatType.MovementSpeed].SetStat(statData.movementSpeed);
-            characterStatDic[CharacterStatType.AttackDamage].SetStat(statData.attackDamage);
-            characterStatDic[CharacterStatType.AttackRange].SetStat(statData.attackRange);
-            characterStatDic[CharacterStatType.AttackCooltime].SetStat(statData.attackCooltime);
-            characterStatDic[CharacterStatType.ManaPoint].SetStat(statData.manaPoint);
+            _characterStatDic[CharacterStatType.HealthPoint].SetStat(statData.healthPoint);
+            _characterStatDic[CharacterStatType.MovementSpeed].SetStat(statData.movementSpeed);
+            _characterStatDic[CharacterStatType.AttackDamage].SetStat(statData.attackDamage);
+            _characterStatDic[CharacterStatType.AttackRange].SetStat(statData.attackRange);
+            _characterStatDic[CharacterStatType.AttackCoolTime].SetStat(statData.attackCoolTime);
+            _characterStatDic[CharacterStatType.ManaPoint].SetStat(statData.manaPoint);
         }
 
         public float GetStatValue(CharacterStatType statType, bool isDefault = false)
         {
-            return isDefault ? characterStatDic[statType].defaultStatValue : characterStatDic[statType].Value;
+            return isDefault ? _characterStatDic[statType].DefaultStatValue : _characterStatDic[statType].Value;
         }
 
         public void SetStatValue(CharacterStatType statType, float value)
         {
-            characterStatDic[statType].Value = value;
+            _characterStatDic[statType].Value = value;
         }
 
-        public void PublishValueChangedEvent(CharacterStatType statType, Action<float> OnValueChanged)
+        public void PublishValueChangedEvent(CharacterStatType statType, Action<float> onValueChanged)
         {
-            characterStatDic[statType].OnValueChanged += OnValueChanged;
+            _characterStatDic[statType].OnValueChanged += onValueChanged;
         }
 
-        public void RemoveValueChangedEvent(CharacterStatType statType, Action<float> OnValueChanged)
+        public void RemoveValueChangedEvent(CharacterStatType statType, Action<float> onValueChanged)
         {
-            characterStatDic[CharacterStatType.HealthPoint].OnValueChanged -= OnValueChanged;
+            _characterStatDic[CharacterStatType.HealthPoint].OnValueChanged -= onValueChanged;
         }
     }
 }

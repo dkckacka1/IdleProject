@@ -9,16 +9,15 @@ namespace IdleProject.Battle.AI.State
         public BattleState(CharacterController controller, Func<CharacterController> targetController) : base(controller, targetController) { }
         public override void Excute()
         {
-            if (Controller.State.canAttack)
+            if (!Controller.State.CanAttack) return;
+            
+            if (Controller.HasSkill && Controller.StatSystem.CanUseSkill)
             {
-                if (Controller.HasSkill && Controller.StatSystem.canUseSkill)
-                {
-                    Controller.Skill();
-                }
-                else
-                {
-                    Controller.Attack();
-                }
+                Controller.Skill();
+            }
+            else
+            {
+                Controller.Attack();
             }
         }
     }

@@ -4,26 +4,26 @@ namespace IdleProject.Battle.AI.State
 {
     public class StateContext
     {
-        private IState currentState;
+        private IState _currentState;
 
         public StateContext(IState defaultState)
         {
-            this.currentState = defaultState;
+            this._currentState = defaultState;
         }
 
         public void ExcuteState()
         {
-            currentState?.Excute();
+            _currentState?.Excute();
         }
 
         public void ChangeState(IState state)
         {
-            currentState = state;
+            _currentState = state;
         }
 
         public string CurrentStateToString()
         {
-            return currentState.GetType().Name;
+            return _currentState.GetType().Name;
         }
     }
 }

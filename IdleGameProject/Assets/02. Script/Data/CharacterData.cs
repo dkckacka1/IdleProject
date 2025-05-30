@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public struct StatData
@@ -12,8 +13,8 @@ public struct StatData
     public float movementSpeed;
     [Range(2f, 10f)]
     public float attackRange;
-    [Range(0.1f, 5f)]
-    public float attackCooltime;
+    [FormerlySerializedAs("attackCooltime")] [Range(0.1f, 5f)]
+    public float attackCoolTime;
 }
 
 [Serializable]

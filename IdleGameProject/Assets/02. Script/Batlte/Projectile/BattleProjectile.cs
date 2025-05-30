@@ -12,7 +12,7 @@ namespace IdleProject.Battle.Projectile
 
 
         [HideInInspector] public UnityEvent<ITakeDamagedAble> hitEvent;
-        [HideInInspector] public ITakeDamagedAble target;
+        [HideInInspector] public ITakeDamagedAble Target;
 
         public void OnCreateAction()
         {
@@ -26,33 +26,33 @@ namespace IdleProject.Battle.Projectile
         public void OnReleaseAction()
         {
             hitEvent.RemoveAllListeners();
-            target = null;
+            Target = null;
             BattleManager.Instance.BattleObjectEventDic[BattleObjectType.Projectile].RemoveListener(OnBattleEvent);
         }
 
-        public void OnBattleEvent()
+        private void OnBattleEvent()
         {
-            Vector3 directionVector = (target.HitEffectOffset - transform.position).normalized;
-            transform.LookAt(target.HitEffectOffset);
+            var directionVector = (Target.HitEffectOffset - transform.position).normalized;
+            transform.LookAt(Target.HitEffectOffset);
             transform.position += directionVector * projectileSpeed * BattleManager.GetCurrentBattleDeltaTime;
         }
 
         private void OnTriggerEnter(Collider other)
         {
             var takeAble = other.GetComponent<ITakeDamagedAble>();
-            if (takeAble is not null && takeAble == target)
+            if (takeAble is not null && takeAble == Target)
             {
-                hitEvent.Invoke(target);
+                hitEvent.Invoke(Target);
                 ObjectPoolManager.Instance.Release(GetComponent<PoolableObject>());
             }
         }
 
         private void DistanceCheck()
         {
-            float distance = Vector3.Distance(target.HitEffectOffset, this.transform.position);
+            var distance = Vector3.Distance(Target.HitEffectOffset, this.transform.position);
             if (distance < 0.5f)
             {
-                hitEvent.Invoke(target);
+                hitEvent.Invoke(Target);
                 ObjectPoolManager.Instance.Release(GetComponent<PoolableObject>());
             }
         }

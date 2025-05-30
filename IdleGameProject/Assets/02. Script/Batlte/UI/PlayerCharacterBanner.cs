@@ -14,11 +14,9 @@ namespace IdleProject.Battle.UI
         [SerializeField] private HealthBar characterHealthBar;
         [SerializeField] private ManaBar characterManaBar;
 
-        private static string ICON_TYPE = "Banner";
+        private const string ICON_TYPE = "Banner";
 
         public HealthBar CharacterHealthBar => characterHealthBar;
-        public ManaBar CharacaterManabar => characterManaBar;
-
 
         public async UniTaskVoid Initialized(CharacterData data, StatSystem characterStat)
         {

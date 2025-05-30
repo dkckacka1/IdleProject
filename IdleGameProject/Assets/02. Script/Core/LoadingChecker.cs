@@ -7,33 +7,33 @@ namespace IdleProject.Core.Loading
 {
     public static class LoadingChecker
     {
-        private const float MaxLoadingTime = 30f;
+        private const float MAX_LOADING_TIME = 30f;
 
-        private static Dictionary<string, LoadingSystem> currentLoadingDic = new Dictionary<string, LoadingSystem>();
+        private static readonly Dictionary<string, LoadingSystem> CURRENT_LOADING_DIC = new Dictionary<string, LoadingSystem>();
 
         public static void StartLoading(string loadingName, Func<UniTask> loading)
         {
-            if (currentLoadingDic.ContainsKey(loadingName) is false)
+            if (CURRENT_LOADING_DIC.TryGetValue(loadingName, out var loadingSystem) is false)
             {
-                currentLoadingDic.Add(loadingName, new());
-                currentLoadingDic[loadingName].AddLoading(loading);
+                CURRENT_LOADING_DIC.Add(loadingName, new());
+                CURRENT_LOADING_DIC[loadingName].AddLoading(loading);
                 CheckLoading(loadingName).Forget();
             }
             else
             {
-                currentLoadingDic[loadingName].AddLoading(loading);
+                loadingSystem.AddLoading(loading);
             }
         }
 
         private static async UniTaskVoid CheckLoading(string loadingName)
         {
-            float loadingTime = 0f;
-            while (currentLoadingDic[loadingName].IsNowLoading)
+            var loadingTime = 0f;
+            while (CURRENT_LOADING_DIC[loadingName].IsNowLoading)
             {
                 await UniTask.WaitForEndOfFrame();
                 loadingTime += Time.deltaTime;
 
-                if (loadingTime >= MaxLoadingTime)
+                if (loadingTime >= MAX_LOADING_TIME)
                 {
                     Debug.Log("최대 로딩 시간 초과");
                     return;
@@ -41,7 +41,7 @@ namespace IdleProject.Core.Loading
             }
 
             Debug.Log($"{loadingName} Loading is End");
-            currentLoadingDic.Remove(loadingName);
+            CURRENT_LOADING_DIC.Remove(loadingName);
         }
     }
 }

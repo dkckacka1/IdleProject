@@ -15,15 +15,15 @@ namespace IdleProject.Battle.Character
 {
     public struct CharacterState
     {
-        public bool canMove;
-        public bool canAttack;
-        public bool isDead;
+        public bool CanMove;
+        public bool CanAttack;
+        public bool IsDead;
 
         public void Initialize()
         {
-            canMove = true;
-            canAttack = true;
-            isDead = false;
+            CanMove = true;
+            CanAttack = true;
+            IsDead = false;
         }
     }
 
@@ -41,7 +41,7 @@ namespace IdleProject.Battle.Character
         private CharacterSkill _skill;
 
         protected NavMeshAgent Agent;
-        private Collider collider;
+        private Collider _collider;
 
         public Func<BattleEffect> GetAttackHitEffect;
         public Func<BattleEffect> GetSkillHitEffect;
@@ -55,7 +55,7 @@ namespace IdleProject.Battle.Character
             offset = GetComponent<CharacterOffset>();
             
             Agent = GetComponent<NavMeshAgent>();
-            collider = GetComponent<Collider>();
+            _collider = GetComponent<Collider>();
 
             StatSystem = new StatSystem();
 
@@ -66,7 +66,7 @@ namespace IdleProject.Battle.Character
         public virtual void Initialized(CharacterData data, CharacterAIType aiType)
         {
             SetSkill(data);
-            SetStatModifedEvent();
+            SetStatModifyEvent();
             SetAnimationEvent();
 
             SetCharacterData(data.stat);
@@ -86,7 +86,7 @@ namespace IdleProject.Battle.Character
             if (Type.GetType(skillName) is not null)
             {
                 _skill = ReflectionController.CreateInstance<CharacterSkill>(skillName);
-                _skill.controller = this;
+                _skill.Controller = this;
                 _skill.SetAnimationEvent(AnimController.AnimEventHandler);
             }
         }
@@ -109,7 +109,7 @@ namespace IdleProject.Battle.Character
 
             switch (aiType)
             {
-                case CharacterAIType.Playerable:
+                case CharacterAIType.Player:
                     uiController = gameObject.AddComponent<PlayerCharacterUIController>();
                     break;
                 case CharacterAIType.Enemy:
@@ -129,7 +129,6 @@ namespace IdleProject.Battle.Character
             aiController.aiType = aiType;
 
             BattleManager.Instance.BattleObjectEventDic[BattleObjectType.Character].AddListener(aiController.OnBatteEvent);
-            BattleManager.Instance.BattleStateEventBus.PublishEvent(aiController);
 
             characterAI = aiController;
         }

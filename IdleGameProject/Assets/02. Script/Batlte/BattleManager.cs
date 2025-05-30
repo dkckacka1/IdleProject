@@ -42,7 +42,6 @@ namespace IdleProject.Battle
     public partial class BattleManager : SingletonMonoBehaviour<BattleManager>
     {
         [HideInInspector] public SpawnController spawnController;
-
         [HideInInspector] public List<CharacterController> playerCharacterList = new List<CharacterController>();
         [HideInInspector] public List<CharacterController> enemyCharacterList = new List<CharacterController>();
 
@@ -53,23 +52,18 @@ namespace IdleProject.Battle
         public Transform effectParent;
         public Transform projectileParent;
 
-        #region 전투 배속 관련
-
-
-        #endregion
-
         private readonly Queue<CharacterController> _skillQueue = new Queue<CharacterController>(); 
 
-        private List<CharacterController> GetCharacterList(CharacterAIType aiType) => (aiType == CharacterAIType.Playerable) ? playerCharacterList : enemyCharacterList;
+        public List<CharacterController> GetCharacterList(CharacterAIType aiType) => (aiType == CharacterAIType.Player) ? playerCharacterList : enemyCharacterList;
 
-        public override void Initialized()
+        protected override void Initialized()
         {
             base.Initialized();
             spawnController = GetComponent<SpawnController>();
-            UIManager.Instance.GetUIController<BattleUIController>().initialized();
+            UIManager.Instance.GetUIController<BattleUIController>().Initialized();
             EnumExtension.Foreach<BattleObjectType>((type) =>
             {
-                BattleObjectEventDic.Add(type, new());
+                BattleObjectEventDic.Add(type, new UnityEvent());
             });
         }
 
@@ -119,70 +113,42 @@ namespace IdleProject.Battle
             characterControllerList.Add(controller);
         }
 
-        public IEnumerable<CharacterController> GetCharacterList(CharacterAIType aiType, Func<CharacterController, bool> whereFunc = null)
-        {
-            IEnumerable<CharacterController> result = GetCharacterList(aiType);
-
-            if (whereFunc is not null)
-            {
-                result = result.Where(whereFunc);
-            }
-
-            return result;
-        }
-
         public void DeathCharacter(CharacterController characterController)
         {
             var aiType = characterController.characterAI.aiType;
             var characterList = GetCharacterList(aiType);
 
-            if (characterList.Any(character => character.StatSystem.isLive) is false)
+            if (characterList.Any(character => character.StatSystem.IsLive) is false)
             {
-                if (aiType == CharacterAIType.Playerable)
+                if (aiType == CharacterAIType.Player)
                 {
-                    Defeat();
+                    BattleStateEventBus.ChangeEvent(BattleStateType.Defeat);
                 }
                 else
                 {
-                    Win();
+                    BattleStateEventBus.ChangeEvent(BattleStateType.Win);
                 }
             }
         }
-
-        private void Win()
-        {
-            BattleStateEventBus.ChangeEvent(BattleStateType.Win);
-        }
-
-        private void Defeat()
-        {
-            BattleStateEventBus.ChangeEvent(BattleStateType.Defeat);
-        }
-
+        
         public void AddSkillQueue(CharacterController useCharacter)
         {
             _skillQueue.Enqueue(useCharacter);
         }
-        
-        public void UseSkill(CharacterController useCharacter)
+
+        private void UseSkill(CharacterController useCharacter)
         {
             BattleStateEventBus.ChangeEvent(BattleStateType.Skill);
             TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, true);
             
-            foreach (var character in GetCharacterList(CharacterAIType.Playerable))
+            foreach (var character in GetCharacterList(CharacterAIType.Player).Where(character => useCharacter != character))
             {
-                if (useCharacter != character)
-                {
-                    character.AnimController.SetAnimationSpeed(0f);
-                }
+                character.AnimController.SetAnimationSpeed(0f);
             }
             
-            foreach (var character in GetCharacterList(CharacterAIType.Enemy))
+            foreach (var character in GetCharacterList(CharacterAIType.Enemy).Where(character => useCharacter != character))
             {
-                if (useCharacter != character)
-                {
-                    character.AnimController.SetAnimationSpeed(0f);
-                }
+                character.AnimController.SetAnimationSpeed(0f);
             }
         }
 
@@ -191,7 +157,7 @@ namespace IdleProject.Battle
             BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
             TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, false);
             
-            foreach (var character in GetCharacterList(CharacterAIType.Playerable))
+            foreach (var character in GetCharacterList(CharacterAIType.Player))
             {
                 character.AnimController.SetAnimationSpeed(GetCurrentBattleSpeed);
             }

@@ -12,19 +12,25 @@ namespace IdleProject.Battle.Character.Skill
 
         private void SkillFirstHit()
         {
-            var target = controller.GetTargetCharacter.Invoke();
-            var attackDamage = controller.StatSystem.GetStatValue(CharacterStatType.AttackDamage) * 2f;
-            var skillProjectile = controller.GetSkillProjectile?.Invoke();
+            var target = Controller.GetTargetCharacter.Invoke();
+            var attackDamage = Controller.StatSystem.GetStatValue(CharacterStatType.AttackDamage) * 2f;
+            var skillProjectile = Controller.GetSkillProjectile?.Invoke();
 
-            skillProjectile.transform.position = controller.offset.CreateProjectileOffset;
-            skillProjectile.target = target;
-            skillProjectile.hitEvent.AddListener(target =>
+            if (skillProjectile)
             {
-                controller.Hit(target, attackDamage);
-                var attackHitEffect = controller.GetAttackHitEffect?.Invoke();
-                attackHitEffect.transform.position = target.HitEffectOffset;
-                BattleManager.Instance.ExitSkill();
-            });
+                skillProjectile.transform.position = Controller.offset.CreateProjectileOffset;
+                skillProjectile.Target = target;
+                skillProjectile.hitEvent.AddListener(takeDamagedAble =>
+                {
+                    Controller.Hit(takeDamagedAble, attackDamage);
+                    
+                    var attackHitEffect = Controller.GetAttackHitEffect?.Invoke();
+                    if (attackHitEffect) 
+                        attackHitEffect.transform.position = takeDamagedAble.HitEffectOffset;
+                    
+                    BattleManager.Instance.ExitSkill();
+                });
+            }
         }
     }
 }

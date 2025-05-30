@@ -11,7 +11,7 @@ namespace IdleProject.Battle.UI
         [SerializeField] private Slider damageFillSlider;
 
         [SerializeField] private float damagePlayDuration = 1f;
-        private float damageAmount = 0f;
+        private float _damageAmount = 0f;
 
         public void Initialized(float maxHealthPoint)
         {
@@ -21,7 +21,7 @@ namespace IdleProject.Battle.UI
             healthFillSlider.value = maxHealthPoint;
             damageFillSlider.value = maxHealthPoint;
 
-            damageAmount = 0f;
+            _damageAmount = 0f;
         }
 
         public void OnChangeHealthPoint(float currentHealthPoint)
@@ -33,19 +33,19 @@ namespace IdleProject.Battle.UI
                 damageFillSlider.value = healthFillSlider.value;
             }
 
-            damageAmount = damageFillSlider.value - healthFillSlider.value;
+            _damageAmount = damageFillSlider.value - healthFillSlider.value;
         }
 
         public void PlayDamageSlider()
         {
-            if (damageAmount > 0)
+            if (_damageAmount > 0)
             {
-                damageFillSlider.value -= damageAmount / damagePlayDuration * BattleManager.GetCurrentBattleSpeed * Time.deltaTime;
+                damageFillSlider.value -= _damageAmount / damagePlayDuration * BattleManager.GetCurrentBattleSpeed * Time.deltaTime;
             }
 
             if(healthFillSlider.value >= damageFillSlider.value)
             {
-                damageAmount = 0;
+                _damageAmount = 0;
             }
         }
     }

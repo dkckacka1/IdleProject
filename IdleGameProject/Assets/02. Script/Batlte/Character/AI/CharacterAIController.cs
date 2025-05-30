@@ -11,7 +11,7 @@ namespace IdleProject.Battle.AI
 {
     public enum CharacterAIType
     {
-        Playerable,
+        Player,
         Enemy,
         //Ally,
         //Neutral,
@@ -19,18 +19,18 @@ namespace IdleProject.Battle.AI
 
 
     [RequireComponent(typeof(CharacterController))]
-    public class CharacterAIController : MonoBehaviour, IEnumEvent<BattleStateType>
+    public class CharacterAIController : MonoBehaviour
     {
         public CharacterAIType aiType;
 
-        private CharacterController controller;
-        private CharacterController currentTarget;
+        private CharacterController _controller;
+        private CharacterController _currentTarget;
 
-        private StateContext context;
-        private IdleState IdleState;
-        private ChaseState chaseState;
-        private DeathState deathState;
-        private BattleState battleState;
+        private StateContext _context;
+        private IdleState _idleState;
+        private ChaseState _chaseState;
+        private DeathState _deathState;
+        private BattleState _battleState;
 
         private void Awake()
         {
@@ -39,85 +39,58 @@ namespace IdleProject.Battle.AI
 
         protected virtual void Initialized()
         {
-            controller = GetComponent<CharacterController>();
-            controller.GetTargetCharacter = GetTargetController;
+            _controller = GetComponent<CharacterController>();
+            _controller.GetTargetCharacter = GetTargetController;
 
-            IdleState = new IdleState(controller, GetTargetController);
-            chaseState = new ChaseState(controller, GetTargetController);
-            deathState = new DeathState(controller, GetTargetController);
-            battleState = new BattleState(controller, GetTargetController);
-            context = new StateContext(IdleState);
+            _idleState = new IdleState(_controller, GetTargetController);
+            _chaseState = new ChaseState(_controller, GetTargetController);
+            _deathState = new DeathState(_controller, GetTargetController);
+            _battleState = new BattleState(_controller, GetTargetController);
+            _context = new StateContext(_idleState);
         }
 
         public void OnBatteEvent()
         {
-            context.ChangeState(CheckState());
-            context.ExcuteState();
-        }
-
-        public void OnWinEvent()
-        {
-        }
-
-        public void OnDefeatEvent()
-        {
+            _context.ChangeState(CheckState());
+            _context.ExcuteState();
         }
 
         private IState CheckState()
         {
-            if (controller.State.isDead)
-                return deathState;
+            if (_controller.State.IsDead)
+                return _deathState;
 
-            currentTarget = GetNealyTarget();
-            if (currentTarget is not null)
+            _currentTarget = GetNealyTarget();
+            if (_currentTarget is not null)
             {
-                if (Vector3.Distance(currentTarget, controller) >= controller.StatSystem.GetStatValue(Character.CharacterStatType.AttackRange))
+                if (Vector3.Distance(_currentTarget, _controller) >= _controller.StatSystem.GetStatValue(Character.CharacterStatType.AttackRange))
                 {
-                    return chaseState;
+                    return _chaseState;
                 }
                 else
                 {
-                    return battleState;
+                    return _battleState;
                 }
             }
 
-            return IdleState;
+            return _idleState;
         }
 
         private CharacterController GetTargetController()
         {
-            return currentTarget;
+            return _currentTarget;
         }
 
         private CharacterController GetNealyTarget()
         {
-            var enemyCharacterList = BattleManager.Instance.GetCharacterList(EnemyType(), character => character.StatSystem.isLive);
-            var target = enemyCharacterList.OrderBy(character => Vector3.Distance(character.transform.position, controller.transform.position)).FirstOrDefault();
+            var enemyCharacterList = BattleManager.Instance.GetCharacterList(EnemyType()).Where(character => character.StatSystem.IsLive);
+            var target = enemyCharacterList.OrderBy(character => Vector3.Distance(character.transform.position, _controller.transform.position)).FirstOrDefault();
             return target;
         }
 
         private CharacterAIType EnemyType()
         {
-            return (aiType == CharacterAIType.Playerable) ? CharacterAIType.Enemy : CharacterAIType.Playerable;
-        }
-        
-        public void OnEnumChange(BattleStateType type)
-        {
-            switch (type)
-            {
-                case BattleStateType.Ready:
-                case BattleStateType.Battle:
-                case BattleStateType.Skill:
-                    break;
-                case BattleStateType.Win:
-                    OnWinEvent();
-                    break;
-                case BattleStateType.Defeat:
-                    OnDefeatEvent();;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
+            return (aiType == CharacterAIType.Player) ? CharacterAIType.Enemy : CharacterAIType.Player;
         }
     }
 }

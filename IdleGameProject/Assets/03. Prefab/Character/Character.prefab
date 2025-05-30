@@ -216,6 +216,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a299af681d340ee409f908f792388383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: {fileID: 0}
+  characterUI: {fileID: 0}
+  characterAI: {fileID: 0}
 --- !u!114 &6484052830121309840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54246c5ee8ab71649a907e241e1df52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitEffecOffsettTransform: {fileID: 3429333532301889173}
+  hitEffectOffsetTransform: {fileID: 3429333532301889173}
   createProjectileOffsetTransform: {fileID: 7555753651168173832}
   fluidHealthBarOffsetTransform: {fileID: 7607870956049325337}
   battleTextOffsetTransform: {fileID: 3429333532301889173}

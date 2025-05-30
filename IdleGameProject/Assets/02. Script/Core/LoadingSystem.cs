@@ -7,25 +7,20 @@ namespace IdleProject.Core.Loading
 {
     public class LoadingSystem
     {
-        List<Func<UniTask>> loadingList;
+        private readonly List<Func<UniTask>> _loadingList = new();
 
-        public bool IsNowLoading => loadingList.Count > 0;
-
-        public LoadingSystem()
-        {
-            loadingList = new List<Func<UniTask>>();
-        }
+        public bool IsNowLoading => _loadingList.Count > 0;
 
         public void AddLoading(Func<UniTask> method)
         {
-            loadingList.Add(method);
-            StartLoading(method);
+            _loadingList.Add(method);
+            StartLoading(method).Forget();
         }
 
-        private async void StartLoading(Func<UniTask> method)
+        private async UniTask StartLoading(Func<UniTask> method)
         {
             await method.Invoke();
-            loadingList.Remove(method);
+            _loadingList.Remove(method);
         }
     }
 }

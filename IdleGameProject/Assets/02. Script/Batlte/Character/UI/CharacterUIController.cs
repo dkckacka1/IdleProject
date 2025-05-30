@@ -8,14 +8,14 @@ namespace IdleProject.Battle.UI
 {
     public class CharacterUIController : MonoBehaviour
     {
-        private HealthBar fluidHealthBar;
-        private CharacterOffset offset;
+        private HealthBar _fluidHealthBar;
+        private CharacterOffset _offset;
 
         protected static BattleUIController GetBattleUI => UIManager.Instance.GetUIController<BattleUIController>();
 
         private void Awake()
         {
-            offset = GetComponent<CharacterOffset>();
+            _offset = GetComponent<CharacterOffset>();
         }
 
         public virtual void Initialized(CharacterData data, StatSystem stat)
@@ -25,29 +25,29 @@ namespace IdleProject.Battle.UI
 
         public virtual void OnBattleUIEvent()
         {
-            fluidHealthBar.transform.position = UIManager.GetUIInScreen(Camera.main.WorldToScreenPoint(offset.FluidHealthBarOffset));
-            fluidHealthBar.PlayDamageSlider();
+            _fluidHealthBar.transform.position = UIManager.GetUIInScreen(Camera.main.WorldToScreenPoint(_offset.FluidHealthBarOffset));
+            _fluidHealthBar.PlayDamageSlider();
         }
 
         public virtual void OnCharacterDeath()
         {
-            fluidHealthBar.gameObject.SetActive(false);
+            _fluidHealthBar.gameObject.SetActive(false);
         }
 
         public void ShowBattleText(string text)
         {
             var battleText = GetBattleUI.GetBattleText.Invoke();
-            Vector3 randomPos = Random.insideUnitCircle * offset.BattleTextOffsetRadius;
-            var textPosition = UIManager.GetUIInScreen(Camera.main.WorldToScreenPoint(offset.BattleTextOffset) + randomPos);
+            Vector3 randomPos = Random.insideUnitCircle * _offset.BattleTextOffsetRadius;
+            var textPosition = UIManager.GetUIInScreen(Camera.main.WorldToScreenPoint(_offset.BattleTextOffset) + randomPos);
             battleText.ShowText(textPosition, text);
         }
         private async UniTaskVoid SetFluidHealthBar(StatSystem characterStat)
         {
-            fluidHealthBar = await ResourcesLoader.InstantiateUI<HealthBar>(SceneType.Battle, "FluidHealthBar");
-            fluidHealthBar.transform.SetParent(GetBattleUI.FluidHealthBarParent);
-            fluidHealthBar.Initialized(characterStat.GetStatValue(CharacterStatType.HealthPoint, true));
-            fluidHealthBar.transform.position = UIManager.GetUIInScreen(Camera.main.WorldToScreenPoint(offset.FluidHealthBarOffset));
-            characterStat.PublishValueChangedEvent(CharacterStatType.HealthPoint, fluidHealthBar.OnChangeHealthPoint);
+            _fluidHealthBar = await ResourcesLoader.InstantiateUI<HealthBar>(SceneType.Battle, "FluidHealthBar");
+            _fluidHealthBar.transform.SetParent(GetBattleUI.FluidHealthBarParent);
+            _fluidHealthBar.Initialized(characterStat.GetStatValue(CharacterStatType.HealthPoint, true));
+            _fluidHealthBar.transform.position = UIManager.GetUIInScreen(Camera.main.WorldToScreenPoint(_offset.FluidHealthBarOffset));
+            characterStat.PublishValueChangedEvent(CharacterStatType.HealthPoint, _fluidHealthBar.OnChangeHealthPoint);
         }
     }
 }

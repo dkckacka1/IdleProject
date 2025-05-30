@@ -21,19 +21,19 @@ namespace IdleProject.Battle.UI
         [BoxGroup("PlayerBanner"), SerializeField] private List<PlayerCharacterBanner> playerCharacterBannerList; 
 
 
-        public Canvas FluidCanvas { get => fluidCanvas; }
-        public Canvas FixedCanvas { get => fixedCanvas; }
+        public Canvas FluidCanvas => fluidCanvas;
+        public Canvas FixedCanvas => fixedCanvas;
 
         public Transform FluidHealthBarParent => fluidHealthBarParent;
         public Transform BattleTextParent => battleTextParent;
 
         public Func<BattleText> GetBattleText;
 
-        private bool isInitialize = false;
+        private bool _isInitialize = false;
 
-        public async void initialized()
+        public async void Initialized()
         {
-            isInitialize = false;
+            _isInitialize = false;
 
             await ResourcesLoader.CreatePool(PoolableType.UI, "BattleText", battleTextParent);
             GetBattleText = () => ResourcesLoader.GetPoolableObject<BattleText>(PoolableType.UI, "BattleText");
@@ -42,12 +42,12 @@ namespace IdleProject.Battle.UI
             UIManager.Instance.GetUI<UIButton>("SpeedButton").Button.onClick.AddListener(ChangeBattleSpeed);
             UIManager.Instance.GetUI<UIButton>("PauseButton").Button.onClick.AddListener(PauseGame);
             
-            isInitialize = true;
+            _isInitialize = true;
         }
 
         public PlayerCharacterBanner GetPlayerCharacterBanner()
         {
-            var targetBanner = playerCharacterBannerList.Where(banner => banner.gameObject.activeInHierarchy is false).First(); ;
+            var targetBanner = playerCharacterBannerList.First(banner => banner.gameObject.activeInHierarchy is false); ;
             targetBanner.gameObject.SetActive(true);
             return targetBanner;
         }

@@ -30,32 +30,32 @@ namespace IdleProject.Core.UI
             return null;
         }
 
-        public void AddUI(string name, UIBase ui)
+        public void AddUI(string uiName, UIBase ui)
         {
-            _uiBaseDic.Add(name,ui);
+            _uiBaseDic.Add(uiName,ui);
         }
 
-        public T GetUI<T>(string name) where T : UIBase
+        public T GetUI<T>(string uiName) where T : UIBase
         {
-            _uiBaseDic.TryGetValue(name, out var result);
+            _uiBaseDic.TryGetValue(uiName, out var result);
 
             if (result is null)
             {
-                Debug.LogError($"{name} UI is null");
+                Debug.LogError($"{uiName} UI is null");
             }
 
             var ui = result as T;
             if (ui is null)
             {
-                Debug.LogError($"{name} is not {typeof(T).Name}");
+                Debug.LogError($"{uiName} is not {typeof(T).Name}");
             }            
             
             return ui;
         }
 
-        public void RemoveUI(string name)
+        public void RemoveUI(string uiName)
         {
-            _uiBaseDic.Remove(name);
+            _uiBaseDic.Remove(uiName);
         }
 
         public static Vector3 GetUIInScreen(Vector3 position)

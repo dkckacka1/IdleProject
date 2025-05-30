@@ -12,12 +12,12 @@ namespace IdleProject.Battle.Character.Skill
 
         private void SkillFirstHit()
         {
-            var target = controller.GetTargetCharacter.Invoke();
-            var attackDamage = controller.StatSystem.GetStatValue(CharacterStatType.AttackDamage) * 1.6f;
+            var target = Controller.GetTargetCharacter.Invoke();
+            var attackDamage = Controller.StatSystem.GetStatValue(CharacterStatType.AttackDamage) * 1.6f;
 
-            controller.Hit(target, attackDamage);
+            Controller.Hit(target, attackDamage);
 
-            var skillEffect = controller.GetSkillHitEffect.Invoke();
+            var skillEffect = Controller.GetSkillHitEffect.Invoke();
             skillEffect.transform.position = target.HitEffectOffset;
         }
     }

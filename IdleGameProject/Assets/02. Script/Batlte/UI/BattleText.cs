@@ -10,7 +10,7 @@ namespace IdleProject.Battle.UI
 {
     public class BattleText : MonoBehaviour, IPoolable, IEnumEvent<GameStateType>
     {
-        private TextMeshProUGUI battleText;
+        private TextMeshProUGUI _battleText;
 
         [SerializeField] private float punchDuration = 0.2f;
         [SerializeField] private Vector3 punchScaleVector = new Vector3(1.1f, 1.1f);
@@ -18,13 +18,13 @@ namespace IdleProject.Battle.UI
         [SerializeField] private float floatingDuration = 0.5f;
         [SerializeField] private float floatingYPos = 100f;
 
-        private Sequence floatingSequence;
+        private Sequence _floatingSequence;
         
         private void Awake()
         {
-            battleText = GetComponent<TextMeshProUGUI>();
+            _battleText = GetComponent<TextMeshProUGUI>();
 
-            floatingSequence = DOTween.Sequence();
+            _floatingSequence = DOTween.Sequence();
         }
 
         public void OnCreateAction()
@@ -38,8 +38,8 @@ namespace IdleProject.Battle.UI
 
         public void OnReleaseAction()
         {
-            battleText.transform.position = Vector3.zero;
-            floatingSequence = null;
+            _battleText.transform.position = Vector3.zero;
+            _floatingSequence = null;
             
             BattleManager.Instance.GameStateEventBus.RemoveEvent(this);
         }
@@ -47,20 +47,20 @@ namespace IdleProject.Battle.UI
         public void ShowText(Vector3 textPosition, string text)
         {
             transform.position = textPosition;
-            battleText.text = text;
+            _battleText.text = text;
             SetSequence();
         }
 
         private void SetSequence()
         {
-            floatingSequence = DOTween.Sequence();
+            _floatingSequence = DOTween.Sequence();
             
-            floatingSequence.Append(battleText.transform.DOPunchScale(punchScaleVector,
+            _floatingSequence.Append(_battleText.transform.DOPunchScale(punchScaleVector,
                 punchDuration / BattleManager.GetCurrentBattleSpeed));
-            floatingSequence.Join(battleText.transform.DOMoveY(transform.position.y + floatingYPos,
+            _floatingSequence.Join(_battleText.transform.DOMoveY(transform.position.y + floatingYPos,
                 floatingDuration / BattleManager.GetCurrentBattleSpeed));
 
-            floatingSequence.OnComplete(() =>
+            _floatingSequence.OnComplete(() =>
             {
                 ObjectPoolManager.Instance.Release(GetComponent<PoolableObject>());
             });
@@ -71,10 +71,10 @@ namespace IdleProject.Battle.UI
             switch (type)
             {
                 case GameStateType.Play:
-                    floatingSequence?.Play();
+                    _floatingSequence?.Play();
                     break;
                 case GameStateType.Pause:
-                    floatingSequence?.Pause();
+                    _floatingSequence?.Pause();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

@@ -5,30 +5,27 @@ namespace IdleProject.Battle.Character
 {
     public class BattleCharacterStat
     {
-        private float statValue = 0f;
+        private float _statValue = 0f;
 
         public float Value
         {
-            get
-            {
-                return statValue;
-            }
+            get => _statValue;
             set
             {
-                statValue = value;
-                OnValueChanged?.Invoke(statValue);
+                _statValue = value;
+                OnValueChanged?.Invoke(_statValue);
             }
         }
 
-        public float defaultStatValue { get; private set; } = 0f;
+        public float DefaultStatValue { get; private set; } = 0f;
 
 
         public Action<float> OnValueChanged = null;
 
         public void SetStat(float stat)
         {
-            defaultStatValue = stat;
-            statValue = stat;
+            DefaultStatValue = stat;
+            _statValue = stat;
             OnValueChanged?.Invoke(stat);
         }
     }

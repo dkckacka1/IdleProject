@@ -39,8 +39,8 @@ namespace IdleProject.Battle.UI
             GetBattleText = () => ResourcesLoader.GetPoolableObject<BattleText>(PoolableType.UI, "BattleText");
 
             SetSpeedText();
-            var button = UIManager.Instance.GetUI<UIButton>("SpeedButton");
-            button.Button.onClick.AddListener(ChangeBattleSpped);
+            UIManager.Instance.GetUI<UIButton>("SpeedButton").Button.onClick.AddListener(ChangeBattleSpeed);
+            UIManager.Instance.GetUI<UIButton>("PauseButton").Button.onClick.AddListener(PauseGame);
             
             isInitialize = true;
         }
@@ -53,16 +53,21 @@ namespace IdleProject.Battle.UI
         }
         
         
-        private void ChangeBattleSpped()
+        private void ChangeBattleSpeed()
         {
             BattleManager.Instance.NextBattleSpeed();
 
             SetSpeedText();
         }
 
-        private static void SetSpeedText()
+        private void SetSpeedText()
         {
-            UIManager.Instance.GetUI<UIText>("BattleSpeedText").Text.text = $"{BattleManager.Instance.currentBattleSpeed:N0}x";
+            UIManager.Instance.GetUI<UIText>("BattleSpeedText").Text.text = $"{BattleManager.Instance.currentBattleSpeed:N0}";
+        }
+
+        private void PauseGame()
+        {
+            BattleManager.Instance.GameStateEventBus.ChangeEvent(GameStateType.Pause);
         }
     }
 }

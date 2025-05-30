@@ -55,14 +55,14 @@ namespace IdleProject.Battle.UI
         
         private void ChangeBattleSpped()
         {
-            BattleManager.Instance.SetBattleSpeed(BattleManager.Instance.CurrentBattleSpeed.GetMoveNext());
+            BattleManager.Instance.NextBattleSpeed();
 
             SetSpeedText();
         }
 
         private static void SetSpeedText()
         {
-            UIManager.Instance.GetUI<UIText>("BattleSpeedText").Text.text = $"{BattleManager.Instance.CurrentBattleSpeed.ToString()} X";
+            UIManager.Instance.GetUI<UIText>("BattleSpeedText").Text.text = $"{BattleManager.Instance.currentBattleSpeed:N0}x";
         }
     }
 }

@@ -1,20 +1,18 @@
-using UnityEngine;
 
-using Engine.Util;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using Cysharp.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.Events;
 using Engine.Core.EventBus;
 using Engine.Core.Time;
 using Engine.Util.Extension;
-using CharacterController = IdleProject.Battle.Character.CharacterController;
+using Engine.Util;
+using IdleProject.Core.UI;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Spawn;
-using UnityEngine.Events;
-using IdleProject.Core.UI;
 using IdleProject.Battle.UI;
-using UnityEngine.InputSystem.Switch;
+using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle
 {
@@ -32,13 +30,6 @@ namespace IdleProject.Battle
         Play = default,
         Pause
     }
-
-    public enum BattleSpeedType
-    {
-        Default = 1,
-        Double = 2,
-        Threefold = 3
-    }
     
     public enum BattleObjectType
     {
@@ -48,7 +39,7 @@ namespace IdleProject.Battle
         UI
     }
 
-    public class BattleManager : SingletonMonoBehaviour<BattleManager>
+    public partial class BattleManager : SingletonMonoBehaviour<BattleManager>
     {
         [HideInInspector] public SpawnController spawnController;
 
@@ -64,14 +55,6 @@ namespace IdleProject.Battle
 
         #region 전투 배속 관련
 
-        public BattleSpeedType CurrentBattleSpeed = BattleSpeedType.Default;
-        public const string BattleSpeedTimeKey = "BattleSpeed";
-        public static float GetCurrentBattleSpeed => TimeManager.Instance.GetTimeScaleFactor(BattleSpeedTimeKey);
-        public static float GetCurrentBattleDeltaTime => TimeManager.Instance.GetDeltaTimeScale(BattleSpeedTimeKey);
-        public static UnityEvent<float> GetChangeBattleSpeedEvent =>
-            TimeManager.Instance.GetFactorChangeEvent(BattleSpeedTimeKey);
-        public static UniTask GetBattleTimer(float waitTime) =>
-            TimeManager.Instance.StartTimer(waitTime, BattleSpeedTimeKey);
 
         #endregion
 
@@ -166,13 +149,6 @@ namespace IdleProject.Battle
             }
         }
 
-        public void SetBattleSpeed(BattleSpeedType battleSpeedType)
-        {
-            CurrentBattleSpeed = battleSpeedType;
-            
-            TimeManager.Instance.SetTimeScaleFactor(BattleSpeedTimeKey, (float)battleSpeedType);
-        }
-
         private void Win()
         {
             BattleStateEventBus.ChangeEvent(BattleStateType.Win);
@@ -191,7 +167,7 @@ namespace IdleProject.Battle
         public void UseSkill(CharacterController useCharacter)
         {
             BattleStateEventBus.ChangeEvent(BattleStateType.Skill);
-            TimeManager.Instance.SettingTimer(BattleSpeedTimeKey, true);
+            TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, true);
             
             foreach (var character in GetCharacterList(CharacterAIType.Playerable))
             {
@@ -213,7 +189,7 @@ namespace IdleProject.Battle
         public void ExitSkill()
         {
             BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
-            TimeManager.Instance.SettingTimer(BattleSpeedTimeKey, false);
+            TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, false);
             
             foreach (var character in GetCharacterList(CharacterAIType.Playerable))
             {

@@ -1,8 +1,10 @@
+using System;
+using Engine.Core.EventBus;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character
 {
-    public class AnimationController
+    public class AnimationController : IEnumEvent<GameStateType>
     {
         public AnimationEventHandler AnimEventHandler { get; private set; }
 
@@ -74,6 +76,16 @@ namespace IdleProject.Battle.Character
         public void OnTimeFactorChange(float timeFactor)
         {
             SetAnimationSpeed(timeFactor);
+        }
+
+        public void OnEnumChange(GameStateType type)
+        {
+            animator.enabled = type switch
+            {
+                GameStateType.Play => true,
+                GameStateType.Pause => false,
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
         }
     }
 }

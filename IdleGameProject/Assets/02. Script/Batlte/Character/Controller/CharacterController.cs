@@ -92,9 +92,11 @@ namespace IdleProject.Battle.Character
         }
         private void SetAnimationEvent()
         {
-            BattleManager.GetChangeBattleSpeedEvent.AddListener(AnimController.OnTimeFactorChange);
-            SetBattleAnimEvent();
             AnimController.OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
+            
+            BattleManager.GetChangeBattleSpeedEvent.AddListener(AnimController.OnTimeFactorChange);
+            BattleManager.Instance.GameStateEventBus.PublishEvent(AnimController);
+            SetBattleAnimEvent();
         }
         protected virtual void SetCharacterData(StatData stat)
         {

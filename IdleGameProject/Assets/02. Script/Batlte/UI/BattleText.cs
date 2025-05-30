@@ -66,22 +66,18 @@ namespace IdleProject.Battle.UI
             });
         }
 
-        public void OnEnumChange<T>(T type)
+        public void OnEnumChange(GameStateType type)
         {
             switch (type)
             {
                 case GameStateType.Play:
-                    if (floatingSequence is not null)
-                    {
-                        floatingSequence.Play();
-                    }
+                    floatingSequence?.Play();
                     break;
                 case GameStateType.Pause:
-                    if (floatingSequence is not null)
-                    {
-                        floatingSequence.Pause();
-                    }
+                    floatingSequence?.Pause();
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
     }

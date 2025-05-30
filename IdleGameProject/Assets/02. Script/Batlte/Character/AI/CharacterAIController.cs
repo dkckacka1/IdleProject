@@ -100,34 +100,13 @@ namespace IdleProject.Battle.AI
         {
             return (aiType == CharacterAIType.Playerable) ? CharacterAIType.Enemy : CharacterAIType.Playerable;
         }
-
-        public void OnChangeBatteState(BattleStateType battleState)
-        {
-            switch (battleState)
-            {
-                case BattleStateType.Ready:
-                    break;
-                case BattleStateType.Battle:
-                    break;
-                case BattleStateType.Skill:
-                    break;
-                case BattleStateType.Win:
-                    OnWinEvent();
-                    break;
-                case BattleStateType.Defeat:
-                    OnDefeatEvent();;
-                    break;
-            }
-        }
-
-        public void OnEnumChange<T>(T type)
+        
+        public void OnEnumChange(BattleStateType type)
         {
             switch (type)
             {
                 case BattleStateType.Ready:
-                    break;
                 case BattleStateType.Battle:
-                    break;
                 case BattleStateType.Skill:
                     break;
                 case BattleStateType.Win:
@@ -136,6 +115,8 @@ namespace IdleProject.Battle.AI
                 case BattleStateType.Defeat:
                     OnDefeatEvent();;
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
     }

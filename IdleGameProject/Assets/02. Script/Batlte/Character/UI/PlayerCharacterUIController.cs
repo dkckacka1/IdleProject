@@ -27,6 +27,16 @@ namespace IdleProject.Battle.UI
             _banner = GetBattleUI.GetPlayerCharacterBanner();
             _banner.Initialized(data, stat).Forget();
         }
+
+        public void StartSkill()
+        {
+            _banner.SetSkillBanner(true);
+        }
+
+        public void EndSkill()
+        {
+            _banner.SetSkillBanner(false);
+        }
     }
 }
 

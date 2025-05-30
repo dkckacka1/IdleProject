@@ -4,6 +4,7 @@ using IdleProject.Core.ObjectPool;
 using Sirenix.OdinInspector;
 using System;
 using Engine.Core.Time;
+using IdleProject.Battle.UI;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character
@@ -128,6 +129,8 @@ namespace IdleProject.Battle.Character
             _isNowSkill = true;
             StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
             BattleManager.Instance.AddSkillQueue(this);
+            
+            (characterUI as PlayerCharacterUIController)?.StartSkill();
         }
 
         private void OnSkillEnd()
@@ -139,6 +142,8 @@ namespace IdleProject.Battle.Character
             {
                 BattleManager.Instance.ExitSkill();
             }
+            
+            (characterUI as PlayerCharacterUIController)?.EndSkill();
         }
 
         private void GetMana()

@@ -1,12 +1,14 @@
+using System;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
 using TMPro;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Engine.Core.EventBus;
 
 namespace IdleProject.Battle.UI
 {
-    public class BattleText : MonoBehaviour, IPoolable
+    public class BattleText : MonoBehaviour, IPoolable, IEnumEvent<GameStateType>
     {
         private TextMeshProUGUI battleText;
 
@@ -31,8 +33,7 @@ namespace IdleProject.Battle.UI
 
         public void OnGetAction()
         {
-            BattleManager.Instance.GameStateEventBus.PublishEvent(GameStateType.Play, OnGamePlay);
-            BattleManager.Instance.GameStateEventBus.PublishEvent(GameStateType.Pause, OnGamePause);
+            BattleManager.Instance.GameStateEventBus.PublishEvent(this);
         }
 
         public void OnReleaseAction()
@@ -40,8 +41,7 @@ namespace IdleProject.Battle.UI
             battleText.transform.position = Vector3.zero;
             floatingSequence = null;
             
-            BattleManager.Instance.GameStateEventBus.RemoveEvent(GameStateType.Play, OnGamePlay);
-            BattleManager.Instance.GameStateEventBus.RemoveEvent(GameStateType.Pause, OnGamePause);
+            BattleManager.Instance.GameStateEventBus.RemoveEvent(this);
         }
 
         public void ShowText(Vector3 textPosition, string text)
@@ -66,19 +66,22 @@ namespace IdleProject.Battle.UI
             });
         }
 
-        private void OnGamePause()
+        public void OnEnumChange<T>(T type)
         {
-            if (floatingSequence is not null)
+            switch (type)
             {
-                floatingSequence.Pause();
-            }
-        }
-        
-        private void OnGamePlay()
-        {
-            if (floatingSequence is not null)
-            {
-                floatingSequence.Play();
+                case GameStateType.Play:
+                    if (floatingSequence is not null)
+                    {
+                        floatingSequence.Play();
+                    }
+                    break;
+                case GameStateType.Pause:
+                    if (floatingSequence is not null)
+                    {
+                        floatingSequence.Pause();
+                    }
+                    break;
             }
         }
     }

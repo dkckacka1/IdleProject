@@ -127,8 +127,7 @@ namespace IdleProject.Battle.Character
             aiController.aiType = aiType;
 
             BattleManager.Instance.BattleObjectEventDic[BattleObjectType.Character].AddListener(aiController.OnBatteEvent);
-            BattleManager.Instance.BattleStateEventBus.PublishEvent(BattleStateType.Win, aiController.OnWinEvent);
-            BattleManager.Instance.BattleStateEventBus.PublishEvent(BattleStateType.Defeat, aiController.OnDefeatEvent);
+            BattleManager.Instance.BattleStateEventBus.PublishEvent(aiController);
 
             characterAI = aiController;
         }

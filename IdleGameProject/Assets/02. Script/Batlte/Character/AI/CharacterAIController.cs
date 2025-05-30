@@ -1,7 +1,9 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
 using Engine.AI.BehaviourTree;
+using Engine.Core.EventBus;
 using IdleProject.Battle.AI.State;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
@@ -17,7 +19,7 @@ namespace IdleProject.Battle.AI
 
 
     [RequireComponent(typeof(CharacterController))]
-    public class CharacterAIController : MonoBehaviour
+    public class CharacterAIController : MonoBehaviour, IEnumEvent<BattleStateType>
     {
         public CharacterAIType aiType;
 
@@ -97,6 +99,44 @@ namespace IdleProject.Battle.AI
         private CharacterAIType EnemyType()
         {
             return (aiType == CharacterAIType.Playerable) ? CharacterAIType.Enemy : CharacterAIType.Playerable;
+        }
+
+        public void OnChangeBatteState(BattleStateType battleState)
+        {
+            switch (battleState)
+            {
+                case BattleStateType.Ready:
+                    break;
+                case BattleStateType.Battle:
+                    break;
+                case BattleStateType.Skill:
+                    break;
+                case BattleStateType.Win:
+                    OnWinEvent();
+                    break;
+                case BattleStateType.Defeat:
+                    OnDefeatEvent();;
+                    break;
+            }
+        }
+
+        public void OnEnumChange<T>(T type)
+        {
+            switch (type)
+            {
+                case BattleStateType.Ready:
+                    break;
+                case BattleStateType.Battle:
+                    break;
+                case BattleStateType.Skill:
+                    break;
+                case BattleStateType.Win:
+                    OnWinEvent();
+                    break;
+                case BattleStateType.Defeat:
+                    OnDefeatEvent();;
+                    break;
+            }
         }
     }
 }

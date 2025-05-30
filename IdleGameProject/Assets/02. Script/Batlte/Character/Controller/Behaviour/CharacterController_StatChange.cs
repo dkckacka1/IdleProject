@@ -1,9 +1,10 @@
 using System;
 using System.Data;
+using Engine.Core.EventBus;
 
 namespace IdleProject.Battle.Character
 {
-    public partial class CharacterController
+    public partial class CharacterController : IEnumEvent<GameStateType>
     {
         private const float ATTACK_RANGE_CORRECTION_VALUE = 0.1f;
 
@@ -12,6 +13,7 @@ namespace IdleProject.Battle.Character
             StatSystem.PublishValueChangedEvent(CharacterStatType.MovementSpeed, ChangeMovementSpeed);
             StatSystem.PublishValueChangedEvent(CharacterStatType.AttackRange, ChangeAttackRange);
             BattleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
+            BattleManager.Instance.GameStateEventBus.PublishEvent(this);
             OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
         }
 
@@ -27,6 +29,21 @@ namespace IdleProject.Battle.Character
         public void OnTimeFactorChange(float timeFactor)
         {
             Agent.speed = StatSystem.GetStatValue(CharacterStatType.MovementSpeed) * timeFactor;
+        }
+
+        public void OnEnumChange(GameStateType type)
+        {
+            switch (type)
+            {
+                case GameStateType.Play:
+                    Agent.enabled = true;
+                    break;
+                case GameStateType.Pause:
+                    Agent.enabled = false;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
         }
     }
 }

@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using Engine.Core.EventBus;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
+using Zenject;
+using IPoolable = IdleProject.Core.ObjectPool.IPoolable;
 
 namespace IdleProject.Battle.Effect
 {
     public class BattleEffect : MonoBehaviour, IPoolable, IEnumEvent<GameStateType>
     {
+        [Inject] 
+        private BattleManager _battleManager;
+        
         private List<ParticleSystem> _particleList;
+        
         
         private void OnParticleSystemStopped()
         {
@@ -25,14 +31,14 @@ namespace IdleProject.Battle.Effect
         {
             OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
             BattleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
-            BattleManager.Instance.GameStateEventBus.PublishEvent(this);
+            _battleManager.GameStateEventBus.PublishEvent(this);
         }
 
         public void OnReleaseAction()
         {
             transform.position = Vector3.zero;
             BattleManager.GetChangeBattleSpeedEvent.RemoveListener(OnTimeFactorChange);
-            BattleManager.Instance.GameStateEventBus.RemoveEvent(this);
+            _battleManager.GameStateEventBus.RemoveEvent(this);
         }
 
         private void OnTimeFactorChange(float timeFactor)

@@ -28,7 +28,7 @@ namespace IdleProject.Battle.Character.Skill
                     if (attackHitEffect) 
                         attackHitEffect.transform.position = takeDamagedAble.HitEffectOffset;
                     
-                    BattleManager.Instance.ExitSkill();
+                    BattleManager.ExitSkill();
                 });
             }
         }

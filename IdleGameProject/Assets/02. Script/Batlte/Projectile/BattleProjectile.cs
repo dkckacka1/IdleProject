@@ -3,11 +3,16 @@ using IdleProject.Battle.Character;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
 using UnityEngine.Events;
+using Zenject;
+using IPoolable = IdleProject.Core.ObjectPool.IPoolable;
 
 namespace IdleProject.Battle.Projectile
 {
     public class BattleProjectile : MonoBehaviour, IPoolable
     {
+        [Inject] 
+        private BattleManager _battleManager;
+        
         [SerializeField] private float projectileSpeed;
 
 
@@ -20,14 +25,14 @@ namespace IdleProject.Battle.Projectile
 
         public void OnGetAction()
         {
-            BattleManager.Instance.BattleObjectEventDic[BattleObjectType.Projectile].AddListener(OnBattleEvent);
+            _battleManager.BattleObjectEventDic[BattleObjectType.Projectile].AddListener(OnBattleEvent);
         }
 
         public void OnReleaseAction()
         {
             hitEvent.RemoveAllListeners();
             Target = null;
-            BattleManager.Instance.BattleObjectEventDic[BattleObjectType.Projectile].RemoveListener(OnBattleEvent);
+            _battleManager.BattleObjectEventDic[BattleObjectType.Projectile].RemoveListener(OnBattleEvent);
         }
 
         private void OnBattleEvent()

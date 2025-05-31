@@ -5,11 +5,16 @@ using TMPro;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Engine.Core.EventBus;
+using Zenject;
+using IPoolable = IdleProject.Core.ObjectPool.IPoolable;
 
 namespace IdleProject.Battle.UI
 {
     public class BattleText : MonoBehaviour, IPoolable, IEnumEvent<GameStateType>
     {
+        [Inject]
+        private BattleManager _battleManager;
+        
         private TextMeshProUGUI _battleText;
 
         [SerializeField] private float punchDuration = 0.2f;
@@ -24,16 +29,16 @@ namespace IdleProject.Battle.UI
         {
             _battleText = GetComponent<TextMeshProUGUI>();
 
-            _floatingSequence = DOTween.Sequence();
         }
 
         public void OnCreateAction()
         {
+            _floatingSequence = DOTween.Sequence();
         }
 
         public void OnGetAction()
         {
-            BattleManager.Instance.GameStateEventBus.PublishEvent(this);
+            _battleManager.GameStateEventBus.PublishEvent(this);
         }
 
         public void OnReleaseAction()
@@ -41,7 +46,7 @@ namespace IdleProject.Battle.UI
             _battleText.transform.position = Vector3.zero;
             _floatingSequence = null;
             
-            BattleManager.Instance.GameStateEventBus.RemoveEvent(this);
+            _battleManager.GameStateEventBus.RemoveEvent(this);
         }
 
         public void ShowText(Vector3 textPosition, string text)

@@ -3,6 +3,7 @@ using Engine.Core.Addressable;
 using Engine.Util;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace IdleProject.Core.ObjectPool
 {
@@ -69,8 +70,8 @@ namespace IdleProject.Core.ObjectPool
         private async UniTask CreateObj<T>(string address, Queue<PoolableObject> pool, Transform parent = null) where T : PoolableObject
         {
             parent ??= _defaultParent;
-
-            var instObj = await AddressableManager.Instance.InstantiateObject<T>(address, parent);
+            var instObj = await AddressableManager.Instance.InstantiateObject<T>(address, parent, container: ProjectContext.Instance.Container);
+            
             instObj.address = address;
             instObj.OnCreate();
             instObj.gameObject.SetActive(false);

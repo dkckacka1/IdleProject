@@ -1,6 +1,5 @@
-
-using Cysharp.Threading.Tasks;
 using IdleProject.Battle.Character;
+using Zenject;
 
 namespace IdleProject.Battle.UI
 {
@@ -8,11 +7,12 @@ namespace IdleProject.Battle.UI
     {
         private PlayerCharacterBanner _banner;
 
-        public override void Initialized(CharacterData data, StatSystem stat)
+        public override void Initialized(CharacterData data, StatSystem stat, CharacterOffset offset)
         {
-            base.Initialized(data, stat);
-
+            base.Initialized(data, stat, offset);
+            
             SetPlayerCharacterBanner(data, stat);
+            
         }
 
         public override void OnBattleUIEvent()
@@ -24,7 +24,7 @@ namespace IdleProject.Battle.UI
 
         private void SetPlayerCharacterBanner(CharacterData data, StatSystem stat)
         {
-            _banner = GetBattleUI.GetPlayerCharacterBanner();
+            _banner = BattleUIController.GetPlayerCharacterBanner();
             _banner.Initialized(data, stat).Forget();
         }
 

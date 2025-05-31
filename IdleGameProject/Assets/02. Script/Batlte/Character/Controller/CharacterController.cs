@@ -3,13 +3,14 @@ using IdleProject.Battle.AI;
 using IdleProject.Battle.Effect;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
-using IdleProject.Core.ObjectPool;
 using IdleProject.Battle.Projectile;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
 using IdleProject.Battle.Character.Skill;
 using Engine.Core;
+using Zenject;
+using IPoolable = IdleProject.Core.ObjectPool.IPoolable;
 
 namespace IdleProject.Battle.Character
 {
@@ -30,6 +31,9 @@ namespace IdleProject.Battle.Character
     [System.Serializable]
     public partial class CharacterController : MonoBehaviour
     {
+        [Inject] private BattleManager _battleManager;
+        [Inject] private BattleResourceLoader _battleResourceLoader; 
+        
         public StatSystem StatSystem;
         public CharacterState State;
         public CharacterOffset offset;
@@ -39,44 +43,42 @@ namespace IdleProject.Battle.Character
         [HideInInspector] public AnimationController AnimController;
 
         private CharacterSkill _skill;
-
         protected NavMeshAgent Agent;
-        private Collider _collider;
 
         public Func<BattleEffect> GetAttackHitEffect;
         public Func<BattleEffect> GetSkillHitEffect;
         public Func<BattleProjectile> GetAttackProjectile;
         public Func<BattleProjectile> GetSkillProjectile;
-
+        
         public Transform GetTransform => transform;
-
-        private void Awake()
-        {
-            offset = GetComponent<CharacterOffset>();
-            
-            Agent = GetComponent<NavMeshAgent>();
-            _collider = GetComponent<Collider>();
-
-            StatSystem = new StatSystem();
-
-            AnimController = new AnimationController(GetComponentInChildren<Animator>(), GetComponentInChildren<AnimationEventHandler>());
-        }
-
+        
         #region 초기화 부문
-        public virtual void Initialized(CharacterData data, CharacterAIType aiType)
+        
+        [Inject]
+        public virtual void Initialized(CharacterData data, CharacterAIType aiType, AnimationController animController)
         {
+            InitDependencies();
+            
             SetSkill(data);
             SetStatModifyEvent();
             SetAnimationEvent();
-
+            
             SetCharacterData(data.stat);
-
-            InitUIController(data, aiType);
-            InitAIController(aiType);
+            
             InitPoolableObject(data);
-
+            
             State.Initialize();
             StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
+            return;
+
+            void InitDependencies()
+            {
+                offset = GetComponent<CharacterOffset>();
+                Agent = GetComponent<NavMeshAgent>();
+                
+                AnimController = animController;
+                StatSystem = new StatSystem();
+            }
         }
 
         private void SetSkill(CharacterData data)
@@ -95,42 +97,12 @@ namespace IdleProject.Battle.Character
             AnimController.OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
             
             BattleManager.GetChangeBattleSpeedEvent.AddListener(AnimController.OnTimeFactorChange);
-            BattleManager.Instance.GameStateEventBus.PublishEvent(AnimController);
+            _battleManager.GameStateEventBus.PublishEvent(AnimController);
             SetBattleAnimEvent();
         }
         protected virtual void SetCharacterData(StatData stat)
         {
             StatSystem.SetStatData(stat);
-        }
-
-        private async UniTask InitUIController(CharacterData data, CharacterAIType aiType)
-        {
-            CharacterUIController uiController = null;
-
-            switch (aiType)
-            {
-                case CharacterAIType.Player:
-                    uiController = gameObject.AddComponent<PlayerCharacterUIController>();
-                    break;
-                case CharacterAIType.Enemy:
-                    uiController = gameObject.AddComponent<CharacterUIController>();
-                    break;
-            }
-
-            uiController.Initialized(data, StatSystem);
-            BattleManager.Instance.BattleObjectEventDic[BattleObjectType.UI].AddListener(uiController.OnBattleUIEvent);
-
-            characterUI = uiController;
-        }
-
-        private async UniTask InitAIController(CharacterAIType aiType)
-        {
-            var aiController = gameObject.AddComponent<CharacterAIController>();
-            aiController.aiType = aiType;
-
-            BattleManager.Instance.BattleObjectEventDic[BattleObjectType.Character].AddListener(aiController.OnBatteEvent);
-
-            characterAI = aiController;
         }
 
         private async UniTask InitPoolableObject(CharacterData data)
@@ -145,8 +117,8 @@ namespace IdleProject.Battle.Character
         {
             if (string.IsNullOrEmpty(address) is true) return null;
 
-            await ResourcesLoader.CreatePool(poolableType, address);
-            return () => ResourcesLoader.GetPoolableObject<T>(poolableType, address);
+            await _battleResourceLoader.CreatePool(poolableType, address);
+            return () => _battleResourceLoader.GetPoolableObject<T>(poolableType, address);
         }
         #endregion
 
@@ -163,5 +135,6 @@ namespace IdleProject.Battle.Character
         public static implicit operator Vector3(CharacterController controller) => controller.transform.position;
 
         public static implicit operator Transform(CharacterController controller) => controller.transform;
+
     }
 }

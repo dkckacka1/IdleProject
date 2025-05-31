@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using System;
 using Engine.Core.Time;
 using IdleProject.Battle.UI;
+using IdleProject.Core.UI;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character
@@ -34,7 +35,6 @@ namespace IdleProject.Battle.Character
         {
             _isNowAttack = true;
         }
-
 
         public virtual void Attack()
         {
@@ -92,7 +92,7 @@ namespace IdleProject.Battle.Character
 
         public virtual void TakeDamage(float takeDamage)
         {
-            characterUI.ShowBattleText(takeDamage.ToString());
+            UIManager.Instance.GetUIController<BattleUIController>().ShowBattleText(takeDamage.ToString("N0"), offset);
             StatSystem.SetStatValue(CharacterStatType.HealthPoint, StatSystem.GetStatValue(CharacterStatType.HealthPoint) - takeDamage);
 
             if (StatSystem.GetStatValue(CharacterStatType.HealthPoint) <= 0)
@@ -128,7 +128,7 @@ namespace IdleProject.Battle.Character
         {
             _isNowSkill = true;
             StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
-            BattleManager.Instance.AddSkillQueue(this);
+            _battleManager.AddSkillQueue(this);
             
             (characterUI as PlayerCharacterUIController)?.StartSkill();
         }
@@ -140,7 +140,7 @@ namespace IdleProject.Battle.Character
 
             if (GetSkillProjectile is null)
             {
-                BattleManager.Instance.ExitSkill();
+                _battleManager.ExitSkill();
             }
             
             (characterUI as PlayerCharacterUIController)?.EndSkill();
@@ -155,7 +155,7 @@ namespace IdleProject.Battle.Character
 
         private void Death()
         {
-            BattleManager.Instance.DeathCharacter(this);
+            _battleManager.DeathCharacter(this);
             characterUI.OnCharacterDeath();
             State.IsDead = true;
             AnimController.SetDeath();

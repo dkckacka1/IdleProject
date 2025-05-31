@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using Engine.Core.EventBus;
+using UnityEngine;
 
 namespace IdleProject.Battle.Character
 {
@@ -13,7 +14,8 @@ namespace IdleProject.Battle.Character
             StatSystem.PublishValueChangedEvent(CharacterStatType.MovementSpeed, ChangeMovementSpeed);
             StatSystem.PublishValueChangedEvent(CharacterStatType.AttackRange, ChangeAttackRange);
             BattleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
-            BattleManager.Instance.GameStateEventBus.PublishEvent(this);
+            _battleManager.GameStateEventBus.PublishEvent(this);
+            
             OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
         }
 

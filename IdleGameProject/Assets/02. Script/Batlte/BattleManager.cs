@@ -7,11 +7,11 @@ using UnityEngine.Events;
 using Engine.Core.EventBus;
 using Engine.Core.Time;
 using Engine.Util.Extension;
-using Engine.Util;
 using IdleProject.Core.UI;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Spawn;
 using IdleProject.Battle.UI;
+using Zenject;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle
@@ -39,29 +39,31 @@ namespace IdleProject.Battle
         UI
     }
 
-    public partial class BattleManager : SingletonMonoBehaviour<BattleManager>
+    public partial class BattleManager : MonoBehaviour, IInitializable
     {
-        [HideInInspector] public SpawnController spawnController;
-        [HideInInspector] public List<CharacterController> playerCharacterList = new List<CharacterController>();
-        [HideInInspector] public List<CharacterController> enemyCharacterList = new List<CharacterController>();
+        [Inject]
+        private SpawnController _spawnController;
+        public List<CharacterController> playerCharacterList = new();
+        public List<CharacterController> enemyCharacterList = new();
+        
+        [Inject(Id = "EffectTransformOffset")] 
+        public Transform EffectTransformOffset { get; private set; }
+
+        [Inject(Id = "ProjectileTransformOffset")]
+        public Transform ProjectileTransformOffset { get; private set; }
 
         public readonly Dictionary<BattleObjectType, UnityEvent> BattleObjectEventDic = new();
         public readonly EnumEventBus<GameStateType> GameStateEventBus = new();
         public readonly EnumEventBus<BattleStateType> BattleStateEventBus = new();
 
-        public Transform effectParent;
-        public Transform projectileParent;
-
         private readonly Queue<CharacterController> _skillQueue = new Queue<CharacterController>(); 
 
         public List<CharacterController> GetCharacterList(CharacterAIType aiType) => (aiType == CharacterAIType.Player) ? playerCharacterList : enemyCharacterList;
 
-        protected override void Initialized()
+        public void Initialize()
         {
-            base.Initialized();
-            spawnController = GetComponent<SpawnController>();
             UIManager.Instance.GetUIController<BattleUIController>().Initialized();
-            EnumExtension.Foreach<BattleObjectType>((type) =>
+            EnumExtension.Foreach<BattleObjectType>(type =>
             {
                 BattleObjectEventDic.Add(type, new UnityEvent());
             });

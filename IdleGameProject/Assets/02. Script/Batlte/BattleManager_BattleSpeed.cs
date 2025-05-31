@@ -32,6 +32,5 @@ namespace IdleProject.Battle
             
             TimeManager.Instance.SetTimeScaleFactor(BATTLE_SPEED_TIME_KEY, currentBattleSpeed);
         }
-
     }
 }

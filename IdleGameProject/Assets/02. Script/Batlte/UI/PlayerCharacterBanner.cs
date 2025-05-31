@@ -4,11 +4,14 @@ using IdleProject.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace IdleProject.Battle.UI
 {
     public class PlayerCharacterBanner : MonoBehaviour
     {
+        [Inject] private BattleResourceLoader _battleResourceLoader; 
+        
         [SerializeField] private Image characterIconImage;
         [SerializeField] private TextMeshProUGUI characterNameText;
         [SerializeField] private HealthBar characterHealthBar;
@@ -24,8 +27,8 @@ namespace IdleProject.Battle.UI
 
         public async UniTaskVoid Initialized(CharacterData data, StatSystem characterStat)
         {
-            characterIconImage.sprite = await ResourcesLoader.GetIcon(IconType.Character, data.addressValue.characterName,ICON_TYPE);
-            characterSkillBannerImage.sprite = await ResourcesLoader.GetIcon(IconType.Character,
+            characterIconImage.sprite = await _battleResourceLoader.GetIcon(IconType.Character, data.addressValue.characterName,ICON_TYPE);
+            characterSkillBannerImage.sprite = await _battleResourceLoader.GetIcon(IconType.Character,
                 data.addressValue.characterName, SKILL_ICON_TYPE);
             characterNameText.text = data.addressValue.characterName;
             characterHealthBar.Initialized(characterStat.GetStatValue(CharacterStatType.HealthPoint, true));

@@ -1,33 +1,37 @@
 using UnityEngine;
 using IdleProject.Core.UI;
 using Sirenix.OdinInspector;
-using IdleProject.Core.ObjectPool;
 using IdleProject.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Engine.Util.Extension;
+using IdleProject.Battle.Character;
+using Zenject;
+using Random = UnityEngine.Random;
 
 namespace IdleProject.Battle.UI
 {
     public class BattleUIController : UIController
     {
-        [BoxGroup("FixedGroup"), SerializeField] private Canvas fixedCanvas;
+        [Inject] private BattleManager _battleManager;
+        [Inject] private BattleResourceLoader _battleResourceLoader;
 
-        [BoxGroup("FluidGroup"), SerializeField] private Canvas fluidCanvas;
-        [BoxGroup("FluidGroup"), SerializeField] private Transform fluidHealthBarParent;
-        [BoxGroup("FluidGroup"), SerializeField] private Transform battleTextParent;
+        [Inject(Id = "FixedCanvas")] 
+        public Canvas FixedCanvas { get; private set; }
 
-        [BoxGroup("PlayerBanner"), SerializeField] private List<PlayerCharacterBanner> playerCharacterBannerList; 
+        [Inject(Id = "FluidCanvas")]
+        public Canvas FluidCanvas { get; private set; }
+        
+        [Inject(Id = "FluidHealthBarParent")] 
+        public Transform FluidHealthBarParent { get; private set; }
+        
+        [Inject(Id = "BattleTextParent")]
+        public Transform BattleTextParent { get; private set; }
 
+        [Inject(Id = "PlayerCharacterBannerList")]
+        private List<PlayerCharacterBanner> _playerCharacterBannerList;
 
-        public Canvas FluidCanvas => fluidCanvas;
-        public Canvas FixedCanvas => fixedCanvas;
-
-        public Transform FluidHealthBarParent => fluidHealthBarParent;
-        public Transform BattleTextParent => battleTextParent;
-
-        public Func<BattleText> GetBattleText;
+        private Func<BattleText> _getBattleText;
 
         private bool _isInitialize = false;
 
@@ -35,42 +39,50 @@ namespace IdleProject.Battle.UI
         {
             _isInitialize = false;
 
-            await ResourcesLoader.CreatePool(PoolableType.UI, "BattleText", battleTextParent);
-            GetBattleText = () => ResourcesLoader.GetPoolableObject<BattleText>(PoolableType.UI, "BattleText");
+            await _battleResourceLoader.CreatePool(PoolableType.UI, "BattleText", BattleTextParent);
+            _getBattleText = () => _battleResourceLoader.GetPoolableObject<BattleText>(PoolableType.UI, "BattleText");
 
             SetSpeedText();
             UIManager.Instance.GetUI<UIButton>("SpeedButton").Button.onClick.AddListener(ChangeBattleSpeed);
             UIManager.Instance.GetUI<UIButton>("PauseButton").Button.onClick.AddListener(PauseGame);
+            // UIManager.Instance.GetUI<UIButton>("PausePopupExitButton").Button.onClick.AddListener(ExitBattle);
             UIManager.Instance.GetUI<UIButton>("PausePopupContinueButton").Button.onClick.AddListener(ClosePausePopup);
             UIManager.Instance.GetUI<UIButton>("PausePopupRetryButton").Button.onClick.AddListener(RetryBattle);
-            UIManager.Instance.GetUI<UIButton>("PausePopupExitButton").Button.onClick.AddListener(ExitBattle);
             
             _isInitialize = true;
         }
 
         public PlayerCharacterBanner GetPlayerCharacterBanner()
         {
-            var targetBanner = playerCharacterBannerList.First(banner => banner.gameObject.activeInHierarchy is false); ;
+            var targetBanner = _playerCharacterBannerList.First(banner => banner.gameObject.activeInHierarchy is false); ;
             targetBanner.gameObject.SetActive(true);
             return targetBanner;
+        }
+
+        public void ShowBattleText(string text, CharacterOffset offset)
+        {
+            var battleText = _getBattleText.Invoke();
+            Vector3 randomPos = Random.insideUnitCircle * offset.BattleTextOffsetRadius;
+            var textPosition = UIManager.GetUIInScreen(Camera.main.WorldToScreenPoint(offset.BattleTextOffset) + randomPos);
+            battleText.ShowText(textPosition, text);
         }
         
         
         private void ChangeBattleSpeed()
         {
-            BattleManager.Instance.NextBattleSpeed();
+            _battleManager.NextBattleSpeed();
 
             SetSpeedText();
         }
 
         private void SetSpeedText()
         {
-            UIManager.Instance.GetUI<UIText>("BattleSpeedText").Text.text = $"<size=70%>x</size>{BattleManager.Instance.currentBattleSpeed:N0}";
+            UIManager.Instance.GetUI<UIText>("BattleSpeedText").Text.text = $"<size=70%>x</size>{_battleManager.currentBattleSpeed:N0}";
         }
 
         private void PauseGame()
         {
-            BattleManager.Instance.GameStateEventBus.ChangeEvent(GameStateType.Pause);
+            _battleManager.GameStateEventBus.ChangeEvent(GameStateType.Pause);
             UIManager.Instance.GetUI<PausePopup>().OpenPopup();
         }
         
@@ -86,7 +98,7 @@ namespace IdleProject.Battle.UI
 
         private void ClosePausePopup()
         {
-            BattleManager.Instance.GameStateEventBus.ChangeEvent(GameStateType.Play);
+            _battleManager.GameStateEventBus.ChangeEvent(GameStateType.Play);
             UIManager.Instance.GetUI<PausePopup>().ClosePopup();
         }
     }

@@ -5,6 +5,7 @@ using UnityEngine;
 using Engine.AI.BehaviourTree;
 using Engine.Core.EventBus;
 using IdleProject.Battle.AI.State;
+using Zenject;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.AI
@@ -21,6 +22,9 @@ namespace IdleProject.Battle.AI
     [RequireComponent(typeof(CharacterController))]
     public class CharacterAIController : MonoBehaviour
     {
+        [Inject]
+        private BattleManager _battleManager;
+        
         public CharacterAIType aiType;
 
         private CharacterController _controller;
@@ -31,17 +35,16 @@ namespace IdleProject.Battle.AI
         private ChaseState _chaseState;
         private DeathState _deathState;
         private BattleState _battleState;
-
-        private void Awake()
+        
+        [Inject]
+        protected virtual void Initialized(CharacterController controller, CharacterAIType aiType)
         {
-            Initialized();
-        }
-
-        protected virtual void Initialized()
-        {
-            _controller = GetComponent<CharacterController>();
+            _controller = controller;
+            this.aiType = aiType;
             _controller.GetTargetCharacter = GetTargetController;
 
+            _battleManager.BattleObjectEventDic[BattleObjectType.Character].AddListener(OnBatteEvent);
+            
             _idleState = new IdleState(_controller, GetTargetController);
             _chaseState = new ChaseState(_controller, GetTargetController);
             _deathState = new DeathState(_controller, GetTargetController);
@@ -83,7 +86,7 @@ namespace IdleProject.Battle.AI
 
         private CharacterController GetNealyTarget()
         {
-            var enemyCharacterList = BattleManager.Instance.GetCharacterList(EnemyType()).Where(character => character.StatSystem.IsLive);
+            var enemyCharacterList = _battleManager.GetCharacterList(EnemyType()).Where(character => character.StatSystem.IsLive);
             var target = enemyCharacterList.OrderBy(character => Vector3.Distance(character.transform.position, _controller.transform.position)).FirstOrDefault();
             return target;
         }

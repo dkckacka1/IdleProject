@@ -62,7 +62,7 @@ sysinfo.txt
 *.app
 
 # Crashlytics generated file
-crashlytics-build.properties
+crashlytics-build.propertie
 
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
@@ -71,9 +71,9 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-# TestSetting
-Test.meta
-*/[Aa]ssets/Test
+#EngineProjectMeta
+Engine.meta
 
 # OriginAsset
 */[Aa]ssets/99. OriginAsset/*
+

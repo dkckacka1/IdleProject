@@ -1,6 +1,7 @@
 
 using Cysharp.Threading.Tasks;
 using IdleProject.Battle.Character;
+using IdleProject.Data;
 
 namespace IdleProject.Battle.UI
 {

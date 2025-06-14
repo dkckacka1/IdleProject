@@ -12,6 +12,7 @@ using IdleProject.Core.UI;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Spawn;
 using IdleProject.Battle.UI;
+using IdleProject.Core;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle
@@ -39,7 +40,7 @@ namespace IdleProject.Battle
         UI
     }
 
-    public partial class BattleManager : SingletonMonoBehaviour<BattleManager>
+    public partial class BattleManager : SceneController
     {
         [HideInInspector] public SpawnController spawnController;
         [HideInInspector] public List<CharacterController> playerCharacterList = new List<CharacterController>();
@@ -56,9 +57,9 @@ namespace IdleProject.Battle
 
         public List<CharacterController> GetCharacterList(CharacterAIType aiType) => (aiType == CharacterAIType.Player) ? playerCharacterList : enemyCharacterList;
 
-        protected override void Initialized()
+
+        public override void SceneInitialize()
         {
-            base.Initialized();
             spawnController = GetComponent<SpawnController>();
             UIManager.Instance.GetUIController<BattleUIController>().Initialized();
             EnumExtension.Foreach<BattleObjectType>((type) =>
@@ -66,7 +67,7 @@ namespace IdleProject.Battle
                 BattleObjectEventDic.Add(type, new UnityEvent());
             });
         }
-
+        
         private void FixedUpdate()
         {
             if (GameStateEventBus.CurrentType is GameStateType.Play)

@@ -1,4 +1,5 @@
 using System;
+using IdleProject.Core;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill
@@ -28,7 +29,7 @@ namespace IdleProject.Battle.Character.Skill
                     if (attackHitEffect) 
                         attackHitEffect.transform.position = takeDamagedAble.HitEffectOffset;
                     
-                    BattleManager.Instance.ExitSkill();
+                    GameManager.GetCurrentSceneManager<BattleManager>().ExitSkill();
                 });
             }
         }

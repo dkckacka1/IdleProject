@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using IdleProject.Battle.Character;
 using IdleProject.Core;
 using IdleProject.Core.UI;
+using IdleProject.Data;
 using UnityEngine;
 
 namespace IdleProject.Battle.UI

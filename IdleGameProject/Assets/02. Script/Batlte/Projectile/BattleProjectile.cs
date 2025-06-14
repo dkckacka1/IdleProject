@@ -1,5 +1,6 @@
 using Engine.Core.Time;
 using IdleProject.Battle.Character;
+using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
 using UnityEngine.Events;
@@ -20,14 +21,14 @@ namespace IdleProject.Battle.Projectile
 
         public void OnGetAction()
         {
-            BattleManager.Instance.BattleObjectEventDic[BattleObjectType.Projectile].AddListener(OnBattleEvent);
+            GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.Projectile].AddListener(OnBattleEvent);
         }
 
         public void OnReleaseAction()
         {
             hitEvent.RemoveAllListeners();
             Target = null;
-            BattleManager.Instance.BattleObjectEventDic[BattleObjectType.Projectile].RemoveListener(OnBattleEvent);
+            GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.Projectile].RemoveListener(OnBattleEvent);
         }
 
         private void OnBattleEvent()

@@ -1,14 +1,18 @@
+using System;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace IdleProject.Core
 {
-    public enum SceneType
+    // 씬 매니저 클래스
+    // 각 씬당 하나씩 존재
+    public abstract class SceneController : MonoBehaviour
     {
-        Splash,
-        Lobby,
-        Battle,
-    }
+        private void Awake()
+        {
+            GameManager.Instance.SetSceneManager(this);
+        }
 
-    public class SceneController
-    {
+        public abstract void SceneInitialize();
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Engine.Core.EventBus;
+using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
 
@@ -25,14 +26,14 @@ namespace IdleProject.Battle.Effect
         {
             OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
             BattleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
-            BattleManager.Instance.GameStateEventBus.PublishEvent(this);
+            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.PublishEvent(this);
         }
 
         public void OnReleaseAction()
         {
             transform.position = Vector3.zero;
             BattleManager.GetChangeBattleSpeedEvent.RemoveListener(OnTimeFactorChange);
-            BattleManager.Instance.GameStateEventBus.RemoveEvent(this);
+            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.RemoveEvent(this);
         }
 
         private void OnTimeFactorChange(float timeFactor)

@@ -2,6 +2,7 @@ using Engine.Util;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace IdleProject.Core.UI
 {
@@ -9,6 +10,15 @@ namespace IdleProject.Core.UI
     {
         private readonly Dictionary<Type, UIController> _uiControllerDic = new Dictionary<Type, UIController>();
         private readonly Dictionary<string, UIBase> _uiBaseDic = new();
+
+        [HideInInspector] public LoadingUI loadingUI;
+
+        protected override void Initialized()
+        {
+            base.Initialized();
+
+            loadingUI = GetComponentInChildren<LoadingUI>();
+        }
 
         public void AddUIController(UIController controller)
         {

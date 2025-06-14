@@ -28,10 +28,21 @@ MonoBehaviour:
   - m_GUID: 18de1684e4d77584a9eefdf2b8f62817
     m_Address: GameData
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Data
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2dc8a4dce6584ca4e8d1aaae34104a75
     m_Address: Icon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9fc0d4010bbf28b4594072e72b8655ab
+    m_Address: Scene/Battle.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ffdd61c61c7432c418036d5d2afb9dba
+    m_Address: Scene
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

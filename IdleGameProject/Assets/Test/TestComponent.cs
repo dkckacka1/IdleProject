@@ -24,18 +24,18 @@ public class TestComponent : MonoBehaviour
     [Button]
     private void Test()
     {
-        BattleManager.Instance.spawnController.SpawnCharacter(CharacterAIType.Player, SpawnPositionType.FrontLeft,
+        GameManager.GetCurrentSceneManager<BattleManager>().spawnController.SpawnCharacter(CharacterAIType.Player, SpawnPositionType.FrontLeft,
             "Hiro");
-        BattleManager.Instance.spawnController.SpawnCharacter(CharacterAIType.Player, SpawnPositionType.FrontMiddle,
+        GameManager.GetCurrentSceneManager<BattleManager>().spawnController.SpawnCharacter(CharacterAIType.Player, SpawnPositionType.FrontMiddle,
             "Eli");
-        BattleManager.Instance.spawnController.SpawnCharacter(CharacterAIType.Enemy, SpawnPositionType.FrontMiddle,
+        GameManager.GetCurrentSceneManager<BattleManager>().spawnController.SpawnCharacter(CharacterAIType.Enemy, SpawnPositionType.FrontMiddle,
             "GoblinMale");
     }
 
     [Button]
     private void Test2()
     {
-        BattleManager.Instance.BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
-        BattleManager.Instance.GameStateEventBus.ChangeEvent(GameStateType.Play);
+        GameManager.GetCurrentSceneManager<BattleManager>().BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
+        GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Play);
     }
 }

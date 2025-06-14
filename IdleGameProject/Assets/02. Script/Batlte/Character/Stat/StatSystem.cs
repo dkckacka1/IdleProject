@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 
 using Engine.Util.Extension;
+using IdleProject.Data;
 
 namespace IdleProject.Battle.Character
 {

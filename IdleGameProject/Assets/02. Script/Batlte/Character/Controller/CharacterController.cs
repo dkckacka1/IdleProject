@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using IdleProject.Battle.Character.Skill;
 using Engine.Core;
+using IdleProject.Data;
 
 namespace IdleProject.Battle.Character
 {
@@ -95,7 +96,7 @@ namespace IdleProject.Battle.Character
             AnimController.OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
             
             BattleManager.GetChangeBattleSpeedEvent.AddListener(AnimController.OnTimeFactorChange);
-            BattleManager.Instance.GameStateEventBus.PublishEvent(AnimController);
+            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.PublishEvent(AnimController);
             SetBattleAnimEvent();
         }
         protected virtual void SetCharacterData(StatData stat)
@@ -118,7 +119,7 @@ namespace IdleProject.Battle.Character
             }
 
             uiController.Initialized(data, StatSystem);
-            BattleManager.Instance.BattleObjectEventDic[BattleObjectType.UI].AddListener(uiController.OnBattleUIEvent);
+            GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.UI].AddListener(uiController.OnBattleUIEvent);
 
             characterUI = uiController;
         }
@@ -128,7 +129,7 @@ namespace IdleProject.Battle.Character
             var aiController = gameObject.AddComponent<CharacterAIController>();
             aiController.aiType = aiType;
 
-            BattleManager.Instance.BattleObjectEventDic[BattleObjectType.Character].AddListener(aiController.OnBatteEvent);
+            GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.Character].AddListener(aiController.OnBatteEvent);
 
             characterAI = aiController;
         }

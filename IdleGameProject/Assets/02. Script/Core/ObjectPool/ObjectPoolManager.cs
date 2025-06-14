@@ -58,7 +58,7 @@ namespace IdleProject.Core.ObjectPool
 
             _poolableDic.Add(address, new());
             var pool = _poolableDic[address];
-            var poolableObj = await AddressableManager.Instance.LoadAssetAsync<PoolableObject>(address);
+            var poolableObj = await AddressableManager.Instance.Controller.LoadAssetAsync<PoolableObject>(address);
 
             for (int i = 0; i < poolableObj.defaultPoolCount; ++i)
             {
@@ -70,7 +70,7 @@ namespace IdleProject.Core.ObjectPool
         {
             parent ??= _defaultParent;
 
-            var instObj = await AddressableManager.Instance.InstantiateObject<T>(address, parent);
+            var instObj = await AddressableManager.Instance.Controller.InstantiateObject<T>(address, parent);
             instObj.address = address;
             instObj.OnCreate();
             instObj.gameObject.SetActive(false);

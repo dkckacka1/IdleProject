@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using System;
 using Engine.Core.Time;
 using IdleProject.Battle.UI;
+using IdleProject.Core;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character
@@ -128,7 +129,7 @@ namespace IdleProject.Battle.Character
         {
             _isNowSkill = true;
             StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
-            BattleManager.Instance.AddSkillQueue(this);
+            GameManager.GetCurrentSceneManager<BattleManager>().AddSkillQueue(this);
             
             (characterUI as PlayerCharacterUIController)?.StartSkill();
         }
@@ -140,7 +141,7 @@ namespace IdleProject.Battle.Character
 
             if (GetSkillProjectile is null)
             {
-                BattleManager.Instance.ExitSkill();
+                GameManager.GetCurrentSceneManager<BattleManager>().ExitSkill();
             }
             
             (characterUI as PlayerCharacterUIController)?.EndSkill();
@@ -155,7 +156,7 @@ namespace IdleProject.Battle.Character
 
         private void Death()
         {
-            BattleManager.Instance.DeathCharacter(this);
+            GameManager.GetCurrentSceneManager<BattleManager>().DeathCharacter(this);
             characterUI.OnCharacterDeath();
             State.IsDead = true;
             AnimController.SetDeath();

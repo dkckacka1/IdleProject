@@ -5,6 +5,7 @@ using TMPro;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Engine.Core.EventBus;
+using IdleProject.Core;
 
 namespace IdleProject.Battle.UI
 {
@@ -33,7 +34,7 @@ namespace IdleProject.Battle.UI
 
         public void OnGetAction()
         {
-            BattleManager.Instance.GameStateEventBus.PublishEvent(this);
+            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.PublishEvent(this);
         }
 
         public void OnReleaseAction()
@@ -41,7 +42,7 @@ namespace IdleProject.Battle.UI
             _battleText.transform.position = Vector3.zero;
             _floatingSequence = null;
             
-            BattleManager.Instance.GameStateEventBus.RemoveEvent(this);
+            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.RemoveEvent(this);
         }
 
         public void ShowText(Vector3 textPosition, string text)

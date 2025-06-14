@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Effect;
@@ -33,12 +34,9 @@ namespace IdleProject.Battle.Spawn
 
         public async UniTask SpawnCharacter(CharacterAIType aiType, SpawnPositionType spawnPositionType, string characterName)
         {
-            var controller = await ResourcesLoader.InstantiateCharacter(characterName);
-            var data = await ResourcesLoader.LoadCharacterData(characterName);
-            controller.Initialized(data, aiType);
+            var controller = await CreateCharacter(characterName, aiType);
 
-
-            BattleManager.Instance.AddCharacterController(controller);
+            GameManager.GetCurrentSceneManager<BattleManager>().AddCharacterController(controller);
 
             SetCharacterPosition(controller, aiType, spawnPositionType);
         }
@@ -53,6 +51,30 @@ namespace IdleProject.Battle.Spawn
             character.transform.Rotate(spawnData.spawn.transform.rotation.eulerAngles);
         }
 
+        public async Task<CharacterController> CreateCharacter(string characterName, CharacterAIType aiType)
+        {
+            var controller = await ResourcesLoader.InstantiateCharacter(characterName);
+            var data = await ResourcesLoader.LoadCharacterData(characterName);
 
+            AddCharacterUI(controller);
+            AddCharacterAI(controller);
+            SetAnimation(controller);
+            
+            controller.Initialized(data, aiType);
+
+            return controller;
+        }
+
+        private void SetAnimation(CharacterController controller)
+        {
+        }
+
+        private void AddCharacterAI(CharacterController controller)
+        {
+        }
+
+        private void AddCharacterUI(CharacterController controller)
+        {
+        }
     }
 }

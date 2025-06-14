@@ -58,19 +58,19 @@ namespace IdleProject.Battle.UI
         
         private void ChangeBattleSpeed()
         {
-            BattleManager.Instance.NextBattleSpeed();
+            GameManager.GetCurrentSceneManager<BattleManager>().NextBattleSpeed();
 
             SetSpeedText();
         }
 
         private void SetSpeedText()
         {
-            UIManager.Instance.GetUI<UIText>("BattleSpeedText").Text.text = $"<size=70%>x</size>{BattleManager.Instance.currentBattleSpeed:N0}";
+            UIManager.Instance.GetUI<UIText>("BattleSpeedText").Text.text = $"<size=70%>x</size>{GameManager.GetCurrentSceneManager<BattleManager>().currentBattleSpeed:N0}";
         }
 
         private void PauseGame()
         {
-            BattleManager.Instance.GameStateEventBus.ChangeEvent(GameStateType.Pause);
+            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Pause);
             UIManager.Instance.GetUI<PausePopup>().OpenPopup();
         }
         
@@ -86,7 +86,7 @@ namespace IdleProject.Battle.UI
 
         private void ClosePausePopup()
         {
-            BattleManager.Instance.GameStateEventBus.ChangeEvent(GameStateType.Play);
+            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Play);
             UIManager.Instance.GetUI<PausePopup>().ClosePopup();
         }
     }

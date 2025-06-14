@@ -5,6 +5,7 @@ using UnityEngine;
 using Engine.AI.BehaviourTree;
 using Engine.Core.EventBus;
 using IdleProject.Battle.AI.State;
+using IdleProject.Core;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.AI
@@ -83,7 +84,9 @@ namespace IdleProject.Battle.AI
 
         private CharacterController GetNealyTarget()
         {
-            var enemyCharacterList = BattleManager.Instance.GetCharacterList(EnemyType()).Where(character => character.StatSystem.IsLive);
+            
+            
+            var enemyCharacterList = GameManager.GetCurrentSceneManager<BattleManager>().GetCharacterList(EnemyType()).Where(character => character.StatSystem.IsLive);
             var target = enemyCharacterList.OrderBy(character => Vector3.Distance(character.transform.position, _controller.transform.position)).FirstOrDefault();
             return target;
         }

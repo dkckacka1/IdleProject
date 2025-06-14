@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using IdleProject.Battle.Character;
 using IdleProject.Core;
+using IdleProject.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

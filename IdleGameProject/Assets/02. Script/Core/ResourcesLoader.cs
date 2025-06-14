@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Engine.Core.Addressable;
 using IdleProject.Battle;
 using IdleProject.Core.ObjectPool;
+using IdleProject.Data;
 using UnityEngine;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
@@ -40,21 +41,21 @@ namespace IdleProject.Core
         public static async UniTask<CharacterController> InstantiateCharacter(string name)
         {
             var address = $"{JoinSegement(PATH_SEGMENT, PREFAB_PATH, nameof(PrefabType.Character), name)}.prefab";
-            return await AddressableManager.Instance.InstantiateObject<CharacterController>(address);
+            return await AddressableManager.Instance.Controller.InstantiateObject<CharacterController>(address);
         }
 
         public static async UniTask<T> InstantiateUI<T>(SceneType sceneType, string name) where T : Component
         {
             var address =
                 $"{JoinSegement(PATH_SEGMENT, PREFAB_PATH, nameof(PrefabType.UI), sceneType.ToString(), name)}.prefab";
-            var uiObj = await AddressableManager.Instance.InstantiateObject<GameObject>(address);
+            var uiObj = await AddressableManager.Instance.Controller.InstantiateObject<GameObject>(address);
             return uiObj.GetComponent<T>();
         }
 
         public static async UniTask<CharacterData> LoadCharacterData(string name)
         {
             var address = $"{JoinSegement(PATH_SEGMENT, DATA_PATH, CHARACTER_DATA_PATH, name)}.asset";
-            var data = await AddressableManager.Instance.LoadAssetAsync<CharacterData>(address);
+            var data = await AddressableManager.Instance.Controller.LoadAssetAsync<CharacterData>(address);
             return data;
         }
 
@@ -82,7 +83,7 @@ namespace IdleProject.Core
             var spriteName = JoinSegement(SPRITE_NAME_SEGMENT, iconType.ToString(), name, type, "Icon");
             var address = $"{JoinSegement(PATH_SEGMENT, "Icon", spriteName)}.png";
 
-            var sprite = await AddressableManager.Instance.LoadAssetAsync<Sprite>(address);
+            var sprite = await AddressableManager.Instance.Controller.LoadAssetAsync<Sprite>(address);
 
             return sprite;
         }
@@ -104,10 +105,10 @@ namespace IdleProject.Core
                 case PoolableType.UI:
                     break;
                 case PoolableType.Effect:
-                    parent = BattleManager.Instance.effectParent;
+                    parent = GameManager.GetCurrentSceneManager<BattleManager>().effectParent;
                     break;
                 case PoolableType.Projectile:
-                    parent = BattleManager.Instance.projectileParent;
+                    parent = GameManager.GetCurrentSceneManager<BattleManager>().projectileParent;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(poolableType), poolableType, null);

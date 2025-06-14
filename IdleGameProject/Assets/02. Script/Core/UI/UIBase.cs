@@ -8,7 +8,6 @@ namespace IdleProject.Core.UI
         protected virtual void Awake()
         {
             UIManager.Instance.AddUI(name, this);
-            Debug.Log(name);
         }
 
         protected void OnDestroy()

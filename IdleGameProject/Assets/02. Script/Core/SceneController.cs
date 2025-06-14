@@ -10,7 +10,7 @@ namespace IdleProject.Core
     {
         private void Awake()
         {
-            GameManager.Instance.SetSceneManager(this);
+            GameManager.SetCurrentSceneManager(this);
         }
 
         public abstract void SceneInitialize();

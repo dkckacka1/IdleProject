@@ -22,11 +22,6 @@ namespace IdleProject.Core
             _sceneLoader = new SceneLoader();
         }
 
-        public void SetSceneManager(SceneController sceneController)
-        {
-            _currentSceneController = sceneController;
-        }
-
         [Button]
         private async  void LoadSceneTest()
         {

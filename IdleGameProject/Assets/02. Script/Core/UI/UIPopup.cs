@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace IdleProject.Core.UI
@@ -7,6 +8,10 @@ namespace IdleProject.Core.UI
         protected override void Awake()
         {
             base.Awake();
+        }
+
+        private void Start()
+        {
             gameObject.SetActive(false);
         }
 

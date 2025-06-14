@@ -32,13 +32,8 @@ namespace IdleProject.Battle.AI
         private ChaseState _chaseState;
         private DeathState _deathState;
         private BattleState _battleState;
-
-        private void Awake()
-        {
-            Initialized();
-        }
-
-        protected virtual void Initialized()
+        
+        public void Initialized()
         {
             _controller = GetComponent<CharacterController>();
             _controller.GetTargetCharacter = GetTargetController;

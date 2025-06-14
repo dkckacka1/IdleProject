@@ -1,3 +1,5 @@
+using System;
+using Cysharp.Threading.Tasks;
 using Engine.Util;
 using Sirenix.OdinInspector;
 
@@ -22,10 +24,9 @@ namespace IdleProject.Core
             _sceneLoader = new SceneLoader();
         }
 
-        [Button]
-        private async  void LoadSceneTest()
+        private void Start()
         {
-            await _sceneLoader.LoadScene(SceneType.Battle, true);
+            _sceneLoader.LoadScene(SceneType.Battle, true).Forget();
         }
     }
 }

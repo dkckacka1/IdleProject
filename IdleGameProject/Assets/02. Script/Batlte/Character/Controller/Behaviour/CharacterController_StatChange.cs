@@ -9,7 +9,7 @@ namespace IdleProject.Battle.Character
     {
         private const float ATTACK_RANGE_CORRECTION_VALUE = 0.1f;
 
-        private void SetStatModifyEvent()
+        private void PublishStatModifyEvent()
         {
             StatSystem.PublishValueChangedEvent(CharacterStatType.MovementSpeed, ChangeMovementSpeed);
             StatSystem.PublishValueChangedEvent(CharacterStatType.AttackRange, ChangeAttackRange);

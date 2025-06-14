@@ -23,6 +23,12 @@ namespace IdleProject.Battle.Character
             AnimEventHandler = animEventHandler;
         }
 
+        public void SetAnimationController(RuntimeAnimatorController animationController)
+        {
+            _animator.runtimeAnimatorController = animationController;
+            _animator.Rebind();
+        }
+
         public void SetSkill()
         {
             _animator.SetTrigger(_skillAnimHash);

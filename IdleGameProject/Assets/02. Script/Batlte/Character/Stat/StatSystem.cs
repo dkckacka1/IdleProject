@@ -57,6 +57,11 @@ namespace IdleProject.Battle.Character
             _characterStatDic[statType].Value = value;
         }
 
+        public void SetStatValue(CharacterStatType setStatType, CharacterStatType getStatType, bool isDefault = false)
+        {
+            _characterStatDic[setStatType].Value = isDefault ? _characterStatDic[getStatType].DefaultStatValue : _characterStatDic[getStatType].Value;
+        }
+
         public void PublishValueChangedEvent(CharacterStatType statType, Action<float> onValueChanged)
         {
             _characterStatDic[statType].OnValueChanged += onValueChanged;

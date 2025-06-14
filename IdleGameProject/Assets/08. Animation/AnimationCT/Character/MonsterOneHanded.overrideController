@@ -6,7 +6,7 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: OneHanded
+  m_Name: MonsterOneHanded
   m_Controller: {fileID: 9100000, guid: 12081aea278120045a1028e018223431, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 0ea596284bc018743ba9479beccf8517, type: 3}

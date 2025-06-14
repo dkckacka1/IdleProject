@@ -11,6 +11,7 @@ using UnityEngine.AI;
 using IdleProject.Battle.Character.Skill;
 using Engine.Core;
 using IdleProject.Data;
+using UnityEngine.Serialization;
 
 namespace IdleProject.Battle.Character
 {
@@ -31,67 +32,45 @@ namespace IdleProject.Battle.Character
     [System.Serializable]
     public partial class CharacterController : MonoBehaviour
     {
-        public StatSystem StatSystem;
-        public CharacterState State;
-        public CharacterOffset offset;
-
+        [HideInInspector] public CharacterOffset offset;
         [HideInInspector] public CharacterUIController characterUI;
         [HideInInspector] public CharacterAIController characterAI;
-        [HideInInspector] public AnimationController AnimController;
-
-        private CharacterSkill _skill;
-
+        
+        public AnimationController AnimController;
+        public CharacterSkill CharacterSkill;
+        public StatSystem StatSystem;
+        public CharacterState State;
+        
         protected NavMeshAgent Agent;
-        private Collider _collider;
 
         public Func<BattleEffect> GetAttackHitEffect;
         public Func<BattleEffect> GetSkillHitEffect;
         public Func<BattleProjectile> GetAttackProjectile;
         public Func<BattleProjectile> GetSkillProjectile;
 
-        public Transform GetTransform => transform;
-
         private void Awake()
         {
-            offset = GetComponent<CharacterOffset>();
-            
             Agent = GetComponent<NavMeshAgent>();
-            _collider = GetComponent<Collider>();
-
-            StatSystem = new StatSystem();
-
-            AnimController = new AnimationController(GetComponentInChildren<Animator>(), GetComponentInChildren<AnimationEventHandler>());
         }
 
         #region 초기화 부문
-        public virtual void Initialized(CharacterData data, CharacterAIType aiType)
+        public virtual void PublishEvent()
         {
-            SetSkill(data);
-            SetStatModifyEvent();
-            SetAnimationEvent();
+            PublishStatModifyEvent();
+            PublishAnimationEvent();
+            PublishUIEvent();
+            PublishAIEvent();
+        }
 
-            SetCharacterData(data.stat);
-
-            InitUIController(data, aiType);
-            InitAIController(aiType);
-            InitPoolableObject(data);
-
+        public void InitStats()
+        {
             State.Initialize();
+            StatSystem.SetStatValue(CharacterStatType.MovementSpeed, CharacterStatType.MovementSpeed, true);
+            StatSystem.SetStatValue(CharacterStatType.AttackRange, CharacterStatType.AttackRange, true);
             StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
         }
-
-        private void SetSkill(CharacterData data)
-        {
-            var skillName = $"{typeof(CharacterSkill).FullName}{data.addressValue.characterName}, {typeof(CharacterSkill).Assembly}";
-
-            if (Type.GetType(skillName) is not null)
-            {
-                _skill = ReflectionController.CreateInstance<CharacterSkill>(skillName);
-                _skill.Controller = this;
-                _skill.SetAnimationEvent(AnimController.AnimEventHandler);
-            }
-        }
-        private void SetAnimationEvent()
+        
+        private void PublishAnimationEvent()
         {
             AnimController.OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
             
@@ -99,56 +78,18 @@ namespace IdleProject.Battle.Character
             GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.PublishEvent(AnimController);
             SetBattleAnimEvent();
         }
-        protected virtual void SetCharacterData(StatData stat)
+        
+        private void PublishUIEvent()
         {
-            StatSystem.SetStatData(stat);
+            GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.UI].AddListener(characterUI.OnBattleUIEvent);
         }
 
-        private async UniTask InitUIController(CharacterData data, CharacterAIType aiType)
+        private void PublishAIEvent()
         {
-            CharacterUIController uiController = null;
-
-            switch (aiType)
-            {
-                case CharacterAIType.Player:
-                    uiController = gameObject.AddComponent<PlayerCharacterUIController>();
-                    break;
-                case CharacterAIType.Enemy:
-                    uiController = gameObject.AddComponent<CharacterUIController>();
-                    break;
-            }
-
-            uiController.Initialized(data, StatSystem);
-            GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.UI].AddListener(uiController.OnBattleUIEvent);
-
-            characterUI = uiController;
+            GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.Character].AddListener(characterAI.OnBatteEvent);
         }
 
-        private async UniTask InitAIController(CharacterAIType aiType)
-        {
-            var aiController = gameObject.AddComponent<CharacterAIController>();
-            aiController.aiType = aiType;
 
-            GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.Character].AddListener(aiController.OnBatteEvent);
-
-            characterAI = aiController;
-        }
-
-        private async UniTask InitPoolableObject(CharacterData data)
-        {
-            GetAttackHitEffect = await CreatePool<BattleEffect>(PoolableType.Effect, data.addressValue.attackHitEffectAddress);
-            GetSkillHitEffect = await CreatePool<BattleEffect>(PoolableType.Effect, data.addressValue.skillHitEffectAddress);
-            GetAttackProjectile = await CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.attackProjectileAddress);
-            GetSkillProjectile = await CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.skillProjectileAddress);
-        }
-
-        private async UniTask<Func<T>> CreatePool<T>(PoolableType poolableType, string address) where T : IPoolable
-        {
-            if (string.IsNullOrEmpty(address) is true) return null;
-
-            await ResourcesLoader.CreatePool(poolableType, address);
-            return () => ResourcesLoader.GetPoolableObject<T>(poolableType, address);
-        }
         #endregion
 
         public void Win()

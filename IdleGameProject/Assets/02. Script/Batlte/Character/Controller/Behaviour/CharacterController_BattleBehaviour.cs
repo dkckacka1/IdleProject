@@ -13,14 +13,15 @@ namespace IdleProject.Battle.Character
     public partial class CharacterController : ITakeDamagedAble
     {
         public Func<ITakeDamagedAble> GetTargetCharacter;
+        public Transform GetTransform => transform;
 
         private const float DEFAULT_GET_MANA_POINT = 10;
         private bool _isNowAttack;
         private bool _isNowSkill;
 
         public bool CanTakeDamage => !State.IsDead;
-        public bool HasSkill => _skill is not null;
-        public Vector3 HitEffectOffset => offset.HitEffectOffset;
+        public bool HasSkill => CharacterSkill is not null;
+        public Vector3 HitEffectOffset => offset.GetHitEffectPosition;
 
         protected virtual void SetBattleAnimEvent()
         {
@@ -56,7 +57,7 @@ namespace IdleProject.Battle.Character
                 if (GetAttackProjectile is not null)
                 {
                     var projectile = GetAttackProjectile.Invoke();
-                    projectile.transform.position = offset.CreateProjectileOffset;
+                    projectile.transform.position = offset.GetProjectilePosition;
                     projectile.Target = targetCharacter;
                     projectile.hitEvent.AddListener(target =>
                     {

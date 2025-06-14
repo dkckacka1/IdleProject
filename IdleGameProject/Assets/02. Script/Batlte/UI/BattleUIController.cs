@@ -35,8 +35,8 @@ namespace IdleProject.Battle.UI
         {
             _isInitialize = false;
 
-            await ResourcesLoader.CreatePool(PoolableType.UI, "BattleText", battleTextParent);
-            GetBattleText = () => ResourcesLoader.GetPoolableObject<BattleText>(PoolableType.UI, "BattleText");
+            await ResourceLoader.CreatePool(PoolableType.UI, "BattleText", battleTextParent);
+            GetBattleText = () => ResourceLoader.GetPoolableObject<BattleText>(PoolableType.UI, "BattleText");
 
             SetSpeedText();
             UIManager.Instance.GetUI<UIButton>("SpeedButton").Button.onClick.AddListener(ChangeBattleSpeed);

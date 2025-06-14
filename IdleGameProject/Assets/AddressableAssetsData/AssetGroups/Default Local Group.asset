@@ -36,6 +36,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83676e73926d19849ac30715154cb0dc
+    m_Address: Animation
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9fc0d4010bbf28b4594072e72b8655ab
     m_Address: Scene/Battle.unity
     m_ReadOnly: 0

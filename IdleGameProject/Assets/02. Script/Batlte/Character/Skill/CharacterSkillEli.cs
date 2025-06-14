@@ -19,7 +19,7 @@ namespace IdleProject.Battle.Character.Skill
 
             if (skillProjectile)
             {
-                skillProjectile.transform.position = Controller.offset.CreateProjectileOffset;
+                skillProjectile.transform.position = Controller.offset.GetProjectilePosition;
                 skillProjectile.Target = target;
                 skillProjectile.hitEvent.AddListener(takeDamagedAble =>
                 {

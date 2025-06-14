@@ -23,6 +23,7 @@ namespace IdleProject.Data
     public struct CharacterAddressValue
     {
         public string characterName;
+        public string characterAnimationName;
         public string attackProjectileAddress;
         public string attackHitEffectAddress;
         public string skillHitEffectAddress;

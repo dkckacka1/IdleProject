@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IdleProject.Battle.Spawn
 {
-    public class Spawn : MonoBehaviour
+    public class SpawnFormation : MonoBehaviour
     {
         [SerializeField] private Transform frontMiddlePosition;
         [SerializeField] private Transform frontRightPosition;

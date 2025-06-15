@@ -10,8 +10,10 @@ using IdleProject.Battle.Effect;
 using IdleProject.Battle.Projectile;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
+using IdleProject.Core.GameData;
 using IdleProject.Core.ObjectPool;
 using IdleProject.Data;
+using UnityEngine.Serialization;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.Spawn
@@ -25,17 +27,17 @@ namespace IdleProject.Battle.Spawn
         RearLeft,
     }
 
-    [System.Serializable]
-    public struct SpawnDatas
+    [Serializable]
+    public struct SpawnInfo
     {
-        public Spawn spawn;
+        public SpawnFormation spawnFormation;
         public Transform spawnObject;
     }
 
     public class SpawnController : MonoBehaviour
     {
-        [SerializeField] private SpawnDatas player;
-        [SerializeField] private SpawnDatas enemy;
+        [SerializeField] private SpawnInfo player;
+        [SerializeField] private SpawnInfo enemy;
 
         public async UniTask SpawnCharacter(CharacterAIType aiType, SpawnPositionType spawnPositionType,
             string characterName)
@@ -50,12 +52,12 @@ namespace IdleProject.Battle.Spawn
         private void SetCharacterPosition(CharacterController character, CharacterAIType aiType,
             SpawnPositionType spawnPositionType)
         {
-            SpawnDatas spawnData = aiType == CharacterAIType.Player ? player : enemy;
-            var spawnPosition = spawnData.spawn.GetSpawnPosition(spawnPositionType);
+            SpawnInfo spawnInfo = aiType == CharacterAIType.Player ? player : enemy;
+            var spawnPosition = spawnInfo.spawnFormation.GetSpawnPosition(spawnPositionType);
 
-            character.transform.SetParent(spawnData.spawnObject);
+            character.transform.SetParent(spawnInfo.spawnObject);
             character.transform.position = spawnPosition;
-            character.transform.Rotate(spawnData.spawn.transform.rotation.eulerAngles);
+            character.transform.Rotate(spawnInfo.spawnFormation.transform.rotation.eulerAngles);
         }
 
         public async Task<CharacterController> CreateCharacter(string characterName, CharacterAIType aiType)

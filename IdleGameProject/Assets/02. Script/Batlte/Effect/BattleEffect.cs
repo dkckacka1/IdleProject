@@ -4,12 +4,16 @@ using Engine.Core.EventBus;
 using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace IdleProject.Battle.Effect
 {
     public class BattleEffect : MonoBehaviour, IPoolable, IEnumEvent<GameStateType>
     {
         private List<ParticleSystem> _particleList;
+
+        public UnityEvent releaseEvent = null;
         
         private void OnParticleSystemStopped()
         {
@@ -31,9 +35,18 @@ namespace IdleProject.Battle.Effect
 
         public void OnReleaseAction()
         {
+            releaseEvent.Invoke();
+            releaseEvent.RemoveAllListeners();
+            
             transform.position = Vector3.zero;
             BattleManager.GetChangeBattleSpeedEvent.RemoveListener(OnTimeFactorChange);
             GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.RemoveEvent(this);
+        }
+
+        public void SetSkillEffect()
+        {
+            GameManager.GetCurrentSceneManager<BattleManager>().AddSkillObject(this);
+            releaseEvent.AddListener(() => GameManager.GetCurrentSceneManager<BattleManager>().RemoveSkillObject(this));
         }
 
         private void OnTimeFactorChange(float timeFactor)

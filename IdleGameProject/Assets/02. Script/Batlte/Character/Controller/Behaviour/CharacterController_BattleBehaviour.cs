@@ -7,6 +7,7 @@ using Engine.Core.Time;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace IdleProject.Battle.Character
 {
@@ -17,7 +18,7 @@ namespace IdleProject.Battle.Character
 
         private const float DEFAULT_GET_MANA_POINT = 10;
         private bool _isNowAttack;
-        private bool _isNowSkill;
+        public bool isNowSkill;
 
         public bool CanTakeDamage => !State.IsDead;
         public bool HasSkill => CharacterSkill is not null;
@@ -41,7 +42,7 @@ namespace IdleProject.Battle.Character
         public virtual void Attack()
         {
             transform.LookAt(GetTargetCharacter?.Invoke().GetTransform);
-            if (_isNowAttack is false && _isNowSkill is false)
+            if (_isNowAttack is false && isNowSkill is false)
             {
                 AnimController.SetAttack();
             }
@@ -110,7 +111,7 @@ namespace IdleProject.Battle.Character
             StartAttackCooltime().Forget();
         }
 
-        private async UniTaskVoid StartAttackCooltime()
+        public async UniTaskVoid StartAttackCooltime()
         {
             State.CanAttack = false;
             await BattleManager.GetBattleTimer(StatSystem.GetStatValue(CharacterStatType.AttackCoolTime));
@@ -120,7 +121,7 @@ namespace IdleProject.Battle.Character
         #region 스킬 관련
         public virtual void Skill()
         {
-            if (_isNowAttack is false && _isNowSkill is false)
+            if (_isNowAttack is false && isNowSkill is false)
             {
                 AnimController.SetSkill();
             }
@@ -128,7 +129,7 @@ namespace IdleProject.Battle.Character
 
         private void OnSkillStart()
         {
-            _isNowSkill = true;
+            isNowSkill = true;
             StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
             GameManager.GetCurrentSceneManager<BattleManager>().AddSkillQueue(this);
             
@@ -137,13 +138,8 @@ namespace IdleProject.Battle.Character
 
         private void OnSkillEnd()
         {
-            _isNowSkill = false;
-            StartAttackCooltime().Forget();
-
-            if (GetSkillProjectile is null)
-            {
-                GameManager.GetCurrentSceneManager<BattleManager>().ExitSkill();
-            }
+            
+            GameManager.GetCurrentSceneManager<BattleManager>().RemoveSkillObject(this);
             
             (characterUI as PlayerCharacterUIController)?.EndSkill();
         }

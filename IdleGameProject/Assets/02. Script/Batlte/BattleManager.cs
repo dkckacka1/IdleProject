@@ -13,7 +13,9 @@ using IdleProject.Battle.AI;
 using IdleProject.Battle.Spawn;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
+using Sirenix.OdinInspector;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
+using Object = UnityEngine.Object;
 
 namespace IdleProject.Battle
 {
@@ -53,7 +55,9 @@ namespace IdleProject.Battle
         public Transform effectParent;
         public Transform projectileParent;
 
-        private readonly Queue<CharacterController> _skillQueue = new Queue<CharacterController>(); 
+        private readonly Queue<CharacterController> _skillQueue = new Queue<CharacterController>();
+        [ShowInInspector]
+        private readonly List<Object> _currentSkillObjectList = new List<Object>();
 
         public List<CharacterController> GetCharacterList(CharacterAIType aiType) => (aiType == CharacterAIType.Player) ? playerCharacterList : enemyCharacterList;
 
@@ -79,7 +83,7 @@ namespace IdleProject.Battle
                     case BattleStateType.Battle:
                         if (_skillQueue.Count > 0)
                         {
-                            UseSkill(_skillQueue.Dequeue());
+                            UseSkill(_skillQueue.Peek());
                         }
                         BattleObjectEventDic[BattleObjectType.Character].Invoke();
                         BattleObjectEventDic[BattleObjectType.Projectile].Invoke();
@@ -135,10 +139,27 @@ namespace IdleProject.Battle
         public void AddSkillQueue(CharacterController useCharacter)
         {
             _skillQueue.Enqueue(useCharacter);
+            AddSkillObject(useCharacter);
+        }
+
+        public void AddSkillObject(Object skillObject)
+        {
+            _currentSkillObjectList.Add(skillObject);
+        }
+
+        public void RemoveSkillObject(Object skillObject)
+        {
+            _currentSkillObjectList.Remove(skillObject);
+            if (_currentSkillObjectList.Count <= 0)
+            {
+                ExitSkill(_skillQueue.Dequeue());
+            }
         }
 
         private void UseSkill(CharacterController useCharacter)
         {
+            useCharacter.isNowSkill = true;
+            
             BattleStateEventBus.ChangeEvent(BattleStateType.Skill);
             TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, true);
             
@@ -153,8 +174,11 @@ namespace IdleProject.Battle
             }
         }
 
-        public void ExitSkill()
+        public void ExitSkill(CharacterController useCharacter)
         {
+            useCharacter.isNowSkill = false;
+            useCharacter.StartAttackCooltime().Forget();
+            
             BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
             TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, false);
             

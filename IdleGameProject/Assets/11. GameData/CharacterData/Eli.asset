@@ -21,7 +21,7 @@ MonoBehaviour:
     skillProjectileAddress: Eli_Attack_Projectile
   stat:
     healthPoint: 50
-    manaPoint: 40
+    manaPoint: 20
     attackDamage: 20
     movementSpeed: 4.5
     attackRange: 10

@@ -16,20 +16,21 @@ namespace IdleProject.Battle.Character.Skill
             var target = Controller.GetTargetCharacter.Invoke();
             var attackDamage = Controller.StatSystem.GetStatValue(CharacterStatType.AttackDamage) * 2f;
             var skillProjectile = Controller.GetSkillProjectile?.Invoke();
-
             if (skillProjectile)
             {
                 skillProjectile.transform.position = Controller.offset.GetProjectilePosition;
                 skillProjectile.Target = target;
+                skillProjectile.SetSkillProjectile();
                 skillProjectile.hitEvent.AddListener(takeDamagedAble =>
                 {
                     Controller.Hit(takeDamagedAble, attackDamage);
                     
                     var attackHitEffect = Controller.GetAttackHitEffect?.Invoke();
-                    if (attackHitEffect) 
+                    if (attackHitEffect)
+                    {
+                        attackHitEffect.SetSkillEffect();
                         attackHitEffect.transform.position = takeDamagedAble.HitEffectOffset;
-                    
-                    GameManager.GetCurrentSceneManager<BattleManager>().ExitSkill();
+                    }
                 });
             }
         }

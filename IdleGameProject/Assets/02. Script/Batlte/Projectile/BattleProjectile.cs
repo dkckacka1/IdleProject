@@ -4,6 +4,7 @@ using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace IdleProject.Battle.Projectile
 {
@@ -11,9 +12,9 @@ namespace IdleProject.Battle.Projectile
     {
         [SerializeField] private float projectileSpeed;
 
-
         [HideInInspector] public UnityEvent<ITakeDamagedAble> hitEvent;
         [HideInInspector] public ITakeDamagedAble Target;
+        [HideInInspector] public UnityEvent releaseEvent = null;
 
         public void OnCreateAction()
         {
@@ -26,9 +27,17 @@ namespace IdleProject.Battle.Projectile
 
         public void OnReleaseAction()
         {
+            releaseEvent.Invoke();
+            releaseEvent.RemoveAllListeners();
             hitEvent.RemoveAllListeners();
             Target = null;
             GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.Projectile].RemoveListener(OnBattleEvent);
+        }
+
+        public void SetSkillProjectile()
+        {
+            GameManager.GetCurrentSceneManager<BattleManager>().AddSkillObject(this);
+            releaseEvent.AddListener(() => GameManager.GetCurrentSceneManager<BattleManager>().RemoveSkillObject(this));
         }
 
         private void OnBattleEvent()

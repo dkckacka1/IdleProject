@@ -2,29 +2,38 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Engine.Util;
-using IdleProject.Data;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using Data = IdleProject.Data.Data;
 
-namespace IdleProject.Core
+namespace IdleProject.Core.GameData
 {
     public class DataManager : SingletonMonoBehaviour<DataManager>
     {
         [ShowInInspector]
-        private readonly Dictionary<Type, Dictionary<string, Data.Data>> _dataDictionary =
-            new Dictionary<Type, Dictionary<string, Data.Data>>();
+        private readonly Dictionary<Type, Dictionary<string, Data.Data>> _dataDictionary = new();
 
         private const string DATA_LABEL_REFERENCE_NAME = "Data";
+        
+        [ShowInInspector]
+        public DataController DataController { get; private set; }
+
+        [SerializeField] private bool isTest;
 
         protected override void Initialized()
         {
             base.Initialized();
 
-            LoadData().Forget();
+            if (isTest)
+            {
+                DataController = new DataController();
+            }
+            else
+            {
+                DataController = new DataController(Resources.Load<TestStaticData>("TestStaticData"));
+            }
         }
         
-        private async UniTaskVoid LoadData()
+        public async UniTask LoadData()
         {
             var locateList =
                 await AddressableManager.Instance.Controller.LoadAssetLabelLocationList(DATA_LABEL_REFERENCE_NAME);

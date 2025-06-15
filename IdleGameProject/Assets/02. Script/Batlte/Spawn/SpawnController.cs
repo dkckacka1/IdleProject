@@ -28,7 +28,7 @@ namespace IdleProject.Battle.Spawn
     }
 
     [Serializable]
-    public struct SpawnInfo
+    public class SpawnInfo
     {
         public SpawnFormation spawnFormation;
         public Transform spawnObject;
@@ -39,6 +39,24 @@ namespace IdleProject.Battle.Spawn
         [SerializeField] private SpawnInfo player;
         [SerializeField] private SpawnInfo enemy;
 
+        public async UniTask SpawnCharacterAtInfo(CharacterAIType aiType, SpawnInfoData spawnInfo)
+        {
+            if(string.IsNullOrEmpty(spawnInfo.frontLeftCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.FrontLeft, spawnInfo.frontLeftCharacterName);
+            
+            if(string.IsNullOrEmpty(spawnInfo.frontMiddleCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.FrontMiddle, spawnInfo.frontMiddleCharacterName);
+            
+            if(string.IsNullOrEmpty(spawnInfo.frontRightCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.FrontLeft, spawnInfo.frontRightCharacterName);
+            
+            if(string.IsNullOrEmpty(spawnInfo.rearLeftCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.RearLeft, spawnInfo.rearLeftCharacterName);
+            
+            if(string.IsNullOrEmpty(spawnInfo.rearRightCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.RearRight, spawnInfo.rearRightCharacterName);
+        }
+        
         public async UniTask SpawnCharacter(CharacterAIType aiType, SpawnPositionType spawnPositionType,
             string characterName)
         {

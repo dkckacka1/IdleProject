@@ -787,10 +787,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player:
-    spawn: {fileID: 1010962261}
+    spawnFormation: {fileID: 1010962261}
     spawnObject: {fileID: 575789450}
   enemy:
-    spawn: {fileID: 1688777391}
+    spawnFormation: {fileID: 1688777391}
     spawnObject: {fileID: 616870146}
 --- !u!1 &296956545
 GameObject:

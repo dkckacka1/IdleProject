@@ -10,7 +10,7 @@ using UnityEngine.UI;
 namespace  IdleProject.Core.UI
 {
     // 로딩 전용 UI 클래스
-    public class LoadingUI : MonoBehaviour
+    public class LoadingUI : MonoBehaviour, IProgress<float>
     {
         [BoxGroup("LoadingUI"),SerializeField] private Canvas canvas;
         [BoxGroup("LoadingUI"), SerializeField] private CanvasGroup canvasGroup;
@@ -47,7 +47,12 @@ namespace  IdleProject.Core.UI
 
         private void OnPercentChange(float percent)
         {
-            loadingPercentText.text = $"{percent * 100 :000} %";
+            loadingPercentText.text = $"{percent * 100 :0} %";
+        }
+
+        public void Report(float value)
+        {
+            
         }
     }
 }

@@ -13,6 +13,6 @@ namespace IdleProject.Core
             GameManager.SetCurrentSceneManager(this);
         }
 
-        public abstract void SceneInitialize();
+        public abstract UniTask Initialize();
     }
 }

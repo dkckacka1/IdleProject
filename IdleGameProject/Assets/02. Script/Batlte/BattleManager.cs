@@ -1,7 +1,7 @@
-
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using Engine.Core.EventBus;
@@ -13,6 +13,7 @@ using IdleProject.Battle.AI;
 using IdleProject.Battle.Spawn;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
+using IdleProject.Core.GameData;
 using Sirenix.OdinInspector;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 using Object = UnityEngine.Object;
@@ -33,7 +34,7 @@ namespace IdleProject.Battle
         Play = default,
         Pause
     }
-    
+
     public enum BattleObjectType
     {
         Character,
@@ -56,22 +57,32 @@ namespace IdleProject.Battle
         public Transform projectileParent;
 
         private readonly Queue<CharacterController> _skillQueue = new Queue<CharacterController>();
-        [ShowInInspector]
-        private readonly List<Object> _currentSkillObjectList = new List<Object>();
+        [ShowInInspector] private readonly List<Object> _currentSkillObjectList = new List<Object>();
 
-        public List<CharacterController> GetCharacterList(CharacterAIType aiType) => (aiType == CharacterAIType.Player) ? playerCharacterList : enemyCharacterList;
+        public List<CharacterController> GetCharacterList(CharacterAIType aiType) =>
+            (aiType == CharacterAIType.Player) ? playerCharacterList : enemyCharacterList;
 
+        public override async UniTask Initialize()
+        {
+            SceneInitialize();
+            await BattleInit();
+        }
 
-        public override void SceneInitialize()
+        public void SceneInitialize()
         {
             spawnController = GetComponent<SpawnController>();
             UIManager.Instance.GetUIController<BattleUIController>().Initialized();
-            EnumExtension.Foreach<BattleObjectType>((type) =>
-            {
-                BattleObjectEventDic.Add(type, new UnityEvent());
-            });
+            EnumExtension.Foreach<BattleObjectType>((type) => { BattleObjectEventDic.Add(type, new UnityEvent()); });
         }
-        
+
+        private async UniTask BattleInit()
+        {
+            await spawnController.SpawnCharacterAtInfo(CharacterAIType.Player,
+                DataManager.Instance.DataController.playerSpawnInfo);
+            await spawnController.SpawnCharacterAtInfo(CharacterAIType.Enemy,
+                DataManager.Instance.DataController.enemySpawnInfo);
+        }
+
         private void FixedUpdate()
         {
             if (GameStateEventBus.CurrentType is GameStateType.Play)
@@ -85,6 +96,7 @@ namespace IdleProject.Battle
                         {
                             UseSkill(_skillQueue.Peek());
                         }
+
                         BattleObjectEventDic[BattleObjectType.Character].Invoke();
                         BattleObjectEventDic[BattleObjectType.Projectile].Invoke();
                         BattleObjectEventDic[BattleObjectType.Effect].Invoke();
@@ -105,7 +117,8 @@ namespace IdleProject.Battle
 
         private void LateUpdate()
         {
-            if (GameStateEventBus.CurrentType is GameStateType.Play && BattleStateEventBus.CurrentType is BattleStateType.Battle)
+            if (GameStateEventBus.CurrentType is GameStateType.Play &&
+                BattleStateEventBus.CurrentType is BattleStateType.Battle)
             {
                 BattleObjectEventDic[BattleObjectType.UI].Invoke();
             }
@@ -135,7 +148,7 @@ namespace IdleProject.Battle
                 }
             }
         }
-        
+
         public void AddSkillQueue(CharacterController useCharacter)
         {
             _skillQueue.Enqueue(useCharacter);
@@ -159,16 +172,18 @@ namespace IdleProject.Battle
         private void UseSkill(CharacterController useCharacter)
         {
             useCharacter.isNowSkill = true;
-            
+
             BattleStateEventBus.ChangeEvent(BattleStateType.Skill);
             TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, true);
-            
-            foreach (var character in GetCharacterList(CharacterAIType.Player).Where(character => useCharacter != character))
+
+            foreach (var character in GetCharacterList(CharacterAIType.Player)
+                         .Where(character => useCharacter != character))
             {
                 character.AnimController.SetAnimationSpeed(0f);
             }
-            
-            foreach (var character in GetCharacterList(CharacterAIType.Enemy).Where(character => useCharacter != character))
+
+            foreach (var character in GetCharacterList(CharacterAIType.Enemy)
+                         .Where(character => useCharacter != character))
             {
                 character.AnimController.SetAnimationSpeed(0f);
             }
@@ -178,10 +193,10 @@ namespace IdleProject.Battle
         {
             useCharacter.isNowSkill = false;
             useCharacter.StartAttackCooltime().Forget();
-            
+
             BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
             TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, false);
-            
+
             foreach (var character in GetCharacterList(CharacterAIType.Player))
             {
                 character.AnimController.SetAnimationSpeed(GetCurrentBattleSpeed);
@@ -194,4 +209,3 @@ namespace IdleProject.Battle
         }
     }
 }
-

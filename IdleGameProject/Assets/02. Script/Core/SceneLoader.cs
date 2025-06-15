@@ -21,32 +21,28 @@ namespace IdleProject.Core
         private const string SCENE_ADDRESSABLE_PATH = "Scene";
         private const string SCENE_FILE_EXTENSION = "unity";
 
-        public async UniTask<SceneController> LoadScene(SceneType sceneType, bool isLoading)
+        public async UniTask<SceneController> LoadScene(SceneType sceneType)
         {
             SceneController sceneController = null;
 
             var loadingUI = UIManager.Instance.loadingUI;
-            if (isLoading)
-                loadingUI.LoadingStart();
+            loadingUI.LoadingStart();
 
             var sceneInstance = await AddressableManager.Instance.Controller.LoadSceneAsync(
                 $"{SCENE_ADDRESSABLE_PATH}/{sceneType}.{SCENE_FILE_EXTENSION}", LoadSceneMode.Single);
-            await sceneInstance.ActivateAsync().ToUniTask();
+            await sceneInstance.ActivateAsync().ToUniTask(loadingUI);
 
-            if (isLoading)
-                loadingUI.ShowLoadingPercent(30f);
+            loadingUI.ShowLoadingPercent(0.3f);
 
             sceneController = UnityEngine.Object.FindAnyObjectByType<SceneController>();
-            sceneController.SceneInitialize();
-            
-            if (isLoading)
-                loadingUI.ShowLoadingPercent(60f);
+            await sceneController.Initialize();
 
-            if (isLoading)
-                await UniTask.WaitForSeconds(1f);
+            loadingUI.ShowLoadingPercent(0.6f);
 
-            if (isLoading)
-                loadingUI.LoadingEnd();
+            await UniTask.WaitForSeconds(1f);
+            loadingUI.ShowLoadingPercent(1f);
+
+            loadingUI.LoadingEnd();
 
 
             return sceneController;

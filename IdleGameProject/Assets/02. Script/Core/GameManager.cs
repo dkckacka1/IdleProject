@@ -1,6 +1,8 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Engine.Util;
+using IdleProject.Core.GameData;
+using IdleProject.Core.Loading;
 using Sirenix.OdinInspector;
 
 namespace IdleProject.Core
@@ -9,14 +11,18 @@ namespace IdleProject.Core
     public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         private SceneLoader _sceneLoader;
-        
+
         private SceneController _currentSceneController;
 
+        private const string GAME_INIT_TASK = "GameInit";
+
         public static T GetCurrentSceneManager<T>() where T : SceneController => Instance._currentSceneController as T;
+
         public static void SetCurrentSceneManager(SceneController controller)
         {
             Instance._currentSceneController = controller;
         }
+
         protected override void Initialized()
         {
             base.Initialized();
@@ -26,7 +32,10 @@ namespace IdleProject.Core
 
         private void Start()
         {
-            _sceneLoader.LoadScene(SceneType.Battle, true).Forget();
+            TaskChecker.StartLoading(GAME_INIT_TASK, DataManager.Instance.LoadData);
+            TaskChecker.StartLoading(GAME_INIT_TASK, () => UniTask.WaitForSeconds(1f));
+            TaskChecker.AddOnCompleteCallback(GAME_INIT_TASK,
+                () => { _sceneLoader.LoadScene(SceneType.Battle, true).Forget(); });
         }
     }
 }

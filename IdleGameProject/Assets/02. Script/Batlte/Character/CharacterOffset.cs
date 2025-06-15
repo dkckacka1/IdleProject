@@ -30,15 +30,9 @@ namespace IdleProject.Battle.Character
         
         public void Initialized()
         {
-            Debug.Log(name);
-            
-            var hitOffset = transform.GetChildByName(HIT_EFFECT_OFFSET_NAME);
-            var createOffset = transform.GetChildByName(CREATE_PROJECTILE_OFFSET_NAME);
-            var fluidOffset = transform.GetChildByName(FLUID_HEALTH_BAR_OFFSET_NAME);
-            
-            _hitEffectOffsetTransform = hitOffset;
-            _createProjectileOffsetTransform = createOffset;
-            _fluidHealthBarOffsetTransform = fluidOffset;
+            _hitEffectOffsetTransform = transform.GetChildByName(HIT_EFFECT_OFFSET_NAME);
+            _createProjectileOffsetTransform = transform.GetChildByName(CREATE_PROJECTILE_OFFSET_NAME);
+            _fluidHealthBarOffsetTransform = transform.GetChildByName(FLUID_HEALTH_BAR_OFFSET_NAME);
 
             BattleTextOffsetRadius = GetComponent<Collider>().bounds.size.x / 2;
         }

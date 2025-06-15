@@ -17,8 +17,10 @@ namespace IdleProject.Battle.Character.Skill
 
             Controller.Hit(target, attackDamage);
 
-            var skillEffect = Controller.GetSkillHitEffect.Invoke();
-            skillEffect.transform.position = target.HitEffectOffset;
+            if (TryGetSkillEffect(out var effect))
+            {
+                effect.transform.position = target.HitEffectOffset;
+            }
         }
     }
 }

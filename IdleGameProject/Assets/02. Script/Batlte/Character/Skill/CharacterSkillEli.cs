@@ -1,4 +1,5 @@
 using System;
+using IdleProject.Battle.Projectile;
 using IdleProject.Core;
 using UnityEngine;
 
@@ -15,21 +16,20 @@ namespace IdleProject.Battle.Character.Skill
         {
             var target = Controller.GetTargetCharacter.Invoke();
             var attackDamage = Controller.StatSystem.GetStatValue(CharacterStatType.AttackDamage) * 2f;
-            var skillProjectile = Controller.GetSkillProjectile?.Invoke();
-            if (skillProjectile)
+
+            if (TryGetSkillProjectile(out var projectile))
             {
-                skillProjectile.transform.position = Controller.offset.GetProjectilePosition;
-                skillProjectile.Target = target;
-                skillProjectile.SetSkillProjectile();
-                skillProjectile.hitEvent.AddListener(takeDamagedAble =>
+                projectile.transform.position = Controller.offset.GetProjectilePosition;
+                projectile.Target = target;
+                projectile.SetSkillProjectile();
+                projectile.hitEvent.AddListener(takeDamagedAble =>
                 {
                     Controller.Hit(takeDamagedAble, attackDamage);
-                    
-                    var attackHitEffect = Controller.GetAttackHitEffect?.Invoke();
-                    if (attackHitEffect)
+
+                    if (TryGetSkillEffect(out var effect))
                     {
-                        attackHitEffect.SetSkillEffect();
-                        attackHitEffect.transform.position = takeDamagedAble.HitEffectOffset;
+                        effect.SetSkillEffect();
+                        effect.transform.position = takeDamagedAble.HitEffectOffset;
                     }
                 });
             }

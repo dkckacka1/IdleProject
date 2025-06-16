@@ -1,10 +1,8 @@
-using Engine.Core.Time;
 using IdleProject.Battle.Character;
 using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace IdleProject.Battle.Projectile
 {

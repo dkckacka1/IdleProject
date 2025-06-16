@@ -73,7 +73,7 @@ namespace IdleProject.Core
         public static T GetPoolableObject<T>(PoolableType poolableType, string name) where T : IPoolable
         {
             var address = $"{JoinSegment(PATH_SEGMENT, POOLABLE_PATH, poolableType.ToString(), name)}.{PREFAB_EXTENSION}";
-            return ObjectPoolManager.Instance.Get<T>(address, GetBattleTransformParent(poolableType));
+            return ObjectPoolManager.Instance.Get<T>(address);
         }
 
         public static async UniTask CreatePool(PoolableType poolableType, string name)

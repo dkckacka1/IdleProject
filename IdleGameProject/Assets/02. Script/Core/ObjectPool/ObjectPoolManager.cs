@@ -2,17 +2,14 @@ using Cysharp.Threading.Tasks;
 using Engine.Core.Addressable;
 using Engine.Util;
 using System.Collections.Generic;
+using IdleProject.Battle.UI;
 using UnityEngine;
 
 namespace IdleProject.Core.ObjectPool
 {
     public class ObjectPoolManager : SingletonMonoBehaviour<ObjectPoolManager>
     {
-        private Dictionary<string, Queue<PoolableObject>> _poolableDic;
-
-        private const int DEFAULT_POOL_COUNT = 10;
-        private const int CREATE_COUNT = 5;
-        private const int MAX_POOL_CAP = 1000;
+        private Dictionary<string, ObjectPool> _poolableDic;
 
         private Transform _defaultParent;
 
@@ -25,56 +22,28 @@ namespace IdleProject.Core.ObjectPool
             _defaultParent.SetParent(transform);
         }
 
-        public T Get<T>(string address, Transform parent = null) where T : IPoolable
+        public T Get<T>(string address) where T : IPoolable
         {
-            if (!_poolableDic.ContainsKey(address))
-            {
-                CreatePool<PoolableObject>(address);
-            }
-
             var pool = _poolableDic[address];
-            if (pool.Count <= CREATE_COUNT)
-            {
-                CreateObj<PoolableObject>(address, pool, parent).Forget();
-            }
 
-            var getObj = pool.Dequeue();
-            getObj.OnGet();
-            getObj.gameObject.SetActive(true);
-
-            return getObj.GetComponent<T>();
+            return pool.Get<T>();
         }
 
         public void Release(PoolableObject poolable)
         {
-            poolable.OnRelease();
-            poolable.gameObject.SetActive(false);
-            _poolableDic[poolable.address].Enqueue(poolable);
+            _poolableDic[poolable.address].Release(poolable);
         }
 
         public async UniTask CreatePool<T>(string address, Transform parent = null) where T : PoolableObject
         {
             if (_poolableDic.ContainsKey(address)) return;
 
-            _poolableDic.Add(address, new());
-            var pool = _poolableDic[address];
+            if (parent is null)
+                parent = _defaultParent;
+            
             var poolableObj = await AddressableManager.Instance.Controller.LoadAssetAsync<PoolableObject>(address);
-
-            for (int i = 0; i < poolableObj.defaultPoolCount; ++i)
-            {
-                await CreateObj<T>(address, pool, parent);
-            }
-        }
-
-        private async UniTask CreateObj<T>(string address, Queue<PoolableObject> pool, Transform parent = null) where T : PoolableObject
-        {
-            parent ??= _defaultParent;
-
-            var instObj = await AddressableManager.Instance.Controller.InstantiateObject<T>(address, parent);
-            instObj.address = address;
-            instObj.OnCreate();
-            instObj.gameObject.SetActive(false);
-            pool.Enqueue(instObj);
+            poolableObj.address = address;
+            _poolableDic.Add(address, new ObjectPool(parent , poolableObj, poolableObj.defaultPoolCount));
         }
     }
 }

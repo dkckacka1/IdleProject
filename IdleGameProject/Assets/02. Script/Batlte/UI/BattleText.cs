@@ -21,15 +21,9 @@ namespace IdleProject.Battle.UI
 
         private Sequence _floatingSequence;
         
-        private void Awake()
-        {
-            _battleText = GetComponent<TextMeshProUGUI>();
-
-            _floatingSequence = DOTween.Sequence();
-        }
-
         public void OnCreateAction()
         {
+            _battleText = GetComponent<TextMeshProUGUI>();
         }
 
         public void OnGetAction()

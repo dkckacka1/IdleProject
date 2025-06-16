@@ -15,7 +15,7 @@ MonoBehaviour:
   PlayerSpawnInfo:
     frontMiddleCharacterName: Hiro
     frontRightCharacterName: Eli
-    frontLeftCharacterName: 
+    frontLeftCharacterName: Bak
     rearRightCharacterName: 
     rearLeftCharacterName: 
   EnemySpawnInfo:

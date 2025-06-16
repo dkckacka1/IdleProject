@@ -1,3 +1,4 @@
+using IdleProject.Battle.AI;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character
@@ -5,6 +6,7 @@ namespace IdleProject.Battle.Character
     public interface ITargetedAble
     {
         public Transform GetTransform { get; }
+        public CharacterAIType GetAiType { get; }
     }
 
     public interface ITakeDamagedAble : ITargetedAble

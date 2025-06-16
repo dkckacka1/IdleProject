@@ -4,6 +4,7 @@ using IdleProject.Core.ObjectPool;
 using Sirenix.OdinInspector;
 using System;
 using Engine.Core.Time;
+using IdleProject.Battle.AI;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
 using UnityEngine;
@@ -14,11 +15,13 @@ namespace IdleProject.Battle.Character
     public partial class CharacterController : ITakeDamagedAble
     {
         public Func<ITakeDamagedAble> GetTargetCharacter;
-        public Transform GetTransform => transform;
+        public bool isNowSkill;
+        public bool isNowAttack;
 
         private const float DEFAULT_GET_MANA_POINT = 10;
-        private bool _isNowAttack;
-        public bool isNowSkill;
+
+        public Transform GetTransform => transform;
+        public CharacterAIType GetAiType => characterAI.aiType;
 
         public bool CanTakeDamage => !State.IsDead;
         public bool HasSkill => CharacterSkill is not null;
@@ -35,14 +38,14 @@ namespace IdleProject.Battle.Character
 
         private void OnAttackStart()
         {
-            _isNowAttack = true;
+            isNowAttack = true;
         }
 
 
         public virtual void Attack()
         {
             transform.LookAt(GetTargetCharacter?.Invoke().GetTransform);
-            if (_isNowAttack is false && isNowSkill is false)
+            if (isNowAttack is false && isNowSkill is false)
             {
                 AnimController.SetAttack();
             }
@@ -107,26 +110,19 @@ namespace IdleProject.Battle.Character
 
         private void OnAttackEnd()
         {
-            _isNowAttack = false;
+            isNowAttack = false;
             StartAttackCooltime().Forget();
-        }
-
-        public async UniTaskVoid StartAttackCooltime()
-        {
-            State.CanAttack = false;
-            await BattleManager.GetBattleTimer(StatSystem.GetStatValue(CharacterStatType.AttackCoolTime));
-            State.CanAttack = true;
         }
 
         #region 스킬 관련
         public virtual void Skill()
         {
-            if (_isNowAttack is false && isNowSkill is false)
+            if (isNowAttack is false && isNowSkill is false)
             {
                 AnimController.SetSkill();
             }
         }
-
+        
         private void OnSkillStart()
         {
             isNowSkill = true;
@@ -138,10 +134,16 @@ namespace IdleProject.Battle.Character
 
         private void OnSkillEnd()
         {
-            
             GameManager.GetCurrentSceneManager<BattleManager>().RemoveSkillObject(this);
             
             (characterUI as PlayerCharacterUIController)?.EndSkill();
+        }
+        
+        public async UniTaskVoid StartAttackCooltime()
+        {
+            State.CanAttack = false;
+            await BattleManager.GetBattleTimer(StatSystem.GetStatValue(CharacterStatType.AttackCoolTime));
+            State.CanAttack = true;
         }
 
         private void GetMana()

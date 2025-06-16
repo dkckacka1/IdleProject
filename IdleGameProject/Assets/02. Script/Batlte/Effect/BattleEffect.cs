@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Engine.Core.EventBus;
+using IdleProject.Battle.Character;
 using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
@@ -13,8 +14,18 @@ namespace IdleProject.Battle.Effect
     {
         private List<ParticleSystem> _particleList;
 
+        public UnityEvent<ITakeDamagedAble> effectTriggerEnterEvent = null;
         public UnityEvent releaseEvent = null;
-        
+
+        private void OnTriggerEnter(Collider other)
+        {
+            var takeDamageAble = other.GetComponent<ITakeDamagedAble>();
+            if (takeDamageAble is not null)
+            {
+                effectTriggerEnterEvent?.Invoke(takeDamageAble);
+            }
+        }
+
         private void OnParticleSystemStopped()
         {
             var poolableObject = GetComponent<PoolableObject>();
@@ -42,7 +53,7 @@ namespace IdleProject.Battle.Effect
             BattleManager.GetChangeBattleSpeedEvent.RemoveListener(OnTimeFactorChange);
             GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.RemoveEvent(this);
         }
-
+        
         public void SetSkillEffect()
         {
             GameManager.GetCurrentSceneManager<BattleManager>().AddSkillObject(this);

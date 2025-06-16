@@ -48,7 +48,7 @@ namespace IdleProject.Battle.Spawn
                 await SpawnCharacter(aiType, SpawnPositionType.FrontMiddle, spawnInfo.frontMiddleCharacterName);
             
             if(string.IsNullOrEmpty(spawnInfo.frontRightCharacterName) is false)
-                await SpawnCharacter(aiType, SpawnPositionType.FrontLeft, spawnInfo.frontRightCharacterName);
+                await SpawnCharacter(aiType, SpawnPositionType.FrontRight, spawnInfo.frontRightCharacterName);
             
             if(string.IsNullOrEmpty(spawnInfo.rearLeftCharacterName) is false)
                 await SpawnCharacter(aiType, SpawnPositionType.RearLeft, spawnInfo.rearLeftCharacterName);

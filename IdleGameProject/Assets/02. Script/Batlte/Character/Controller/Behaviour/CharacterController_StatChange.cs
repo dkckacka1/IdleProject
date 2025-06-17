@@ -13,14 +13,14 @@ namespace IdleProject.Battle.Character
         {
             StatSystem.PublishValueChangedEvent(CharacterStatType.MovementSpeed, ChangeMovementSpeed);
             StatSystem.PublishValueChangedEvent(CharacterStatType.AttackRange, ChangeAttackRange);
-            BattleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
+            GameManager.GetCurrentSceneManager<BattleManager>().GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
             GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.PublishEvent(this);
-            OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
+            OnTimeFactorChange(GameManager.GetCurrentSceneManager<BattleManager>().GetCurrentBattleSpeed);
         }
 
         public virtual void ChangeMovementSpeed(float movementSpeed)
         {
-            Agent.speed = movementSpeed * BattleManager.GetCurrentBattleSpeed;
+            Agent.speed = movementSpeed * GameManager.GetCurrentSceneManager<BattleManager>().GetCurrentBattleSpeed;
         }
         private void ChangeAttackRange(float attackRange)
         {

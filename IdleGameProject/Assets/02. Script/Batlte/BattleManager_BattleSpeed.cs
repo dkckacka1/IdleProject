@@ -13,14 +13,14 @@ namespace IdleProject.Battle
         private const float MAX_BATTLE_SPEED = 3f;
         private const string BATTLE_SPEED_TIME_KEY = "BattleSpeed";
 
-        public static float GetCurrentBattleSpeed => TimeManager.Instance.GetTimeScaleFactor(BATTLE_SPEED_TIME_KEY);
+        public float GetCurrentBattleSpeed => TimeManager.Instance.GetTimeScaleFactor(BATTLE_SPEED_TIME_KEY);
 
-        public static float GetCurrentBattleDeltaTime => TimeManager.Instance.GetDeltaTimeScale(BATTLE_SPEED_TIME_KEY);
+        public float GetCurrentBattleDeltaTime => TimeManager.Instance.GetDeltaTimeScale(BATTLE_SPEED_TIME_KEY);
 
-        public static UnityEvent<float> GetChangeBattleSpeedEvent =>
+        public UnityEvent<float> GetChangeBattleSpeedEvent =>
             TimeManager.Instance.GetFactorChangeEvent(BATTLE_SPEED_TIME_KEY);
 
-        public static UniTask GetBattleTimer(float waitTime) =>
+        public UniTask GetBattleTimer(float waitTime) =>
             TimeManager.Instance.StartTimer(waitTime, BATTLE_SPEED_TIME_KEY);
         
         
@@ -32,6 +32,5 @@ namespace IdleProject.Battle
             
             TimeManager.Instance.SetTimeScaleFactor(BATTLE_SPEED_TIME_KEY, currentBattleSpeed);
         }
-
     }
 }

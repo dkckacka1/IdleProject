@@ -51,9 +51,9 @@ namespace IdleProject.Battle.UI
             _floatingSequence = DOTween.Sequence();
             
             _floatingSequence.Append(_battleText.transform.DOPunchScale(punchScaleVector,
-                punchDuration / BattleManager.GetCurrentBattleSpeed));
+                punchDuration / GameManager.GetCurrentSceneManager<BattleManager>().GetCurrentBattleSpeed));
             _floatingSequence.Join(_battleText.transform.DOMoveY(transform.position.y + floatingYPos,
-                floatingDuration / BattleManager.GetCurrentBattleSpeed));
+                floatingDuration / GameManager.GetCurrentSceneManager<BattleManager>().GetCurrentBattleSpeed));
 
             _floatingSequence.OnComplete(() =>
             {

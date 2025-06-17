@@ -142,7 +142,7 @@ namespace IdleProject.Battle.Character
         public async UniTaskVoid StartAttackCooltime()
         {
             State.CanAttack = false;
-            await BattleManager.GetBattleTimer(StatSystem.GetStatValue(CharacterStatType.AttackCoolTime));
+            await GameManager.GetCurrentSceneManager<BattleManager>().GetBattleTimer(StatSystem.GetStatValue(CharacterStatType.AttackCoolTime));
             State.CanAttack = true;
         }
 

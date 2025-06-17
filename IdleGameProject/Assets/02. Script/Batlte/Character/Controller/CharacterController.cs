@@ -72,9 +72,9 @@ namespace IdleProject.Battle.Character
         
         private void PublishAnimationEvent()
         {
-            AnimController.OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
+            AnimController.OnTimeFactorChange(GameManager.GetCurrentSceneManager<BattleManager>().GetCurrentBattleSpeed);
             
-            BattleManager.GetChangeBattleSpeedEvent.AddListener(AnimController.OnTimeFactorChange);
+            GameManager.GetCurrentSceneManager<BattleManager>().GetChangeBattleSpeedEvent.AddListener(AnimController.OnTimeFactorChange);
             GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.PublishEvent(AnimController);
             SetBattleAnimEvent();
         }

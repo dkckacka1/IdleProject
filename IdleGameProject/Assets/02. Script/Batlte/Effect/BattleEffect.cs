@@ -39,8 +39,8 @@ namespace IdleProject.Battle.Effect
 
         public void OnGetAction()
         {
-            OnTimeFactorChange(BattleManager.GetCurrentBattleSpeed);
-            BattleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
+            OnTimeFactorChange(GameManager.GetCurrentSceneManager<BattleManager>().GetCurrentBattleSpeed);
+            GameManager.GetCurrentSceneManager<BattleManager>().GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
             GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.PublishEvent(this);
         }
 
@@ -50,7 +50,7 @@ namespace IdleProject.Battle.Effect
             releaseEvent.RemoveAllListeners();
             
             transform.position = Vector3.zero;
-            BattleManager.GetChangeBattleSpeedEvent.RemoveListener(OnTimeFactorChange);
+            GameManager.GetCurrentSceneManager<BattleManager>().GetChangeBattleSpeedEvent.RemoveListener(OnTimeFactorChange);
             GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.RemoveEvent(this);
         }
         

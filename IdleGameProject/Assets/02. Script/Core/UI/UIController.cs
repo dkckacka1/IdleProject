@@ -1,15 +1,16 @@
+using System;
 using UnityEngine;
 
 namespace IdleProject.Core.UI
 {
     public abstract class UIController : MonoBehaviour
     {
-        protected void Awake()
+        protected virtual void Awake()
         {
             UIManager.Instance.AddUIController(this);
         }
 
-        protected void Destroy()
+        protected virtual void OnDestroy()
         {
             UIManager.Instance.RemoveUIController(this);
         }

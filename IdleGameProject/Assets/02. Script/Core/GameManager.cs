@@ -40,7 +40,7 @@ namespace IdleProject.Core
             TaskChecker.StartLoading(GAME_INIT_TASK, DataManager.Instance.LoadData);
             TaskChecker.StartLoading(GAME_INIT_TASK, () => UniTask.WaitForSeconds(1f));
             TaskChecker.AddOnCompleteCallback(GAME_INIT_TASK,
-                () => { LoadScene(SceneType.Battle); });
+                () => { LoadScene(SceneType.Lobby); });
         }
     }
 }

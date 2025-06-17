@@ -10,7 +10,7 @@ namespace IdleProject.Core
     public enum SceneType
     {
         Splash,
-        // Lobby,
+        Lobby,
         Battle,
         // Loading,
     }

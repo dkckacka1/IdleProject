@@ -32,7 +32,7 @@ namespace IdleProject.Core
 
         public void LoadScene(SceneType sceneType)
         {
-            _sceneLoader.LoadScene(SceneType.Battle).Forget();
+            _sceneLoader.LoadScene(sceneType).Forget();
         }
 
         private void Start()

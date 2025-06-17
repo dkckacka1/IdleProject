@@ -15,25 +15,32 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Threading.Tasks;
 using Engine.Core.Time;
+using Engine.Util;
 using IdleProject.Battle.Spawn;
 using IdleProject.Battle.UI;
 using IdleProject.Core.Loading;
+using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
-public class TestComponent : MonoBehaviour
+public class TestComponent : SingletonMonoBehaviour<TestComponent>
 {
-    [Button]
-    private void Test()
+    private string GetSceneName => SceneManager.GetActiveScene().name;
+
+    private bool IsGamePlay => Application.isPlaying;
+
+    [Title("SceneMove")]
+    [BoxGroup("Game"),EnumToggleButtons, ShowIf("@this.IsGamePlay")]
+    public SceneType moveSceneType;
+
+    [BoxGroup("Game"),Button, ShowIf("@this.IsGamePlay")]
+    private void MoveScene()
     {
-        GameManager.GetCurrentSceneManager<BattleManager>().spawnController.SpawnCharacter(CharacterAIType.Player, SpawnPositionType.FrontLeft,
-            "Hiro");
-        GameManager.GetCurrentSceneManager<BattleManager>().spawnController.SpawnCharacter(CharacterAIType.Player, SpawnPositionType.FrontMiddle,
-            "Eli");
-        GameManager.GetCurrentSceneManager<BattleManager>().spawnController.SpawnCharacter(CharacterAIType.Enemy, SpawnPositionType.FrontMiddle,
-            "GoblinMale");
+        GameManager.Instance.LoadScene(moveSceneType);
     }
 
-    [Button]
-    private void Test2()
+    [BoxGroup("Battle"), Button, ShowIf("@this.IsGamePlay && this.GetSceneName == \"Battle\"")]
+    private void PlayBattle()
     {
         GameManager.GetCurrentSceneManager<BattleManager>().BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
         GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Play);

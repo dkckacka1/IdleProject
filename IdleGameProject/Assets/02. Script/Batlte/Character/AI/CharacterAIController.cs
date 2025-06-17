@@ -45,7 +45,7 @@ namespace IdleProject.Battle.AI
             _context = new StateContext(_idleState);
         }
 
-        public void OnBatteEvent()
+        public void OnBattleEvent()
         {
             _context.ChangeState(CheckState());
             _context.ExcuteState();

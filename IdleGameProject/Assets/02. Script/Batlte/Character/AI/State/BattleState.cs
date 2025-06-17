@@ -1,17 +1,21 @@
 using System;
-
+using IdleProject.Core;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.AI.State
 {
     public class BattleState : State
     {
-        public BattleState(CharacterController controller, Func<CharacterController> targetController) : base(controller, targetController) { }
+        public BattleState(CharacterController controller, Func<CharacterController> targetController) : base(
+            controller, targetController)
+        {
+        }
+
         public override void Excute()
         {
             if (!Controller.State.CanAttack) return;
-            
-            if (Controller.HasSkill && Controller.StatSystem.CanUseSkill)
+
+            if (CanUseSKill())
             {
                 Controller.Skill();
             }
@@ -19,6 +23,12 @@ namespace IdleProject.Battle.AI.State
             {
                 Controller.Attack();
             }
+        }
+
+        private bool CanUseSKill()
+        {
+            return GameManager.GetCurrentSceneManager<BattleManager>().IsAnyCharacterUsingSkill is false &&
+                   Controller.HasSkill && Controller.StatSystem.CanUseSkill && Controller.isNowSkill is false;
         }
     }
 }

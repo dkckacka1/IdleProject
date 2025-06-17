@@ -122,7 +122,7 @@ namespace IdleProject.Battle.Spawn
         private async UniTask SetAnimation(CharacterController controller, CharacterData data)
         {
             var animationController = await ResourceLoader.GetAnimation(data.addressValue.characterAnimationName);
-            controller.AnimController = new AnimationController(controller.GetComponentInChildren<Animator>(), controller.GetComponentInChildren<AnimationEventHandler>());
+            controller.AnimController = new CharacterBattleAnimationController(controller.GetComponentInChildren<Animator>(), controller.GetComponentInChildren<AnimationEventHandler>());
             controller.AnimController.SetAnimationController(animationController);
         }
         

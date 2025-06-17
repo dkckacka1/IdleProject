@@ -120,14 +120,14 @@ namespace IdleProject.Battle.Character
             if (isNowAttack is false && isNowSkill is false)
             {
                 AnimController.SetSkill();
+                GameManager.GetCurrentSceneManager<BattleManager>().AddSkillQueue(this);
+                isNowSkill = true;
             }
         }
         
         private void OnSkillStart()
         {
-            isNowSkill = true;
             StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
-            GameManager.GetCurrentSceneManager<BattleManager>().AddSkillQueue(this);
             
             (characterUI as PlayerCharacterUIController)?.StartSkill();
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace IdleProject.Battle.Character
 {
-    public class AnimationController : IEnumEvent<GameStateType>
+    public class CharacterBattleAnimationController : IEnumEvent<GameStateType>
     {
         public AnimationEventHandler AnimEventHandler { get; private set; }
 
@@ -17,7 +17,7 @@ namespace IdleProject.Battle.Character
         private readonly int _idleAnimHash = Animator.StringToHash("Idle");
         private readonly int _winAnimHash = Animator.StringToHash("Win");
 
-        public AnimationController(Animator animator, AnimationEventHandler animEventHandler)
+        public CharacterBattleAnimationController(Animator animator, AnimationEventHandler animEventHandler)
         {
             _animator = animator;
             AnimEventHandler = animEventHandler;

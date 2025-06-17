@@ -36,7 +36,7 @@ namespace IdleProject.Battle.Character
         [HideInInspector] public CharacterUIController characterUI;
         [HideInInspector] public CharacterAIController characterAI;
         
-        public AnimationController AnimController;
+        public CharacterBattleAnimationController AnimController;
         public CharacterSkill CharacterSkill;
         public StatSystem StatSystem;
         public CharacterState State;
@@ -86,7 +86,7 @@ namespace IdleProject.Battle.Character
 
         private void PublishAIEvent()
         {
-            GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.Character].AddListener(characterAI.OnBatteEvent);
+            GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.Character].AddListener(characterAI.OnBattleEvent);
         }
 
 

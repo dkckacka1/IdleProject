@@ -7,14 +7,12 @@ using UnityEngine.Events;
 using Engine.Core.EventBus;
 using Engine.Core.Time;
 using Engine.Util.Extension;
-using Engine.Util;
 using IdleProject.Core.UI;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Spawn;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
-using Sirenix.OdinInspector;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 using Object = UnityEngine.Object;
 
@@ -55,9 +53,6 @@ namespace IdleProject.Battle
 
         public Transform effectParent;
         public Transform projectileParent;
-
-        private readonly Queue<CharacterController> _skillQueue = new Queue<CharacterController>();
-        [ShowInInspector] private readonly List<Object> _currentSkillObjectList = new List<Object>();
 
         public List<CharacterController> GetCharacterList(CharacterAIType aiType) =>
             (aiType == CharacterAIType.Player) ? playerCharacterList : enemyCharacterList;
@@ -149,63 +144,5 @@ namespace IdleProject.Battle
             }
         }
 
-        public void AddSkillQueue(CharacterController useCharacter)
-        {
-            _skillQueue.Enqueue(useCharacter);
-            AddSkillObject(useCharacter);
-        }
-
-        public void AddSkillObject(Object skillObject)
-        {
-            _currentSkillObjectList.Add(skillObject);
-        }
-
-        public void RemoveSkillObject(Object skillObject)
-        {
-            _currentSkillObjectList.Remove(skillObject);
-            if (_currentSkillObjectList.Count <= 0)
-            {
-                ExitSkill(_skillQueue.Dequeue());
-            }
-        }
-
-        private void UseSkill(CharacterController useCharacter)
-        {
-            useCharacter.isNowSkill = true;
-
-            BattleStateEventBus.ChangeEvent(BattleStateType.Skill);
-            TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, true);
-
-            foreach (var character in GetCharacterList(CharacterAIType.Player)
-                         .Where(character => useCharacter != character))
-            {
-                character.AnimController.SetAnimationSpeed(0f);
-            }
-
-            foreach (var character in GetCharacterList(CharacterAIType.Enemy)
-                         .Where(character => useCharacter != character))
-            {
-                character.AnimController.SetAnimationSpeed(0f);
-            }
-        }
-
-        public void ExitSkill(CharacterController useCharacter)
-        {
-            useCharacter.isNowSkill = false;
-            useCharacter.StartAttackCooltime().Forget();
-
-            BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
-            TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, false);
-
-            foreach (var character in GetCharacterList(CharacterAIType.Player))
-            {
-                character.AnimController.SetAnimationSpeed(GetCurrentBattleSpeed);
-            }
-
-            foreach (var character in GetCharacterList(CharacterAIType.Enemy))
-            {
-                character.AnimController.SetAnimationSpeed(GetCurrentBattleSpeed);
-            }
-        }
     }
 }

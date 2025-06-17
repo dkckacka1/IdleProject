@@ -30,12 +30,17 @@ namespace IdleProject.Core
             _sceneLoader = new SceneLoader();
         }
 
+        public void LoadScene(SceneType sceneType)
+        {
+            _sceneLoader.LoadScene(SceneType.Battle).Forget();
+        }
+
         private void Start()
         {
             TaskChecker.StartLoading(GAME_INIT_TASK, DataManager.Instance.LoadData);
             TaskChecker.StartLoading(GAME_INIT_TASK, () => UniTask.WaitForSeconds(1f));
             TaskChecker.AddOnCompleteCallback(GAME_INIT_TASK,
-                () => { _sceneLoader.LoadScene(SceneType.Battle).Forget(); });
+                () => { LoadScene(SceneType.Battle); });
         }
     }
 }

@@ -10,9 +10,9 @@ namespace IdleProject.Core
     public enum SceneType
     {
         Splash,
-        Lobby,
+        // Lobby,
         Battle,
-        Loading,
+        // Loading,
     }
 
     // 씬 이동 관리 클래스

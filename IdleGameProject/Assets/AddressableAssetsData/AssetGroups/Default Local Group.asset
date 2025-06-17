@@ -41,10 +41,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9fc0d4010bbf28b4594072e72b8655ab
-    m_Address: Scene/Battle.unity
+  - m_GUID: 87845ff8ea6de5b47b8fcab3e79bd8b4
+    m_Address: Assets/10. Sprite/SpriteAtlas
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - SpriteAtlas
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ffdd61c61c7432c418036d5d2afb9dba
     m_Address: Scene

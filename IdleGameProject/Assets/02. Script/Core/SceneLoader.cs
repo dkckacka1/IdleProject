@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using Engine.Core.Time;
 using IdleProject.Core.UI;
 using Unity.VisualScripting;
 using UnityEngine.AddressableAssets;
@@ -21,10 +22,13 @@ namespace IdleProject.Core
         private const string SCENE_ADDRESSABLE_PATH = "Scene";
         private const string SCENE_FILE_EXTENSION = "unity";
 
+        private const float REQUIRED_SCENE_LOADING_TIME = 1f; // 최소 로딩 시간 보장
+
         public async UniTask<SceneController> LoadScene(SceneType sceneType)
         {
             SceneController sceneController = null;
 
+            
             var loadingUI = UIManager.Instance.loadingUI;
             loadingUI.LoadingStart();
 

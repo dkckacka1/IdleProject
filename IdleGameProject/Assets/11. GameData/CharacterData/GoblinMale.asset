@@ -22,7 +22,7 @@ MonoBehaviour:
   stat:
     healthPoint: 100000
     manaPoint: 10
-    attackDamage: 1
+    attackDamage: 10
     movementSpeed: 4.5
     attackRange: 2
     attackCoolTime: 0.1

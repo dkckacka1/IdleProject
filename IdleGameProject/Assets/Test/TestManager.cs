@@ -22,6 +22,7 @@ using IdleProject.Core.Loading;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using UnityEngine.U2D;
 
 public class TestManager : SingletonMonoBehaviour<TestManager>
 {
@@ -51,5 +52,20 @@ public class TestManager : SingletonMonoBehaviour<TestManager>
     {
         GameManager.GetCurrentSceneManager<BattleManager>().BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
         GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Play);
+    }
+
+    [Button]
+    private async void Test()
+    {
+        string SPRITEATLAS_ADDRESSABLE_LABEL_NAME = "SpriteAtlas";
+
+        var list =
+            await AddressableManager.Instance.Controller.LoadAssetsLabelAsync<SpriteAtlas>(
+                SPRITEATLAS_ADDRESSABLE_LABEL_NAME);
+
+        foreach (var atlas in list)
+        {
+            Debug.Log(atlas.name);
+        }
     }
 }

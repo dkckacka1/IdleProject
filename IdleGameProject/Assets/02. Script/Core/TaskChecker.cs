@@ -18,6 +18,8 @@ namespace IdleProject.Core.Loading
 
         private static readonly Dictionary<string, CheckList> CURRENT_TASK_DIC = new Dictionary<string, CheckList>();
 
+        public static bool IsTasking(string taskName) => CURRENT_TASK_DIC.ContainsKey(taskName);
+        
         public static void StartLoading(string taskName, Func<UniTask> task, UnityAction onTaskComplete = null)
         {
             if (CURRENT_TASK_DIC.TryGetValue(taskName, out var checkList) is false)

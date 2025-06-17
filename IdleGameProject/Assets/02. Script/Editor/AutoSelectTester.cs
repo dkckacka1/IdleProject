@@ -13,7 +13,7 @@ public static class AutoSelectTester
 
     private static void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        var testerObject = GameObject.Find("Tester");
+        var testerObject = GameObject.Find("TestManager");
         if (testerObject)
         {
             Selection.activeGameObject = testerObject;

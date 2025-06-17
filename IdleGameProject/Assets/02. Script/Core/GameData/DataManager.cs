@@ -17,20 +17,11 @@ namespace IdleProject.Core.GameData
         [ShowInInspector]
         public DataController DataController { get; private set; }
 
-        [SerializeField] private bool isTest;
-
         protected override void Initialized()
         {
             base.Initialized();
 
-            if (isTest)
-            {
-                DataController = new DataController();
-            }
-            else
-            {
-                DataController = new DataController(Resources.Load<TestStaticData>("TestStaticData"));
-            }
+            DataController = TestManager.Instance.isTestPlay is false ? new DataController() : new DataController(TestManager.Instance.testData);
         }
         
         public async UniTask LoadData()

@@ -23,10 +23,17 @@ using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
-public class TestComponent : SingletonMonoBehaviour<TestComponent>
+public class TestManager : SingletonMonoBehaviour<TestManager>
 {
     private string GetSceneName => SceneManager.GetActiveScene().name;
 
+    [BoxGroup("Game")]
+    public bool isTestPlay;
+
+    
+    [BoxGroup("Game"), ShowIf("@this.isTestPlay")]
+    public TestStaticData testData;
+    
     private bool IsGamePlay => Application.isPlaying;
 
     [Title("SceneMove")]

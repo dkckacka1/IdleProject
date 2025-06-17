@@ -774,7 +774,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 121c4a9962f0123498b8163816b6d1ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTest: 0
 --- !u!4 &1359599638
 Transform:
   m_ObjectHideFlags: 0
@@ -960,7 +959,7 @@ GameObject:
   - component: {fileID: 1657019844}
   - component: {fileID: 1657019843}
   m_Layer: 0
-  m_Name: Tester
+  m_Name: TestManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -978,6 +977,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc90041e7d1eec42b23bc063003e11f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTestPlay: 1
+  testData: {fileID: 11400000, guid: fc755539ec8856f47a54a5e607260d84, type: 2}
   moveSceneType: 0
 --- !u!4 &1657019844
 Transform:

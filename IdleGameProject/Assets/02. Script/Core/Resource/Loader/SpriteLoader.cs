@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.U2D;
 

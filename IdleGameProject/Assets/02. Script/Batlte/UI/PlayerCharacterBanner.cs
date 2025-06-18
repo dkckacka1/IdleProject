@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using IdleProject.Battle.Character;
 using IdleProject.Core;
+using IdleProject.Core.Resource;
 using IdleProject.Data;
 using TMPro;
 using UnityEngine;
@@ -25,9 +26,8 @@ namespace IdleProject.Battle.UI
 
         public async UniTaskVoid Initialized(CharacterData data, StatSystem characterStat)
         {
-            characterIconImage.sprite = await ResourceLoader.GetIcon(IconType.Character, data.addressValue.characterName,ICON_TYPE);
-            characterSkillBannerImage.sprite = await ResourceLoader.GetIcon(IconType.Character,
-                data.addressValue.characterName, SKILL_ICON_TYPE);
+            characterIconImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(data.GetCharacterBannerIconName);
+            characterSkillBannerImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(data.GetCharacterSkillBannerIconName);
             characterNameText.text = data.addressValue.characterName;
             characterHealthBar.Initialized(characterStat.GetStatValue(CharacterStatType.HealthPoint, true));
             characterManaBar.Initialized(characterStat.GetStatValue(CharacterStatType.ManaPoint, true));

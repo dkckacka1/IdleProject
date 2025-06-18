@@ -89,16 +89,6 @@ namespace IdleProject.Core
             await ObjectPoolManager.Instance.CreatePool<PoolableObject>(address, parent);
         }
 
-        public static async UniTask<Sprite> GetIcon(IconType iconType, string name, string type)
-        {
-            var spriteName = JoinSegment(SPRITE_NAME_SEGMENT, iconType.ToString(), name, type, "Icon");
-            var address = $"{JoinSegment(PATH_SEGMENT, "Icon", spriteName)}.png";
-
-            var sprite = await AddressableManager.Instance.Controller.LoadAssetAsync<Sprite>(address);
-
-            return sprite;
-        }
-
         private static string JoinSegment(char segment, params string[] parts)
         {
             if (parts == null || parts.Length == 0)

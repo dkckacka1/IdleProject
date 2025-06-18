@@ -38,6 +38,8 @@ namespace IdleProject.Data
         public CharacterAddressValue addressValue;
         public StatData stat;
 
+        public string GetCharacterBannerIconName => $"Icon_{addressValue.characterName}_Banner";
+        public string GetCharacterSkillBannerIconName => $"Icon_{addressValue.characterName}_SkillBanner";
     }
 }
 

@@ -19,6 +19,7 @@ namespace IdleProject.Core.Resource
             base.Initialized();
             
             _assetLoaderDic.Add(typeof(Sprite), new SpriteLoader());
+            _assetLoaderDic.Add(typeof(RuntimeAnimatorController), new AnimationControllerLoader());
         }
 
 

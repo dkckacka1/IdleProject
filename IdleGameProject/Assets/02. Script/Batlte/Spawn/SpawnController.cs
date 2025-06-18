@@ -12,6 +12,7 @@ using IdleProject.Battle.UI;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.ObjectPool;
+using IdleProject.Core.Resource;
 using IdleProject.Data;
 using UnityEngine.Serialization;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
@@ -121,7 +122,7 @@ namespace IdleProject.Battle.Spawn
 
         private async UniTask SetAnimation(CharacterController controller, CharacterData data)
         {
-            var animationController = await ResourceLoader.GetAnimation(data.addressValue.characterAnimationName);
+            var animationController = ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(data.addressValue.characterAnimationName);
             controller.AnimController = new CharacterBattleAnimationController(controller.GetComponentInChildren<Animator>(), controller.GetComponentInChildren<AnimationEventHandler>());
             controller.AnimController.SetAnimationController(animationController);
         }

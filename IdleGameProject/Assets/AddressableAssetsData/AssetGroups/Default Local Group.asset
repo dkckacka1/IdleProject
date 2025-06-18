@@ -39,7 +39,8 @@ MonoBehaviour:
   - m_GUID: 83676e73926d19849ac30715154cb0dc
     m_Address: Animation
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - Animation
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 87845ff8ea6de5b47b8fcab3e79bd8b4
     m_Address: Assets/10. Sprite/SpriteAtlas

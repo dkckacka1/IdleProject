@@ -13,6 +13,8 @@ namespace IdleProject.Core.UI
 
         [HideInInspector] public LoadingUI loadingUI;
 
+        public bool IsShowingLoading => loadingUI.isLoading;
+
         protected override void Initialized()
         {
             base.Initialized();

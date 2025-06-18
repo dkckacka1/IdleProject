@@ -13,6 +13,7 @@ using IdleProject.Battle.Spawn;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
+using IdleProject.Core.Loading;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 using Object = UnityEngine.Object;
 
@@ -54,23 +55,37 @@ namespace IdleProject.Battle
         public Transform effectParent;
         public Transform projectileParent;
 
-        public List<CharacterController> GetCharacterList(CharacterAIType aiType) =>
-            (aiType == CharacterAIType.Player) ? playerCharacterList : enemyCharacterList;
+        private BattleUIController _battleUIController;
 
+        private const string BATTLE_INIT_TASK = "BattleInit";
+        
+        public List<CharacterController> GetCharacterList(CharacterAIType aiType) =>
+            aiType == CharacterAIType.Player ? playerCharacterList : enemyCharacterList;
+        
         public override async UniTask Initialize()
         {
-            SceneInitialize();
-            await BattleInit();
-        }
-
-        public void SceneInitialize()
-        {
             spawnController = GetComponent<SpawnController>();
-            UIManager.Instance.GetUIController<BattleUIController>().Initialized();
-            EnumExtension.Foreach<BattleObjectType>((type) => { BattleObjectEventDic.Add(type, new UnityEvent()); });
+            _battleUIController = UIManager.Instance.GetUIController<BattleUIController>();
+            
+            EnumExtension.Foreach<BattleObjectType>(type => { BattleObjectEventDic.Add(type, new UnityEvent()); });
+            
+            TaskChecker.StartLoading(BATTLE_INIT_TASK, _battleUIController.Initialized);
+            TaskChecker.StartLoading(BATTLE_INIT_TASK, SpawnCharacter);
+            
+            await UniTask.WaitUntil(() => TaskChecker.IsTasking(BATTLE_INIT_TASK) is false);
         }
 
-        private async UniTask BattleInit()
+        private async UniTask Start()
+        {
+            await UniTask.WaitUntil(() => UIManager.Instance.IsShowingLoading is false);
+            _battleUIController.PlayReadyUI(() =>
+            {
+                GameManager.GetCurrentSceneManager<BattleManager>().BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
+                GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Play);
+            });
+        }
+
+        private async UniTask SpawnCharacter()
         {
             await spawnController.SpawnCharacterAtInfo(CharacterAIType.Player,
                 DataManager.Instance.DataController.playerSpawnInfo);

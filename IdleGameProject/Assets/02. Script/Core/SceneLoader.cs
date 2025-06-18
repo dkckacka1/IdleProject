@@ -34,7 +34,7 @@ namespace IdleProject.Core
 
             var sceneInstance = await AddressableManager.Instance.Controller.LoadSceneAsync(
                 $"{SCENE_ADDRESSABLE_PATH}/{sceneType}.{SCENE_FILE_EXTENSION}", LoadSceneMode.Single);
-            await sceneInstance.ActivateAsync().ToUniTask(loadingUI);
+            await sceneInstance.ActivateAsync().ToUniTask();
 
             loadingUI.ShowLoadingPercent(0.3f);
 

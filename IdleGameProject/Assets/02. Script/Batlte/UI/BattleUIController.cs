@@ -6,35 +6,26 @@ using IdleProject.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Engine.Util.Extension;
+using UnityEngine.Events;
 
 namespace IdleProject.Battle.UI
 {
     public class BattleUIController : UIController
     {
-        [BoxGroup("FixedGroup"), SerializeField] private Canvas fixedCanvas;
-
-        [BoxGroup("FluidGroup"), SerializeField] private Canvas fluidCanvas;
         [BoxGroup("FluidGroup"), SerializeField] private Transform fluidHealthBarParent;
         [BoxGroup("FluidGroup"), SerializeField] private Transform battleTextParent;
 
-        [BoxGroup("PlayerBanner"), SerializeField] private List<PlayerCharacterBanner> playerCharacterBannerList; 
-
-
-        public Canvas FluidCanvas => fluidCanvas;
-        public Canvas FixedCanvas => fixedCanvas;
+        [BoxGroup("BattleUI"), SerializeField] private List<PlayerCharacterBanner> playerCharacterBannerList; 
+        [BoxGroup("BattleUI"), SerializeField] private ReadyPanel readyPanelUI; 
 
         public Transform FluidHealthBarParent => fluidHealthBarParent;
-        public Transform BattleTextParent => battleTextParent;
 
         public Func<BattleText> GetBattleText;
 
-        private bool _isInitialize = false;
-
-        public async void Initialized()
+        public async UniTask Initialized()
         {
-            _isInitialize = false;
-
             await ResourceLoader.CreatePool(PoolableType.UI, "BattleText", battleTextParent);
             GetBattleText = () => ResourceLoader.GetPoolableObject<BattleText>(PoolableType.UI, "BattleText");
 
@@ -44,8 +35,6 @@ namespace IdleProject.Battle.UI
             UIManager.Instance.GetUI<UIButton>("PausePopupContinueButton").Button.onClick.AddListener(ClosePausePopup);
             UIManager.Instance.GetUI<UIButton>("PausePopupRetryButton").Button.onClick.AddListener(RetryBattle);
             UIManager.Instance.GetUI<UIButton>("PausePopupExitButton").Button.onClick.AddListener(ExitBattle);
-            
-            _isInitialize = true;
         }
 
         public PlayerCharacterBanner GetPlayerCharacterBanner()
@@ -54,7 +43,11 @@ namespace IdleProject.Battle.UI
             targetBanner.gameObject.SetActive(true);
             return targetBanner;
         }
-        
+
+        public void PlayReadyUI(UnityAction onUIPlayEnd)
+        {
+            readyPanelUI.PlayReadyUI(onUIPlayEnd);
+        }
         
         private void ChangeBattleSpeed()
         {
@@ -73,7 +66,6 @@ namespace IdleProject.Battle.UI
             GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Pause);
             UIManager.Instance.GetUI<PausePopup>().OpenPopup();
         }
-        
         
         private void ExitBattle()
         {

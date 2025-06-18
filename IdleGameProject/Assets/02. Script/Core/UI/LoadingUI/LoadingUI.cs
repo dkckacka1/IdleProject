@@ -10,7 +10,7 @@ using UnityEngine.UI;
 namespace  IdleProject.Core.UI
 {
     // 로딩 전용 UI 클래스
-    public class LoadingUI : MonoBehaviour, IProgress<float>
+    public class LoadingUI : MonoBehaviour
     {
         [BoxGroup("LoadingUI"),SerializeField] private Canvas canvas;
         [BoxGroup("LoadingUI"), SerializeField] private CanvasGroup canvasGroup;
@@ -19,6 +19,8 @@ namespace  IdleProject.Core.UI
 
         [BoxGroup("LoadingTween"), SerializeField]
         private float fadeOutDuration = 1f;
+
+        public bool isLoading;
 
         private void Awake()
         {
@@ -32,6 +34,8 @@ namespace  IdleProject.Core.UI
 
             loadingProgressBar.maxValue = 1f;
             loadingProgressBar.value = 0f;
+
+            isLoading = true;
         }
 
         public void ShowLoadingPercent(float percent)
@@ -41,18 +45,17 @@ namespace  IdleProject.Core.UI
 
         public void LoadingEnd()
         {
-            canvasGroup.DOFade(0f, fadeOutDuration).OnComplete(() => { canvas.enabled = false; });
+            canvasGroup.DOFade(0f, fadeOutDuration).OnComplete(() =>
+            {
+                isLoading = false;
+                canvas.enabled = false;
+            });
         }
 
 
         private void OnPercentChange(float percent)
         {
             loadingPercentText.text = $"{percent * 100 :0} %";
-        }
-
-        public void Report(float value)
-        {
-            
         }
     }
 }

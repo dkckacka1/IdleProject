@@ -1,9 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
-using Engine.Core.Addressable;
 using IdleProject.Battle;
 using IdleProject.Core.ObjectPool;
-using IdleProject.Data;
 using UnityEngine;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
@@ -21,12 +19,7 @@ namespace IdleProject.Core
         Effect,
         Projectile,
     }
-
-    public enum IconType
-    {
-        Character,
-    }
-
+    
     public static class ResourceLoader
     {
         private const string PREFAB_PATH = "Prefab";

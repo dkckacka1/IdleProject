@@ -75,7 +75,7 @@ namespace IdleProject.Battle
             await UniTask.WaitUntil(() => TaskChecker.IsTasking(BATTLE_INIT_TASK) is false);
         }
 
-        private async UniTask Start()
+        private async void Start()
         {
             await UniTask.WaitUntil(() => UIManager.Instance.IsShowingLoading is false);
             _battleUIController.PlayReadyUI(() =>
@@ -127,8 +127,8 @@ namespace IdleProject.Battle
 
         private void LateUpdate()
         {
-            if (GameStateEventBus.CurrentType is GameStateType.Play &&
-                BattleStateEventBus.CurrentType is BattleStateType.Battle)
+            if (GameStateEventBus.IsSameCurrentType(GameStateType.Play) &&
+                BattleStateEventBus.IsSameCurrentType(BattleStateType.Battle, BattleStateType.Skill))
             {
                 BattleObjectEventDic[BattleObjectType.UI].Invoke();
             }

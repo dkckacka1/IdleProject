@@ -40,22 +40,22 @@ namespace IdleProject.Battle.Spawn
         [SerializeField] private SpawnInfo player;
         [SerializeField] private SpawnInfo enemy;
 
-        public async UniTask SpawnCharacterAtInfo(CharacterAIType aiType, SpawnInfoData spawnInfo)
+        public async UniTask SpawnCharacterAtInfo(CharacterAIType aiType, FormationInfo formationInfo)
         {
-            if(string.IsNullOrEmpty(spawnInfo.frontLeftCharacterName) is false)
-                await SpawnCharacter(aiType, SpawnPositionType.FrontLeft, spawnInfo.frontLeftCharacterName);
+            if(string.IsNullOrEmpty(formationInfo.frontLeftCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.FrontLeft, formationInfo.frontLeftCharacterName);
             
-            if(string.IsNullOrEmpty(spawnInfo.frontMiddleCharacterName) is false)
-                await SpawnCharacter(aiType, SpawnPositionType.FrontMiddle, spawnInfo.frontMiddleCharacterName);
+            if(string.IsNullOrEmpty(formationInfo.frontMiddleCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.FrontMiddle, formationInfo.frontMiddleCharacterName);
             
-            if(string.IsNullOrEmpty(spawnInfo.frontRightCharacterName) is false)
-                await SpawnCharacter(aiType, SpawnPositionType.FrontRight, spawnInfo.frontRightCharacterName);
+            if(string.IsNullOrEmpty(formationInfo.frontRightCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.FrontRight, formationInfo.frontRightCharacterName);
             
-            if(string.IsNullOrEmpty(spawnInfo.rearLeftCharacterName) is false)
-                await SpawnCharacter(aiType, SpawnPositionType.RearLeft, spawnInfo.rearLeftCharacterName);
+            if(string.IsNullOrEmpty(formationInfo.rearLeftCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.RearLeft, formationInfo.rearLeftCharacterName);
             
-            if(string.IsNullOrEmpty(spawnInfo.rearRightCharacterName) is false)
-                await SpawnCharacter(aiType, SpawnPositionType.RearRight, spawnInfo.rearRightCharacterName);
+            if(string.IsNullOrEmpty(formationInfo.rearRightCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.RearRight, formationInfo.rearRightCharacterName);
         }
         
         public async UniTask SpawnCharacter(CharacterAIType aiType, SpawnPositionType spawnPositionType,

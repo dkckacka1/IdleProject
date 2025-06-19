@@ -3,7 +3,6 @@ using Cysharp.Threading.Tasks;
 using IdleProject.Battle;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
-using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Core
 {
@@ -30,12 +29,13 @@ namespace IdleProject.Core
 
         private const char PATH_SEGMENT = '/';
 
-        public static async UniTask<GameObject> InstantiateCharacterModel(string characterName, CharacterController controller)
+        public static async UniTask<GameObject> InstantiateCharacterModel(string characterName, Transform parent)
         {
             var prefabName = $"{MODEL_PATH}_{characterName}";
             var address = $"{JoinSegment(PATH_SEGMENT, PREFAB_PATH, nameof(ResourceType.Character), MODEL_PATH, prefabName)}.{PREFAB_EXTENSION}";
-            var model = await AddressableManager.Instance.Controller.InstantiateObject<GameObject>(address, parent: controller.transform);
+            var model = await AddressableManager.Instance.Controller.InstantiateObject<GameObject>(address, parent);
 
+            model.transform.position = parent.transform.position;
             return model;
         }
         

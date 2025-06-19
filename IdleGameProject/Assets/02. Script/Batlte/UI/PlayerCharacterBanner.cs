@@ -1,6 +1,5 @@
 using Cysharp.Threading.Tasks;
-using IdleProject.Battle.Character;
-using IdleProject.Core;
+using IdleProject.Character.Stat;
 using IdleProject.Core.Resource;
 using IdleProject.Data;
 using TMPro;

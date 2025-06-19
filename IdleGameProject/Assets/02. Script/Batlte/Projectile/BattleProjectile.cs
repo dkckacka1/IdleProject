@@ -1,4 +1,4 @@
-using IdleProject.Battle.Character;
+using IdleProject.Character;
 using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;

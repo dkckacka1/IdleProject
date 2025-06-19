@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Engine.Core.EventBus;
-using IdleProject.Battle.Character;
+using IdleProject.Character;
 using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace IdleProject.Battle.Effect
 {

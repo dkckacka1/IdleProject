@@ -3,19 +3,21 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Engine.Core;
 using UnityEngine;
-using IdleProject.Battle.AI;
-using IdleProject.Battle.Character;
-using IdleProject.Battle.Character.Skill;
 using IdleProject.Battle.Effect;
 using IdleProject.Battle.Projectile;
-using IdleProject.Battle.UI;
+using IdleProject.Character;
+using IdleProject.Character.AI;
+using IdleProject.Character.Character;
+using IdleProject.Character.Skill;
+using IdleProject.Character.Stat;
+using IdleProject.Character.UI;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.ObjectPool;
 using IdleProject.Core.Resource;
 using IdleProject.Data;
-using UnityEngine.Serialization;
-using CharacterController = IdleProject.Battle.Character.CharacterController;
+
+using CharacterController = IdleProject.Character.CharacterController;
 
 namespace IdleProject.Battle.Spawn
 {
@@ -81,7 +83,8 @@ namespace IdleProject.Battle.Spawn
 
         public async Task<CharacterController> CreateCharacter(string characterName, CharacterAIType aiType)
         {
-            var controller = await AddressableManager.Instance.Controller.LoadAssetAsync<CharacterController>("Prefab/Character/Character.prefab");
+            var character = await AddressableManager.Instance.Controller.LoadAssetAsync<GameObject>("Prefab/Character/Character.prefab");
+            var controller = Instantiate(character).AddComponent<CharacterController>();
             var data = DataManager.Instance.GetData<CharacterData>(characterName);
             var instance = Instantiate(controller);
             instance.name = characterName;
@@ -123,7 +126,7 @@ namespace IdleProject.Battle.Spawn
         private async UniTask SetAnimation(CharacterController controller, CharacterData data)
         {
             var animationController = ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(data.addressValue.characterAnimationName);
-            controller.AnimController = new CharacterBattleAnimationController(controller.GetComponentInChildren<Animator>(), controller.GetComponentInChildren<AnimationEventHandler>());
+            controller.AnimController = new CharacterBattleAnimationController(controller.GetComponentInChildren<Animator>(), controller.gameObject.AddComponent<AnimationEventHandler>());
             controller.AnimController.SetAnimationController(animationController);
         }
         

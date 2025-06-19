@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using IdleProject.Battle;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
-using CharacterController = IdleProject.Battle.Character.CharacterController;
+using CharacterController = IdleProject.Character.CharacterController;
 
 namespace IdleProject.Core
 {

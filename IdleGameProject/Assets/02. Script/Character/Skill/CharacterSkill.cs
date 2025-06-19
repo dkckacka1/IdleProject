@@ -6,7 +6,7 @@ namespace IdleProject.Character.Skill
 {
     public abstract class CharacterSkill
     {
-        public BattleCharacterController Controller;
+        public CharacterController Controller;
 
         public abstract void SetAnimationEvent(AnimationEventHandler eventHandler);
 

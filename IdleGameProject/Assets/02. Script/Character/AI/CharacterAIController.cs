@@ -16,13 +16,13 @@ namespace IdleProject.Character.AI
     }
 
 
-    [RequireComponent(typeof(BattleCharacterController))]
+    [RequireComponent(typeof(CharacterController))]
     public class CharacterAIController : MonoBehaviour
     {
         public CharacterAIType aiType;
 
-        private BattleCharacterController _controller;
-        private BattleCharacterController _currentTarget;
+        private CharacterController _controller;
+        private CharacterController _currentTarget;
 
         private StateContext _context;
         private IdleState _idleState;
@@ -32,7 +32,7 @@ namespace IdleProject.Character.AI
         
         public void Initialized()
         {
-            _controller = GetComponent<BattleCharacterController>();
+            _controller = GetComponent<CharacterController>();
             _controller.GetTargetCharacter = GetTargetController;
 
             _idleState = new IdleState(_controller, GetTargetController);
@@ -69,12 +69,12 @@ namespace IdleProject.Character.AI
             return _idleState;
         }
 
-        private BattleCharacterController GetTargetController()
+        private CharacterController GetTargetController()
         {
             return _currentTarget;
         }
 
-        private BattleCharacterController GetNealyTarget()
+        private CharacterController GetNealyTarget()
         {
             
             

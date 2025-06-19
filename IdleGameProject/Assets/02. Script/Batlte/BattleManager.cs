@@ -9,11 +9,12 @@ using Engine.Util.Extension;
 using IdleProject.Core.UI;
 using IdleProject.Battle.Spawn;
 using IdleProject.Battle.UI;
-using IdleProject.Character;
 using IdleProject.Character.AI;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.Loading;
+
+using CharacterController = IdleProject.Character.CharacterController;
 
 namespace IdleProject.Battle
 {
@@ -43,8 +44,8 @@ namespace IdleProject.Battle
     public partial class BattleManager : SceneController
     {
         [HideInInspector] public SpawnController spawnController;
-        [HideInInspector] public List<BattleCharacterController> playerCharacterList = new List<BattleCharacterController>();
-        [HideInInspector] public List<BattleCharacterController> enemyCharacterList = new List<BattleCharacterController>();
+        [HideInInspector] public List<CharacterController> playerCharacterList = new List<CharacterController>();
+        [HideInInspector] public List<CharacterController> enemyCharacterList = new List<CharacterController>();
 
         public readonly Dictionary<BattleObjectType, UnityEvent> BattleObjectEventDic = new();
         public readonly EnumEventBus<GameStateType> GameStateEventBus = new();
@@ -57,7 +58,7 @@ namespace IdleProject.Battle
 
         private const string BATTLE_INIT_TASK = "BattleInit";
         
-        public List<BattleCharacterController> GetCharacterList(CharacterAIType aiType) =>
+        public List<CharacterController> GetCharacterList(CharacterAIType aiType) =>
             aiType == CharacterAIType.Player ? playerCharacterList : enemyCharacterList;
         
         public override async UniTask Initialize()
@@ -86,9 +87,9 @@ namespace IdleProject.Battle
         private async UniTask SpawnCharacter()
         {
             await spawnController.SpawnCharacterAtInfo(CharacterAIType.Player,
-                DataManager.Instance.DataController.playerFormationInfo);
+                DataManager.Instance.DataController.playerSpawnInfo);
             await spawnController.SpawnCharacterAtInfo(CharacterAIType.Enemy,
-                DataManager.Instance.DataController.enemyFormationInfo);
+                DataManager.Instance.DataController.enemySpawnInfo);
         }
 
         private void FixedUpdate()
@@ -132,16 +133,16 @@ namespace IdleProject.Battle
             }
         }
 
-        public void AddCharacterController(BattleCharacterController controller)
+        public void AddCharacterController(CharacterController controller)
         {
             var characterControllerList = GetCharacterList(controller.characterAI.aiType);
 
             characterControllerList.Add(controller);
         }
 
-        public void DeathCharacter(BattleCharacterController battleCharacterController)
+        public void DeathCharacter(CharacterController characterController)
         {
-            var aiType = battleCharacterController.characterAI.aiType;
+            var aiType = characterController.characterAI.aiType;
             var characterList = GetCharacterList(aiType);
 
             if (characterList.Any(character => character.StatSystem.IsLive) is false)

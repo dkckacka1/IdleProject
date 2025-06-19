@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IdleProject.Character
 {
-    public partial class CharacterController
+    public partial class BattleCharacterController
     {
         public virtual void Move(Vector3 destination)
         {

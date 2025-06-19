@@ -6,7 +6,7 @@ using IdleProject.Core;
 
 namespace IdleProject.Character
 {
-    public partial class CharacterController : IEnumEvent<GameStateType>
+    public partial class BattleCharacterController : IEnumEvent<GameStateType>
     {
         private const float ATTACK_RANGE_CORRECTION_VALUE = 0.1f;
 

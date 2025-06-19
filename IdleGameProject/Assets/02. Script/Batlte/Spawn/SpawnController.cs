@@ -17,8 +17,6 @@ using IdleProject.Core.ObjectPool;
 using IdleProject.Core.Resource;
 using IdleProject.Data;
 
-using CharacterController = IdleProject.Character.CharacterController;
-
 namespace IdleProject.Battle.Spawn
 {
     public enum SpawnPositionType
@@ -42,22 +40,22 @@ namespace IdleProject.Battle.Spawn
         [SerializeField] private SpawnInfo player;
         [SerializeField] private SpawnInfo enemy;
 
-        public async UniTask SpawnCharacterAtInfo(CharacterAIType aiType, SpawnInfoData spawnInfo)
+        public async UniTask SpawnCharacterAtInfo(CharacterAIType aiType, FormationInfoData formationInfo)
         {
-            if(string.IsNullOrEmpty(spawnInfo.frontLeftCharacterName) is false)
-                await SpawnCharacter(aiType, SpawnPositionType.FrontLeft, spawnInfo.frontLeftCharacterName);
+            if(string.IsNullOrEmpty(formationInfo.frontLeftCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.FrontLeft, formationInfo.frontLeftCharacterName);
             
-            if(string.IsNullOrEmpty(spawnInfo.frontMiddleCharacterName) is false)
-                await SpawnCharacter(aiType, SpawnPositionType.FrontMiddle, spawnInfo.frontMiddleCharacterName);
+            if(string.IsNullOrEmpty(formationInfo.frontMiddleCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.FrontMiddle, formationInfo.frontMiddleCharacterName);
             
-            if(string.IsNullOrEmpty(spawnInfo.frontRightCharacterName) is false)
-                await SpawnCharacter(aiType, SpawnPositionType.FrontRight, spawnInfo.frontRightCharacterName);
+            if(string.IsNullOrEmpty(formationInfo.frontRightCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.FrontRight, formationInfo.frontRightCharacterName);
             
-            if(string.IsNullOrEmpty(spawnInfo.rearLeftCharacterName) is false)
-                await SpawnCharacter(aiType, SpawnPositionType.RearLeft, spawnInfo.rearLeftCharacterName);
+            if(string.IsNullOrEmpty(formationInfo.rearLeftCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.RearLeft, formationInfo.rearLeftCharacterName);
             
-            if(string.IsNullOrEmpty(spawnInfo.rearRightCharacterName) is false)
-                await SpawnCharacter(aiType, SpawnPositionType.RearRight, spawnInfo.rearRightCharacterName);
+            if(string.IsNullOrEmpty(formationInfo.rearRightCharacterName) is false)
+                await SpawnCharacter(aiType, SpawnPositionType.RearRight, formationInfo.rearRightCharacterName);
         }
         
         public async UniTask SpawnCharacter(CharacterAIType aiType, SpawnPositionType spawnPositionType,
@@ -70,21 +68,21 @@ namespace IdleProject.Battle.Spawn
             SetCharacterPosition(controller, aiType, spawnPositionType);
         }
 
-        private void SetCharacterPosition(CharacterController character, CharacterAIType aiType,
+        private void SetCharacterPosition(BattleCharacterController battleCharacter, CharacterAIType aiType,
             SpawnPositionType spawnPositionType)
         {
             SpawnInfo spawnInfo = aiType == CharacterAIType.Player ? player : enemy;
             var spawnPosition = spawnInfo.spawnFormation.GetSpawnPosition(spawnPositionType);
 
-            character.transform.SetParent(spawnInfo.spawnObject);
-            character.transform.position = spawnPosition;
-            character.transform.Rotate(spawnInfo.spawnFormation.transform.rotation.eulerAngles);
+            battleCharacter.transform.SetParent(spawnInfo.spawnObject);
+            battleCharacter.transform.position = spawnPosition;
+            battleCharacter.transform.Rotate(spawnInfo.spawnFormation.transform.rotation.eulerAngles);
         }
 
-        public async Task<CharacterController> CreateCharacter(string characterName, CharacterAIType aiType)
+        public async Task<BattleCharacterController> CreateCharacter(string characterName, CharacterAIType aiType)
         {
             var character = await AddressableManager.Instance.Controller.LoadAssetAsync<GameObject>("Prefab/Character/Character.prefab");
-            var controller = Instantiate(character).AddComponent<CharacterController>();
+            var controller = Instantiate(character).AddComponent<BattleCharacterController>();
             var data = DataManager.Instance.GetData<CharacterData>(characterName);
             var instance = Instantiate(controller);
             instance.name = characterName;
@@ -106,7 +104,7 @@ namespace IdleProject.Battle.Spawn
 
 
 
-        private void SetStat(CharacterController controller, CharacterData data)
+        private void SetStat(BattleCharacterController controller, CharacterData data)
         {
             var statSystem = new StatSystem();
             statSystem.SetStatData(data.stat);
@@ -114,23 +112,24 @@ namespace IdleProject.Battle.Spawn
             controller.StatSystem = statSystem;
         }
 
-        private async UniTask SetModel(CharacterController controller, CharacterData data)
+        private async UniTask SetModel(BattleCharacterController controller, CharacterData data)
         {
-            await ResourceLoader.InstantiateCharacterModel(data.addressValue.characterName, controller);
+            var model = await ResourceLoader.InstantiateCharacterModel(data.addressValue.characterName, controller);
+            controller.SetModel(model);
             var characterOffset =  controller.gameObject.AddComponent<CharacterOffset>();
             characterOffset.Initialized();
 
             controller.offset = characterOffset;
         }
 
-        private async UniTask SetAnimation(CharacterController controller, CharacterData data)
+        private async UniTask SetAnimation(BattleCharacterController controller, CharacterData data)
         {
             var animationController = ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(data.addressValue.characterAnimationName);
             controller.AnimController = new CharacterBattleAnimationController(controller.GetComponentInChildren<Animator>(), controller.gameObject.AddComponent<AnimationEventHandler>());
             controller.AnimController.SetAnimationController(animationController);
         }
         
-        private async UniTask SetPoolableObject(CharacterController controller, CharacterData data)
+        private async UniTask SetPoolableObject(BattleCharacterController controller, CharacterData data)
         {
             controller.GetAttackHitEffect = await CreatePool<BattleEffect>(PoolableType.Effect, data.addressValue.attackHitEffectAddress);
             controller.GetSkillHitEffect = await CreatePool<BattleEffect>(PoolableType.Effect, data.addressValue.skillHitEffectAddress);
@@ -138,7 +137,7 @@ namespace IdleProject.Battle.Spawn
             controller.GetSkillProjectile = await CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.skillProjectileAddress);
         }
         
-        private void SetSkill(CharacterController controllerInstance, CharacterData data)
+        private void SetSkill(BattleCharacterController controllerInstance, CharacterData data)
         {
             var skillName = $"{typeof(CharacterSkill).FullName}{data.addressValue.characterName}, {typeof(CharacterSkill).Assembly}";
 
@@ -150,7 +149,7 @@ namespace IdleProject.Battle.Spawn
             }
         }
 
-        private void AddCharacterAI(CharacterController controller, CharacterAIType aiType)
+        private void AddCharacterAI(BattleCharacterController controller, CharacterAIType aiType)
         {
             var aiController = controller.gameObject.AddComponent<CharacterAIController>();
             aiController.aiType = aiType;
@@ -159,7 +158,7 @@ namespace IdleProject.Battle.Spawn
             controller.characterAI = aiController;
         }
 
-        private void AddCharacterUI(CharacterController controller, CharacterData data,CharacterAIType aiType)
+        private void AddCharacterUI(BattleCharacterController controller, CharacterData data,CharacterAIType aiType)
         {
             CharacterUIController uiController = null;
 

@@ -14,7 +14,7 @@ using UnityEngine;
 
 namespace IdleProject.Character
 {
-    public partial class CharacterController : ITakeDamagedAble
+    public partial class BattleCharacterController : ITakeDamagedAble
     {
         public Func<ITakeDamagedAble> GetTargetCharacter;
         public bool isNowSkill;

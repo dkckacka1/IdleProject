@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using IdleProject.Battle;
+using IdleProject.Character;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
 using CharacterController = IdleProject.Character.CharacterController;
@@ -35,6 +36,8 @@ namespace IdleProject.Core
             var prefabName = $"{MODEL_PATH}_{characterName}";
             var address = $"{JoinSegment(PATH_SEGMENT, PREFAB_PATH, nameof(ResourceType.Character), MODEL_PATH, prefabName)}.{PREFAB_EXTENSION}";
             var model = await AddressableManager.Instance.Controller.InstantiateObject<GameObject>(address, parent: controller.transform);
+
+            model.transform.position = controller.transform.position;
 
             return model;
         }

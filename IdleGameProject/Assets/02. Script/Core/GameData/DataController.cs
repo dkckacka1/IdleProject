@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 namespace IdleProject.Core.GameData
 {
     [System.Serializable]
-    public struct SpawnInfoData
+    public struct FormationInfoData
     {
         public string frontMiddleCharacterName;
         public string frontRightCharacterName;
@@ -18,8 +18,8 @@ namespace IdleProject.Core.GameData
     [System.Serializable]
     public class DataController
     {
-        public SpawnInfoData playerSpawnInfo;
-        public SpawnInfoData enemySpawnInfo;
+        public FormationInfoData playerFormationInfo;
+        public FormationInfoData enemyFormationInfo;
 
         public DataController()
         {
@@ -28,8 +28,8 @@ namespace IdleProject.Core.GameData
 
         public DataController(TestStaticData staticData)
         {
-            playerSpawnInfo = staticData.PlayerSpawnInfo;
-            enemySpawnInfo = staticData.EnemySpawnInfo;
+            playerFormationInfo = staticData.playerFormationInfo;
+            enemyFormationInfo = staticData.enemyFormationInfo;
         }
     }
 }

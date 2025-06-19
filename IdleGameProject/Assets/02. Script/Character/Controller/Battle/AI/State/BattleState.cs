@@ -1,13 +1,12 @@
 using System;
 using IdleProject.Battle;
 using IdleProject.Core;
-using CharacterController = IdleProject.Character.CharacterController;
 
 namespace IdleProject.Character.AI.State
 {
     public class BattleState : State
     {
-        public BattleState(CharacterController controller, Func<CharacterController> targetController) : base(
+        public BattleState(BattleCharacterController controller, Func<BattleCharacterController> targetController) : base(
             controller, targetController)
         {
         }

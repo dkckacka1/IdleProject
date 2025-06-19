@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5721d77e71f8394cb7bf7f75f9bc4a3, type: 3}
   m_Name: TestStaticData
   m_EditorClassIdentifier: 
-  PlayerSpawnInfo:
+  playerFormationInfo:
     frontMiddleCharacterName: Hiro
-    frontRightCharacterName: Eli
-    frontLeftCharacterName: Bak
+    frontRightCharacterName: Bak
+    frontLeftCharacterName: Eli
     rearRightCharacterName: 
     rearLeftCharacterName: 
-  EnemySpawnInfo:
+  enemyFormationInfo:
     frontMiddleCharacterName: GoblinMale
     frontRightCharacterName: GoblinMale
     frontLeftCharacterName: GoblinMale

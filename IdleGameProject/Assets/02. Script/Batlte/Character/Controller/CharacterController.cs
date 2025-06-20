@@ -81,6 +81,7 @@ namespace IdleProject.Battle.Character
         
         private void PublishUIEvent()
         {
+            GameManager.GetCurrentSceneManager<BattleManager>().BattleStateEventBus.PublishEvent(characterUI);
             GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.UI].AddListener(characterUI.OnBattleUIEvent);
         }
 

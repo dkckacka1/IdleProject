@@ -1,6 +1,7 @@
 using Engine.Util;
 using System;
 using System.Collections.Generic;
+using IdleProject.Core.UI.Loading;
 using UnityEngine;
 using UnityEngine.Serialization;
 

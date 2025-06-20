@@ -356,6 +356,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3829090815388523765}
+  - component: {fileID: 7331949986690799316}
   m_Layer: 5
   m_Name: LobbyStatBar
   m_TagString: Untagged
@@ -385,3 +386,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7331949986690799316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6133461256644883105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 716fb78e948686d4a98e651e82cc1b04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statNameText: {fileID: 2279660490935295798}
+  statValueText: {fileID: 37300783299149833}

@@ -31,6 +31,7 @@ namespace IdleProject.Lobby.Character
         {
             _animator.runtimeAnimatorController = animatorController;
             _animator.Rebind();
+            _animator.Update(0f);
         }
     }
 }

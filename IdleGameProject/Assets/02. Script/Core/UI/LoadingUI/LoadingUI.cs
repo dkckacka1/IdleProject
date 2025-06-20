@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 
-namespace  IdleProject.Core.UI
+namespace  IdleProject.Core.UI.Loading
 {
     // 로딩 전용 UI 클래스
     public class LoadingUI : MonoBehaviour

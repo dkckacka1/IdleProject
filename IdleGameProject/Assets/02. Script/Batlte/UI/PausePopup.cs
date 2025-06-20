@@ -61,11 +61,12 @@ namespace IdleProject.Battle.UI
                 
         private void ExitBattle()
         {
+            GameManager.Instance.LoadScene(SceneType.Lobby);
         }
 
         private void RetryBattle()
         {
-            
+            GameManager.Instance.LoadScene(SceneType.Battle);
         }
 
         private void ClosePausePopup()

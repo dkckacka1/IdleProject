@@ -35,7 +35,7 @@ namespace IdleProject.Battle.UI
         public void ShowBattleText(string text)
         {
             var battleText = GetBattleUI.GetBattleText.Invoke();
-            Vector3 randomPos = Random.insideUnitCircle * _offset.BattleTextOffsetRadius;
+            Vector3 randomPos = Random.insideUnitCircle * _offset.BattleTextOffsetRadius * 50f;
             var textPosition = UIManager.GetUIInScreen(Camera.main.WorldToScreenPoint(_offset.GetHitEffectPosition) + randomPos);
             battleText.ShowText(textPosition, text);
         }

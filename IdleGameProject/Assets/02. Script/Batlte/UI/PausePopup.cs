@@ -1,4 +1,5 @@
 using DG.Tweening;
+using IdleProject.Core;
 using IdleProject.Core.UI;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -28,6 +29,13 @@ namespace IdleProject.Battle.UI
         private Sequence _openPopupSequence;
         private Sequence _closePopupSequence;
 
+        public override void Initialized()
+        {
+            UIManager.Instance.GetUI<UIButton>("PausePopupContinueButton").Button.onClick.AddListener(ClosePausePopup);
+            UIManager.Instance.GetUI<UIButton>("PausePopupRetryButton").Button.onClick.AddListener(RetryBattle);
+            UIManager.Instance.GetUI<UIButton>("PausePopupExitButton").Button.onClick.AddListener(ExitBattle);
+        }
+
         public override void OpenPopup()
         {
             base.OpenPopup();
@@ -41,14 +49,29 @@ namespace IdleProject.Battle.UI
 
         public override void ClosePopup()
         {
-            base.ClosePopup();
             _closePopupSequence = DOTween.Sequence();
             _closePopupSequence.Append(backgroundImage.DOFade(0f, backgroundShadowDuration));
             _closePopupSequence.Join(popupBaseObj.DOMoveY(-PopupBaseHeight, popupBaseTweenDuration));
             _closePopupSequence.OnComplete(() => 
             {
-                gameObject.SetActive(false);
+                base.ClosePopup();
             });
+        }
+        
+                
+        private void ExitBattle()
+        {
+        }
+
+        private void RetryBattle()
+        {
+            
+        }
+
+        private void ClosePausePopup()
+        {
+            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Play);
+            UIManager.Instance.GetUI<PausePopup>().ClosePopup();
         }
     }
 }

@@ -3,13 +3,10 @@ using UnityEngine;
 
 namespace IdleProject.Core.UI
 {
-    public class UIPopup : UIBase
+    public abstract class UIPopup : UIBase
     {
-        protected override void Awake()
-        {
-            base.Awake();
-        }
-
+        public abstract void Initialized();
+        
         private void Start()
         {
             gameObject.SetActive(false);
@@ -22,7 +19,7 @@ namespace IdleProject.Core.UI
 
         public virtual void ClosePopup()
         {
-            
+            gameObject.SetActive(false);
         }
     }
 }

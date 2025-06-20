@@ -30,11 +30,9 @@ namespace IdleProject.Battle.UI
             GetBattleText = () => ResourceLoader.GetPoolableObject<BattleText>(PoolableType.UI, "BattleText");
 
             SetSpeedText();
+            UIManager.Instance.GetUI<UIPopup>("PausePopup").Initialized();
             UIManager.Instance.GetUI<UIButton>("SpeedButton").Button.onClick.AddListener(ChangeBattleSpeed);
             UIManager.Instance.GetUI<UIButton>("PauseButton").Button.onClick.AddListener(PauseGame);
-            UIManager.Instance.GetUI<UIButton>("PausePopupContinueButton").Button.onClick.AddListener(ClosePausePopup);
-            UIManager.Instance.GetUI<UIButton>("PausePopupRetryButton").Button.onClick.AddListener(RetryBattle);
-            UIManager.Instance.GetUI<UIButton>("PausePopupExitButton").Button.onClick.AddListener(ExitBattle);
         }
 
         public PlayerCharacterBanner GetPlayerCharacterBanner()
@@ -66,20 +64,6 @@ namespace IdleProject.Battle.UI
             GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Pause);
             UIManager.Instance.GetUI<PausePopup>().OpenPopup();
         }
-        
-        private void ExitBattle()
-        {
-        }
 
-        private void RetryBattle()
-        {
-            
-        }
-
-        private void ClosePausePopup()
-        {
-            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Play);
-            UIManager.Instance.GetUI<PausePopup>().ClosePopup();
-        }
     }
 }

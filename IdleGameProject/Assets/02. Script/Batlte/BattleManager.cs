@@ -14,6 +14,7 @@ using IdleProject.Battle.UI;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.Loading;
+using UnityEngine.Serialization;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 using Object = UnityEngine.Object;
 
@@ -44,17 +45,17 @@ namespace IdleProject.Battle
 
     public partial class BattleManager : SceneController
     {
-        [HideInInspector] public SpawnController spawnController;
         [HideInInspector] public List<CharacterController> playerCharacterList = new List<CharacterController>();
         [HideInInspector] public List<CharacterController> enemyCharacterList = new List<CharacterController>();
 
         public readonly Dictionary<BattleObjectType, UnityEvent> BattleObjectEventDic = new();
-        public readonly EnumEventBus<GameStateType> GameStateEventBus = new();
-        public readonly EnumEventBus<BattleStateType> BattleStateEventBus = new();
+        public readonly EnumEventBus<GameStateType> GameStateEventBus = new(GameStateType.Play);
+        public readonly EnumEventBus<BattleStateType> BattleStateEventBus = new(BattleStateType.Ready);
 
         public Transform effectParent;
         public Transform projectileParent;
 
+        [HideInInspector] public SpawnController spawnController;
         private BattleUIController _battleUIController;
 
         private const string BATTLE_INIT_TASK = "BattleInit";
@@ -64,32 +65,23 @@ namespace IdleProject.Battle
         
         public override async UniTask Initialize()
         {
-            spawnController = GetComponent<SpawnController>();
             _battleUIController = UIManager.Instance.GetUIController<BattleUIController>();
             
-            EnumExtension.Foreach<BattleObjectType>(type => { BattleObjectEventDic.Add(type, new UnityEvent()); });
+            spawnController = GetComponent<SpawnController>();
+            spawnController.Initialize();
             
+            EnumExtension.Foreach<BattleObjectType>(type => { BattleObjectEventDic.Add(type, new UnityEvent()); });
             TaskChecker.StartLoading(BATTLE_INIT_TASK, _battleUIController.Initialized);
             TaskChecker.StartLoading(BATTLE_INIT_TASK, SpawnCharacter);
             
             await UniTask.WaitUntil(() => TaskChecker.IsTasking(BATTLE_INIT_TASK) is false);
         }
 
-        private async void Start()
-        {
-            await UniTask.WaitUntil(() => UIManager.Instance.IsShowingLoading is false);
-            _battleUIController.PlayReadyUI(() =>
-            {
-                GameManager.GetCurrentSceneManager<BattleManager>().BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
-                GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Play);
-            });
-        }
-
         private async UniTask SpawnCharacter()
         {
-            await spawnController.SpawnCharacterAtInfo(CharacterAIType.Player,
+            await spawnController.SpawnCharacterByFormation(CharacterAIType.Player,
                 DataManager.Instance.DataController.playerFormationInfo);
-            await spawnController.SpawnCharacterAtInfo(CharacterAIType.Enemy,
+            await spawnController.SpawnCharacterByFormation(CharacterAIType.Enemy,
                 DataManager.Instance.DataController.enemyFormationInfo);
         }
 
@@ -159,5 +151,12 @@ namespace IdleProject.Battle
             }
         }
 
+        public void RemoveCharacter(CharacterController character, SpawnPosition position)
+        {                
+            character.BattleEventGroup.UnPublishAll(this);
+            character.characterUI.OnCharacterRemove();
+            GetCharacterList(position.SpawnAIType).Remove(character);
+            Destroy(character.gameObject);
+        }
     }
 }

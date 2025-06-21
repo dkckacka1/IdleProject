@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using IdleProject.Battle.Character.Skill;
 using Engine.Core;
+using IdleProject.Battle.Character.EventGroup;
 using IdleProject.Data;
 using UnityEngine.Serialization;
 
@@ -30,17 +31,18 @@ namespace IdleProject.Battle.Character
     }
 
     [System.Serializable]
-    public partial class CharacterController : MonoBehaviour
+    public partial class CharacterController : MonoBehaviour, IEventGroup<BattleManager>
     {
         [HideInInspector] public CharacterOffset offset;
         [HideInInspector] public CharacterUIController characterUI;
         [HideInInspector] public CharacterAIController characterAI;
-        
+
         public CharacterBattleAnimationController AnimController;
         public CharacterSkill CharacterSkill;
         public StatSystem StatSystem;
         public CharacterState State;
-        
+        public EventGroup<BattleManager> BattleEventGroup;
+
         protected NavMeshAgent Agent;
 
         public Func<BattleEffect> GetAttackHitEffect;
@@ -48,49 +50,51 @@ namespace IdleProject.Battle.Character
         public Func<BattleProjectile> GetAttackProjectile;
         public Func<BattleProjectile> GetSkillProjectile;
 
+        private BattleManager _battleManager;
+
+        private BattleManager GetBattleManager =>
+            _battleManager ??= GameManager.GetCurrentSceneManager<BattleManager>();
+
         private void Awake()
         {
             Agent = GetComponent<NavMeshAgent>();
         }
 
         #region 초기화 부문
-        public virtual void PublishEvent()
-        {
-            PublishStatModifyEvent();
-            PublishAnimationEvent();
-            PublishUIEvent();
-            PublishAIEvent();
-        }
 
-        public void InitStats()
+        public void Initialized()
         {
             State.Initialize();
-            StatSystem.SetStatValue(CharacterStatType.MovementSpeed, CharacterStatType.MovementSpeed, true);
-            StatSystem.SetStatValue(CharacterStatType.AttackRange, CharacterStatType.AttackRange, true);
-            StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
-        }
-        
-        private void PublishAnimationEvent()
-        {
-            AnimController.OnTimeFactorChange(GameManager.GetCurrentSceneManager<BattleManager>().GetCurrentBattleSpeed);
-            
-            GameManager.GetCurrentSceneManager<BattleManager>().GetChangeBattleSpeedEvent.AddListener(AnimController.OnTimeFactorChange);
-            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.PublishEvent(AnimController);
+            SetEventGroup();
+            SetStatValue();
             SetBattleAnimEvent();
-        }
-        
-        private void PublishUIEvent()
-        {
-            GameManager.GetCurrentSceneManager<BattleManager>().BattleStateEventBus.PublishEvent(characterUI);
-            GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.UI].AddListener(characterUI.OnBattleUIEvent);
-        }
+            SetBattleSpeedTimeFactor();
 
-        private void PublishAIEvent()
-        {
-            GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.Character].AddListener(characterAI.OnBattleEvent);
+            return;
+
+            void SetStatValue()
+            {
+                StatSystem.SetStatValue(CharacterStatType.MovementSpeed, CharacterStatType.MovementSpeed, true);
+                StatSystem.SetStatValue(CharacterStatType.AttackRange, CharacterStatType.AttackRange, true);
+                StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
+            }
+
+            void SetBattleSpeedTimeFactor()
+            {
+                OnTimeFactorChange(GetBattleManager.GetCurrentBattleSpeed);
+                AnimController.OnTimeFactorChange(_battleManager.GetCurrentBattleSpeed);
+            }
+
+            void SetEventGroup()
+            {
+                BattleEventGroup = new EventGroup<BattleManager>();
+                BattleEventGroup.EventGroupList.Add(this);
+                BattleEventGroup.EventGroupList.Add(AnimController);
+                BattleEventGroup.EventGroupList.Add(characterUI);
+                BattleEventGroup.EventGroupList.Add(characterAI);
+                BattleEventGroup.PublishAll(GetBattleManager);
+            }
         }
-
-
         #endregion
 
         public void Win()
@@ -101,6 +105,22 @@ namespace IdleProject.Battle.Character
         public void Idle()
         {
             AnimController.SetIdle();
+        }
+
+        public void Publish(BattleManager publisher)
+        {
+            StatSystem.PublishValueChangedEvent(CharacterStatType.MovementSpeed, ChangeMovementSpeed);
+            StatSystem.PublishValueChangedEvent(CharacterStatType.AttackRange, ChangeAttackRange);
+            GetBattleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
+            GetBattleManager.GameStateEventBus.PublishEvent(this);
+        }
+
+        public void UnPublish(BattleManager publisher)
+        {
+            StatSystem.RemoveValueChangedEvent(CharacterStatType.MovementSpeed, ChangeMovementSpeed);
+            StatSystem.RemoveValueChangedEvent(CharacterStatType.AttackRange, ChangeAttackRange);
+            GetBattleManager.GetChangeBattleSpeedEvent.RemoveListener(OnTimeFactorChange);
+            GetBattleManager.GameStateEventBus.RemoveEvent(this);
         }
 
         public static implicit operator Vector3(CharacterController controller) => controller.transform.position;

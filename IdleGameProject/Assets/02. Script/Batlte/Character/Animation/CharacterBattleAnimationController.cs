@@ -1,10 +1,11 @@
 using System;
 using Engine.Core.EventBus;
+using IdleProject.Battle.Character.EventGroup;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character
 {
-    public class CharacterBattleAnimationController : IEnumEvent<GameStateType>
+    public class CharacterBattleAnimationController : IEnumEvent<GameStateType>, IEventGroup<BattleManager>
     {
         public AnimationEventHandler AnimEventHandler { get; private set; }
 
@@ -91,6 +92,18 @@ namespace IdleProject.Battle.Character
                 GameStateType.Pause => false,
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
+        }
+
+        public void Publish(BattleManager publisher)
+        {
+            publisher.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
+            publisher.GameStateEventBus.PublishEvent(this);
+        }
+
+        public void UnPublish(BattleManager publisher)
+        {
+            publisher.GetChangeBattleSpeedEvent.RemoveListener(OnTimeFactorChange);
+            publisher.GameStateEventBus.RemoveEvent(this);
         }
     }
 }

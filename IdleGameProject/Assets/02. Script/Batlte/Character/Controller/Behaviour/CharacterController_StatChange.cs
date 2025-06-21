@@ -9,18 +9,9 @@ namespace IdleProject.Battle.Character
     {
         private const float ATTACK_RANGE_CORRECTION_VALUE = 0.1f;
 
-        private void PublishStatModifyEvent()
-        {
-            StatSystem.PublishValueChangedEvent(CharacterStatType.MovementSpeed, ChangeMovementSpeed);
-            StatSystem.PublishValueChangedEvent(CharacterStatType.AttackRange, ChangeAttackRange);
-            GameManager.GetCurrentSceneManager<BattleManager>().GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
-            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.PublishEvent(this);
-            OnTimeFactorChange(GameManager.GetCurrentSceneManager<BattleManager>().GetCurrentBattleSpeed);
-        }
-
         public virtual void ChangeMovementSpeed(float movementSpeed)
         {
-            Agent.speed = movementSpeed * GameManager.GetCurrentSceneManager<BattleManager>().GetCurrentBattleSpeed;
+            Agent.speed = movementSpeed * GetBattleManager.GetCurrentBattleSpeed;
         }
         private void ChangeAttackRange(float attackRange)
         {

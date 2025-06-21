@@ -120,7 +120,7 @@ namespace IdleProject.Battle.Character
             if (isNowAttack is false && isNowSkill is false)
             {
                 AnimController.SetSkill();
-                GameManager.GetCurrentSceneManager<BattleManager>().AddSkillQueue(this);
+                GetBattleManager.AddSkillQueue(this);
                 isNowSkill = true;
             }
         }
@@ -134,7 +134,7 @@ namespace IdleProject.Battle.Character
 
         private void OnSkillEnd()
         {
-            GameManager.GetCurrentSceneManager<BattleManager>().RemoveSkillObject(this);
+            GetBattleManager.RemoveSkillObject(this);
             
             (characterUI as PlayerCharacterUIController)?.EndSkill();
         }
@@ -142,7 +142,7 @@ namespace IdleProject.Battle.Character
         public async UniTaskVoid StartAttackCooltime()
         {
             State.CanAttack = false;
-            await GameManager.GetCurrentSceneManager<BattleManager>().GetBattleTimer(StatSystem.GetStatValue(CharacterStatType.AttackCoolTime));
+            await GetBattleManager.GetBattleTimer(StatSystem.GetStatValue(CharacterStatType.AttackCoolTime));
             State.CanAttack = true;
         }
 
@@ -155,7 +155,7 @@ namespace IdleProject.Battle.Character
 
         private void Death()
         {
-            GameManager.GetCurrentSceneManager<BattleManager>().DeathCharacter(this);
+            GetBattleManager.DeathCharacter(this);
             characterUI.OnCharacterDeath();
             State.IsDead = true;
             AnimController.SetDeath();

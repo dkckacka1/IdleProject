@@ -15,7 +15,7 @@ namespace IdleProject.Core
     public enum PoolableType
     {
         UI,
-        Effect,
+        BattleEffect,
         Projectile,
     }
     
@@ -53,13 +53,6 @@ namespace IdleProject.Core
             return ObjectPoolManager.Instance.Get<T>(address);
         }
 
-        public static async UniTask CreatePool(PoolableType poolableType, string name)
-        {
-            var address = $"{JoinSegment(PATH_SEGMENT, POOLABLE_PATH, poolableType.ToString(), name)}.{PREFAB_EXTENSION}";
-            await ObjectPoolManager.Instance.CreatePool<PoolableObject>(address,
-                GetBattleTransformParent(poolableType));
-        }
-
         public static async UniTask CreatePool(PoolableType poolableType, string name, Transform parent)
         {
             var address = $"{JoinSegment(PATH_SEGMENT, POOLABLE_PATH, poolableType.ToString(), name)}.{PREFAB_EXTENSION}";
@@ -72,27 +65,6 @@ namespace IdleProject.Core
                 return string.Empty;
 
             return string.Join(segment, parts);
-        }
-
-        private static Transform GetBattleTransformParent(PoolableType poolableType)
-        {
-            Transform parent = null;
-
-            switch (poolableType)
-            {
-                case PoolableType.UI:
-                    break;
-                case PoolableType.Effect:
-                    parent = GameManager.GetCurrentSceneManager<BattleManager>().effectParent;
-                    break;
-                case PoolableType.Projectile:
-                    parent = GameManager.GetCurrentSceneManager<BattleManager>().projectileParent;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(poolableType), poolableType, null);
-            }
-
-            return parent;
         }
     }
 }

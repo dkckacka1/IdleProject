@@ -1,4 +1,5 @@
 
+using System;
 using Cysharp.Threading.Tasks;
 using IdleProject.Battle.Character;
 using IdleProject.Data;
@@ -13,20 +14,21 @@ namespace IdleProject.Battle.UI
         {
             base.Initialized(data, stat);
 
-            SetPlayerCharacterBanner(data, stat);
+            _banner = GetBattleUI.GetPlayerCharacterBanner();
+            _banner.Initialized(data, stat);
         }
 
-        public override void OnBattleUIEvent()
+        protected override void OnBattleUIEvent()
         {
             base.OnBattleUIEvent();
 
             _banner.CharacterHealthBar.PlayDamageSlider();
         }
 
-        private void SetPlayerCharacterBanner(CharacterData data, StatSystem stat)
+        public override void OnCharacterRemove()
         {
-            _banner = GetBattleUI.GetPlayerCharacterBanner();
-            _banner.Initialized(data, stat).Forget();
+            base.OnCharacterRemove();
+            _banner.gameObject.SetActive(false);
         }
 
         public void StartSkill()

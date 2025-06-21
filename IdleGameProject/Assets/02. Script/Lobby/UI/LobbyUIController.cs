@@ -10,6 +10,7 @@ namespace IdleProject.Lobby.UI
         public async UniTask Initialized()
         {
             UIManager.Instance.GetUI<UIPopup>("CharacterPopup").Initialized();
+            UIManager.Instance.GetUI<UIPopup>("CharacterPopup").ClosePopup();
             UIManager.Instance.GetUI<UIButton>("EquipmentButton").Button.onClick.AddListener(OpenEquipmentPanel);
             UIManager.Instance.GetUI<UIButton>("DungeonButton").Button.onClick.AddListener(GoToDungeon);
         }

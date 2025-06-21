@@ -7,11 +7,6 @@ namespace IdleProject.Core.UI
     {
         public abstract void Initialized();
         
-        private void Start()
-        {
-            gameObject.SetActive(false);
-        }
-
         public virtual void OpenPopup()
         {
             gameObject.SetActive(true);

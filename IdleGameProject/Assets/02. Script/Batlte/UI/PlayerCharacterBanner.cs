@@ -24,7 +24,7 @@ namespace IdleProject.Battle.UI
 
         public HealthBar CharacterHealthBar => characterHealthBar;
 
-        public async UniTaskVoid Initialized(CharacterData data, StatSystem characterStat)
+        public void Initialized(CharacterData data, StatSystem characterStat)
         {
             characterIconImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(data.GetCharacterBannerIconName);
             characterSkillBannerImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(data.GetCharacterSkillBannerIconName);

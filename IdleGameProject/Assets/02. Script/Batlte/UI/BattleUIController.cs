@@ -31,6 +31,9 @@ namespace IdleProject.Battle.UI
 
             SetSpeedText();
             UIManager.Instance.GetUI<UIPopup>("PausePopup").Initialized();
+            UIManager.Instance.GetUI<UIPopup>("PausePopup").ClosePopup();
+            UIManager.Instance.GetUI<UIPopup>("PickCharacterPopup").Initialized();
+            UIManager.Instance.GetUI<UIPopup>("PickCharacterPopup").OpenPopup();
             UIManager.Instance.GetUI<UIButton>("SpeedButton").Button.onClick.AddListener(ChangeBattleSpeed);
             UIManager.Instance.GetUI<UIButton>("PauseButton").Button.onClick.AddListener(PauseGame);
         }
@@ -40,11 +43,6 @@ namespace IdleProject.Battle.UI
             var targetBanner = playerCharacterBannerList.First(banner => banner.gameObject.activeInHierarchy is false); ;
             targetBanner.gameObject.SetActive(true);
             return targetBanner;
-        }
-
-        public void PlayReadyUI(UnityAction onUIPlayEnd)
-        {
-            readyPanelUI.PlayReadyUI(onUIPlayEnd);
         }
         
         private void ChangeBattleSpeed()

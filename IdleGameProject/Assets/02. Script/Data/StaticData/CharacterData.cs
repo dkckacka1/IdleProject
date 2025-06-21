@@ -31,7 +31,7 @@ namespace IdleProject.Data
     }
 
     [CreateAssetMenu(fileName = "CharacterData", menuName = "Scriptable Objects/CharacterData")]
-    public class CharacterData : Data
+    public class CharacterData : Data, ISlotData
     {
         public override string Index => addressValue.characterName;
         
@@ -40,6 +40,7 @@ namespace IdleProject.Data
 
         public string GetCharacterBannerIconName => $"Icon_{addressValue.characterName}_Banner";
         public string GetCharacterSkillBannerIconName => $"Icon_{addressValue.characterName}_SkillBanner";
+        public string GetIconName => GetCharacterBannerIconName;
     }
 }
 

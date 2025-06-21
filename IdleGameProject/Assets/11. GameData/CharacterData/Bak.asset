@@ -21,7 +21,7 @@ MonoBehaviour:
     skillProjectileAddress: 
   stat:
     healthPoint: 200
-    manaPoint: 10
+    manaPoint: 40
     attackDamage: 20
     movementSpeed: 3.5
     attackRange: 2

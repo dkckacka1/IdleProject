@@ -80,9 +80,9 @@ namespace IdleProject.Battle
         private async UniTask SpawnCharacter()
         {
             await spawnController.SpawnCharacterByFormation(CharacterAIType.Player,
-                DataManager.Instance.DataController.playerFormationInfo);
+                DataManager.Instance.DataController.userData.UserFormation);
             await spawnController.SpawnCharacterByFormation(CharacterAIType.Enemy,
-                DataManager.Instance.DataController.enemyFormationInfo);
+                DataManager.Instance.DataController.selectStageData.stageFormation);
         }
 
         private void FixedUpdate()

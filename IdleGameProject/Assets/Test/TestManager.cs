@@ -19,6 +19,7 @@ using Engine.Util;
 using IdleProject.Battle.Spawn;
 using IdleProject.Battle.UI;
 using IdleProject.Core.Loading;
+using IdleProject.Data;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -33,7 +34,7 @@ public class TestManager : SingletonMonoBehaviour<TestManager>
 
     
     [BoxGroup("Game"), ShowIf("@this.isTestPlay")]
-    public TestStaticData testData;
+    public PlayerData testPlayerData;
     
     private bool IsGamePlay => Application.isPlaying;
 

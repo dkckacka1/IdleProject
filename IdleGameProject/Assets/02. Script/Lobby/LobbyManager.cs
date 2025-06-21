@@ -46,7 +46,7 @@ namespace IdleProject.Lobby
 
         private async UniTask SetMainCharacter()
         {
-            var formation = DataManager.Instance.DataController.playerFormationInfo;
+            var formation = DataManager.Instance.DataController.userData.UserFormation;
             
             TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK, () => SetCharacter(formation.frontLeftCharacterName, frontLeftCharacter));
             TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK, () => SetCharacter(formation.frontMiddleCharacterName, frontMiddleCharacter));

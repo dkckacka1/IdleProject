@@ -341,6 +341,7 @@ MonoBehaviour:
   loadingProgressBar: {fileID: 2001575945}
   loadingPercentText: {fileID: 2005787605}
   fadeOutDuration: 1
+  isLoading: 0
 --- !u!1 &597566157
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,7 +1023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTestPlay: 1
-  testData: {fileID: 11400000, guid: fc755539ec8856f47a54a5e607260d84, type: 2}
+  testPlayerData: {fileID: 11400000, guid: 40a1d2a0186a80648958473b72f83ac8, type: 2}
   moveSceneType: 0
 --- !u!4 &1657019844
 Transform:

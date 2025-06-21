@@ -7,7 +7,6 @@ using IdleProject.Core.UI;
 using IdleProject.Core.UI.Loading;
 using IdleProject.Data;
 using IdleProject.Lobby.Character;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace IdleProject.Lobby.UI.EquipmentPanel
@@ -19,7 +18,7 @@ namespace IdleProject.Lobby.UI.EquipmentPanel
         
         public override void Initialized()
         {
-            SetCharacter(DataManager.Instance.DataController.playerFormationInfo.frontMiddleCharacterName);
+            SetCharacter(DataManager.Instance.DataController.userData.UserHeroList[0]);
         }
 
         private void SetCharacter(string heroName)

@@ -21,7 +21,7 @@ namespace IdleProject.Core.GameData
         {
             base.Initialized();
 
-            DataController = TestManager.Instance.isTestPlay is false ? new DataController() : new DataController(TestManager.Instance.testData);
+            DataController = TestManager.Instance.isTestPlay is false ? new DataController() : new DataController(TestManager.Instance.testPlayerData);
         }
         
         public async UniTask LoadData()

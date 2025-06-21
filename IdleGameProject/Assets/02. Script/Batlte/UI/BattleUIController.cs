@@ -62,6 +62,5 @@ namespace IdleProject.Battle.UI
             GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Pause);
             UIManager.Instance.GetUI<PausePopup>().OpenPopup();
         }
-
     }
 }

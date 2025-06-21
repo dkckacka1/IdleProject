@@ -64,6 +64,8 @@ namespace  IdleProject.Core.UI.Loading
                 if (loadingProgressBar.value < _currentLoadingValue)
                 {
                     loadingProgressBar.value += _fillAmount * Time.deltaTime / progressBarGageFillDuration;
+                    if (loadingProgressBar.value > _currentLoadingValue)
+                        loadingProgressBar.value = _currentLoadingValue;
                 }
 
                 await UniTask.WaitForEndOfFrame();

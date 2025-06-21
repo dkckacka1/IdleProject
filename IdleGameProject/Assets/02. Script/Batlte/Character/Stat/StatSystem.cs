@@ -18,8 +18,8 @@ namespace IdleProject.Battle.Character
 
     public class StatSystem
     {
-        private StatData _defaultStat;
-
+        public string CharacterName { get; private set; }
+        
         private readonly Dictionary<CharacterStatType, BattleCharacterStat> _characterStatDic;
 
         public bool IsLive => GetStatValue(CharacterStatType.HealthPoint) > 0;
@@ -35,10 +35,10 @@ namespace IdleProject.Battle.Character
             });
         }
 
-        public void SetStatData(StatData statData)
+        public void SetStatData(string characterName, StatData statData)
         {
-            _defaultStat = statData;
-
+            CharacterName = characterName;            
+            
             _characterStatDic[CharacterStatType.HealthPoint].SetStat(statData.healthPoint);
             _characterStatDic[CharacterStatType.MovementSpeed].SetStat(statData.movementSpeed);
             _characterStatDic[CharacterStatType.AttackDamage].SetStat(statData.attackDamage);

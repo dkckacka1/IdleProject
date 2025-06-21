@@ -1,13 +1,14 @@
-﻿using UnityEngine.Events;
+﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace IdleProject.Core.UI
 {
     public class SelectSlot : SlotUI, IDragHandler, IBeginDragHandler, IEndDragHandler
     {
-        public UnityEvent<PointerEventData> dragEvent;
-        public UnityEvent<PointerEventData> beginDragEvent;
-        public UnityEvent<PointerEventData> endDragEvent;
+        [HideInInspector] public UnityEvent<PointerEventData> dragEvent;
+        [HideInInspector] public UnityEvent<PointerEventData> beginDragEvent;
+        [HideInInspector] public UnityEvent<PointerEventData> endDragEvent;
                 
         public void OnDrag(PointerEventData eventData)
         {

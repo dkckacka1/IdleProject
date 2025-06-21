@@ -57,9 +57,7 @@ namespace IdleProject.Battle.Spawn
             var character = position.Character;
             if (character is not null)
             {
-                _battleManager.RemoveCharacter(character, position);
-                
-
+                RemoveCharacter(character, position.SpawnAIType);
             }
 
             await SpawnCharacter(position.SpawnAIType, position.positionType, data);
@@ -74,6 +72,30 @@ namespace IdleProject.Battle.Spawn
             await SetCharacterSpawn(aiType, SpawnPositionType.RearRight, formationInfo.rearRightCharacterName);
         }
 
+        public void SwapCharacter(SpawnPosition lhs, SpawnPosition rhs)
+        {
+            var temp = rhs.Character;
+            rhs.SetCharacter(lhs.Character);
+            lhs.SetCharacter(temp);
+        }
+
+        public void RemoveCharacter(CharacterController character, CharacterAIType aiType)
+        {
+            character.BattleEventGroup.UnPublishAll(_battleManager);
+            character.characterUI.OnCharacterRemove();
+            var spawnInfo = aiType == CharacterAIType.Player ? playerSpawnInfo : enemySpawnInfo;
+            var targetPosition = spawnInfo.spawnFormation.GetSpawnPosition(character);
+            targetPosition.SetCharacter(null);
+            _battleManager.GetCharacterList(targetPosition.SpawnAIType).Remove(character);
+            Destroy(character.gameObject);
+        }
+
+        public SpawnPosition GetSpawnPosition(CharacterController character, CharacterAIType aiType)
+        {
+            var spawnInfo = aiType == CharacterAIType.Player ? playerSpawnInfo : enemySpawnInfo;
+            return spawnInfo.spawnFormation.GetSpawnPosition(character);
+        }
+        
         private async UniTask SetCharacterSpawn(CharacterAIType aiType, SpawnPositionType spawnPositionType,
             string heroName)
         {
@@ -105,11 +127,11 @@ namespace IdleProject.Battle.Spawn
             var spawnInfo = aiType == CharacterAIType.Player ? playerSpawnInfo : enemySpawnInfo;
             var spawnPosition = spawnInfo.spawnFormation.GetSpawnPosition(spawnPositionType);
 
-            spawnPosition.SetCharacter(character);
             character.transform.SetParent(spawnInfo.spawnObject);
-            character.transform.position = spawnPosition.transform.position;
-            character.transform.Rotate(spawnInfo.spawnFormation.transform.rotation.eulerAngles);
+            spawnPosition.SetCharacter(character);
         }
+
+        #region 캐릭터 생성 부문
 
         private async Task<CharacterController> CreateCharacter(CharacterData data, CharacterAIType aiType)
         {
@@ -134,7 +156,7 @@ namespace IdleProject.Battle.Spawn
         private void SetStat(CharacterController controller, CharacterData data)
         {
             var statSystem = new StatSystem();
-            statSystem.SetStatData(data.stat);
+            statSystem.SetStatData(data.addressValue.characterName, data.stat);
 
             controller.StatSystem = statSystem;
         }
@@ -239,5 +261,7 @@ namespace IdleProject.Battle.Spawn
 
             return parent;
         }
+
+        #endregion
     }
 }

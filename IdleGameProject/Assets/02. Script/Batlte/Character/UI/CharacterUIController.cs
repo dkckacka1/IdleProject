@@ -52,7 +52,7 @@ namespace IdleProject.Battle.UI
             var battleText = GetBattleUI.GetBattleText.Invoke();
             Vector3 randomPos = Random.insideUnitCircle * _offset.BattleTextOffsetRadius * 50f;
             var textPosition =
-                UIManager.GetUIInScreen(Camera.main.WorldToScreenPoint(_offset.GetHitEffectPosition) + randomPos);
+                UIManager.GetUIInScreen(_mainCamera.WorldToScreenPoint(_offset.GetHitEffectPosition) + randomPos);
             battleText.ShowText(textPosition, text);
         }
 
@@ -63,6 +63,7 @@ namespace IdleProject.Battle.UI
                 case BattleStateType.Ready:
                     break;
                 case BattleStateType.Battle:
+                    _fluidHealthBar.gameObject.SetActive(true);
                     break;
                 case BattleStateType.Skill:
                     break;
@@ -79,11 +80,13 @@ namespace IdleProject.Battle.UI
 
         public void Publish(BattleManager publisher)
         {
+            publisher.BattleStateEventBus.PublishEvent(this);
             publisher.BattleObjectEventDic[BattleObjectType.UI].AddListener(OnBattleUIEvent);
         }
 
         public void UnPublish(BattleManager publisher)
         {
+            publisher.BattleStateEventBus.RemoveEvent(this);
             publisher.BattleObjectEventDic[BattleObjectType.UI].RemoveListener(OnBattleUIEvent);
         }
         
@@ -93,8 +96,9 @@ namespace IdleProject.Battle.UI
             _fluidHealthBar.transform.SetParent(GetBattleUI.FluidHealthBarParent);
             _fluidHealthBar.Initialized(characterStat.GetStatValue(CharacterStatType.HealthPoint, true));
             _fluidHealthBar.transform.position =
-                UIManager.GetUIInScreen(Camera.main.WorldToScreenPoint(_offset.GetFluidHealthBarPosition));
+                UIManager.GetUIInScreen(_mainCamera.WorldToScreenPoint(_offset.GetFluidHealthBarPosition));
             characterStat.PublishValueChangedEvent(CharacterStatType.HealthPoint, _fluidHealthBar.OnChangeHealthPoint);
+            _fluidHealthBar.gameObject.SetActive(false);
         }
     }
 }

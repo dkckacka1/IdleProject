@@ -150,13 +150,5 @@ namespace IdleProject.Battle
                 }
             }
         }
-
-        public void RemoveCharacter(CharacterController character, SpawnPosition position)
-        {                
-            character.BattleEventGroup.UnPublishAll(this);
-            character.characterUI.OnCharacterRemove();
-            GetCharacterList(position.SpawnAIType).Remove(character);
-            Destroy(character.gameObject);
-        }
     }
 }

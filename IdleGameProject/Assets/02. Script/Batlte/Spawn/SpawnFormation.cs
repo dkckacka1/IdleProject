@@ -1,7 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Engine.Util.Extension;
 using IdleProject.Battle.AI;
 using UnityEngine;
+
+using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.Spawn
 {
@@ -33,6 +37,23 @@ namespace IdleProject.Battle.Spawn
                 SpawnPositionType.RearLeft => rearLeftPosition,
                 _ => throw new ArgumentOutOfRangeException(nameof(positionType), positionType, null)
             };
+        }
+
+        public SpawnPosition GetSpawnPosition(CharacterController targetCharacter)
+        {
+            return GetAllSpawnPosition().FirstOrDefault(position => position.Character == targetCharacter);
+        }
+
+        private List<SpawnPosition> GetAllSpawnPosition()
+        {
+            var result = new List<SpawnPosition>();
+            
+            EnumExtension.Foreach<SpawnPositionType>(type =>
+            {
+                result.Add(GetSpawnPosition(type));
+            });
+
+            return result;
         }
     }
 }

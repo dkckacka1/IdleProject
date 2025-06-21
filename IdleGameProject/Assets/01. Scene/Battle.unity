@@ -3145,7 +3145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickCharacterScrollView: {fileID: 104282978}
-  slotPrefab: {fileID: 3403907110033380408, guid: 0cdb45c31f043e141b48fcc7b6342faa, type: 3}
+  slotPrefab: {fileID: 5222144726227154853, guid: 492e9fa944f7f8d499975181a03d3671, type: 3}
   dorpSlot: {fileID: 3149438326908796866}
 --- !u!1001 &1048577765
 PrefabInstance:

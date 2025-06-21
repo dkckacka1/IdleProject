@@ -31,6 +31,11 @@ namespace IdleProject.Battle.Spawn
         public void SetCharacter(CharacterController character)
         {
             Character = character;
+            if (Character is not null)
+            {
+                Character.transform.position = transform.position;
+                Character.transform.Rotate(transform.rotation.eulerAngles);
+            }
         }
 
         public void OnEnumChange(BattleStateType type)

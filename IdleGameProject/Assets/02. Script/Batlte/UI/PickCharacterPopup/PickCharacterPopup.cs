@@ -1,4 +1,5 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Spawn;
 using IdleProject.Core;
@@ -7,7 +8,10 @@ using IdleProject.Core.UI;
 using IdleProject.Data;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
+
+using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.UI
 {
@@ -15,65 +19,99 @@ namespace IdleProject.Battle.UI
     {
         [SerializeField] private ScrollRect pickCharacterScrollView;
 
-        [SerializeField] private SelectSlot slotPrefab;
-        [SerializeField] private SlotUI dorpSlot;
+        [SerializeField] private PickCharacterPopupSlot slotPrefab;
+        [FormerlySerializedAs("dorpSlot")] [SerializeField] private SlotUI dropSlot;
+
+        private readonly List<PickCharacterPopupSlot> _slotList = new();
 
         private CharacterData _pickData;
+        private Camera _mainCamera;
+        private BattleManager _battleManager;
         
         public override void Initialized()
         {
+            _mainCamera = Camera.main;
+            _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();
+
+            var userMainCharacterList = DataManager.Instance.DataController.userData.UserFormation.GetCharacterNameList();
+            
             foreach (var userHeroName in DataManager.Instance.DataController.userData.UserHeroList)
             {
-                CreateSlot(DataManager.Instance.GetData<CharacterData>(userHeroName));
+                var createSlot = CreateSlot(DataManager.Instance.GetData<CharacterData>(userHeroName));
+                createSlot.SetChoice(userMainCharacterList.Any(mainCharacterName => mainCharacterName == userHeroName));
+                _slotList.Add(createSlot);
             }
             
             UIManager.Instance.GetUI<UIButton>("BattleStartButton").Button.onClick.AddListener(StartBattle);
             
-            dorpSlot.gameObject.SetActive(false);
+            dropSlot.gameObject.SetActive(false);
         }
         
-        private void CreateSlot(CharacterData characterData)
+        private PickCharacterPopupSlot CreateSlot(CharacterData characterData)
         {
             var slot = Instantiate(slotPrefab, pickCharacterScrollView.content);
             slot.SetData(characterData);
             slot.beginDragEvent.AddListener(OnSlotDragBegin);
             slot.endDragEvent.AddListener(OnSlotDragEnd);
             slot.dragEvent.AddListener(OnSlotDrag);
+            slot.clickEvent.AddListener(OnSlotClick);
+
+            return slot;
         }
 
         private void OnSlotDragBegin(PointerEventData eventData)
         {
-            dorpSlot.gameObject.SetActive(true);
+            dropSlot.gameObject.SetActive(true);
 
-            var selectCharacterData = ExecuteEvents.GetEventHandler<IDragHandler>(eventData.pointerCurrentRaycast.gameObject)
-                .GetComponent<SlotUI>().GetData<CharacterData>();
+            var selectCharacterData = eventData.pointerDrag.GetComponent<SlotUI>().GetData<CharacterData>();
 
             if (selectCharacterData)
             {
                 _pickData = selectCharacterData;
             }
             
-            dorpSlot.SetData(selectCharacterData);
+            dropSlot.SetData(selectCharacterData);
         }
         
         private void OnSlotDragEnd(PointerEventData eventData)
         {
             if (_pickData is null) return;
             
-            dorpSlot.gameObject.SetActive(false);
+            dropSlot.gameObject.SetActive(false);
 
-            var ray = Camera.main.ScreenPointToRay(eventData.position);
+            var ray = _mainCamera.ScreenPointToRay(eventData.position);
             var hits = Physics.RaycastAll(ray, 100f);
-
+            
             foreach (var hit in hits)
             {
-                var spawnPosition = hit.collider.gameObject.GetComponent<SpawnPosition>();
-                if (!spawnPosition) 
+                var targetSpawnPosition = hit.collider.gameObject.GetComponent<SpawnPosition>();
+                if (!targetSpawnPosition) 
                     continue;
                 
-                if (spawnPosition.SpawnAIType == CharacterAIType.Player)
+                
+                if (targetSpawnPosition.SpawnAIType == CharacterAIType.Player)
                 {
-                    GameManager.GetCurrentSceneManager<BattleManager>().spawnController.SpawnCharacterBySpawnPosition(_pickData, spawnPosition).Forget();
+                    var slot = eventData.pointerDrag.GetComponent<PickCharacterPopupSlot>();
+                    if (!IsCharacterSpawnedSlot(slot, out var spawnedCharacter))
+                        // 스폰된 캐릭터가 없다면 생성
+                    {
+                        slot.SetChoice(true);
+                        _battleManager.spawnController
+                            .SpawnCharacterBySpawnPosition(_pickData, targetSpawnPosition).Forget();
+                    }
+                    else
+                        // 스폰된 캐릭터가 있다면
+                    {
+                        var spawnedPosition = _battleManager.spawnController
+                            .GetSpawnPosition(spawnedCharacter, CharacterAIType.Player);
+
+                        if (spawnedPosition == targetSpawnPosition)
+                            // 동일한 위치를 선택했다면
+                            return;
+                        
+                        // 다른 위치를 선택했다면
+                        _battleManager.spawnController.SwapCharacter(spawnedPosition, targetSpawnPosition);
+                    }
                 }
             }
 
@@ -82,16 +120,39 @@ namespace IdleProject.Battle.UI
 
         private void OnSlotDrag(PointerEventData eventData)
         {
-            dorpSlot.transform.position = eventData.position;
+            dropSlot.transform.position = eventData.position;
         }
-        
+
+        private void OnSlotClick(PointerEventData eventData)
+        {
+            var slot = ExecuteEvents.GetEventHandler<IPointerClickHandler>(eventData.pointerCurrentRaycast.gameObject)
+                .GetComponent<PickCharacterPopupSlot>();
+
+            if (IsCharacterSpawnedSlot(slot, out var character))
+            {
+                _battleManager.spawnController.RemoveCharacter(character, CharacterAIType.Player);
+                
+                slot.SetChoice(false);
+            }
+        }
         
         private void StartBattle()
         {
-            GameManager.GetCurrentSceneManager<BattleManager>().BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
-            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Play);
+            _battleManager.BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
+            _battleManager.GameStateEventBus.ChangeEvent(GameStateType.Play);
             
             ClosePopup();
+        }
+
+        private bool IsCharacterSpawnedSlot(SlotUI slot, out CharacterController character)
+        {
+            var data = slot.GetData<CharacterData>();
+            var characterName = data.addressValue.characterName;
+
+            var characterList = _battleManager.GetCharacterList(CharacterAIType.Player);
+            character = characterList.FirstOrDefault(character => character.StatSystem.CharacterName == characterName);
+
+            return character is not null;
         }
     }
 }

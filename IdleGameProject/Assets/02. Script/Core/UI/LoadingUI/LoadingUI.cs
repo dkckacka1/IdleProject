@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -20,6 +21,11 @@ namespace  IdleProject.Core.UI.Loading
         [BoxGroup("LoadingTween"), SerializeField]
         private float fadeOutDuration = 1f;
 
+        [SerializeField] private float progressBarGageFillDuration = 0.2f;
+
+        private float _currentLoadingValue;
+        private float _fillAmount;
+        
         public bool isLoading;
 
         private void Awake()
@@ -34,16 +40,39 @@ namespace  IdleProject.Core.UI.Loading
 
             loadingProgressBar.maxValue = 1f;
             loadingProgressBar.value = 0f;
-
+            _currentLoadingValue = 0f;
             isLoading = true;
+            
+            FillLoadingGage().Forget();
         }
-
+        
         public void ShowLoadingPercent(float percent)
         {
-            loadingProgressBar.value = percent;
+            _currentLoadingValue = percent;
+            _fillAmount = _currentLoadingValue - loadingProgressBar.value;
         }
 
-        public void LoadingEnd()
+        private void OnPercentChange(float percent)
+        {
+            loadingPercentText.text = $"{percent * 100 :0} %";
+        }
+
+        private async UniTaskVoid FillLoadingGage()
+        {
+            while (loadingProgressBar.value < 1)
+            {
+                if (loadingProgressBar.value < _currentLoadingValue)
+                {
+                    loadingProgressBar.value += _fillAmount * Time.deltaTime / progressBarGageFillDuration;
+                }
+
+                await UniTask.WaitForEndOfFrame();
+            }
+
+            LoadingEnd();
+        }
+        
+        private void LoadingEnd()
         {
             canvasGroup.DOFade(0f, fadeOutDuration).OnComplete(() =>
             {
@@ -52,10 +81,5 @@ namespace  IdleProject.Core.UI.Loading
             });
         }
 
-
-        private void OnPercentChange(float percent)
-        {
-            loadingPercentText.text = $"{percent * 100 :0} %";
-        }
     }
 }

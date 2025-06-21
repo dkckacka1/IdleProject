@@ -46,9 +46,6 @@ namespace IdleProject.Core
             await UniTask.WaitForSeconds(1f);
             loadingUI.ShowLoadingPercent(1f);
 
-            loadingUI.LoadingEnd();
-
-
             return sceneController;
         }
     }

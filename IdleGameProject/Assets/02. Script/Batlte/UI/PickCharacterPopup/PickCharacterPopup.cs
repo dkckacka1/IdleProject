@@ -22,26 +22,16 @@ namespace IdleProject.Battle.UI
         
         public override void Initialized()
         {
-            CreateSlot(DataManager.Instance.GetData<CharacterData>("Hiro"));
-            CreateSlot(DataManager.Instance.GetData<CharacterData>("Eli"));
-            CreateSlot(DataManager.Instance.GetData<CharacterData>("Bak"));
+            foreach (var userHeroName in DataManager.Instance.DataController.userData.UserHeroList)
+            {
+                CreateSlot(DataManager.Instance.GetData<CharacterData>(userHeroName));
+            }
             
             UIManager.Instance.GetUI<UIButton>("BattleStartButton").Button.onClick.AddListener(StartBattle);
             
             dorpSlot.gameObject.SetActive(false);
         }
-
-        public override void OpenPopup()
-        {
-            base.OpenPopup();
-            Debug.Log("Open pickCharacterPopup");
-        }
-
-        private void OnDisable()
-        {
-            Debug.Log("Close pickCharacterPopup");
-        }
-
+        
         private void CreateSlot(CharacterData characterData)
         {
             var slot = Instantiate(slotPrefab, pickCharacterScrollView.content);

@@ -41,7 +41,7 @@ namespace IdleProject.Lobby
             TaskChecker.StartLoading(LOBBY_INIT_TASK, _lobbyUIController.Initialized);
             TaskChecker.StartLoading(LOBBY_INIT_TASK, SetMainCharacter);
             
-            await UniTask.WaitUntil(() => TaskChecker.IsTasking(LOBBY_INIT_TASK) is false);
+            await TaskChecker.WaitTasking(LOBBY_INIT_TASK);
         }
 
         private async UniTask SetMainCharacter()
@@ -53,7 +53,7 @@ namespace IdleProject.Lobby
             TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK, () => SetCharacter(formation.frontRightCharacterName, frontRightCharacter));
             TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK, () => SetCharacter(formation.rearLeftCharacterName, rearLeftCharacter));
             TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK, () => SetCharacter(formation.rearRightCharacterName, rearRightCharacter));
-            await UniTask.WaitUntil(() => TaskChecker.IsTasking(MAIN_CHARACTER_INIT_TASK) is false);
+            await TaskChecker.WaitTasking(MAIN_CHARACTER_INIT_TASK);
         }
 
         private async UniTask SetCharacter(string heroName, LobbyCharacter character)

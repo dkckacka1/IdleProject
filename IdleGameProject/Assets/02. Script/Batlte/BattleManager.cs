@@ -74,7 +74,7 @@ namespace IdleProject.Battle
             TaskChecker.StartLoading(BATTLE_INIT_TASK, _battleUIController.Initialized);
             TaskChecker.StartLoading(BATTLE_INIT_TASK, SpawnCharacter);
             
-            await UniTask.WaitUntil(() => TaskChecker.IsTasking(BATTLE_INIT_TASK) is false);
+            await TaskChecker.WaitTasking(BATTLE_INIT_TASK);
         }
 
         private async UniTask SpawnCharacter()

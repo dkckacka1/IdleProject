@@ -41,7 +41,7 @@ namespace IdleProject.Core.Resource
                 TaskChecker.StartLoading(ASSET_LOADING_TASK, loader.LoadAsset);
             }
 
-            await UniTask.WaitUntil(() => TaskChecker.IsTasking(ASSET_LOADING_TASK) is false);
+            await TaskChecker.WaitTasking(ASSET_LOADING_TASK);
         }
     }
 }

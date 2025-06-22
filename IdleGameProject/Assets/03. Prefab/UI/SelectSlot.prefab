@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2560452743820615028}
   - component: {fileID: 3403907110033380408}
   m_Layer: 5
-  m_Name: DragSlot
+  m_Name: SelectSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

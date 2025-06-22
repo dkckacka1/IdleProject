@@ -9,9 +9,9 @@ using IdleProject.Data;
 using IdleProject.Lobby.Character;
 using UnityEngine;
 
-namespace IdleProject.Lobby.UI.EquipmentPanel
+namespace IdleProject.Lobby.UI.CharacterPopup
 {
-    public class EquipmentCharacterPanel : UIPanel
+    public class SelectCharacterPanel : UIPanel
     {
         [SerializeField] private LobbyCharacter equipCharacter;
         [SerializeField] private LoadingRotateUI characterLoadingRotate;
@@ -21,10 +21,10 @@ namespace IdleProject.Lobby.UI.EquipmentPanel
             SetCharacter(DataManager.Instance.DataController.userData.UserHeroList[0]);
         }
 
-        private void SetCharacter(string heroName)
+        public void SetCharacter(string heroName)
         {
             var data = DataManager.Instance.GetData<CharacterData>(heroName);
-            
+
             characterLoadingRotate.StartLoading(LoadCharacter(data)).Forget();
 
             UIManager.Instance.GetUI<CharacterStatBar>("CharacterStatBar_AttackDamage")
@@ -37,9 +37,9 @@ namespace IdleProject.Lobby.UI.EquipmentPanel
 
         private async UniTask LoadCharacter(CharacterData characterData)
         {
-            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.CharacterModelLabelName,
-                $"Model_{characterData.addressValue.characterName}");
-            equipCharacter.SetModel(Instantiate(modelObject, equipCharacter.transform));
+            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.CharacterModelLabelName, $"Model_{characterData.addressValue.characterName}");
+            var modelInstance = await InstantiateAsync(modelObject, equipCharacter.transform).ToUniTask();
+            equipCharacter.SetModel(modelInstance[0]);
 
             var animatorController = ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(characterData.addressValue.characterAnimationName);
             equipCharacter.SetAnimation(animatorController);

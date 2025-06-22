@@ -24,6 +24,7 @@ namespace IdleProject.Lobby.Character
             if (model is null) return;
             
             model.SetLayerRecursively(LayerMask.NameToLayer("UIObject"));
+            model.transform.position = transform.position;
             _model = model;
         }
 

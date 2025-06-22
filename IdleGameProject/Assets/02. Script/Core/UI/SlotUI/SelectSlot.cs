@@ -24,5 +24,13 @@ namespace IdleProject.Core.UI
         {
             endDragEvent?.Invoke(eventData);
         }
+
+        public override void RemoveAllEvent()
+        {
+            base.RemoveAllEvent();
+            dragEvent.RemoveAllListeners();
+            beginDragEvent.RemoveAllListeners();
+            endDragEvent.RemoveAllListeners();
+        }
     }
 }

@@ -28,5 +28,10 @@ namespace  IdleProject.Core.UI
         {
             clickEvent?.Invoke(eventData);
         }
+
+        public virtual void RemoveAllEvent()
+        {
+            clickEvent.RemoveAllListeners();
+        }
     }
 }

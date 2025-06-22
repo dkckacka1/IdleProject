@@ -4,7 +4,7 @@ using IdleProject.Core.UI;
 using TMPro;
 using UnityEngine;
 
-namespace IdleProject.Lobby.UI.EquipmentPanel
+namespace IdleProject.Lobby.UI.CharacterPopup
 {
     public class CharacterStatBar : UIBase
     {

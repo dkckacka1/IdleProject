@@ -10,6 +10,9 @@ namespace IdleProject.Battle.AI.State
 
         public override void Excute()
         {
+            if (Controller.isNowAttack || Controller.isNowSkill)
+                return;
+            
             Controller.Move(Target);
         }
     }

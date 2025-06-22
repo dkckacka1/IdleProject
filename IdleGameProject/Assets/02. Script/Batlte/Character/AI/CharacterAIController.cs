@@ -60,13 +60,13 @@ namespace IdleProject.Battle.AI
             _currentTarget = GetNealyTarget();
             if (_currentTarget is not null)
             {
-                if (Vector3.Distance(_currentTarget, _controller) >= _controller.StatSystem.GetStatValue(Character.CharacterStatType.AttackRange))
+                if (CharacterController.IsTargetInsideAttackRange(_controller, _currentTarget))
                 {
-                    return _chaseState;
+                    return _battleState;
                 }
                 else
                 {
-                    return _battleState;
+                    return _chaseState;
                 }
             }
 

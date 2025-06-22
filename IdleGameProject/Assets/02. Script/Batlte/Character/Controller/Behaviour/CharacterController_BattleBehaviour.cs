@@ -90,6 +90,10 @@ namespace IdleProject.Battle.Character
 
         public virtual void Hit(ITakeDamagedAble iTakeDamage, float attackDamage)
         {
+            if (IsTargetInsideAttackRange(this, iTakeDamage) is false)
+                return;
+                
+            
             if (iTakeDamage.CanTakeDamage)
             {
                 iTakeDamage.TakeDamage(attackDamage);
@@ -152,7 +156,6 @@ namespace IdleProject.Battle.Character
         }
         #endregion
 
-
         private void Death()
         {
             GetBattleManager.DeathCharacter(this);
@@ -160,6 +163,11 @@ namespace IdleProject.Battle.Character
             State.IsDead = true;
             AnimController.SetDeath();
             GetComponent<Collider>().enabled = false;
+        }
+
+        public static bool IsTargetInsideAttackRange(CharacterController mine, ITargetedAble targetCharacter)
+        {
+            return Vector3.Distance(mine, targetCharacter.GetTransform.position) < mine.StatSystem.GetStatValue(CharacterStatType.AttackRange);
         }
     }
 }

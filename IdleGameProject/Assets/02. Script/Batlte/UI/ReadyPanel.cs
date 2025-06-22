@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 namespace IdleProject.Battle.UI
 {
+    [Obsolete]
     public class ReadyPanel : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI readyText;

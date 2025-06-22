@@ -34,6 +34,8 @@ namespace IdleProject.Battle.UI
             UIManager.Instance.GetUI<UIPopup>("PausePopup").ClosePopup();
             UIManager.Instance.GetUI<UIPopup>("PickCharacterPopup").Initialized();
             UIManager.Instance.GetUI<UIPopup>("PickCharacterPopup").OpenPopup();
+            UIManager.Instance.GetUI<UIPopup>("WinPopup").Initialized();
+            UIManager.Instance.GetUI<UIPopup>("WinPopup").ClosePopup();
             UIManager.Instance.GetUI<UIButton>("SpeedButton").Button.onClick.AddListener(ChangeBattleSpeed);
             UIManager.Instance.GetUI<UIButton>("PauseButton").Button.onClick.AddListener(PauseGame);
         }

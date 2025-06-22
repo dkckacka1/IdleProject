@@ -21,38 +21,43 @@ namespace IdleProject.Lobby
 
         [BoxGroup("LobbyMainCharacter"), SerializeField]
         private LobbyCharacter frontMiddleCharacter;
-        
+
         [BoxGroup("LobbyMainCharacter"), SerializeField]
         private LobbyCharacter frontRightCharacter;
-        
+
         [BoxGroup("LobbyMainCharacter"), SerializeField]
         private LobbyCharacter frontLeftCharacter;
-        
+
         [BoxGroup("LobbyMainCharacter"), SerializeField]
         private LobbyCharacter rearRightCharacter;
-        
+
         [BoxGroup("LobbyMainCharacter"), SerializeField]
         private LobbyCharacter rearLeftCharacter;
-        
+
         public override async UniTask Initialize()
         {
             _lobbyUIController = UIManager.Instance.GetUIController<LobbyUIController>();
 
             TaskChecker.StartLoading(LOBBY_INIT_TASK, _lobbyUIController.Initialized);
             TaskChecker.StartLoading(LOBBY_INIT_TASK, SetMainCharacter);
-            
+
             await TaskChecker.WaitTasking(LOBBY_INIT_TASK);
         }
 
         private async UniTask SetMainCharacter()
         {
             var formation = DataManager.Instance.DataController.userData.UserFormation;
-            
-            TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK, () => SetCharacter(formation.frontLeftCharacterName, frontLeftCharacter));
-            TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK, () => SetCharacter(formation.frontMiddleCharacterName, frontMiddleCharacter));
-            TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK, () => SetCharacter(formation.frontRightCharacterName, frontRightCharacter));
-            TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK, () => SetCharacter(formation.rearLeftCharacterName, rearLeftCharacter));
-            TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK, () => SetCharacter(formation.rearRightCharacterName, rearRightCharacter));
+
+            TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK,
+                () => SetCharacter(formation.frontLeftCharacterName, frontLeftCharacter));
+            TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK,
+                () => SetCharacter(formation.frontMiddleCharacterName, frontMiddleCharacter));
+            TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK,
+                () => SetCharacter(formation.frontRightCharacterName, frontRightCharacter));
+            TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK,
+                () => SetCharacter(formation.rearLeftCharacterName, rearLeftCharacter));
+            TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK,
+                () => SetCharacter(formation.rearRightCharacterName, rearRightCharacter));
             await TaskChecker.WaitTasking(MAIN_CHARACTER_INIT_TASK);
         }
 
@@ -63,11 +68,13 @@ namespace IdleProject.Lobby
 
             var data = DataManager.Instance.GetData<CharacterData>(heroName);
 
-            var model = await ResourceLoader.InstantiateCharacterModel(data.addressValue.characterName,character.transform);
-            character.SetModel(model);
+            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.CharacterModelLabelName,
+                $"Model_{data.addressValue.characterName}");
+            character.SetModel(Instantiate(modelObject,character.transform));
 
-            var animatorController = ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(data.addressValue.characterAnimationName);
-            
+            var animatorController =
+                ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(data.addressValue.characterAnimationName);
+
             character.SetAnimation(animatorController);
         }
     }

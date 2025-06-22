@@ -31,10 +31,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - Data
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2dc8a4dce6584ca4e8d1aaae34104a75
-    m_Address: Icon
+  - m_GUID: 5306f746a07c2a84f9a0fa4f9b630c61
+    m_Address: Prefab/Character/Model
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - CharacterModel
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 83676e73926d19849ac30715154cb0dc
     m_Address: Animation

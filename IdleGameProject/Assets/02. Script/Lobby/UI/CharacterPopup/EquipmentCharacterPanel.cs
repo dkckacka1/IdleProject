@@ -26,16 +26,20 @@ namespace IdleProject.Lobby.UI.EquipmentPanel
             var data = DataManager.Instance.GetData<CharacterData>(heroName);
             
             characterLoadingRotate.StartLoading(LoadCharacter(data)).Forget();
-            
-            UIManager.Instance.GetUI<CharacterStatBar>("CharacterStatBar_AttackDamage").ShowStat(CharacterStatType.AttackDamage, data.stat.attackDamage);
-            UIManager.Instance.GetUI<CharacterStatBar>("CharacterStatBar_Health").ShowStat(CharacterStatType.HealthPoint, data.stat.healthPoint);
-            UIManager.Instance.GetUI<CharacterStatBar>("CharacterStatBar_MovementSpeed").ShowStat(CharacterStatType.MovementSpeed, data.stat.movementSpeed);
+
+            UIManager.Instance.GetUI<CharacterStatBar>("CharacterStatBar_AttackDamage")
+                .ShowStat(CharacterStatType.AttackDamage, data.stat.attackDamage);
+            UIManager.Instance.GetUI<CharacterStatBar>("CharacterStatBar_Health")
+                .ShowStat(CharacterStatType.HealthPoint, data.stat.healthPoint);
+            UIManager.Instance.GetUI<CharacterStatBar>("CharacterStatBar_MovementSpeed")
+                .ShowStat(CharacterStatType.MovementSpeed, data.stat.movementSpeed);
         }
 
         private async UniTask LoadCharacter(CharacterData characterData)
         {
-            var model = await ResourceLoader.InstantiateCharacterModel(characterData.addressValue.characterName,equipCharacter.transform);
-            equipCharacter.SetModel(model);
+            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.CharacterModelLabelName,
+                $"Model_{characterData.addressValue.characterName}");
+            equipCharacter.SetModel(Instantiate(modelObject, equipCharacter.transform));
 
             var animatorController = ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(characterData.addressValue.characterAnimationName);
             equipCharacter.SetAnimation(animatorController);

@@ -139,7 +139,7 @@ namespace IdleProject.Battle.Spawn
             var characterInstance = Instantiate(controller);
             characterInstance.name = data.addressValue.characterName;
 
-            await SetModel(characterInstance, data);
+            SetModel(characterInstance, data);
             await SetPoolableObject(characterInstance, data);
 
             SetAnimation(characterInstance, data);
@@ -161,9 +161,11 @@ namespace IdleProject.Battle.Spawn
             controller.StatSystem = statSystem;
         }
 
-        private async UniTask SetModel(CharacterController controller, CharacterData data)
+        private void SetModel(CharacterController controller, CharacterData data)
         {
-            await ResourceLoader.InstantiateCharacterModel(data.addressValue.characterName, controller);
+            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.CharacterModelLabelName,
+                $"Model_{data.addressValue.characterName}");
+            Instantiate(modelObject, controller.transform);
             var characterOffset = controller.gameObject.AddComponent<CharacterOffset>();
             characterOffset.Initialized();
 

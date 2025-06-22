@@ -120,7 +120,7 @@ namespace IdleProject.Battle
         private void LateUpdate()
         {
             if (GameStateEventBus.IsSameCurrentType(GameStateType.Play) &&
-                BattleStateEventBus.IsSameCurrentType(BattleStateType.Battle, BattleStateType.Skill))
+                BattleStateEventBus.CurrentType != BattleStateType.Ready)
             {
                 BattleObjectEventDic[BattleObjectType.UI].Invoke();
             }

@@ -15,20 +15,20 @@ using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.UI
 {
-    public class PickCharacterPopup : UIPopup
+    public class PickCharacterPanel : UIPanel
     {
         [SerializeField] private ScrollRect pickCharacterScrollView;
 
-        [SerializeField] private PickCharacterPopupSlot slotPrefab;
+        [SerializeField] private PickCharacterPanelSlot slotPrefab;
         [FormerlySerializedAs("dorpSlot")] [SerializeField] private SlotUI dropSlot;
 
-        private readonly List<PickCharacterPopupSlot> _slotList = new();
+        private readonly List<PickCharacterPanelSlot> _slotList = new();
 
         private CharacterData _pickData;
         private Camera _mainCamera;
         private BattleManager _battleManager;
         
-        public override void Initialized()
+        protected override void Initialized()
         {
             _mainCamera = Camera.main;
             _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();
@@ -48,7 +48,7 @@ namespace IdleProject.Battle.UI
             dropSlot.gameObject.SetActive(false);
         }
         
-        private PickCharacterPopupSlot CreateSlot(CharacterData characterData)
+        private PickCharacterPanelSlot CreateSlot(CharacterData characterData)
         {
             var slot = Instantiate(slotPrefab, pickCharacterScrollView.content);
             slot.SetData(characterData);
@@ -92,7 +92,7 @@ namespace IdleProject.Battle.UI
                 
                 if (targetSpawnPosition.SpawnAIType == CharacterAIType.Player)
                 {
-                    var slot = eventData.pointerDrag.GetComponent<PickCharacterPopupSlot>();
+                    var slot = eventData.pointerDrag.GetComponent<PickCharacterPanelSlot>();
                     if (!IsCharacterSpawnedSlot(slot, out var spawnedCharacter))
                         // 스폰된 캐릭터가 없다면 생성
                     {
@@ -127,7 +127,7 @@ namespace IdleProject.Battle.UI
         private void OnSlotClick(PointerEventData eventData)
         {
             var slot = ExecuteEvents.GetEventHandler<IPointerClickHandler>(eventData.pointerCurrentRaycast.gameObject)
-                .GetComponent<PickCharacterPopupSlot>();
+                .GetComponent<PickCharacterPanelSlot>();
 
             if (IsCharacterSpawnedSlot(slot, out var character))
             {
@@ -142,7 +142,7 @@ namespace IdleProject.Battle.UI
             _battleManager.BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
             _battleManager.GameStateEventBus.ChangeEvent(GameStateType.Play);
             
-            ClosePopup();
+            ClosePanel();
         }
 
         private bool IsCharacterSpawnedSlot(SlotUI slot, out CharacterController character)

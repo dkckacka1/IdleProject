@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IdleProject.Core.UI
 {
-    public class PickCharacterPopupSlot : SelectSlot
+    public class PickCharacterPanelSlot : SelectSlot
     {
         [SerializeField] private GameObject choiceObject;
 

@@ -1105,7 +1105,7 @@ GameObject:
   - component: {fileID: 337256420}
   - component: {fileID: 337256419}
   m_Layer: 5
-  m_Name: PausePopupContinueButton
+  m_Name: PausePanelContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1212,6 +1212,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1041166179092963694, guid: 1e6d71e38eef3d54aa46182a4186dcfd, type: 3}
+      propertyPath: m_Name
+      value: DefeatPanelRetryStageButton
+      objectReference: {fileID: 0}
     - target: {fileID: 1934541625626253804, guid: 1e6d71e38eef3d54aa46182a4186dcfd, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1223,6 +1227,14 @@ PrefabInstance:
     - target: {fileID: 1934541625626253804, guid: 1e6d71e38eef3d54aa46182a4186dcfd, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2011642536869345566, guid: 1e6d71e38eef3d54aa46182a4186dcfd, type: 3}
+      propertyPath: m_Name
+      value: DefeatPanelExitButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 2723158373174835788, guid: 1e6d71e38eef3d54aa46182a4186dcfd, type: 3}
+      propertyPath: m_Name
+      value: DefeatPanelButtons
       objectReference: {fileID: 0}
     - target: {fileID: 2949774100268507582, guid: 1e6d71e38eef3d54aa46182a4186dcfd, type: 3}
       propertyPath: m_Pivot.x
@@ -1304,9 +1316,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3263959956667354555, guid: 1e6d71e38eef3d54aa46182a4186dcfd, type: 3}
+      propertyPath: m_Name
+      value: PanelBase
+      objectReference: {fileID: 0}
     - target: {fileID: 4229866757579278828, guid: 1e6d71e38eef3d54aa46182a4186dcfd, type: 3}
       propertyPath: m_Name
-      value: DefeatPopup
+      value: DefeatPanel
       objectReference: {fileID: 0}
     - target: {fileID: 4229866757579278828, guid: 1e6d71e38eef3d54aa46182a4186dcfd, type: 3}
       propertyPath: m_IsActive
@@ -2199,7 +2215,7 @@ GameObject:
   m_Component:
   - component: {fileID: 619054927}
   m_Layer: 5
-  m_Name: PopupBase
+  m_Name: PanelBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2285,6 +2301,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1728011154821821923, guid: 1520713c575a3d24e8a1c505fabc81cd, type: 3}
+      propertyPath: m_Name
+      value: PanelBase
+      objectReference: {fileID: 0}
     - target: {fileID: 4360555455787252949, guid: 1520713c575a3d24e8a1c505fabc81cd, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2300,6 +2320,10 @@ PrefabInstance:
     - target: {fileID: 4360555455787252949, guid: 1520713c575a3d24e8a1c505fabc81cd, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4456448215839600831, guid: 1520713c575a3d24e8a1c505fabc81cd, type: 3}
+      propertyPath: m_Name
+      value: WinPanelNextStageButton
       objectReference: {fileID: 0}
     - target: {fileID: 6013628135067138713, guid: 1520713c575a3d24e8a1c505fabc81cd, type: 3}
       propertyPath: m_Pivot.x
@@ -2381,6 +2405,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7666911729587659405, guid: 1520713c575a3d24e8a1c505fabc81cd, type: 3}
+      propertyPath: m_Name
+      value: WinPanelRetryStageButton
+      objectReference: {fileID: 0}
     - target: {fileID: 7881608648749843559, guid: 1520713c575a3d24e8a1c505fabc81cd, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2397,9 +2425,17 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8079907168966846261, guid: 1520713c575a3d24e8a1c505fabc81cd, type: 3}
+      propertyPath: m_Name
+      value: WinPanelExitButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8169385541854470047, guid: 1520713c575a3d24e8a1c505fabc81cd, type: 3}
       propertyPath: m_Name
-      value: WinPopup
+      value: WinPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 9154235273561259177, guid: 1520713c575a3d24e8a1c505fabc81cd, type: 3}
+      propertyPath: m_Name
+      value: WinPanelButtons
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2924,7 +2960,7 @@ GameObject:
   - component: {fileID: 956949415}
   - component: {fileID: 956949414}
   m_Layer: 5
-  m_Name: BattlePopupCanavs
+  m_Name: BattlePanelCanavs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3389,7 +3425,7 @@ GameObject:
   - component: {fileID: 1007916902}
   - component: {fileID: 1007916901}
   m_Layer: 5
-  m_Name: PausePopupRetryButton
+  m_Name: PausePanelRetryButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3499,7 +3535,7 @@ GameObject:
   - component: {fileID: 1018451997}
   - component: {fileID: 1018452000}
   m_Layer: 5
-  m_Name: PickCharacterPopup
+  m_Name: PickCharacterPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3896,7 +3932,7 @@ GameObject:
   - component: {fileID: 1245646687}
   - component: {fileID: 1245646688}
   m_Layer: 5
-  m_Name: PausePopup
+  m_Name: PausePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4994,7 +5030,7 @@ GameObject:
   - component: {fileID: 1526086935}
   - component: {fileID: 1526086936}
   m_Layer: 5
-  m_Name: PausePopupButtons
+  m_Name: PausePanelButtons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5870,7 +5906,7 @@ GameObject:
   - component: {fileID: 1713891846}
   - component: {fileID: 1713891845}
   m_Layer: 5
-  m_Name: PausePopupExitButton
+  m_Name: PausePanelExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

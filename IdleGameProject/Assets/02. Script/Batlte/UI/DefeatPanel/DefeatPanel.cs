@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace IdleProject.Battle.UI
 {
-    public class DefeatPopup : UIPopup
+    public class DefeatPanel : UIPanel
     {
         [SerializeField] private RectTransform title;
         [SerializeField] private CanvasGroup reinforce;
@@ -16,17 +16,17 @@ namespace IdleProject.Battle.UI
         [BoxGroup("OpenTween"), SerializeField] private float openActiveInterval;
         [BoxGroup("OpenTween"), SerializeField] private float titleDuration;
         
-        public override void Initialized()
+        protected override void Initialized()
         {
             UIManager.Instance.GetUI<UIButton>("CharacterReinForceButton").Button.onClick.AddListener(GotoLobbyAtCharacterReinforce);
             UIManager.Instance.GetUI<UIButton>("EquipmentReinForceButton").Button.onClick.AddListener(GotoLobbyAtEquipmentReinforce);
-            UIManager.Instance.GetUI<UIButton>("DefeatPopupRetryStageButton").Button.onClick.AddListener(RetryStage);
-            UIManager.Instance.GetUI<UIButton>("DefeatPopupExitButton").Button.onClick.AddListener(GotoLobby);
+            UIManager.Instance.GetUI<UIButton>("DefeatPanelRetryStageButton").Button.onClick.AddListener(RetryStage);
+            UIManager.Instance.GetUI<UIButton>("DefeatPanelExitButton").Button.onClick.AddListener(GotoLobby);
         }
 
-        public override void OpenPopup()
+        public override void OpenPanel()
         {
-            base.OpenPopup();
+            base.OpenPanel();
             var openSequence = DOTween.Sequence();
             openSequence.OnStart(() =>
             {
@@ -56,7 +56,8 @@ namespace IdleProject.Battle.UI
         {
             GameManager.Instance.LoadScene(SceneType.Lobby, () =>
             {
-                UIManager.Instance.GetUI<UIPopup>("CharacterPopup").OpenPopup();
+                UIManager.Instance.GetUI<UIPanel>("CharacterPanel").OpenPanel();
+                UIManager.Instance.GetUI<UIToggle>("CharacterSelectToggle").Toggle.isOn = true;
             }).Forget();
         }
 
@@ -64,7 +65,7 @@ namespace IdleProject.Battle.UI
         {
             GameManager.Instance.LoadScene(SceneType.Lobby, () =>
             {
-                UIManager.Instance.GetUI<UIPopup>("CharacterPopup").OpenPopup();
+                UIManager.Instance.GetUI<UIPanel>("CharacterPanel").OpenPanel();
                 UIManager.Instance.GetUI<UIToggle>("EquipmentToggle").Toggle.isOn = true;
             }).Forget();
         }

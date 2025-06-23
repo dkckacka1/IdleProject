@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace IdleProject.Battle.UI
 {
-    public class WinPopup : UIPopup
+    public class WinPanel : UIPanel
     {
         [SerializeField] private RectTransform title;
         [SerializeField] private CanvasGroup reward;
@@ -23,16 +23,16 @@ namespace IdleProject.Battle.UI
         [BoxGroup("OpenTween/RewardTween"), SerializeField] private float slotPunchScale;
         [BoxGroup("OpenTween/RewardTween"), SerializeField] private float slotPunchDuration;
         
-        public override void Initialized()
+        protected override void Initialized()
         {
-            UIManager.Instance.GetUI<UIButton>("WinPopupNextStageButton").Button.onClick.AddListener(GotoNextStage);
-            UIManager.Instance.GetUI<UIButton>("WinPopupRetryStageButton").Button.onClick.AddListener(RetryStage);
-            UIManager.Instance.GetUI<UIButton>("WinPopupExitButton").Button.onClick.AddListener(GotoLobby);
+            UIManager.Instance.GetUI<UIButton>("WinPanelNextStageButton").Button.onClick.AddListener(GotoNextStage);
+            UIManager.Instance.GetUI<UIButton>("WinPanelRetryStageButton").Button.onClick.AddListener(RetryStage);
+            UIManager.Instance.GetUI<UIButton>("WinPanelExitButton").Button.onClick.AddListener(GotoLobby);
         }
 
-        public override void OpenPopup()
+        public override void OpenPanel()
         {
-            base.OpenPopup();
+            base.OpenPanel();
 
             var openSequence = DOTween.Sequence();
             openSequence.OnStart(() =>

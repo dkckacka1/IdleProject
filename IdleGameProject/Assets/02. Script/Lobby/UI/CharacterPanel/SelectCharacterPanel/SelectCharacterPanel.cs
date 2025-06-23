@@ -16,7 +16,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         [SerializeField] private LobbyCharacter equipCharacter;
         [SerializeField] private LoadingRotateUI characterLoadingRotate;
         
-        public override void Initialized()
+        protected override void Initialized()
         {
             SetCharacter(DataManager.Instance.DataController.userData.UserHeroList[0].heroName);
         }

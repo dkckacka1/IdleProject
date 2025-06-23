@@ -11,8 +11,7 @@ namespace IdleProject.Lobby.UI
     {
         public async UniTask Initialized()
         {
-            UIManager.Instance.GetUI<UIPopup>("CharacterPopup").Initialized();
-            UIManager.Instance.GetUI<UIPopup>("CharacterPopup").ClosePopup();
+            UIManager.Instance.GetUI<UIPanel>("CharacterPanel").ClosePanel();
             UIManager.Instance.GetUI<UIButton>("EquipmentButton").Button.onClick.AddListener(OpenEquipmentPanel);
             UIManager.Instance.GetUI<UIButton>("DungeonButton").Button.onClick.AddListener(GoToDungeon);
         }
@@ -25,7 +24,7 @@ namespace IdleProject.Lobby.UI
 
         private void OpenEquipmentPanel()
         {
-            UIManager.Instance.GetUI<UIPopup>("CharacterPopup").OpenPopup();
+            UIManager.Instance.GetUI<UIPanel>("CharacterPanel").OpenPanel();
         }
     }
 }

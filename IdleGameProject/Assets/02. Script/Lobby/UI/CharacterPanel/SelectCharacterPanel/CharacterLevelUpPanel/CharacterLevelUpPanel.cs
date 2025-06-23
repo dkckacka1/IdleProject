@@ -5,7 +5,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 {
     public class CharacterLevelUpPanel : UIPanel
     {
-        public override void Initialized()
+        protected override void Initialized()
         {
             
         }

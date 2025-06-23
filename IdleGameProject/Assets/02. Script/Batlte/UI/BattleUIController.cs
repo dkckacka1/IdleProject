@@ -35,14 +35,10 @@ namespace IdleProject.Battle.UI
             GetBattleText = () => ResourceLoader.GetPoolableObject<BattleText>(PoolableType.UI, "BattleText");
 
             SetSpeedText();
-            UIManager.Instance.GetUI<UIPopup>("PausePopup").Initialized();
-            UIManager.Instance.GetUI<UIPopup>("PausePopup").ClosePopup();
-            UIManager.Instance.GetUI<UIPopup>("PickCharacterPopup").Initialized();
-            UIManager.Instance.GetUI<UIPopup>("PickCharacterPopup").OpenPopup();
-            UIManager.Instance.GetUI<UIPopup>("WinPopup").Initialized();
-            UIManager.Instance.GetUI<UIPopup>("WinPopup").ClosePopup();
-            UIManager.Instance.GetUI<UIPopup>("DefeatPopup").Initialized();
-            UIManager.Instance.GetUI<UIPopup>("DefeatPopup").ClosePopup();
+            UIManager.Instance.GetUI<UIPanel>("PausePanel").ClosePanel();
+            UIManager.Instance.GetUI<UIPanel>("PickCharacterPanel").OpenPanel();
+            UIManager.Instance.GetUI<UIPanel>("WinPanel").ClosePanel();
+            UIManager.Instance.GetUI<UIPanel>("DefeatPanel").ClosePanel();
             UIManager.Instance.GetUI<UIButton>("SpeedButton").Button.onClick.AddListener(ChangeBattleSpeed);
             UIManager.Instance.GetUI<UIButton>("PauseButton").Button.onClick.AddListener(PauseGame);
             
@@ -71,7 +67,7 @@ namespace IdleProject.Battle.UI
         private void PauseGame()
         {
             GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Pause);
-            UIManager.Instance.GetUI<PausePopup>().OpenPopup();
+            UIManager.Instance.GetUI<PausePanel>().OpenPanel();
         }
 
         public void OnEnumChange(BattleStateType type)
@@ -86,13 +82,13 @@ namespace IdleProject.Battle.UI
                     battleCanvas.enabled = false;
                     battleFluidCanvas.enabled = false;
                     
-                    UIManager.Instance.GetUI<UIPopup>("WinPopup").OpenPopup();
+                    UIManager.Instance.GetUI<UIPanel>("WinPanel").OpenPanel();
                     break;
                 case BattleStateType.Defeat:
                     battleCanvas.enabled = false;
                     battleFluidCanvas.enabled = false;
                     
-                    UIManager.Instance.GetUI<UIPopup>("DefeatPopup").OpenPopup();
+                    UIManager.Instance.GetUI<UIPanel>("DefeatPanel").OpenPanel();
                     break;
             }
         }

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace IdleProject.Battle.UI
 {
-    public class PausePopup : UIPopup
+    public class PausePanel : UIPanel
     {
         [BoxGroup("Background"), SerializeField]
         private Image backgroundImage;
@@ -29,16 +29,16 @@ namespace IdleProject.Battle.UI
         private Sequence _openPopupSequence;
         private Sequence _closePopupSequence;
 
-        public override void Initialized()
+        protected override void Initialized()
         {
-            UIManager.Instance.GetUI<UIButton>("PausePopupContinueButton").Button.onClick.AddListener(ClosePausePopup);
-            UIManager.Instance.GetUI<UIButton>("PausePopupRetryButton").Button.onClick.AddListener(RetryBattle);
-            UIManager.Instance.GetUI<UIButton>("PausePopupExitButton").Button.onClick.AddListener(ExitBattle);
+            UIManager.Instance.GetUI<UIButton>("PausePanelContinueButton").Button.onClick.AddListener(ClosePausePopup);
+            UIManager.Instance.GetUI<UIButton>("PausePanelRetryButton").Button.onClick.AddListener(RetryBattle);
+            UIManager.Instance.GetUI<UIButton>("PausePanelExitButton").Button.onClick.AddListener(ExitBattle);
         }
 
-        public override void OpenPopup()
+        public override void OpenPanel()
         {
-            base.OpenPopup();
+            base.OpenPanel();
 
             popupBaseObj.transform.position = new Vector3(popupBaseObj.transform.position.x, -PopupBaseHeight);
 
@@ -47,14 +47,14 @@ namespace IdleProject.Battle.UI
             _openPopupSequence.Join(popupBaseObj.DOMoveY(0f, popupBaseTweenDuration));
         }
 
-        public override void ClosePopup()
+        public override void ClosePanel()
         {
             _closePopupSequence = DOTween.Sequence();
             _closePopupSequence.Append(backgroundImage.DOFade(0f, backgroundShadowDuration));
             _closePopupSequence.Join(popupBaseObj.DOMoveY(-PopupBaseHeight, popupBaseTweenDuration));
             _closePopupSequence.OnComplete(() => 
             {
-                base.ClosePopup();
+                base.ClosePanel();
             });
         }
         
@@ -72,7 +72,7 @@ namespace IdleProject.Battle.UI
         private void ClosePausePopup()
         {
             GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Play);
-            UIManager.Instance.GetUI<PausePopup>().ClosePopup();
+            UIManager.Instance.GetUI<PausePanel>().ClosePanel();
         }
     }
 }

@@ -15,14 +15,17 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         [SerializeField] private Transform content;
 
-        private List<SlotUI> _slotList = new List<SlotUI>();
+        private readonly List<SlotUI> _slotList = new List<SlotUI>();
         
-        public override void Initialized()
+        protected override void Initialized()
         {
             UIManager.Instance.GetUI<UIToggle>("CharacterSelectToggle").Toggle.onValueChanged.AddListener(CharacterSelectToggleValueChanged);
             UIManager.Instance.GetUI<UIToggle>("SkillSelectToggle").Toggle.onValueChanged.AddListener(SkillSelectToggleValueChanged);
             UIManager.Instance.GetUI<UIToggle>("EquipmentToggle").Toggle.onValueChanged.AddListener(EquipmentToggleValueChanged);
+        }
 
+        public override void OpenPanel()
+        {
             UIManager.Instance.GetUI<UIToggle>("CharacterSelectToggle").Toggle.isOn = true;
             CharacterSelectToggleValueChanged(true);
         }

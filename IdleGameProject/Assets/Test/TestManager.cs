@@ -20,6 +20,7 @@ using IdleProject.Battle.Spawn;
 using IdleProject.Battle.UI;
 using IdleProject.Core.Loading;
 using IdleProject.Data;
+using IdleProject.Data.Player;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;

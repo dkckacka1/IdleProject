@@ -15,12 +15,15 @@ MonoBehaviour:
   PlayerLevel: 1
   PlayerExp: 0
   UserHeroList:
-  - Hiro
-  - Eli
-  - Bak
+  - heroName: Hiro
+    level: 1
+  - heroName: Eli
+    level: 1
+  - heroName: Bak
+    level: 1
   UserFormation:
     frontMiddleCharacterName: Hiro
     frontRightCharacterName: Bak
     frontLeftCharacterName: 
-    rearRightCharacterName: 
+    rearRightCharacterName: Eli
     rearLeftCharacterName: 

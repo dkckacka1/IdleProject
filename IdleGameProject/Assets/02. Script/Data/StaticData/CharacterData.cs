@@ -18,6 +18,13 @@ namespace IdleProject.Data
     }
 
     [Serializable]
+    public struct LevelData
+    {
+        public float healthPointValue;
+        public float attackDamageValue;
+    }
+
+    [Serializable]
     public struct CharacterAddressValue
     {
         public string characterName;
@@ -35,6 +42,7 @@ namespace IdleProject.Data
         
         public CharacterAddressValue addressValue;
         public StatData stat;
+        public LevelData levelData;
 
         public string GetCharacterBannerIconName => $"Icon_{addressValue.characterName}_Banner";
         public string GetCharacterSkillBannerIconName => $"Icon_{addressValue.characterName}_SkillBanner";

@@ -34,8 +34,9 @@ namespace IdleProject.Battle.UI
             _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();
 
             var userMainCharacterList = DataManager.Instance.DataController.userData.UserFormation.GetCharacterNameList();
+            var heroList = DataManager.Instance.DataController.userData.UserHeroList.Select(hero => hero.heroName);
             
-            foreach (var userHeroName in DataManager.Instance.DataController.userData.UserHeroList)
+            foreach (var userHeroName in heroList)
             {
                 var createSlot = CreateSlot(DataManager.Instance.GetData<CharacterData>(userHeroName));
                 createSlot.SetChoice(userMainCharacterList.Any(mainCharacterName => mainCharacterName == userHeroName));

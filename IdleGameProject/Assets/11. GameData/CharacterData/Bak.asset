@@ -26,3 +26,6 @@ MonoBehaviour:
     movementSpeed: 3.5
     attackRange: 2
     attackCoolTime: 0.1
+  levelData:
+    healthPointValue: 1
+    attackDamageValue: 10

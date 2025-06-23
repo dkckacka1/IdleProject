@@ -5,7 +5,13 @@ namespace IdleProject.Core.UI
     public abstract class UIPopup : UIBase
     {
         public abstract void Initialized();
-        
+
+        protected override void Awake()
+        {
+            base.Awake();
+            Initialized();
+        }
+
         [Button]
         public virtual void OpenPopup()
         {

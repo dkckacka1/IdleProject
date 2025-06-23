@@ -1,4 +1,5 @@
 using IdleProject.Data;
+using IdleProject.Data.Player;
 
 namespace IdleProject.Core.GameData
 {

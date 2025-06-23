@@ -41,6 +41,8 @@ namespace IdleProject.Battle.UI
             UIManager.Instance.GetUI<UIPopup>("PickCharacterPopup").OpenPopup();
             UIManager.Instance.GetUI<UIPopup>("WinPopup").Initialized();
             UIManager.Instance.GetUI<UIPopup>("WinPopup").ClosePopup();
+            UIManager.Instance.GetUI<UIPopup>("DefeatPopup").Initialized();
+            UIManager.Instance.GetUI<UIPopup>("DefeatPopup").ClosePopup();
             UIManager.Instance.GetUI<UIButton>("SpeedButton").Button.onClick.AddListener(ChangeBattleSpeed);
             UIManager.Instance.GetUI<UIButton>("PauseButton").Button.onClick.AddListener(PauseGame);
             
@@ -77,9 +79,7 @@ namespace IdleProject.Battle.UI
             switch (type)
             {
                 case BattleStateType.Ready:
-                    break;
                 case BattleStateType.Battle:
-                    break;
                 case BattleStateType.Skill:
                     break;
                 case BattleStateType.Win:
@@ -89,6 +89,10 @@ namespace IdleProject.Battle.UI
                     UIManager.Instance.GetUI<UIPopup>("WinPopup").OpenPopup();
                     break;
                 case BattleStateType.Defeat:
+                    battleCanvas.enabled = false;
+                    battleFluidCanvas.enabled = false;
+                    
+                    UIManager.Instance.GetUI<UIPopup>("DefeatPopup").OpenPopup();
                     break;
             }
         }

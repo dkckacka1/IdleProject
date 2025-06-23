@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5772794875328419118}
+  - component: {fileID: 7859194557202119604}
   m_Layer: 5
   m_Name: Reward
   m_TagString: Untagged
@@ -39,6 +40,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -27.0177}
   m_SizeDelta: {x: 1127.2188, y: 489.7689}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &7859194557202119604
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25229237430081611}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1728011154821821923
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,8 +308,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Exit
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 734221c6f1337024c8a1e73e5edbcf51, type: 2}
-  m_sharedMaterial: {fileID: -5921272790465135491, guid: 734221c6f1337024c8a1e73e5edbcf51, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9d68cce02c98d6443848525f56a6927c, type: 2}
+  m_sharedMaterial: {fileID: 4395596668824882610, guid: 9d68cce02c98d6443848525f56a6927c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -336,7 +349,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -788,8 +801,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Retry
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 734221c6f1337024c8a1e73e5edbcf51, type: 2}
-  m_sharedMaterial: {fileID: -5921272790465135491, guid: 734221c6f1337024c8a1e73e5edbcf51, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9d68cce02c98d6443848525f56a6927c, type: 2}
+  m_sharedMaterial: {fileID: 4395596668824882610, guid: 9d68cce02c98d6443848525f56a6927c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -829,7 +842,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -1305,8 +1318,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Continue
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 734221c6f1337024c8a1e73e5edbcf51, type: 2}
-  m_sharedMaterial: {fileID: -5921272790465135491, guid: 734221c6f1337024c8a1e73e5edbcf51, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9d68cce02c98d6443848525f56a6927c, type: 2}
+  m_sharedMaterial: {fileID: 4395596668824882610, guid: 9d68cce02c98d6443848525f56a6927c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1346,7 +1359,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -1655,9 +1668,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f8a6c1075381774fad43797d80f19eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winTitle: {fileID: 3719226609220312408}
-  reward: {fileID: 25229237430081611}
-  buttonsObject: {fileID: 9154235273561259177}
+  title: {fileID: 8891352040271650128}
+  reward: {fileID: 7859194557202119604}
+  buttonsObject: {fileID: 3707351490055932004}
   rewardScroll: {fileID: 3994196307338196742}
   slotUIPrefab: {fileID: 4836674976611164553, guid: cc98ce945e4c2f1438dd17896557c4dd, type: 3}
   openActiveInterval: 0.3
@@ -1936,6 +1949,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3537255228816604651}
   - component: {fileID: 2099823191460313192}
+  - component: {fileID: 3707351490055932004}
   m_Layer: 5
   m_Name: WinPopupButtons
   m_TagString: Untagged
@@ -1991,3 +2005,15 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!225 &3707351490055932004
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9154235273561259177}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

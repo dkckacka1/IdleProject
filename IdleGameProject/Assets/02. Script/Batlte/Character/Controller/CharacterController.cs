@@ -96,19 +96,19 @@ namespace IdleProject.Battle.Character
                 BattleEventGroup.PublishAll(GetBattleManager);
             }
         }
+
         #endregion
 
         public void Win()
         {
-            if(StatSystem.IsLive)
-                AnimController.SetWin();
+            AnimController.SetWin();
         }
 
         public void Idle()
         {
             AnimController.SetIdle();
         }
-        
+
         public void OnEnumChange(GameStateType type)
         {
             switch (type)
@@ -135,9 +135,12 @@ namespace IdleProject.Battle.Character
                 case BattleStateType.Skill:
                     break;
                 case BattleStateType.Win:
-                    Win();
+                    if(StatSystem.IsLive)
+                        Win();
                     break;
                 case BattleStateType.Defeat:
+                    if(StatSystem.IsLive)
+                        Idle();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

@@ -9,9 +9,9 @@ namespace IdleProject.Battle.UI
 {
     public class WinPopup : UIPopup
     {
-        [SerializeField] private GameObject winTitle;
-        [SerializeField] private GameObject reward;
-        [SerializeField] private GameObject buttonsObject;
+        [SerializeField] private RectTransform title;
+        [SerializeField] private CanvasGroup reward;
+        [SerializeField] private CanvasGroup buttonsObject;
 
         [SerializeField] private ScrollRect rewardScroll;
         [SerializeField] private SlotUI slotUIPrefab;
@@ -39,20 +39,24 @@ namespace IdleProject.Battle.UI
             {
                 reward.gameObject.SetActive(false);
                 buttonsObject.gameObject.SetActive(false);
-                
-                ((RectTransform)winTitle.transform).anchoredPosition = new Vector3(0, 750, 0);
+                 
+                title.anchoredPosition = new Vector3(0, 750, 0);
             });
-            openSequence.Append(((RectTransform)winTitle.transform).DOAnchorPosY(400, titleDuration).SetEase(Ease.OutBack));
+            openSequence.Append(title.DOAnchorPosY(400, titleDuration).SetEase(Ease.OutBack));
             openSequence.AppendInterval(openActiveInterval);
             openSequence.AppendCallback(() =>
             {
                 reward.gameObject.SetActive(true);
+                reward.alpha = 0f;
+                reward.DOFade(1f, 0.2f);
             });
             openSequence.Append(SetRewardSequence(10));
             openSequence.AppendInterval(openActiveInterval);
             openSequence.AppendCallback(() =>
             {
                 buttonsObject.gameObject.SetActive(true);
+                buttonsObject.alpha = 0f;
+                buttonsObject.DOFade(1f, 0.2f);
             });
         }
 

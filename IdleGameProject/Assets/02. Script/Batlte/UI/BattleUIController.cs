@@ -7,18 +7,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Engine.Core.EventBus;
 using Engine.Util.Extension;
 using UnityEngine.Events;
 
 namespace IdleProject.Battle.UI
 {
-    public class BattleUIController : UIController
+    public class BattleUIController : UIController, IEnumEvent<BattleStateType>
     {
         [BoxGroup("FluidGroup"), SerializeField] private Transform fluidHealthBarParent;
         [BoxGroup("FluidGroup"), SerializeField] private Transform battleTextParent;
 
         [BoxGroup("BattleUI"), SerializeField] private List<PlayerCharacterBanner> playerCharacterBannerList; 
-        [BoxGroup("BattleUI"), SerializeField] private ReadyPanel readyPanelUI; 
 
         public Transform FluidHealthBarParent => fluidHealthBarParent;
 
@@ -38,6 +38,8 @@ namespace IdleProject.Battle.UI
             UIManager.Instance.GetUI<UIPopup>("WinPopup").ClosePopup();
             UIManager.Instance.GetUI<UIButton>("SpeedButton").Button.onClick.AddListener(ChangeBattleSpeed);
             UIManager.Instance.GetUI<UIButton>("PauseButton").Button.onClick.AddListener(PauseGame);
+            
+            GameManager.GetCurrentSceneManager<BattleManager>().BattleStateEventBus.PublishEvent(this);
         }
 
         public PlayerCharacterBanner GetPlayerCharacterBanner()
@@ -63,6 +65,24 @@ namespace IdleProject.Battle.UI
         {
             GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Pause);
             UIManager.Instance.GetUI<PausePopup>().OpenPopup();
+        }
+
+        public void OnEnumChange(BattleStateType type)
+        {
+            switch (type)
+            {
+                case BattleStateType.Ready:
+                    break;
+                case BattleStateType.Battle:
+                    break;
+                case BattleStateType.Skill:
+                    break;
+                case BattleStateType.Win:
+                    UIManager.Instance.GetUI<UIPopup>("WinPopup").OpenPopup();
+                    break;
+                case BattleStateType.Defeat:
+                    break;
+            }
         }
     }
 }

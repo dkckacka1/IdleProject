@@ -1,5 +1,4 @@
-using System;
-using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace IdleProject.Core.UI
 {
@@ -7,11 +6,13 @@ namespace IdleProject.Core.UI
     {
         public abstract void Initialized();
         
+        [Button]
         public virtual void OpenPopup()
         {
             gameObject.SetActive(true);
         }
 
+        [Button]
         public virtual void ClosePopup()
         {
             gameObject.SetActive(false);

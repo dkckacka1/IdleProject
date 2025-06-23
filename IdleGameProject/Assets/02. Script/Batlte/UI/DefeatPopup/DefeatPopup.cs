@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using IdleProject.Core;
 using IdleProject.Core.UI;
@@ -53,12 +54,19 @@ namespace IdleProject.Battle.UI
 
         private void GotoLobbyAtCharacterReinforce()
         {
-            
+            GameManager.Instance.LoadScene(SceneType.Lobby, () =>
+            {
+                UIManager.Instance.GetUI<UIPopup>("CharacterPopup").OpenPopup();
+            }).Forget();
         }
 
         private void GotoLobbyAtEquipmentReinforce()
         {
-            
+            GameManager.Instance.LoadScene(SceneType.Lobby, () =>
+            {
+                UIManager.Instance.GetUI<UIPopup>("CharacterPopup").OpenPopup();
+                UIManager.Instance.GetUI<UIToggle>("EquipmentToggle").Toggle.isOn = true;
+            }).Forget();
         }
 
         private void RetryStage()

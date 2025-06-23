@@ -5,6 +5,7 @@ using IdleProject.Core.GameData;
 using IdleProject.Core.Loading;
 using IdleProject.Core.Resource;
 using Sirenix.OdinInspector;
+using UnityEngine.Events;
 
 namespace IdleProject.Core
 {
@@ -31,17 +32,18 @@ namespace IdleProject.Core
             _sceneLoader = new SceneLoader();
         }
 
-        public void LoadScene(SceneType sceneType)
+        public async UniTask LoadScene(SceneType sceneType, UnityAction sceneLoadComplete = null)
         {
-            _sceneLoader.LoadScene(sceneType).Forget();
+            await _sceneLoader.LoadScene(sceneType);
+            sceneLoadComplete?.Invoke();
         }
-
+        
         private void Start()
         {
             TaskChecker.StartLoading(GAME_INIT_TASK, DataManager.Instance.LoadData);
             TaskChecker.StartLoading(GAME_INIT_TASK, ResourceManager.Instance.LoadAssets);
             TaskChecker.AddOnCompleteCallback(GAME_INIT_TASK,
-                () => { LoadScene(SceneType.Lobby); });
+                () => { LoadScene(SceneType.Lobby).Forget(); });
         }
     }
 }

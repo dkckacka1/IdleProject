@@ -27,7 +27,6 @@ namespace IdleProject.Core
         public async UniTask<SceneController> LoadScene(SceneType sceneType)
         {
             SceneController sceneController = null;
-
             
             var loadingUI = UIManager.Instance.loadingUI;
             loadingUI.LoadingStart();

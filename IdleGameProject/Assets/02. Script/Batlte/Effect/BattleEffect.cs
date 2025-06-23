@@ -51,7 +51,7 @@ namespace IdleProject.Battle.Effect
             
             transform.position = Vector3.zero;
             GameManager.GetCurrentSceneManager<BattleManager>().GetChangeBattleSpeedEvent.RemoveListener(OnTimeFactorChange);
-            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.RemoveEvent(this);
+            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.UnPublishEvent(this);
         }
         
         public void SetSkillEffect()

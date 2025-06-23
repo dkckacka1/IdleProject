@@ -103,7 +103,7 @@ namespace IdleProject.Battle.Character
         public void UnPublish(BattleManager publisher)
         {
             publisher.GetChangeBattleSpeedEvent.RemoveListener(OnTimeFactorChange);
-            publisher.GameStateEventBus.RemoveEvent(this);
+            publisher.GameStateEventBus.UnPublishEvent(this);
         }
     }
 }

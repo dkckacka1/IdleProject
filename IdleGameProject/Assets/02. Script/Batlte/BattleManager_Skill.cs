@@ -72,6 +72,8 @@ namespace IdleProject.Battle
             {
                 character.AnimController.SetAnimationSpeed(GetCurrentBattleSpeed);
             }
+            
+            SetBattleResultState();
         }
     }
 }

@@ -15,10 +15,15 @@ namespace IdleProject.Battle.UI
 {
     public class BattleUIController : UIController, IEnumEvent<BattleStateType>
     {
-        [BoxGroup("FluidGroup"), SerializeField] private Transform fluidHealthBarParent;
-        [BoxGroup("FluidGroup"), SerializeField] private Transform battleTextParent;
+        [BoxGroup("BattleCanvas"), SerializeField] private Canvas battleCanvas; 
+        [BoxGroup("BattleCanvas"), SerializeField] private List<PlayerCharacterBanner> playerCharacterBannerList;
 
-        [BoxGroup("BattleUI"), SerializeField] private List<PlayerCharacterBanner> playerCharacterBannerList; 
+        [BoxGroup("BattleFluidCanvas"), SerializeField] private Canvas battleFluidCanvas;
+        [BoxGroup("BattleFluidCanvas"), SerializeField] private Transform fluidHealthBarParent;
+        [BoxGroup("BattleFluidCanvas"), SerializeField] private Transform battleTextParent;
+
+        [BoxGroup("BattlePopupCanvas"), SerializeField]
+        private Canvas battlePopupCanvas;
 
         public Transform FluidHealthBarParent => fluidHealthBarParent;
 
@@ -78,6 +83,9 @@ namespace IdleProject.Battle.UI
                 case BattleStateType.Skill:
                     break;
                 case BattleStateType.Win:
+                    battleCanvas.enabled = false;
+                    battleFluidCanvas.enabled = false;
+                    
                     UIManager.Instance.GetUI<UIPopup>("WinPopup").OpenPopup();
                     break;
                 case BattleStateType.Defeat:

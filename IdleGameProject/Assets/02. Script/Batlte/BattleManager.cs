@@ -133,22 +133,24 @@ namespace IdleProject.Battle
             characterControllerList.Add(controller);
         }
 
-        public void DeathCharacter(CharacterController characterController)
+        public void DeathCharacter()
         {
-            var aiType = characterController.characterAI.aiType;
-            var characterList = GetCharacterList(aiType);
-
-            if (characterList.Any(character => character.StatSystem.IsLive) is false)
+            if (BattleStateEventBus.IsSameCurrentType(BattleStateType.Skill) is false)
             {
-                if (aiType == CharacterAIType.Player)
-                {
-                    BattleStateEventBus.ChangeEvent(BattleStateType.Defeat);
-                }
-                else
-                {
-                    BattleStateEventBus.ChangeEvent(BattleStateType.Win);
-                }
+                SetBattleResultState();
             }
+        }
+
+        private void SetBattleResultState()
+        {
+            var characterList = GetCharacterList(CharacterAIType.Player);
+            if (characterList.Any(character => character.StatSystem.IsLive) is false)
+                    BattleStateEventBus.ChangeEvent(BattleStateType.Defeat);
+
+            characterList = GetCharacterList(CharacterAIType.Enemy);
+            if (characterList.Any(character => character.StatSystem.IsLive) is false)
+                BattleStateEventBus.ChangeEvent(BattleStateType.Win);
+            
         }
     }
 }

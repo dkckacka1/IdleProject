@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using IdleProject.Battle.Character.Skill;
 using Engine.Core;
+using Engine.Core.EventBus;
 using IdleProject.Battle.Character.EventGroup;
 using IdleProject.Data;
 using UnityEngine.Serialization;
@@ -31,7 +32,7 @@ namespace IdleProject.Battle.Character
     }
 
     [System.Serializable]
-    public partial class CharacterController : MonoBehaviour, IEventGroup<BattleManager>
+    public partial class CharacterController : MonoBehaviour, IEventGroup<BattleManager>, IEnumEvent<GameStateType>, IEnumEvent<BattleStateType>
     {
         [HideInInspector] public CharacterOffset offset;
         [HideInInspector] public CharacterUIController characterUI;
@@ -99,12 +100,48 @@ namespace IdleProject.Battle.Character
 
         public void Win()
         {
-            AnimController.SetWin();
+            if(StatSystem.IsLive)
+                AnimController.SetWin();
         }
 
         public void Idle()
         {
             AnimController.SetIdle();
+        }
+        
+        public void OnEnumChange(GameStateType type)
+        {
+            switch (type)
+            {
+                case GameStateType.Play:
+                    Agent.enabled = true;
+                    break;
+                case GameStateType.Pause:
+                    Agent.enabled = false;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+        
+        public void OnEnumChange(BattleStateType type)
+        {
+            switch (type)
+            {
+                case BattleStateType.Ready:
+                    break;
+                case BattleStateType.Battle:
+                    break;
+                case BattleStateType.Skill:
+                    break;
+                case BattleStateType.Win:
+                    Win();
+                    break;
+                case BattleStateType.Defeat:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
         }
 
         public void Publish(BattleManager publisher)
@@ -113,6 +150,7 @@ namespace IdleProject.Battle.Character
             StatSystem.PublishValueChangedEvent(CharacterStatType.AttackRange, ChangeAttackRange);
             GetBattleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
             GetBattleManager.GameStateEventBus.PublishEvent(this);
+            GetBattleManager.BattleStateEventBus.PublishEvent(this);
         }
 
         public void UnPublish(BattleManager publisher)
@@ -120,11 +158,13 @@ namespace IdleProject.Battle.Character
             StatSystem.RemoveValueChangedEvent(CharacterStatType.MovementSpeed, ChangeMovementSpeed);
             StatSystem.RemoveValueChangedEvent(CharacterStatType.AttackRange, ChangeAttackRange);
             GetBattleManager.GetChangeBattleSpeedEvent.RemoveListener(OnTimeFactorChange);
-            GetBattleManager.GameStateEventBus.RemoveEvent(this);
+            GetBattleManager.GameStateEventBus.UnPublishEvent(this);
+            GetBattleManager.BattleStateEventBus.UnPublishEvent(this);
         }
 
         public static implicit operator Vector3(CharacterController controller) => controller.transform.position;
 
         public static implicit operator Transform(CharacterController controller) => controller.transform;
+
     }
 }

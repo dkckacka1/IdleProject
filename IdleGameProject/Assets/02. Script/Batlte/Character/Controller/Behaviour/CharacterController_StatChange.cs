@@ -5,7 +5,7 @@ using IdleProject.Core;
 
 namespace IdleProject.Battle.Character
 {
-    public partial class CharacterController : IEnumEvent<GameStateType>
+    public partial class CharacterController
     {
         private const float ATTACK_RANGE_CORRECTION_VALUE = 0.1f;
 
@@ -23,19 +23,6 @@ namespace IdleProject.Battle.Character
             Agent.speed = StatSystem.GetStatValue(CharacterStatType.MovementSpeed) * timeFactor;
         }
 
-        public void OnEnumChange(GameStateType type)
-        {
-            switch (type)
-            {
-                case GameStateType.Play:
-                    Agent.enabled = true;
-                    break;
-                case GameStateType.Pause:
-                    Agent.enabled = false;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
-        }
+
     }
 }

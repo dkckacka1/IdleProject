@@ -86,7 +86,7 @@ namespace IdleProject.Battle.UI
 
         public void UnPublish(BattleManager publisher)
         {
-            publisher.BattleStateEventBus.RemoveEvent(this);
+            publisher.BattleStateEventBus.UnPublishEvent(this);
             publisher.BattleObjectEventDic[BattleObjectType.UI].RemoveListener(OnBattleUIEvent);
         }
         

@@ -36,7 +36,7 @@ namespace IdleProject.Battle.UI
             _battleText.transform.position = Vector3.zero;
             _floatingSequence = null;
             
-            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.RemoveEvent(this);
+            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.UnPublishEvent(this);
         }
 
         public void ShowText(Vector3 textPosition, string text)

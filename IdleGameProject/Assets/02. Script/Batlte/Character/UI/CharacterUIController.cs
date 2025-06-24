@@ -6,6 +6,7 @@ using IdleProject.Battle.Character.EventGroup;
 using IdleProject.Core;
 using IdleProject.Core.UI;
 using IdleProject.Data;
+using IdleProject.Data.StaticData;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;

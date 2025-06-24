@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using Engine.Util.Extension;
 using IdleProject.Data;
+using IdleProject.Data.StaticData;
 
 namespace IdleProject.Battle.Character
 {

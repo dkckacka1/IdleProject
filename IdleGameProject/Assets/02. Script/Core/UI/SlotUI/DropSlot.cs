@@ -1,14 +1,10 @@
-﻿using UnityEngine.Events;
+﻿using IdleProject.Core.UI.Slot;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace IdleProject.Core.UI
 {
-    public class DropSlot : SlotUI, IDropHandler
+    public class DropSlot : SlotUI
     {
-        public UnityEvent<PointerEventData> dragEvent;
-        public void OnDrop(PointerEventData eventData)
-        {
-            dragEvent?.Invoke(eventData);
-        }
     }
 }

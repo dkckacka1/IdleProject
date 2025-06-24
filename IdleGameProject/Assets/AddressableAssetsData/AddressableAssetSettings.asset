@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 35e389a7d69f98f4a8c3d648c1d0af0c
   m_currentHash:
     serializedVersion: 2
-    Hash: 9ec6f912b70bc4272534ff4f62123fad
+    Hash: 4f59de6fe374b556c77101b4c382f2eb
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -103,6 +103,7 @@ MonoBehaviour:
     - SpriteAtlas
     - Animation
     - CharacterModel
+    - SlotUI
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 6b3e184d07b2815409f542e0f115385b, type: 2}

@@ -3,6 +3,7 @@ using IdleProject.Core.Resource;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Loading;
 using IdleProject.Data;
+using IdleProject.Data.StaticData;
 using IdleProject.Lobby.Character;
 using UnityEngine;
 

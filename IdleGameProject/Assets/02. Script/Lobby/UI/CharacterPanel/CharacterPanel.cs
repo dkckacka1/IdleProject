@@ -1,6 +1,6 @@
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
-using IdleProject.Data;
+using IdleProject.Data.StaticData;
 using Sirenix.Utilities;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
@@ -16,7 +16,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             base.OpenPanel();
             
-            var mainCharacterName = DataManager.Instance.DataController.userData.UserHeroList[0].heroName;
+            var mainCharacterName = DataManager.Instance.DataController.userData.userHeroList[0].heroName;
             var mainCharacterData = DataManager.Instance.GetData<CharacterData>(mainCharacterName);
 
             UIManager.Instance.GetUIsOfType<ISelectCharacterUpdatableUI>()

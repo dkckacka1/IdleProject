@@ -1,7 +1,7 @@
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using IdleProject.Core;
 using IdleProject.Core.UI;
+using IdleProject.Core.UI.Slot;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;

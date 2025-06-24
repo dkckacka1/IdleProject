@@ -49,6 +49,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - SpriteAtlas
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 996a1b0d998b23c41bbb0939314c7d5a
+    m_Address: Prefab/UI/SlotUI
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - SlotUI
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ffdd61c61c7432c418036d5d2afb9dba
     m_Address: Scene
     m_ReadOnly: 0

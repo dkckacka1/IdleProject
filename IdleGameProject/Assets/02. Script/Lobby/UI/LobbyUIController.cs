@@ -2,8 +2,7 @@ using Cysharp.Threading.Tasks;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
-using IdleProject.Data;
-using UnityEngine;
+using IdleProject.Data.StaticData;
 
 namespace IdleProject.Lobby.UI
 {

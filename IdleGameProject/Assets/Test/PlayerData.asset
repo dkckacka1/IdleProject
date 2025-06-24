@@ -12,18 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd8c69bf2bd0f3340abcecbb162b787e, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  PlayerLevel: 1
-  PlayerExp: 0
-  UserHeroList:
+  playerLevel: 1
+  playerExp: 0
+  userHeroList:
   - heroName: Hiro
     level: 1
+    exp: 0
   - heroName: Eli
     level: 1
+    exp: 0
   - heroName: Bak
     level: 1
-  UserFormation:
+    exp: 0
+  userConsumableItemList:
+  - itemName: ExpPotion01
+    itemCount: 0
+  - itemName: ExpPotion02
+    itemCount: 0
+  - itemName: ExpPotion03
+    itemCount: 0
+  - itemName: ExpPotion04
+    itemCount: 0
+  - itemName: ExpPotion05
+    itemCount: 0
+  userFormation:
     frontMiddleCharacterName: Hiro
-    frontRightCharacterName: Bak
-    frontLeftCharacterName: 
-    rearRightCharacterName: Eli
+    frontRightCharacterName: Eli
+    frontLeftCharacterName: Bak
+    rearRightCharacterName: 
     rearLeftCharacterName: 

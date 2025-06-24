@@ -6,7 +6,7 @@ namespace IdleProject.Data.Player
     public class PlayerHeroData
     {
         public string heroName;
-        public int level;
+        public int level = 1;
         public int exp;
     }
 }

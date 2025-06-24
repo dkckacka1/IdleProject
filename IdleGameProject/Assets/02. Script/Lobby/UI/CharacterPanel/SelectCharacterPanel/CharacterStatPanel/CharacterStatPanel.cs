@@ -1,6 +1,6 @@
 using IdleProject.Battle.Character;
 using IdleProject.Core.UI;
-using IdleProject.Data;
+using IdleProject.Data.StaticData;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
 {

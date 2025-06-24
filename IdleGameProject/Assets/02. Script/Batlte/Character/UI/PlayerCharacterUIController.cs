@@ -3,6 +3,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using IdleProject.Battle.Character;
 using IdleProject.Data;
+using IdleProject.Data.StaticData;
 
 namespace IdleProject.Battle.UI
 {

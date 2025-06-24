@@ -16,6 +16,7 @@ using IdleProject.Core.GameData;
 using IdleProject.Core.ObjectPool;
 using IdleProject.Core.Resource;
 using IdleProject.Data;
+using IdleProject.Data.StaticData;
 using UnityEngine.Serialization;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 

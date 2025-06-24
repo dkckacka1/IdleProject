@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using Engine.Util;
 using Sirenix.OdinInspector;
@@ -10,7 +11,7 @@ namespace IdleProject.Core.GameData
     public class DataManager : SingletonMonoBehaviour<DataManager>
     {
         [ShowInInspector]
-        private readonly Dictionary<Type, Dictionary<string, Data.Data>> _dataDictionary = new();
+        private readonly Dictionary<Type, Dictionary<string, Data.StaticData.Data>> _dataDictionary = new();
 
         private const string DATA_LABEL_REFERENCE_NAME = "Data";
         
@@ -32,24 +33,24 @@ namespace IdleProject.Core.GameData
             foreach (var locate in locateList)
             {
                 var loadData =
-                    await AddressableManager.Instance.Controller.LoadAssetAsync<Data.Data>(locate.PrimaryKey);
+                    await AddressableManager.Instance.Controller.LoadAssetAsync<Data.StaticData.Data>(locate.PrimaryKey);
                 
                 AddData(locate.ResourceType, loadData);                
             }
         }
 
-        public void AddData(Type type, Data.Data data)
+        public void AddData(Type type, Data.StaticData.Data data)
         {
             if (_dataDictionary.ContainsKey(type) is false)
             {
-                _dataDictionary.Add(type, new Dictionary<string, Data.Data>());
+                _dataDictionary.Add(type, new Dictionary<string, Data.StaticData.Data>());
             }
 
             var targetDic = _dataDictionary[type];
             targetDic.Add(data.Index, data);
         }
 
-        public T GetData<T>(string dataIndex) where T : Data.Data
+        public T GetData<T>(string dataIndex) where T : Data.StaticData.Data
         {
             if (_dataDictionary.TryGetValue(typeof(T), out var targetDic))
             {
@@ -66,8 +67,12 @@ namespace IdleProject.Core.GameData
             {
                 Debug.LogError($"{typeof(T).Name} is nullDic");
             }
-            
+
             return null;
+        }
+        public List<T> GetDataList<T>() where T : Data.StaticData.Data
+        {
+            return _dataDictionary.TryGetValue(typeof(T), out var targetDic) ? targetDic.Values.Select(data => data as T).ToList() : null;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using IdleProject.Data;
+﻿using IdleProject.Data.StaticData;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
 {

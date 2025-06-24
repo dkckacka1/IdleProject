@@ -3,18 +3,20 @@ using Cysharp.Threading.Tasks;
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Loading;
+using IdleProject.Core.UI.Slot;
 using IdleProject.Data;
+using IdleProject.Data.StaticData;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
 {
     public class SelectSlotPanel : UIPanel
     {
-        [SerializeField] private SelectSlot selectSlotPrefab;
         [SerializeField] private LoadingRotateUI loadingUI;
 
-        [SerializeField] private Transform content;
+        [SerializeField] private ScrollRect slotScrollRect;
 
         private readonly List<SlotUI> _slotList = new List<SlotUI>();
         
@@ -32,7 +34,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             if (value)
             {
-                var userHeroList = DataManager.Instance.DataController.userData.UserHeroList;
+                var userHeroList = DataManager.Instance.DataController.userData.userHeroList;
 
                 var createSlotCount = userHeroList.Count - _slotList.Count;
                 for (int i = 0; i < createSlotCount; ++i)
@@ -48,7 +50,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                         var data = DataManager.Instance.GetData<CharacterData>(userHeroList[i].heroName);
 
                         slot.SetData(data);
-                        slot.clickEvent.AddListener(ClickCharacterSlot);
+                        slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, ClickCharacterSlot);
                         slot.gameObject.SetActive(true);
                     }
                     else
@@ -61,7 +63,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             {
                 foreach (var slot in _slotList)
                 {
-                    slot.RemoveAllEvent();
+                    slot.UnPublishAllEvent();
                     slot.gameObject.SetActive(false);
                 }
             }
@@ -88,9 +90,9 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             Debug.Log($"EquipmentToggle {value}"); 
         }
 
-        private SelectSlot CreateSlot()
+        private SlotUI CreateSlot()
         {
-            return Instantiate(selectSlotPrefab, content);
+            return SlotUI.GetSlotUI(slotScrollRect.content);
         }
     }
 }

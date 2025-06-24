@@ -1,5 +1,5 @@
-using IdleProject.Data;
 using IdleProject.Data.Player;
+using IdleProject.Data.StaticData;
 
 namespace IdleProject.Core.GameData
 {

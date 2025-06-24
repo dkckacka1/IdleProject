@@ -3,6 +3,7 @@ using IdleProject.Battle.Character;
 using IdleProject.Core;
 using IdleProject.Core.Resource;
 using IdleProject.Data;
+using IdleProject.Data.StaticData;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

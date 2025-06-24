@@ -5,6 +5,7 @@ using IdleProject.Core.Loading;
 using IdleProject.Core.Resource;
 using IdleProject.Core.UI;
 using IdleProject.Data;
+using IdleProject.Data.StaticData;
 using IdleProject.Lobby.Character;
 using IdleProject.Lobby.UI;
 using Sirenix.OdinInspector;
@@ -46,7 +47,7 @@ namespace IdleProject.Lobby
 
         private async UniTask SetMainCharacter()
         {
-            var formation = DataManager.Instance.DataController.userData.UserFormation;
+            var formation = DataManager.Instance.DataController.userData.userFormation;
 
             TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK,
                 () => SetCharacter(formation.frontLeftCharacterName, frontLeftCharacter));

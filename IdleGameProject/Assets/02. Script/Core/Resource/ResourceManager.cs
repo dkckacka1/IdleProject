@@ -19,6 +19,7 @@ namespace IdleProject.Core.Resource
         private const string ASSET_LOADING_TASK = "AssetLoading";
 
         public const string CharacterModelLabelName = "CharacterModel";
+        public const string SlotLabelName = "SlotUI";
         
         protected override void Initialized()
         {
@@ -27,8 +28,8 @@ namespace IdleProject.Core.Resource
             _assetLoaderDic.Add(typeof(Sprite), new SpriteLoader());
             _assetLoaderDic.Add(typeof(RuntimeAnimatorController), new AnimationControllerLoader());
             _prefabLoaderDic.Add(CharacterModelLabelName, new PrefabLoader(CharacterModelLabelName));
+            _prefabLoaderDic.Add(SlotLabelName, new PrefabLoader(SlotLabelName));
         }
-
 
         public T GetAsset<T>(string assetName) where T : Object
         {
@@ -49,7 +50,6 @@ namespace IdleProject.Core.Resource
 
             return null;
         }
-        
         
         public async UniTask LoadAssets()
         {

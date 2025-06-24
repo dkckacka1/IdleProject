@@ -27,7 +27,7 @@ namespace IdleProject.Core.Resource
         {
             if (AssetCacheDic.TryGetValue(address, out var prefab) is false)
             {
-                throw new Exception($"{address} is Invalid Key");
+                Debug.LogError($"{address} is Invalid Key");
             }
 
             return prefab;

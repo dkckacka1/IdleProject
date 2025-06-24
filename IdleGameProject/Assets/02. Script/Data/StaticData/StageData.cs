@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IdleProject.Data
+namespace IdleProject.Data.StaticData
 {
     [System.Serializable]
     public struct FormationInfo

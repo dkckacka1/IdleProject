@@ -39,10 +39,9 @@ namespace IdleProject.Core
 
             sceneController = UnityEngine.Object.FindAnyObjectByType<SceneController>();
             await sceneController.Initialize();
-
             loadingUI.ShowLoadingPercent(0.6f);
 
-            await UniTask.WaitForSeconds(1f);
+            await UIManager.Instance.InitializedUI();
             loadingUI.ShowLoadingPercent(1f);
 
             return sceneController;

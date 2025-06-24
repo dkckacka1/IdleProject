@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Spawn;
 using IdleProject.Core;
@@ -28,7 +29,7 @@ namespace IdleProject.Battle.UI
         private Camera _mainCamera;
         private BattleManager _battleManager;
         
-        protected override void Initialized()
+        public override async UniTask Initialized()
         {
             _mainCamera = Camera.main;
             _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();

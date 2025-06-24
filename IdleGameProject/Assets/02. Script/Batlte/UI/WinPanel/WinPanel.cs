@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using IdleProject.Core;
 using IdleProject.Core.UI;
@@ -23,7 +24,7 @@ namespace IdleProject.Battle.UI
         [BoxGroup("OpenTween/RewardTween"), SerializeField] private float slotPunchScale;
         [BoxGroup("OpenTween/RewardTween"), SerializeField] private float slotPunchDuration;
         
-        protected override void Initialized()
+        public override async UniTask Initialized()
         {
             UIManager.Instance.GetUI<UIButton>("WinPanelNextStageButton").Button.onClick.AddListener(GotoNextStage);
             UIManager.Instance.GetUI<UIButton>("WinPanelRetryStageButton").Button.onClick.AddListener(RetryStage);

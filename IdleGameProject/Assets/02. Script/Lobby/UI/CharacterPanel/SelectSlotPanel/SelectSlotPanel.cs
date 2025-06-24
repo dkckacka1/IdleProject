@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Loading;
@@ -17,15 +18,13 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         private readonly List<SlotUI> _slotList = new List<SlotUI>();
         
-        protected override void Initialized()
+        public override async UniTask Initialized()
         {
             UIManager.Instance.GetUI<UIToggle>("CharacterSelectToggle").Toggle.onValueChanged.AddListener(CharacterSelectToggleValueChanged);
             UIManager.Instance.GetUI<UIToggle>("SkillSelectToggle").Toggle.onValueChanged.AddListener(SkillSelectToggleValueChanged);
             UIManager.Instance.GetUI<UIToggle>("EquipmentToggle").Toggle.onValueChanged.AddListener(EquipmentToggleValueChanged);
-        }
-
-        public override void OpenPanel()
-        {
+            
+            // 초기 오픈시 세팅
             UIManager.Instance.GetUI<UIToggle>("CharacterSelectToggle").Toggle.isOn = true;
             CharacterSelectToggleValueChanged(true);
         }

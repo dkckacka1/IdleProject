@@ -1,8 +1,11 @@
 using Engine.Util;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Cysharp.Threading.Tasks;
 using IdleProject.Core.UI.Loading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 namespace IdleProject.Core.UI
@@ -19,10 +22,9 @@ namespace IdleProject.Core.UI
         protected override void Initialized()
         {
             base.Initialized();
-
             loadingUI = GetComponentInChildren<LoadingUI>();
         }
-
+        
         public void AddUIController(UIController controller)
         {
             var uiControllerType = controller.GetType();
@@ -88,6 +90,14 @@ namespace IdleProject.Core.UI
         public void RemoveUI(string uiName)
         {
             _uiBaseDic.Remove(uiName);
+        }
+
+        public async UniTask InitializedUI()
+        {
+            foreach (var ui in _uiBaseDic.Values.OfType<IUIInit>())
+            {
+                await ui.Initialized();
+            }
         }
 
         public static Vector3 GetUIInScreen(Vector3 position)

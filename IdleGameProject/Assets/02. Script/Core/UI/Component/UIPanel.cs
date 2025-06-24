@@ -1,17 +1,13 @@
-using System;
+using Cysharp.Threading.Tasks;
 using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace IdleProject.Core.UI
 {
-    public abstract class UIPanel : UIBase
+    public abstract class UIPanel : UIBase, IUIInit
     {
-        protected abstract void Initialized();
-
-        private void Start()
-        {
-            Initialized();
-        }
-
+        public abstract UniTask Initialized();
+        
         [Button]
         public virtual void OpenPanel()
         {

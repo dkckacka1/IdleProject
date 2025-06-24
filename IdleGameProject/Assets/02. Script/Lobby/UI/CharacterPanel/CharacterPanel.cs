@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using IdleProject.Core.UI;
 using IdleProject.Lobby.Character;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
     {
         [SerializeField] private LobbyCharacter lobbyCharacter;
 
-        protected override void Initialized()
+        public override async UniTask Initialized()
         {
             UIManager.Instance.GetUI<UIButton>("CloseCharacterPopupButton").Button.onClick.AddListener(ClosePanel);
         }

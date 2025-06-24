@@ -16,10 +16,10 @@ namespace IdleProject.Battle.UI
         [BoxGroup("OpenTween"), SerializeField] private float openActiveInterval;
         [BoxGroup("OpenTween"), SerializeField] private float titleDuration;
         
-        protected override void Initialized()
+        public override async UniTask Initialized()
         {
-            UIManager.Instance.GetUI<UIButton>("CharacterReinForceButton").Button.onClick.AddListener(GotoLobbyAtCharacterReinforce);
-            UIManager.Instance.GetUI<UIButton>("EquipmentReinForceButton").Button.onClick.AddListener(GotoLobbyAtEquipmentReinforce);
+            UIManager.Instance.GetUI<UIButton>("CharacterReinForceButton").Button.onClick.AddListener(GoToLobbyAtCharacterReinforce);
+            UIManager.Instance.GetUI<UIButton>("EquipmentReinForceButton").Button.onClick.AddListener(GoToLobbyAtEquipmentReinforce);
             UIManager.Instance.GetUI<UIButton>("DefeatPanelRetryStageButton").Button.onClick.AddListener(RetryStage);
             UIManager.Instance.GetUI<UIButton>("DefeatPanelExitButton").Button.onClick.AddListener(GotoLobby);
         }
@@ -52,7 +52,7 @@ namespace IdleProject.Battle.UI
             });
         }
 
-        private void GotoLobbyAtCharacterReinforce()
+        private void GoToLobbyAtCharacterReinforce()
         {
             GameManager.Instance.LoadScene(SceneType.Lobby, () =>
             {
@@ -61,7 +61,7 @@ namespace IdleProject.Battle.UI
             }).Forget();
         }
 
-        private void GotoLobbyAtEquipmentReinforce()
+        private void GoToLobbyAtEquipmentReinforce()
         {
             GameManager.Instance.LoadScene(SceneType.Lobby, () =>
             {

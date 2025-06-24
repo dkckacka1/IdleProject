@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using IdleProject.Core;
 using IdleProject.Core.UI;
@@ -29,7 +30,7 @@ namespace IdleProject.Battle.UI
         private Sequence _openPopupSequence;
         private Sequence _closePopupSequence;
 
-        protected override void Initialized()
+        public async override UniTask Initialized()
         {
             UIManager.Instance.GetUI<UIButton>("PausePanelContinueButton").Button.onClick.AddListener(ClosePausePopup);
             UIManager.Instance.GetUI<UIButton>("PausePanelRetryButton").Button.onClick.AddListener(RetryBattle);

@@ -29,7 +29,7 @@ namespace IdleProject.Battle.UI
         private Camera _mainCamera;
         private BattleManager _battleManager;
         
-        public override async UniTask Initialized()
+        public override void Initialized()
         {
             _mainCamera = Camera.main;
             _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();

@@ -24,7 +24,7 @@ namespace IdleProject.Battle.UI
         [BoxGroup("OpenTween/RewardTween"), SerializeField] private float slotPunchScale;
         [BoxGroup("OpenTween/RewardTween"), SerializeField] private float slotPunchDuration;
         
-        public override async UniTask Initialized()
+        public override void Initialized()
         {
             UIManager.Instance.GetUI<UIButton>("WinPanelNextStageButton").Button.onClick.AddListener(GotoNextStage);
             UIManager.Instance.GetUI<UIButton>("WinPanelRetryStageButton").Button.onClick.AddListener(RetryStage);

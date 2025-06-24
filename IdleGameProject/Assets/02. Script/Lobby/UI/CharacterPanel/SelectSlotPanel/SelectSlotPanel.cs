@@ -18,15 +18,14 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         private readonly List<SlotUI> _slotList = new List<SlotUI>();
         
-        public override async UniTask Initialized()
+        public override void Initialized()
         {
             UIManager.Instance.GetUI<UIToggle>("CharacterSelectToggle").Toggle.onValueChanged.AddListener(CharacterSelectToggleValueChanged);
             UIManager.Instance.GetUI<UIToggle>("SkillSelectToggle").Toggle.onValueChanged.AddListener(SkillSelectToggleValueChanged);
             UIManager.Instance.GetUI<UIToggle>("EquipmentToggle").Toggle.onValueChanged.AddListener(EquipmentToggleValueChanged);
             
-            // 초기 오픈시 세팅
             UIManager.Instance.GetUI<UIToggle>("CharacterSelectToggle").Toggle.isOn = true;
-            CharacterSelectToggleValueChanged(true);
+            UIManager.Instance.GetUI<UIToggle>("CharacterSelectToggle").Toggle.onValueChanged.Invoke(true);
         }
 
         private void CharacterSelectToggleValueChanged(bool value)
@@ -73,8 +72,10 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             var slot = eventData.pointerClick.GetComponent<SlotUI>();
             var characterData = slot.GetData<CharacterData>();
 
-            var equipmentCharacterPanel = UIManager.Instance.GetUI<SelectCharacterPanel>("SelectCharacterPanel");
-            equipmentCharacterPanel.SetCharacter(characterData.addressValue.characterName);
+            foreach (var selectCharacterUpdatableUI in UIManager.Instance.GetUIsOfType<ISelectCharacterUpdatableUI>())
+            {
+                selectCharacterUpdatableUI.SetCharacter(characterData);
+            }
         }
 
         private void EquipmentToggleValueChanged(bool value)

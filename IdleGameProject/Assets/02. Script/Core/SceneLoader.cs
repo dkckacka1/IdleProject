@@ -41,7 +41,7 @@ namespace IdleProject.Core
             await sceneController.Initialize();
             loadingUI.ShowLoadingPercent(0.6f);
 
-            await UIManager.Instance.InitializedUI();
+            UIManager.Instance.InitializedUI();
             loadingUI.ShowLoadingPercent(1f);
 
             return sceneController;

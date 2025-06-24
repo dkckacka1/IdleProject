@@ -30,7 +30,7 @@ namespace IdleProject.Battle.UI
         private Sequence _openPopupSequence;
         private Sequence _closePopupSequence;
 
-        public async override UniTask Initialized()
+        public override void Initialized()
         {
             UIManager.Instance.GetUI<UIButton>("PausePanelContinueButton").Button.onClick.AddListener(ClosePausePopup);
             UIManager.Instance.GetUI<UIButton>("PausePanelRetryButton").Button.onClick.AddListener(RetryBattle);

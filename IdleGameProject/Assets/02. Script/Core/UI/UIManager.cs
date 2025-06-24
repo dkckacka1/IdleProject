@@ -92,12 +92,17 @@ namespace IdleProject.Core.UI
             _uiBaseDic.Remove(uiName);
         }
 
-        public async UniTask InitializedUI()
+        public void InitializedUI()
         {
             foreach (var ui in _uiBaseDic.Values.OfType<IUIInit>())
             {
-                await ui.Initialized();
+                ui.Initialized();
             }
+        }
+
+        public IEnumerable<T> GetUIsOfType<T>()
+        {
+            return _uiBaseDic.Values.OfType<T>();
         }
 
         public static Vector3 GetUIInScreen(Vector3 position)

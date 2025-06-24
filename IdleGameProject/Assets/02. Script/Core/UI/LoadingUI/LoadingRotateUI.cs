@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace IdleProject.Core.UI.Loading
 {
-    public class LoadingRotateUI : MonoBehaviour
+    public class LoadingRotateUI : UIBase
     {
         [SerializeField] private float rotateDuration = 1f;
         

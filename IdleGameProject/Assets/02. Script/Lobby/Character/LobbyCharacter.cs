@@ -1,16 +1,18 @@
 using System;
 using Engine.Util.Extension;
+using IdleProject.Core.UI;
 using UnityEngine;
 
 namespace IdleProject.Lobby.Character
 {
-    public class LobbyCharacter : MonoBehaviour
+    public class LobbyCharacter : UIBase
     {
         private Animator _animator;
         private GameObject _model;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _animator = GetComponent<Animator>();
         }
 

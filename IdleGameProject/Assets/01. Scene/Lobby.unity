@@ -558,8 +558,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 179259614}
+  - component: {fileID: 179259615}
   m_Layer: 5
-  m_Name: EquipPanel
+  m_Name: EquipCharacterPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -588,6 +589,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 482.23566}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &179259615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179259613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b3d484e198f634faf1e9c47cbd54f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &218170830
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1010,7 +1023,7 @@ GameObject:
   - component: {fileID: 424134797}
   - component: {fileID: 424134796}
   m_Layer: 5
-  m_Name: ButtonFrame
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1388,7 +1401,7 @@ GameObject:
   - component: {fileID: 520613256}
   - component: {fileID: 520613257}
   m_Layer: 5
-  m_Name: CharacterButtons
+  m_Name: CharacterToggles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1545,7 +1558,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 950721129}
   toggleTransition: 1
   graphic: {fileID: 0}
   m_Group: {fileID: 520613257}
@@ -1716,7 +1729,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 424134796}
   toggleTransition: 1
   graphic: {fileID: 0}
   m_Group: {fileID: 520613257}
@@ -2246,7 +2259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7865ca4f105615b438368c4743741892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyCharacter: {fileID: 1081201972}
 --- !u!1 &772683257
 GameObject:
   m_ObjectHideFlags: 0
@@ -2420,7 +2432,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -57.764374}
+  m_AnchoredPosition: {x: 0, y: -57.764}
   m_SizeDelta: {x: 767.7551, y: -115.5287}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &899226681
@@ -2461,8 +2473,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4ce638817fbc864f9910c9d22d3663d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equipCharacter: {fileID: 1081201972}
-  characterLoadingRotate: {fileID: 4520722838701027329}
 --- !u!1 &950721127
 GameObject:
   m_ObjectHideFlags: 0
@@ -2475,7 +2485,7 @@ GameObject:
   - component: {fileID: 950721130}
   - component: {fileID: 950721129}
   m_Layer: 5
-  m_Name: ButtonFrame
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2952,7 +2962,7 @@ GameObject:
   - component: {fileID: 1081201972}
   - component: {fileID: 1081201971}
   m_Layer: 8
-  m_Name: SelectCharacter
+  m_Name: CharacterPanel_Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3016,6 +3026,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1098842293}
+  - component: {fileID: 1098842294}
   m_Layer: 5
   m_Name: CharacterLevelUpPanel
   m_TagString: Untagged
@@ -3045,6 +3056,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1098842294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098842292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7fc898785d28d4cb09c9f58465d6a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1126041903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5403,6 +5426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2034723345}
   - component: {fileID: 2034723346}
+  - component: {fileID: 2034723347}
   m_Layer: 5
   m_Name: CharacterStatPanel
   m_TagString: Untagged
@@ -5458,6 +5482,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2034723347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034723344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3ab56468314b0648a599976b24dec6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2048535514
 GameObject:
   m_ObjectHideFlags: 0
@@ -6482,7 +6518,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5537352697008251802, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
       propertyPath: m_Name
-      value: LoadingRotate
+      value: CharacterPanel_CharacterLoadingUI
       objectReference: {fileID: 0}
     - target: {fileID: 5581494103662004182, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
       propertyPath: m_Pivot.x
@@ -6574,17 +6610,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5581494103662004182, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
   m_PrefabInstance: {fileID: 4520722838701027327}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4520722838701027329 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6724429272836755565, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
-  m_PrefabInstance: {fileID: 4520722838701027327}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 971e7c080d0329d498f96f9f6b73905d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5322661891300024936
 PrefabInstance:
   m_ObjectHideFlags: 0

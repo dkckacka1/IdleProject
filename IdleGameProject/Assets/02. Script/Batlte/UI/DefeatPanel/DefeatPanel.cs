@@ -16,7 +16,7 @@ namespace IdleProject.Battle.UI
         [BoxGroup("OpenTween"), SerializeField] private float openActiveInterval;
         [BoxGroup("OpenTween"), SerializeField] private float titleDuration;
         
-        public override async UniTask Initialized()
+        public override void Initialized()
         {
             UIManager.Instance.GetUI<UIButton>("CharacterReinForceButton").Button.onClick.AddListener(GoToLobbyAtCharacterReinforce);
             UIManager.Instance.GetUI<UIButton>("EquipmentReinForceButton").Button.onClick.AddListener(GoToLobbyAtEquipmentReinforce);

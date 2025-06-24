@@ -6,7 +6,7 @@ namespace IdleProject.Core.UI
 {
     public abstract class UIPanel : UIBase, IUIInit
     {
-        public abstract UniTask Initialized();
+        public abstract void Initialized();
         
         [Button]
         public virtual void OpenPanel()

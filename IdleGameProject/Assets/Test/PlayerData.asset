@@ -26,13 +26,13 @@ MonoBehaviour:
     exp: 0
   userConsumableItemList:
   - itemName: ExpPotion01
-    itemCount: 0
+    itemCount: 1000
   - itemName: ExpPotion02
-    itemCount: 0
+    itemCount: 500
   - itemName: ExpPotion03
-    itemCount: 0
+    itemCount: 250
   - itemName: ExpPotion04
-    itemCount: 0
+    itemCount: 100
   - itemName: ExpPotion05
     itemCount: 0
   userFormation:

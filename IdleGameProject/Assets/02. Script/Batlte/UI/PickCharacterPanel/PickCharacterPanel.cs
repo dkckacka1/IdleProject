@@ -19,8 +19,6 @@ namespace IdleProject.Battle.UI
     public class PickCharacterPanel : UIPanel
     {
         [SerializeField] private ScrollRect pickCharacterScrollView;
-        [SerializeField] private PickCharacterPanelSlot slotPrefab;
-        
         [FormerlySerializedAs("dorpSlot")] [SerializeField] private SlotUI dropSlot;
 
         private readonly List<SlotUI> _slotList = new();

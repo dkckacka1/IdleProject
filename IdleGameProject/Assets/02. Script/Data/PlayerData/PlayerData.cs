@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using IdleProject.Core.GameData;
 using IdleProject.Data.StaticData;
 using Sirenix.OdinInspector;
@@ -17,6 +18,11 @@ namespace IdleProject.Data.Player
 
         public FormationInfo userFormation;
 
+        public PlayerConsumableItemData GetItem(string itemName)
+        {
+            return userConsumableItemList.FirstOrDefault(data => data.itemName == itemName);
+        }
+        
         [Button]
         private void CreateConsumableItem()
         {

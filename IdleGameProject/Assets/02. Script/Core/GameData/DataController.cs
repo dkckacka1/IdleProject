@@ -1,5 +1,7 @@
+using IdleProject.Data.DynamicData;
 using IdleProject.Data.Player;
 using IdleProject.Data.StaticData;
+using UnityEngine.Serialization;
 
 namespace IdleProject.Core.GameData
 {
@@ -7,9 +9,9 @@ namespace IdleProject.Core.GameData
     [System.Serializable]
     public class DataController
     {
-        public PlayerData userData;
+        public DynamicPlayerData Player;
 
-        public StageData selectStageData;
+        public StaticStageData selectStaticStageData;
 
         public DataController()
         {
@@ -18,7 +20,7 @@ namespace IdleProject.Core.GameData
 
         public DataController(PlayerData testPlayerData)
         {
-            userData = testPlayerData;
+            Player = new DynamicPlayerData(testPlayerData);
         }
     }
 }

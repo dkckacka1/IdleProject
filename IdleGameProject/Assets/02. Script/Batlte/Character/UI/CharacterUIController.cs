@@ -22,7 +22,7 @@ namespace IdleProject.Battle.UI
         
         protected static BattleUIController GetBattleUI => UIManager.Instance.GetUIController<BattleUIController>();
 
-        public virtual void Initialized(CharacterData data, StatSystem stat)
+        public virtual void Initialized(StaticCharacterData data, StatSystem stat)
         {
             _offset = GetComponent<CharacterOffset>();
             

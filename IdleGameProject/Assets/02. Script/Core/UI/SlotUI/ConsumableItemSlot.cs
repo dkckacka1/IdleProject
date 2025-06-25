@@ -13,7 +13,6 @@ namespace IdleProject.Core.UI.Slot
         
         public void SetShadow(bool isShadow)
         {
-            Debug.Log(isShadow);
             shadowImage.enabled = isShadow;
         }
 

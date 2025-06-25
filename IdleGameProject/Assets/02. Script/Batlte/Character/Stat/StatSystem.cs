@@ -36,16 +36,16 @@ namespace IdleProject.Battle.Character
             });
         }
 
-        public void SetStatData(string characterName, StatData statData)
+        public void SetStatData(string characterName, StatValue statValue)
         {
             CharacterName = characterName;            
             
-            _characterStatDic[CharacterStatType.HealthPoint].SetStat(statData.healthPoint);
-            _characterStatDic[CharacterStatType.MovementSpeed].SetStat(statData.movementSpeed);
-            _characterStatDic[CharacterStatType.AttackDamage].SetStat(statData.attackDamage);
-            _characterStatDic[CharacterStatType.AttackRange].SetStat(statData.attackRange);
-            _characterStatDic[CharacterStatType.AttackCoolTime].SetStat(statData.attackCoolTime);
-            _characterStatDic[CharacterStatType.ManaPoint].SetStat(statData.manaPoint);
+            _characterStatDic[CharacterStatType.HealthPoint].SetStat(statValue.healthPoint);
+            _characterStatDic[CharacterStatType.MovementSpeed].SetStat(statValue.movementSpeed);
+            _characterStatDic[CharacterStatType.AttackDamage].SetStat(statValue.attackDamage);
+            _characterStatDic[CharacterStatType.AttackRange].SetStat(statValue.attackRange);
+            _characterStatDic[CharacterStatType.AttackCoolTime].SetStat(statValue.attackCoolTime);
+            _characterStatDic[CharacterStatType.ManaPoint].SetStat(statValue.manaPoint);
         }
 
         public float GetStatValue(CharacterStatType statType, bool isDefault = false)

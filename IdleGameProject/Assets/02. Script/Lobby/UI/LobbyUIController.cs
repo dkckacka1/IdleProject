@@ -17,7 +17,7 @@ namespace IdleProject.Lobby.UI
 
         private void GoToDungeon()
         {
-            DataManager.Instance.DataController.selectStageData = DataManager.Instance.GetData<StageData>("1");
+            DataManager.Instance.DataController.selectStaticStageData = DataManager.Instance.GetData<StaticStageData>("1");
             GameManager.Instance.LoadScene(SceneType.Battle);
         }
 

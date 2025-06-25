@@ -9,7 +9,7 @@ namespace IdleProject.Data.Player
         public string itemName;
         public int itemCount;
 
-        public PlayerConsumableItemData(ConsumableItemData item, int count = 0)
+        public PlayerConsumableItemData(StaticConsumableItemData item, int count = 0)
         {
             itemName = item.itemName;
             itemCount = count;

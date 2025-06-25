@@ -16,6 +16,7 @@ using IdleProject.Core.GameData;
 using IdleProject.Core.ObjectPool;
 using IdleProject.Core.Resource;
 using IdleProject.Data;
+using IdleProject.Data.DynamicData;
 using IdleProject.Data.StaticData;
 using UnityEngine.Serialization;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
@@ -53,7 +54,7 @@ namespace IdleProject.Battle.Spawn
             enemySpawnInfo.spawnFormation.SetDefaultSpawn(CharacterAIType.Enemy);
         }
 
-        public async UniTaskVoid SpawnCharacterBySpawnPosition(CharacterData data, SpawnPosition position)
+        public async UniTaskVoid SpawnCharacterBySpawnPosition(DynamicCharacterData data, SpawnPosition position)
         {
             var character = position.Character;
             if (character is not null)
@@ -66,11 +67,11 @@ namespace IdleProject.Battle.Spawn
 
         public async UniTask SpawnCharacterByFormation(CharacterAIType aiType, FormationInfo formationInfo)
         {
-            await SetCharacterSpawn(aiType, SpawnPositionType.FrontLeft, formationInfo.frontLeftCharacterName);
-            await SetCharacterSpawn(aiType, SpawnPositionType.FrontMiddle, formationInfo.frontMiddleCharacterName);
-            await SetCharacterSpawn(aiType, SpawnPositionType.FrontRight, formationInfo.frontRightCharacterName);
-            await SetCharacterSpawn(aiType, SpawnPositionType.RearLeft, formationInfo.rearLeftCharacterName);
-            await SetCharacterSpawn(aiType, SpawnPositionType.RearRight, formationInfo.rearRightCharacterName);
+            await SetCharacterSpawn(aiType, SpawnPositionType.FrontLeft, formationInfo.frontLeftPositionInfo);
+            await SetCharacterSpawn(aiType, SpawnPositionType.FrontMiddle, formationInfo.frontMiddlePositionInfo);
+            await SetCharacterSpawn(aiType, SpawnPositionType.FrontRight, formationInfo.frontRightPositionInfo);
+            await SetCharacterSpawn(aiType, SpawnPositionType.RearLeft, formationInfo.rearLeftPositionInfo);
+            await SetCharacterSpawn(aiType, SpawnPositionType.RearRight, formationInfo.rearRightPositionInfo);
         }
 
         public void SwapCharacter(SpawnPosition lhs, SpawnPosition rhs)
@@ -98,11 +99,11 @@ namespace IdleProject.Battle.Spawn
         }
         
         private async UniTask SetCharacterSpawn(CharacterAIType aiType, SpawnPositionType spawnPositionType,
-            string heroName)
+            PositionInfo info)
         {
-            if (string.IsNullOrEmpty(heroName) is false)
+            if (string.IsNullOrEmpty(info.characterName) is false)
             {
-                await SpawnCharacter(aiType, spawnPositionType, DataManager.Instance.GetData<CharacterData>(heroName));
+                await SpawnCharacter(aiType, spawnPositionType, DynamicCharacterData.GetInstance(info));
             }
             else
             {
@@ -113,7 +114,7 @@ namespace IdleProject.Battle.Spawn
         }
 
         private async UniTask SpawnCharacter(CharacterAIType aiType, SpawnPositionType spawnPositionType,
-            CharacterData data)
+            DynamicCharacterData data)
         {
             var controller = await CreateCharacter(data, aiType);
 
@@ -134,19 +135,19 @@ namespace IdleProject.Battle.Spawn
 
         #region 캐릭터 생성 부문
 
-        private async Task<CharacterController> CreateCharacter(CharacterData data, CharacterAIType aiType)
+        private async Task<CharacterController> CreateCharacter(DynamicCharacterData data, CharacterAIType aiType)
         {
             var controller = await AddressableManager.Instance.Controller.LoadAssetAsync<CharacterController>("Prefab/Character/Character.prefab");
             var characterInstance = Instantiate(controller);
-            characterInstance.name = data.addressValue.characterName;
+            characterInstance.name = data.CharacterData.addressValue.characterName;
 
-            SetModel(characterInstance, data);
-            await SetPoolableObject(characterInstance, data);
+            SetModel(characterInstance, data.CharacterData);
+            await SetPoolableObject(characterInstance, data.CharacterData);
 
-            SetAnimation(characterInstance, data);
-            SetStat(characterInstance, data);
-            SetSkill(characterInstance, data);
-            AddCharacterUI(characterInstance, data, aiType);
+            SetAnimation(characterInstance, data.CharacterData);
+            SetStat(characterInstance, data.CharacterData);
+            SetSkill(characterInstance, data.CharacterData);
+            AddCharacterUI(characterInstance, data.CharacterData, aiType);
             AddCharacterAI(characterInstance, aiType);
             
             characterInstance.Initialized();
@@ -154,7 +155,7 @@ namespace IdleProject.Battle.Spawn
         }
 
 
-        private void SetStat(CharacterController controller, CharacterData data)
+        private void SetStat(CharacterController controller, StaticCharacterData data)
         {
             var statSystem = new StatSystem();
             statSystem.SetStatData(data.addressValue.characterName, data.stat);
@@ -162,7 +163,7 @@ namespace IdleProject.Battle.Spawn
             controller.StatSystem = statSystem;
         }
 
-        private void SetModel(CharacterController controller, CharacterData data)
+        private void SetModel(CharacterController controller, StaticCharacterData data)
         {
             var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.CharacterModelLabelName,
                 $"Model_{data.addressValue.characterName}");
@@ -173,7 +174,7 @@ namespace IdleProject.Battle.Spawn
             controller.offset = characterOffset;
         }
 
-        private void SetAnimation(CharacterController controller, CharacterData data)
+        private void SetAnimation(CharacterController controller, StaticCharacterData data)
         {
             var animationController =
                 ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(data.addressValue.characterAnimationName);
@@ -183,7 +184,7 @@ namespace IdleProject.Battle.Spawn
             controller.AnimController.SetAnimationController(animationController);
         }
 
-        private async UniTask SetPoolableObject(CharacterController controller, CharacterData data)
+        private async UniTask SetPoolableObject(CharacterController controller, StaticCharacterData data)
         {
             controller.GetAttackHitEffect =
                 await CreatePool<BattleEffect>(PoolableType.BattleEffect, data.addressValue.attackHitEffectAddress);
@@ -195,7 +196,7 @@ namespace IdleProject.Battle.Spawn
                 await CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.skillProjectileAddress);
         }
 
-        private void SetSkill(CharacterController controllerInstance, CharacterData data)
+        private void SetSkill(CharacterController controllerInstance, StaticCharacterData data)
         {
             var skillName =
                 $"{typeof(CharacterSkill).FullName}{data.addressValue.characterName}, {typeof(CharacterSkill).Assembly}";
@@ -217,7 +218,7 @@ namespace IdleProject.Battle.Spawn
             controller.characterAI = aiController;
         }
 
-        private void AddCharacterUI(CharacterController controller, CharacterData data, CharacterAIType aiType)
+        private void AddCharacterUI(CharacterController controller, StaticCharacterData data, CharacterAIType aiType)
         {
             CharacterUIController uiController = null;
 

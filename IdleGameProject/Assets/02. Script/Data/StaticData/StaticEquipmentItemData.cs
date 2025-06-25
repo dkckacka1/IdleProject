@@ -3,7 +3,7 @@
 namespace IdleProject.Data.StaticData
 {
     [CreateAssetMenu(fileName = "EquipmentItemData", menuName = "Scriptable Objects/EquipmentItemData")]
-    public class EquipmentItemData : ItemData
+    public class StaticEquipmentItemData : StaticItemData
     {
     }
 }

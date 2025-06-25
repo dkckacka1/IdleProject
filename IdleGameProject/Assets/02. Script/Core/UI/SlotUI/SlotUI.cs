@@ -1,5 +1,5 @@
-using IdleProject.Core.GameData;
 using IdleProject.Core.Resource;
+using IdleProject.Data;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -17,7 +17,8 @@ namespace  IdleProject.Core.UI.Slot
 
         private EventTrigger _slotEventTrigger;
         
-        private Data.StaticData.Data _data;
+        private Data.StaticData.StaticData _staticData;
+        private IData _data;
 
         private EventTrigger SlotEventTrigger
         {
@@ -25,9 +26,9 @@ namespace  IdleProject.Core.UI.Slot
             set => _slotEventTrigger = value;
         }
 
-        public T GetData<T>() where T : Data.StaticData.Data => _data as T;
-
-        public void SetData<T>(T data) where T:  Data.StaticData.Data, ISlotData
+        public T GetData<T>() where T : class, IData, ISlotData => _data.GetData<T>();
+        
+        public void SetData<T>(T data) where T:  IData, ISlotData
         {
             _data = data;
             var iconName = data.GetIconName;
@@ -40,17 +41,17 @@ namespace  IdleProject.Core.UI.Slot
             
             focusFrameImage.enabled = isFocus;
         }
-
-        public void PublishEvent<T>(EventTriggerType triggerType, UnityAction<T> callback) where T : BaseEventData
+        
+        public void PublishEvent<T>(EventTriggerType triggerType, UnityAction<T, SlotUI> callback) where T : BaseEventData
         {
             var entry = new EventTrigger.Entry
             {
                 eventID = triggerType
             };
             
-            entry.callback.AddListener(eventData =>
-            {
-                callback.Invoke((T)eventData);
+            entry.callback.AddListener(eventData=>
+            { 
+                callback.Invoke((T)eventData, this);
             });
             
             SlotEventTrigger.triggers.Add(entry);

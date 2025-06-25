@@ -8,7 +8,7 @@ namespace IdleProject.Data.StaticData
     }
     
     [CreateAssetMenu(fileName = "ConsumableItemData", menuName = "Scriptable Objects/ConsumableItemData")]
-    public class ConsumableItemData : ItemData
+    public class StaticConsumableItemData : StaticItemData
     {
         public ConsumableType consumableType;
         public int value;

@@ -11,7 +11,7 @@ namespace IdleProject.Battle.UI
     {
         private PlayerCharacterBanner _banner;
 
-        public override void Initialized(CharacterData data, StatSystem stat)
+        public override void Initialized(StaticCharacterData data, StatSystem stat)
         {
             base.Initialized(data, stat);
 

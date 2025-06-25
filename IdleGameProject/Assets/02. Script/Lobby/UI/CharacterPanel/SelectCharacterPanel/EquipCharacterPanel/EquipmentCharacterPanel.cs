@@ -3,13 +3,14 @@ using IdleProject.Core.Resource;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Loading;
 using IdleProject.Data;
+using IdleProject.Data.DynamicData;
 using IdleProject.Data.StaticData;
 using IdleProject.Lobby.Character;
 using UnityEngine;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
 {
-    public class EquipmentCharacterPanel : UIPanel, ISelectCharacterUpdatableUI
+    public class EquipmentCharacterPanel : UIPanel, IUISelectCharacterUpdatable
     {
         private LobbyCharacter _selectCharacter;
         private LoadingRotateUI _characterLoadingRotate;
@@ -31,19 +32,14 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             showCharacterLevelUpPanelToggle.Toggle.isOn = false;
             showCharacterLevelUpPanelToggle.Toggle.onValueChanged.Invoke(false);
         }
-        
-        public void SetCharacter(CharacterData selectData)
-        {
-            _characterLoadingRotate.StartLoading(LoadCharacter(selectData)).Forget();
-        }
 
-        private async UniTask LoadCharacter(CharacterData characterData)
+        private async UniTask LoadCharacter(StaticCharacterData staticCharacterData)
         {
-            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.CharacterModelLabelName, $"Model_{characterData.addressValue.characterName}");
+            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.CharacterModelLabelName, $"Model_{staticCharacterData.addressValue.characterName}");
             var modelInstance = await InstantiateAsync(modelObject, _selectCharacter.transform).ToUniTask();
             _selectCharacter.SetModel(modelInstance[0]);
 
-            var animatorController = ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(characterData.addressValue.characterAnimationName);
+            var animatorController = ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(staticCharacterData.addressValue.characterAnimationName);
             _selectCharacter.SetAnimation(animatorController);
         }
         
@@ -69,6 +65,11 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             {
                 UIManager.Instance.GetUI<CharacterLevelUpPanel>("CharacterLevelUpPanel").ClosePanel();
             }
+        }
+
+        public void SetCharacter(DynamicCharacterData selectData)
+        {
+            _characterLoadingRotate.StartLoading(LoadCharacter(selectData.CharacterData)).Forget();
         }
     }
 }

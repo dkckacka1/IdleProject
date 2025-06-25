@@ -1,6 +1,9 @@
-using UnityEngine;
+using System;
 
-public interface ISlotData
+namespace IdleProject.Data
 {
-    public string GetIconName { get; }
+    public interface ISlotData
+    {
+        public string GetIconName { get; }
+    }
 }

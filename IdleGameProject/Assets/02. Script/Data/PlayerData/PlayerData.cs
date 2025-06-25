@@ -13,22 +13,26 @@ namespace IdleProject.Data.Player
         public int playerLevel = 1;
         public int playerExp = 0;
         
-        public List<PlayerHeroData> userHeroList;
+        public List<PlayerCharacterData> userCharacterList;
         public List<PlayerConsumableItemData> userConsumableItemList;
 
-        public FormationInfo userFormation;
+        public string frontMiddleCharacterName;
+        public string frontRightCharacterName;
+        public string frontLeftCharacterName;
+        public string rearRightCharacterName;
+        public string rearLeftCharacterName;
 
-        public PlayerConsumableItemData GetItem(string itemName)
-        {
-            return userConsumableItemList.FirstOrDefault(data => data.itemName == itemName);
-        }
+        public PlayerCharacterData GetCharacter(string characterName) =>
+            userCharacterList.FirstOrDefault(data => data.characterName == characterName);
+        
+        public PlayerConsumableItemData GetItem(string itemName) => userConsumableItemList.FirstOrDefault(data => data.itemName == itemName);
         
         [Button]
         private void CreateConsumableItem()
         {
             userConsumableItemList.Clear();
             
-            foreach (var itemData in DataManager.Instance.GetDataList<ConsumableItemData>())
+            foreach (var itemData in DataManager.Instance.GetDataList<StaticConsumableItemData>())
             {
                 userConsumableItemList.Add(new PlayerConsumableItemData(itemData));
             }

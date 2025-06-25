@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Loading;
 using IdleProject.Core.UI.Slot;
-using IdleProject.Data;
+using IdleProject.Data.DynamicData;
 using IdleProject.Data.StaticData;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -34,22 +33,22 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             if (value)
             {
-                var userHeroList = DataManager.Instance.DataController.userData.userHeroList;
+                var userCharacterList = DataManager.Instance.DataController.Player.PlayerCharacterDataList;
 
-                var createSlotCount = userHeroList.Count - _slotList.Count;
+                var createSlotCount = userCharacterList.Count - _slotList.Count;
                 for (int i = 0; i < createSlotCount; ++i)
+                    // 부족한 슬롯 생성
                 {
                     _slotList.Add(CreateSlot());
                 }
                 
                 for (int i = 0; i < _slotList.Count; ++i)
+                    // 캐릭터 수만큼 슬롯에 정의
                 {
                     var slot = _slotList[i];
-                    if (i <= userHeroList.Count - 1)
+                    if (i <= userCharacterList.Count - 1)
                     {
-                        var data = DataManager.Instance.GetData<CharacterData>(userHeroList[i].heroName);
-
-                        slot.SetData(data);
+                        slot.SetData(userCharacterList[i]);
                         slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, ClickCharacterSlot);
                         slot.gameObject.SetActive(true);
                     }
@@ -69,12 +68,11 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             }
         }
 
-        private void ClickCharacterSlot(PointerEventData eventData)
+        private void ClickCharacterSlot(PointerEventData eventData, SlotUI slot)
         {
-            var slot = eventData.pointerClick.GetComponent<SlotUI>();
-            var characterData = slot.GetData<CharacterData>();
+            var characterData = slot.GetData<DynamicCharacterData>();
 
-            foreach (var selectCharacterUpdatableUI in UIManager.Instance.GetUIsOfType<ISelectCharacterUpdatableUI>())
+            foreach (var selectCharacterUpdatableUI in UIManager.Instance.GetUIsOfType<IUISelectCharacterUpdatable>())
             {
                 selectCharacterUpdatableUI.SetCharacter(characterData);
             }

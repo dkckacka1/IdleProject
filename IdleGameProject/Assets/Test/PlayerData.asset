@@ -35,9 +35,8 @@ MonoBehaviour:
     itemCount: 100
   - itemName: ExpPotion05
     itemCount: 0
-  userFormation:
-    frontMiddleCharacterName: Hiro
-    frontRightCharacterName: Eli
-    frontLeftCharacterName: Bak
-    rearRightCharacterName: 
-    rearLeftCharacterName: 
+  frontMiddleCharacterName: Hiro
+  frontRightCharacterName: Bak
+  frontLeftCharacterName: Eli
+  rearRightCharacterName: 
+  rearLeftCharacterName: 

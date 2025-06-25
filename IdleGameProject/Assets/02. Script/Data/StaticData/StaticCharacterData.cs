@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace IdleProject.Data.StaticData
 {
     [Serializable]
-    public struct StatData
+    public struct StatValue
     {
         public float healthPoint;
         public float manaPoint;
@@ -18,7 +19,7 @@ namespace IdleProject.Data.StaticData
     }
 
     [Serializable]
-    public struct LevelData
+    public struct LevelValue
     {
         public float healthPointValue;
         public float attackDamageValue;
@@ -36,16 +37,17 @@ namespace IdleProject.Data.StaticData
     }
 
     [CreateAssetMenu(fileName = "CharacterData", menuName = "Scriptable Objects/CharacterData")]
-    public class CharacterData : Data, ISlotData
+    public class StaticCharacterData : StaticData, ISlotData
     {
         public override string Index => addressValue.characterName;
         
         public CharacterAddressValue addressValue;
-        public StatData stat;
-        public LevelData levelData;
+        public StatValue stat;
+        [FormerlySerializedAs("levelData")] public LevelValue levelValue;
 
         public string GetCharacterBannerIconName => $"Icon_{addressValue.characterName}_Banner";
         public string GetCharacterSkillBannerIconName => $"Icon_{addressValue.characterName}_SkillBanner";
+
         public string GetIconName => GetCharacterBannerIconName;
     }
 }

@@ -6,6 +6,7 @@ using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
+using IdleProject.Data.DynamicData;
 using IdleProject.Data.StaticData;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -23,7 +24,7 @@ namespace IdleProject.Battle.UI
 
         private readonly List<SlotUI> _slotList = new();
 
-        private CharacterData _pickData;
+        private DynamicCharacterData _pickData;
         private Camera _mainCamera;
         private BattleManager _battleManager;
         
@@ -32,13 +33,13 @@ namespace IdleProject.Battle.UI
             _mainCamera = Camera.main;
             _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();
 
-            var userMainCharacterList = DataManager.Instance.DataController.userData.userFormation.GetCharacterNameList();
-            var heroList = DataManager.Instance.DataController.userData.userHeroList.Select(hero => hero.heroName);
+            var userMainCharacterList = DataManager.Instance.DataController.Player.GetPlayerFormation().GetCharacterNameList();
+            var characterList = DataManager.Instance.DataController.Player.PlayerCharacterDataList;
             
-            foreach (var userHeroName in heroList)
+            foreach (var character in characterList)
             {
-                var createSlot = CreateSlot(DataManager.Instance.GetData<CharacterData>(userHeroName));
-                createSlot.SetOrganization(userMainCharacterList.Any(mainCharacterName => mainCharacterName == userHeroName));
+                var createSlot = CreateSlot(character);
+                createSlot.SetOrganization(userMainCharacterList.Any(mainCharacterName => mainCharacterName == character.CharacterData.addressValue.characterName));
                 _slotList.Add(createSlot.SlotUI);
             }
             
@@ -47,7 +48,7 @@ namespace IdleProject.Battle.UI
             dropSlot.gameObject.SetActive(false);
         }
         
-        private OrganizationSlot CreateSlot(CharacterData characterData)
+        private OrganizationSlot CreateSlot(DynamicCharacterData characterData)
         {
             var slot = SlotUI.GetSlotUI<OrganizationSlot>(pickCharacterScrollView.content);
             slot.SetData(characterData);
@@ -59,13 +60,13 @@ namespace IdleProject.Battle.UI
             return slot.GetComponent<OrganizationSlot>();
         }
 
-        private void OnSlotDragBegin(PointerEventData eventData)
+        private void OnSlotDragBegin(PointerEventData eventData, SlotUI slot)
         {
             dropSlot.gameObject.SetActive(true);
 
-            var selectCharacterData = eventData.pointerDrag.GetComponent<SlotUI>().GetData<CharacterData>();
+            var selectCharacterData = slot.GetData<DynamicCharacterData>();
 
-            if (selectCharacterData)
+            if (selectCharacterData is not null)
             {
                 _pickData = selectCharacterData;
             }
@@ -73,7 +74,7 @@ namespace IdleProject.Battle.UI
             dropSlot.SetData(selectCharacterData);
         }
         
-        private void OnSlotDragEnd(PointerEventData eventData)
+        private void OnSlotDragEnd(PointerEventData eventData, SlotUI slot)
         {
             if (_pickData is null) return;
             
@@ -91,11 +92,11 @@ namespace IdleProject.Battle.UI
                 
                 if (targetSpawnPosition.SpawnAIType == CharacterAIType.Player)
                 {
-                    var slot = eventData.pointerDrag.GetComponent<OrganizationSlot>();
-                    if (!IsCharacterSpawnedSlot(slot, out var spawnedCharacter))
+                    var organizationSlot = slot.GetComponent<OrganizationSlot>();
+                    if (!IsCharacterSpawnedSlot(organizationSlot, out var spawnedCharacter))
                         // 스폰된 캐릭터가 없다면 생성
                     {
-                        slot.SetOrganization(true);
+                        organizationSlot.SetOrganization(true);
                         _battleManager.spawnController
                             .SpawnCharacterBySpawnPosition(_pickData, targetSpawnPosition).Forget();
                     }
@@ -118,23 +119,22 @@ namespace IdleProject.Battle.UI
             _pickData = null;
         }
 
-        private void OnSlotDrag(PointerEventData eventData)
+        private void OnSlotDrag(PointerEventData eventData, SlotUI slot)
         {
             dropSlot.transform.position = eventData.position;
         }
 
 
         
-        private void OnSlotClick(PointerEventData eventData)
+        private void OnSlotClick(PointerEventData eventData, SlotUI slot)
         {
-            var slot = ExecuteEvents.GetEventHandler<IPointerClickHandler>(eventData.pointerCurrentRaycast.gameObject)
-                .GetComponent<OrganizationSlot>();
+            var organizationSlot = slot.GetComponent<OrganizationSlot>();
 
-            if (IsCharacterSpawnedSlot(slot, out var character))
+            if (IsCharacterSpawnedSlot(organizationSlot, out var character))
             {
                 _battleManager.spawnController.RemoveCharacter(character, CharacterAIType.Player);
                 
-                slot.SetOrganization(false);
+                organizationSlot.SetOrganization(false);
             }
         }
         
@@ -148,8 +148,8 @@ namespace IdleProject.Battle.UI
 
         private bool IsCharacterSpawnedSlot(OrganizationSlot organizationSlot, out CharacterController character)
         {
-            var data = organizationSlot.SlotUI.GetData<CharacterData>();
-            var characterName = data.addressValue.characterName;
+            var data = organizationSlot.SlotUI.GetData<DynamicCharacterData>();
+            var characterName = data.CharacterData.addressValue.characterName;
 
             var characterList = _battleManager.GetCharacterList(CharacterAIType.Player);
             character = characterList.FirstOrDefault(character => character.StatSystem.CharacterName == characterName);

@@ -25,7 +25,7 @@ namespace IdleProject.Battle.UI
 
         public HealthBar CharacterHealthBar => characterHealthBar;
 
-        public void Initialized(CharacterData data, StatSystem characterStat)
+        public void Initialized(StaticCharacterData data, StatSystem characterStat)
         {
             characterIconImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(data.GetCharacterBannerIconName);
             characterSkillBannerImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(data.GetCharacterSkillBannerIconName);

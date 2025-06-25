@@ -47,28 +47,28 @@ namespace IdleProject.Lobby
 
         private async UniTask SetMainCharacter()
         {
-            var formation = DataManager.Instance.DataController.userData.userFormation;
+            var formation = DataManager.Instance.DataController.Player.GetPlayerFormation();
 
             TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK,
-                () => SetCharacter(formation.frontLeftCharacterName, frontLeftCharacter));
+                () => SetCharacter(formation.frontLeftPositionInfo, frontLeftCharacter));
             TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK,
-                () => SetCharacter(formation.frontMiddleCharacterName, frontMiddleCharacter));
+                () => SetCharacter(formation.frontMiddlePositionInfo, frontMiddleCharacter));
             TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK,
-                () => SetCharacter(formation.frontRightCharacterName, frontRightCharacter));
+                () => SetCharacter(formation.frontRightPositionInfo, frontRightCharacter));
             TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK,
-                () => SetCharacter(formation.rearLeftCharacterName, rearLeftCharacter));
+                () => SetCharacter(formation.rearLeftPositionInfo, rearLeftCharacter));
             TaskChecker.StartLoading(MAIN_CHARACTER_INIT_TASK,
-                () => SetCharacter(formation.rearRightCharacterName, rearRightCharacter));
+                () => SetCharacter(formation.rearRightPositionInfo, rearRightCharacter));
             await TaskChecker.WaitTasking(MAIN_CHARACTER_INIT_TASK);
         }
 
-        private async UniTask SetCharacter(string heroName, LobbyCharacter character)
+        private async UniTask SetCharacter(PositionInfo positionInfo, LobbyCharacter character)
         {
-            if (string.IsNullOrEmpty(heroName))
+            if (string.IsNullOrEmpty(positionInfo.characterName))
                 return;
 
-            var data = DataManager.Instance.GetData<CharacterData>(heroName);
-
+            var data = DataManager.Instance.GetData<StaticCharacterData>(positionInfo.characterName);
+            
             var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.CharacterModelLabelName,
                 $"Model_{data.addressValue.characterName}");
             character.SetModel(Instantiate(modelObject,character.transform));

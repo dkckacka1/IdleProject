@@ -14,8 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageNumber: 1
   stageFormation:
-    frontMiddleCharacterName: GoblinMale
-    frontRightCharacterName: GoblinMale
-    frontLeftCharacterName: GoblinMale
-    rearRightCharacterName: GoblinMale
-    rearLeftCharacterName: GoblinMale
+    frontMiddlePositionInfo:
+      characterName: GoblinMale
+      characterLevel: 1
+    frontRightPositionInfo:
+      characterName: GoblinMale
+      characterLevel: 1
+    frontLeftPositionInfo:
+      characterName: GoblinMale
+      characterLevel: 1
+    rearRightPositionInfo:
+      characterName: GoblinMale
+      characterLevel: 1
+    rearLeftPositionInfo:
+      characterName: GoblinMale
+      characterLevel: 1

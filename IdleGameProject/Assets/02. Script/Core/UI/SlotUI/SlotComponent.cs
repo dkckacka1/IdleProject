@@ -6,11 +6,11 @@ namespace IdleProject.Core.UI.Slot
     [RequireComponent(typeof(SlotUI))]
     public abstract class SlotComponent : MonoBehaviour
     {
-        public SlotUI SlotUI { get; private set; }
-
-        private void Awake()
+        private SlotUI _slotUI;
+        public SlotUI SlotUI
         {
-            SlotUI = GetComponent<SlotUI>();
+            get => _slotUI ??= GetComponent<SlotUI>();
+            private set => _slotUI = value;
         }
     }
 }

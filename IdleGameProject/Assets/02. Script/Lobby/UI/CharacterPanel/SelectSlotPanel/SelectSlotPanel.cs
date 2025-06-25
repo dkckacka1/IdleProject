@@ -14,10 +14,10 @@ namespace IdleProject.Lobby.UI.CharacterPopup
     public class SelectSlotPanel : UIPanel
     {
         [SerializeField] private LoadingRotateUI loadingUI;
-
         [SerializeField] private ScrollRect slotScrollRect;
 
         private readonly List<SlotUI> _slotList = new List<SlotUI>();
+        private SlotUI _selectSlot;
         
         public override void Initialized()
         {
@@ -70,12 +70,22 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         private void ClickCharacterSlot(PointerEventData eventData, SlotUI slot)
         {
+            SwapSlotFocus(slot);
             var characterData = slot.GetData<DynamicCharacterData>();
 
             foreach (var selectCharacterUpdatableUI in UIManager.Instance.GetUIsOfType<IUISelectCharacterUpdatable>())
             {
                 selectCharacterUpdatableUI.SetCharacter(characterData);
             }
+        }
+
+        private void SwapSlotFocus(SlotUI slot)
+        {
+            if (_selectSlot is not null)
+                _selectSlot.SetFocus(false);
+
+            _selectSlot = slot;
+            _selectSlot.SetFocus(true);
         }
 
         private void EquipmentToggleValueChanged(bool value)

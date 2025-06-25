@@ -20,11 +20,7 @@ namespace  IdleProject.Core.UI.Slot
         private Data.StaticData.StaticData _staticData;
         private IData _data;
 
-        private EventTrigger SlotEventTrigger
-        {
-            get => _slotEventTrigger ??= GetComponent<EventTrigger>();
-            set => _slotEventTrigger = value;
-        }
+        private EventTrigger SlotEventTrigger => _slotEventTrigger ??= GetComponent<EventTrigger>();
 
         public T GetData<T>() where T : class, IData, ISlotData => _data.GetData<T>();
         

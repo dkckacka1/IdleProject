@@ -23,6 +23,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         private readonly List<ConsumableItemSlot> _slotList = new();
 
         private UISlider _expSlider;
+        private UIText _levelText;
         private ConsumableItemSlot _clickedSlot;
         
         private bool _isClickOver = false;
@@ -37,6 +38,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             UIManager.Instance.GetUI<UIButton>("CharacterLevelUpButton").Button.onClick.AddListener(LevelUp);
             UIManager.Instance.GetUI<UIButton>("ResetUseExpPotionButton").Button.onClick.AddListener(ResetUseExpPotion);
             _expSlider = UIManager.Instance.GetUI<UISlider>("CharacterExpSlider");
+            _levelText = UIManager.Instance.GetUI<UIText>("CharacterLevelUpPanelLevelText");
             var expItemDataList = DataManager.Instance.GetDataList<StaticConsumableItemData>()
                 .Where(data => data.consumableType == ConsumableType.CharacterExp);
 
@@ -129,9 +131,14 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             }
         }
         
-        public void SetCharacter(DynamicCharacterData selectData)
+        public void SetCharacter(DynamicCharacterData character)
         {
-            
+            var playerCharacter =
+                DataManager.Instance.DataController.Player.PlayerData.GetCharacter(character.CharacterData.name);
+
+            _levelText.Text.text = playerCharacter.level.ToString();
+            _expSlider.Slider.maxValue = playerCharacter.GetLevelUpExpValue;
+            _expSlider.Slider.value = playerCharacter.exp;
         }
     }
 }

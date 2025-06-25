@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerLevel: 1
   playerExp: 0
-  userHeroList:
-  - heroName: Hiro
+  userCharacterList:
+  - characterName: Hiro
     level: 1
     exp: 0
-  - heroName: Eli
+  - characterName: Eli
     level: 1
-    exp: 0
-  - heroName: Bak
+    exp: 50
+  - characterName: Bak
     level: 1
-    exp: 0
+    exp: 99
   userConsumableItemList:
   - itemName: ExpPotion01
     itemCount: 1000

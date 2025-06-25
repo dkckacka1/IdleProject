@@ -5,12 +5,9 @@ using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
 using IdleProject.Data.DynamicData;
-using IdleProject.Data.Player;
 using IdleProject.Data.StaticData;
-using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
 {
@@ -19,26 +16,27 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         [SerializeField] private Transform slotContent;
         [SerializeField] private float longClickTime = 2f;
         [SerializeField] private float maxLongClickTime = 4f;
-        
+
         private readonly List<ConsumableItemSlot> _slotList = new();
 
-        private UISlider _expSlider;
-        private UIText _levelText;
         private ConsumableItemSlot _clickedSlot;
-        
+        private CharacterExpChangerUI _expChangerUI;
+        private DynamicCharacterData _selectCharacter;
+
         private bool _isClickOver = false;
         private float _usePotionInterval = 0.5f;
-        
+
         private const float DEFAULT_USE_POTION_INTERVAL = 0.5f;
         private const float LONG_CLICK_USE_POTION_INTERVAL = 0.1f;
         private const float MAX_LONG_CLICK_USE_POTION_INTERVAL = 0.025f;
-        
+
         public override void Initialized()
         {
             UIManager.Instance.GetUI<UIButton>("CharacterLevelUpButton").Button.onClick.AddListener(LevelUp);
             UIManager.Instance.GetUI<UIButton>("ResetUseExpPotionButton").Button.onClick.AddListener(ResetUseExpPotion);
-            _expSlider = UIManager.Instance.GetUI<UISlider>("CharacterExpSlider");
-            _levelText = UIManager.Instance.GetUI<UIText>("CharacterLevelUpPanelLevelText");
+
+            _expChangerUI = UIManager.Instance.GetUI<CharacterExpChangerUI>("CharacterExpChangerUI");
+
             var expItemDataList = DataManager.Instance.GetDataList<StaticConsumableItemData>()
                 .Where(data => data.consumableType == ConsumableType.CharacterExp);
 
@@ -64,7 +62,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             Debug.Log("LevelUp");
         }
-        
+
         private void OnSlotPointerDown(PointerEventData eventData, SlotUI slot)
         {
             _isClickOver = true;
@@ -75,7 +73,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         private void OnSlotPointerUp(PointerEventData eventData, SlotUI slot)
         {
             _isClickOver = false;
-            if(_clickedSlot)
+            if (_clickedSlot)
                 UseExp(_clickedSlot);
         }
 
@@ -88,7 +86,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                 await UniTask.Yield();
                 timer += Time.deltaTime;
                 intervalTimer += Time.deltaTime;
-                
+
                 if (timer > maxLongClickTime)
                 {
                     _usePotionInterval = MAX_LONG_CLICK_USE_POTION_INTERVAL;
@@ -97,7 +95,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                 {
                     _usePotionInterval = LONG_CLICK_USE_POTION_INTERVAL;
                 }
-                
+
                 if (intervalTimer >= _usePotionInterval)
                 {
                     UseExp(_clickedSlot);
@@ -112,13 +110,18 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             if (targetSlot.CurrentCount > 0)
             {
-                targetSlot.SetCount(targetSlot.CurrentCount - 1);
+                targetSlot.SetCount(targetSlot.CurrentCount - 1, true);
+                _expChangerUI.AddExp(targetSlot.SlotUI.GetData<StaticConsumableItemData>().value);
             }
         }
 
         private void ResetUseExpPotion()
         {
             SetSlotsItemCountByPlayer();
+
+            var playerCharacter =
+                DataManager.Instance.DataController.Player.PlayerData.GetCharacter(_selectCharacter.CharacterData.name);
+            _expChangerUI.SetPlayerCharacter(playerCharacter);
         }
 
         private void SetSlotsItemCountByPlayer()
@@ -130,15 +133,14 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                 slot.SetCount(playerHaveData.itemCount, true);
             }
         }
-        
+
         public void SetCharacter(DynamicCharacterData character)
         {
             var playerCharacter =
                 DataManager.Instance.DataController.Player.PlayerData.GetCharacter(character.CharacterData.name);
 
-            _levelText.Text.text = playerCharacter.level.ToString();
-            _expSlider.Slider.maxValue = playerCharacter.GetLevelUpExpValue;
-            _expSlider.Slider.value = playerCharacter.exp;
+            _expChangerUI.SetPlayerCharacter(playerCharacter);
+            _selectCharacter = character;
         }
     }
 }

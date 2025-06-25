@@ -18,5 +18,7 @@ namespace IdleProject.Data.Player
         {
             return DataManager.Instance.GetData<StaticCharacterData>(characterName);
         }
+
+        public static int GetLevelExpValue(int level) => level * 100;
     }
 }

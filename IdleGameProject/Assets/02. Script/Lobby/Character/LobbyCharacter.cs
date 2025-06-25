@@ -1,4 +1,4 @@
-using System;
+using Cysharp.Threading.Tasks;
 using Engine.Util.Extension;
 using IdleProject.Core.UI;
 using UnityEngine;
@@ -30,11 +30,20 @@ namespace IdleProject.Lobby.Character
             _model = model;
         }
 
-        public void SetAnimation(RuntimeAnimatorController animatorController)
+        public async UniTask SetAnimation(RuntimeAnimatorController animatorController)
         {
             _animator.runtimeAnimatorController = animatorController;
-            _animator.Rebind();
+            await BindAnimation();
+        }
+        
+        private async UniTask BindAnimation()
+            // 상태전이 유예를 위해 1프레임 대기 후 리바인드
+        {
+            _model.gameObject.SetActive(false);
+            await UniTask.Yield();
             _animator.Update(0f);
+            _animator.Rebind();
+            _model.gameObject.SetActive(true);
         }
     }
 }

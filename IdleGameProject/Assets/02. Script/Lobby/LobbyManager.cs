@@ -76,7 +76,7 @@ namespace IdleProject.Lobby
             var animatorController =
                 ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(data.addressValue.characterAnimationName);
 
-            character.SetAnimation(animatorController);
+            character.SetAnimation(animatorController).Forget();
         }
     }
 }

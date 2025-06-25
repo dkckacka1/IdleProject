@@ -36,11 +36,10 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         private async UniTask LoadCharacter(StaticCharacterData staticCharacterData)
         {
             var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.CharacterModelLabelName, $"Model_{staticCharacterData.addressValue.characterName}");
-            var modelInstance = await InstantiateAsync(modelObject, _selectCharacter.transform).ToUniTask();
-            _selectCharacter.SetModel(modelInstance[0]);
-
+            var modelInstance = Instantiate(modelObject, _selectCharacter.transform);
+            _selectCharacter.SetModel(modelInstance);
             var animatorController = ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(staticCharacterData.addressValue.characterAnimationName);
-            _selectCharacter.SetAnimation(animatorController);
+            await _selectCharacter.SetAnimation(animatorController);
         }
         
         private void ShowCharacterLevelUpPanelToggle(bool toggleValue)

@@ -2,20 +2,12 @@ using System;
 using System.Collections.Generic;
 
 using Engine.Util.Extension;
+using IdleProject.Core;
 using IdleProject.Data;
 using IdleProject.Data.StaticData;
 
 namespace IdleProject.Battle.Character
 {
-    public enum CharacterStatType
-    {
-        HealthPoint,
-        ManaPoint,
-        MovementSpeed,
-        AttackDamage,
-        AttackRange,
-        AttackCoolTime,
-    }
 
     public class StatSystem
     {

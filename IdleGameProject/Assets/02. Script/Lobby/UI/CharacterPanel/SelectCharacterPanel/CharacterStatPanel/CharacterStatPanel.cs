@@ -1,4 +1,5 @@
 using IdleProject.Battle.Character;
+using IdleProject.Core;
 using IdleProject.Core.UI;
 using IdleProject.Data.DynamicData;
 using IdleProject.Data.Player;

@@ -32,7 +32,7 @@ namespace IdleProject.Battle.Character
     }
 
     [System.Serializable]
-    public partial class CharacterController : MonoBehaviour, IEventGroup<BattleManager>, IEnumEvent<GameStateType>, IEnumEvent<BattleStateType>
+    public partial class CharacterController : MonoBehaviour, IEventGroup<BattleManager>, IEnumEvent<BattleGameStateType>, IEnumEvent<BattleStateType>
     {
         [HideInInspector] public CharacterOffset offset;
         [HideInInspector] public CharacterUIController characterUI;
@@ -109,14 +109,14 @@ namespace IdleProject.Battle.Character
             AnimController.SetIdle();
         }
 
-        public void OnEnumChange(GameStateType type)
+        public void OnEnumChange(BattleGameStateType type)
         {
             switch (type)
             {
-                case GameStateType.Play:
+                case BattleGameStateType.Play:
                     Agent.enabled = true;
                     break;
-                case GameStateType.Pause:
+                case BattleGameStateType.Pause:
                     Agent.enabled = false;
                     break;
                 default:

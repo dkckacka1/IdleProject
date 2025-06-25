@@ -53,6 +53,6 @@ public class TestManager : SingletonMonoBehaviour<TestManager>
     private void PlayBattle()
     {
         GameManager.GetCurrentSceneManager<BattleManager>().BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
-        GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Play);
+        GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(BattleGameStateType.Play);
     }
 }

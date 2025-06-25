@@ -66,7 +66,7 @@ namespace IdleProject.Battle.UI
 
         private void PauseGame()
         {
-            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(GameStateType.Pause);
+            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(BattleGameStateType.Pause);
             UIManager.Instance.GetUI<PausePanel>().OpenPanel();
         }
 

@@ -141,7 +141,7 @@ namespace IdleProject.Battle.UI
         private void StartBattle()
         {
             _battleManager.BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
-            _battleManager.GameStateEventBus.ChangeEvent(GameStateType.Play);
+            _battleManager.GameStateEventBus.ChangeEvent(BattleGameStateType.Play);
             
             ClosePanel();
         }

@@ -10,7 +10,7 @@ using UnityEngine.Serialization;
 
 namespace IdleProject.Battle.Effect
 {
-    public class BattleEffect : MonoBehaviour, IPoolable, IEnumEvent<GameStateType>
+    public class BattleEffect : MonoBehaviour, IPoolable, IEnumEvent<BattleGameStateType>
     {
         private List<ParticleSystem> _particleList;
 
@@ -69,17 +69,17 @@ namespace IdleProject.Battle.Effect
             }
         }
 
-        public void OnEnumChange(GameStateType type)
+        public void OnEnumChange(BattleGameStateType type)
         {
             switch (type)
             {
-                case GameStateType.Play:
+                case BattleGameStateType.Play:
                     foreach (var particle in _particleList)
                     {
                         particle.Play();
                     }
                     break;
-                case GameStateType.Pause:
+                case BattleGameStateType.Pause:
                     foreach (var particle in _particleList)
                     {
                         particle.Pause();

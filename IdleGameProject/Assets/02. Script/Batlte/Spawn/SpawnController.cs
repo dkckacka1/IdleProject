@@ -23,14 +23,7 @@ using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.Spawn
 {
-    public enum SpawnPositionType
-    {
-        FrontMiddle,
-        FrontRight,
-        FrontLeft,
-        RearRight,
-        RearLeft,
-    }
+
 
     [Serializable]
     public class SpawnInfo

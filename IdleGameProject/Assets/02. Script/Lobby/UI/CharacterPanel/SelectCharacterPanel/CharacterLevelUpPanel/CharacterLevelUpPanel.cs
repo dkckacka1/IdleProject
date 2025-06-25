@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;

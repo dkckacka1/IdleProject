@@ -1,4 +1,6 @@
-﻿namespace IdleProject.Battle.Character.Skill
+﻿using IdleProject.Core;
+
+namespace IdleProject.Battle.Character.Skill
 {
     public class CharacterSkillBak : CharacterSkill
     {

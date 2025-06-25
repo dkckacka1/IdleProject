@@ -1,5 +1,6 @@
 using System;
 using IdleProject.Battle.Character;
+using IdleProject.Core;
 using IdleProject.Core.UI;
 using TMPro;
 using UnityEngine;

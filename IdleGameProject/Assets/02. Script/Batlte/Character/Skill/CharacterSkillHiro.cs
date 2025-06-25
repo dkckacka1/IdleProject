@@ -1,4 +1,5 @@
 using System;
+using IdleProject.Core;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill

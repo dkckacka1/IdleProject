@@ -9,7 +9,7 @@ using IdleProject.Core;
 
 namespace IdleProject.Battle.UI
 {
-    public class BattleText : MonoBehaviour, IPoolable, IEnumEvent<GameStateType>
+    public class BattleText : MonoBehaviour, IPoolable, IEnumEvent<BattleGameStateType>
     {
         private TextMeshProUGUI _battleText;
 
@@ -61,14 +61,14 @@ namespace IdleProject.Battle.UI
             });
         }
 
-        public void OnEnumChange(GameStateType type)
+        public void OnEnumChange(BattleGameStateType type)
         {
             switch (type)
             {
-                case GameStateType.Play:
+                case BattleGameStateType.Play:
                     _floatingSequence?.Play();
                     break;
-                case GameStateType.Pause:
+                case BattleGameStateType.Pause:
                     _floatingSequence?.Pause();
                     break;
                 default:

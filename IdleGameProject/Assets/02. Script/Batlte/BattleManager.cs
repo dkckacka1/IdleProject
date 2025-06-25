@@ -20,28 +20,7 @@ using Object = UnityEngine.Object;
 
 namespace IdleProject.Battle
 {
-    public enum BattleStateType
-    {
-        Ready = default,
-        Battle,
-        Skill,
-        Win,
-        Defeat,
-    }
 
-    public enum GameStateType
-    {
-        Play = default,
-        Pause
-    }
-
-    public enum BattleObjectType
-    {
-        Character,
-        Projectile,
-        Effect,
-        UI
-    }
 
     public partial class BattleManager : SceneController
     {
@@ -49,7 +28,7 @@ namespace IdleProject.Battle
         [HideInInspector] public List<CharacterController> enemyCharacterList = new List<CharacterController>();
 
         public readonly Dictionary<BattleObjectType, UnityEvent> BattleObjectEventDic = new();
-        public readonly EnumEventBus<GameStateType> GameStateEventBus = new(GameStateType.Play);
+        public readonly EnumEventBus<BattleGameStateType> GameStateEventBus = new(BattleGameStateType.Play);
         public readonly EnumEventBus<BattleStateType> BattleStateEventBus = new(BattleStateType.Ready);
 
         public Transform effectParent;
@@ -87,7 +66,7 @@ namespace IdleProject.Battle
 
         private void FixedUpdate()
         {
-            if (GameStateEventBus.CurrentType is GameStateType.Play)
+            if (GameStateEventBus.CurrentType is BattleGameStateType.Play)
             {
                 switch (BattleStateEventBus.CurrentType)
                 {
@@ -119,7 +98,7 @@ namespace IdleProject.Battle
 
         private void LateUpdate()
         {
-            if (GameStateEventBus.IsSameCurrentType(GameStateType.Play) &&
+            if (GameStateEventBus.IsSameCurrentType(BattleGameStateType.Play) &&
                 BattleStateEventBus.CurrentType != BattleStateType.Ready)
             {
                 BattleObjectEventDic[BattleObjectType.UI].Invoke();

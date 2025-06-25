@@ -11,13 +11,7 @@ using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.AI
 {
-    public enum CharacterAIType
-    {
-        Player,
-        Enemy,
-        //Ally,
-        //Neutral,
-    }
+
 
 
     [RequireComponent(typeof(CharacterController))]

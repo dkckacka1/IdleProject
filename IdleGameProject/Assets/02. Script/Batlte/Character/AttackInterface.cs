@@ -1,4 +1,5 @@
 using IdleProject.Battle.AI;
+using IdleProject.Core;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character

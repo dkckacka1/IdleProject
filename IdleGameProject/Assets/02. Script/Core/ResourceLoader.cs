@@ -6,19 +6,7 @@ using UnityEngine;
 
 namespace IdleProject.Core
 {
-    public enum ResourceType
-    {
-        Character,
-        UI,
-    }
 
-    public enum PoolableType
-    {
-        UI,
-        BattleEffect,
-        Projectile,
-    }
-    
     public static class ResourceLoader
     {
         private const string PREFAB_PATH = "Prefab";

@@ -6,6 +6,7 @@ using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
 using IdleProject.Data.DynamicData;
 using IdleProject.Data.StaticData;
+using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -23,8 +24,9 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         private CharacterExpChangerUI _expChangerUI;
         private DynamicCharacterData _selectCharacter;
 
-        private bool _isClickOver = false;
+        private bool _isClickOver;
         private float _usePotionInterval = 0.5f;
+        private int _expAmount = 0;
 
         private const float DEFAULT_USE_POTION_INTERVAL = 0.5f;
         private const float LONG_CLICK_USE_POTION_INTERVAL = 0.1f;
@@ -51,6 +53,15 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             SetSlotsItemCountByPlayer();
         }
 
+        public override void ClosePanel()
+        {
+            base.ClosePanel();
+            
+            Debug.Log("Close");
+            
+            ResetUseExpPotion();
+        }
+
         private ConsumableItemSlot CreateSlot(StaticConsumableItemData itemData)
         {
             var slot = SlotUI.GetSlotUI<ConsumableItemSlot>(slotContent);
@@ -60,7 +71,25 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         private void LevelUp()
         {
-            Debug.Log("LevelUp");
+            var playerCharacter =
+                DataManager.Instance.DataController.Player.PlayerData.GetCharacter(_selectCharacter.CharacterData
+                    .addressValue.characterName);
+
+            // 들어온 경험치양 만큼 캐릭터 레벨업
+            // 레벨업 된 캐릭터 플레이어에 적용
+            playerCharacter.AddExp(_expAmount);
+            _expAmount = 0;
+            _selectCharacter.UpdateCharacter(playerCharacter.level);
+            
+            // 소비아이템 사용해주기
+            foreach (var slot in _slotList)
+            {
+                AcceptExpPotion(slot);                
+            }
+            
+            // UI 업데이트
+            UIManager.Instance.GetUIsOfType<IUISelectCharacterUpdatable>()
+                .ForEach(ui => ui.SetCharacter(_selectCharacter));
         }
 
         private void OnSlotPointerDown(PointerEventData eventData, SlotUI slot)
@@ -74,7 +103,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             _isClickOver = false;
             if (_clickedSlot)
-                UseExp(_clickedSlot);
+                UseExpPotion(_clickedSlot);
         }
 
         private async UniTaskVoid ClickOver()
@@ -98,7 +127,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
                 if (intervalTimer >= _usePotionInterval)
                 {
-                    UseExp(_clickedSlot);
+                    UseExpPotion(_clickedSlot);
                     intervalTimer = 0f;
                 }
             }
@@ -106,22 +135,38 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             _usePotionInterval = DEFAULT_USE_POTION_INTERVAL;
         }
 
-        private void UseExp(ConsumableItemSlot targetSlot)
+        private void UseExpPotion(ConsumableItemSlot itemSlot)
         {
-            if (targetSlot.CurrentCount > 0)
+            if (itemSlot.CurrentCount > 0)
             {
-                targetSlot.SetCount(targetSlot.CurrentCount - 1, true);
-                _expChangerUI.AddExp(targetSlot.SlotUI.GetData<StaticConsumableItemData>().value);
+                itemSlot.SetCount(itemSlot.CurrentCount - 1, true);
+                var amount = itemSlot.SlotUI.GetData<StaticConsumableItemData>().value;
+                _expChangerUI.AddExp(amount);
+                _expAmount += amount;
             }
+        }
+
+        private void AcceptExpPotion(ConsumableItemSlot itemSlot)
+        {
+            var itemName = itemSlot.SlotUI.GetData<StaticConsumableItemData>().itemName;
+
+            var userItem = DataManager.Instance.DataController.Player.PlayerData.GetItem(itemName);
+            userItem.itemCount = itemSlot.CurrentCount;
         }
 
         private void ResetUseExpPotion()
         {
             SetSlotsItemCountByPlayer();
 
-            var playerCharacter =
-                DataManager.Instance.DataController.Player.PlayerData.GetCharacter(_selectCharacter.CharacterData.name);
-            _expChangerUI.SetPlayerCharacter(playerCharacter);
+            if (_selectCharacter != null)
+            {
+                var playerCharacter =
+                    DataManager.Instance.DataController.Player.PlayerData.GetCharacter(_selectCharacter.CharacterData.name);
+                
+                _expChangerUI.SetPlayerCharacter(playerCharacter);
+            }
+            
+            _expAmount = 0;
         }
 
         private void SetSlotsItemCountByPlayer()
@@ -141,6 +186,8 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
             _expChangerUI.SetPlayerCharacter(playerCharacter);
             _selectCharacter = character;
+
+            ResetUseExpPotion();
         }
     }
 }

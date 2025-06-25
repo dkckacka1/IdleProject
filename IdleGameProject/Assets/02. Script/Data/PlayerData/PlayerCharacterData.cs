@@ -14,6 +14,16 @@ namespace IdleProject.Data.Player
 
         public int GetLevelUpExpValue => level * 100;
 
+        public void AddExp(int expAmount)
+        {
+            exp += expAmount;
+            while (exp > GetLevelUpExpValue)
+            {
+                exp -= GetLevelUpExpValue; 
+                ++level;
+            }
+        }
+        
         public StaticCharacterData GetCharacterData()
         {
             return DataManager.Instance.GetData<StaticCharacterData>(characterName);

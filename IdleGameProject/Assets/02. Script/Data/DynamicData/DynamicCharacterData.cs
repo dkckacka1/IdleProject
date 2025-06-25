@@ -18,6 +18,11 @@ namespace IdleProject.Data.DynamicData
             SetStat(characterLevel, staticCharacterData);
         }
 
+        public void UpdateCharacter(int characterLevel)
+        {
+            SetStat(characterLevel, CharacterData);
+        }
+
         private void SetStat(int characterLevel, StaticCharacterData staticCharacterData)
         {
             var levelData = staticCharacterData.levelValue;

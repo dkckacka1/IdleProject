@@ -10,6 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ecbccaee41524d2b85b41f9a4c3671b1, type: 3}
-  m_Name: EquipmentData
+  m_Name: Weapon_01
   m_EditorClassIdentifier: 
-  itemName: TestItem
+  itemName: Weapon_01
+  itemType: 0
+  itemValue01: 10
+  itemValue02: 0

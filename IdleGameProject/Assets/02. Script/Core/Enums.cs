@@ -65,4 +65,14 @@
     {
         CharacterExp,
     }
+
+    public enum EquipmentItemType
+    {
+        Weapon,
+        Helmet,
+        Armor,
+        Glove,
+        Boots,
+        Accessory
+    }
 }

@@ -9,7 +9,6 @@ namespace IdleProject.Core.UI.Slot
 
         public void SetOrganization(bool isOrganization)
         {
-            Debug.Log(isOrganization);
             organizationObject.SetActive(isOrganization);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IdleProject.Core;
 using IdleProject.Data.Player;
 using IdleProject.Data.StaticData;
 
@@ -16,13 +17,6 @@ namespace IdleProject.Data.DynamicData
         
         public DynamicPlayerData(PlayerData playerData)
         {
-            PlayerCharacterDataDic =
-                playerData.playerCharacterList.ToDictionary
-                (
-                    data => data.characterName,
-                    DynamicCharacterData.GetInstance
-                );
-
             PlayerEquipmentItemDataDic =
                 playerData.playerEquipmentItemList.ToDictionary
                 (
@@ -35,6 +29,13 @@ namespace IdleProject.Data.DynamicData
                 (
                     data => data.itemName,
                     DynamicConsumableItemData.GetInstance
+                );
+            
+            PlayerCharacterDataDic =
+                playerData.playerCharacterList.ToDictionary
+                (
+                    data => data.characterName,
+                    DynamicCharacterData.GetInstance
                 );
             
             PlayerFormation = GetPlayerFormation(playerData);

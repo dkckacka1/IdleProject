@@ -8,7 +8,9 @@ namespace IdleProject.Data.StaticData
     public class StaticEquipmentItemData : StaticItemData
     {
         public EquipmentItemType itemType;
-        public float itemValue01;
-        public float itemValue02;
+        public CharacterStatType firstValueStatType;
+        public float itemFirstValue;
+        public CharacterStatType secondValueStatType;
+        public float itemSecondValue;
     }
 }

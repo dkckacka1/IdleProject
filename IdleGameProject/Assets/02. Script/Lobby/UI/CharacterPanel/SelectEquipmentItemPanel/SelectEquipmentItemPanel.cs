@@ -35,6 +35,11 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             itemSlot.SetEquipmentCharacterIcon(currentEquippedCharacter);
             
             _equipmentItemNameText.Text.text = item.StaticData.itemName;
+
+            _equipmentItemFirstStatBar.gameObject.SetActive(item.StaticData.firstValueStatType > 0);
+            _equipmentItemFirstStatBar.ShowStat(item.StaticData.firstValueStatType, item.StaticData.itemFirstValue);
+            _equipmentItemSecondStatBar.gameObject.SetActive(item.StaticData.itemSecondValue > 0);
+            _equipmentItemSecondStatBar.ShowStat(item.StaticData.secondValueStatType, item.StaticData.itemSecondValue);
         }
         
         public void SelectEquipmentItem(DynamicEquipmentItemData item)

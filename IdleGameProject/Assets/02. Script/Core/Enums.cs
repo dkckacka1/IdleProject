@@ -53,6 +53,9 @@
         AttackDamage,
         AttackRange,
         AttackCoolTime,
+        DefensePoint,
+        CriticalPercent,
+        CriticalResistance
     }
     
     public enum SpawnPositionType

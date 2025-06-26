@@ -132,15 +132,15 @@ namespace IdleProject.Battle.Spawn
         {
             var controller = await AddressableManager.Instance.Controller.LoadAssetAsync<CharacterController>("Prefab/Character/Character.prefab");
             var characterInstance = Instantiate(controller);
-            characterInstance.name = data.CharacterData.addressValue.characterName;
+            characterInstance.name = data.StaticData.addressValue.characterName;
 
-            SetModel(characterInstance, data.CharacterData);
-            await SetPoolableObject(characterInstance, data.CharacterData);
+            SetModel(characterInstance, data.StaticData);
+            await SetPoolableObject(characterInstance, data.StaticData);
 
-            SetAnimation(characterInstance, data.CharacterData);
-            SetStat(characterInstance, data.CharacterData);
-            SetSkill(characterInstance, data.CharacterData);
-            AddCharacterUI(characterInstance, data.CharacterData, aiType);
+            SetAnimation(characterInstance, data.StaticData);
+            SetStat(characterInstance, data.StaticData);
+            SetSkill(characterInstance, data.StaticData);
+            AddCharacterUI(characterInstance, data.StaticData, aiType);
             AddCharacterAI(characterInstance, aiType);
             
             characterInstance.Initialized();

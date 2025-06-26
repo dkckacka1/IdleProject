@@ -26,8 +26,8 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             _healthPointStatBar.ShowStat(CharacterStatType.HealthPoint, selectData.Stat.healthPoint);
             _movementSpeedStatBar.ShowStat(CharacterStatType.MovementSpeed, selectData.Stat.movementSpeed);
         }
-
-        public void SelectEquipmentItem(StaticEquipmentItemData item)
+        
+        public void SelectEquipmentItem(DynamicEquipmentItemData item)
         {
             ClosePanel();
         }

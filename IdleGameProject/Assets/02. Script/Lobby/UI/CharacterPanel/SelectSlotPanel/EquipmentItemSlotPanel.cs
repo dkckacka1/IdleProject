@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
+using IdleProject.Data.DynamicData;
 using IdleProject.Data.StaticData;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -25,7 +26,8 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             base.OpenPanel();
 
-            var playerEquipmentItemList = DataManager.Instance.DataController.Player.PlayerData.userEquipmentItemList;
+            var playerEquipmentItemList =
+                DataManager.Instance.DataController.Player.GetEquipmentItemList;
 
             int createCount =  playerEquipmentItemList.Count - _slotList.Count;
             
@@ -40,7 +42,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                 var slot = _slotList[i];
                 if (i <= playerEquipmentItemList.Count - 1)
                 {
-                    var data = playerEquipmentItemList[i].GetData;
+                    var data = playerEquipmentItemList[i].GetData<DynamicEquipmentItemData>();
                     var equipmentCharacterData = 
                         !string.IsNullOrEmpty(playerEquipmentItemList[i].equipmentCharacterName)
                         ? DataManager.Instance.GetData<StaticCharacterData>(playerEquipmentItemList[i].equipmentCharacterName)
@@ -63,7 +65,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         private void ClickEquipmentSlot(PointerEventData eventData, SlotUI slot)
         {
             SwapSlotFocus(slot);
-            var equipmentItemData = slot.GetData<StaticEquipmentItemData>();
+            var equipmentItemData = slot.GetData<DynamicEquipmentItemData>();
 
             foreach (var selectEquipmentItemUpdatable in UIManager.Instance.GetUIsOfType<IUISelectEquipmentItemUpdatable>())
             {

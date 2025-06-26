@@ -18,21 +18,5 @@ namespace IdleProject.Data.Player
         public int equipmentGloveIndex;
         public int equipmentBootsIndex;
         public int equipmentAccessoryIndex;
-        
-        public int GetLevelUpExpValue => level * 100;
-
-        public void AddExp(int expAmount)
-        {
-            exp += expAmount;
-            while (exp > GetLevelUpExpValue)
-            {
-                exp -= GetLevelUpExpValue; 
-                ++level;
-            }
-        }
-        
-        public StaticCharacterData GetData => DataManager.Instance.GetData<StaticCharacterData>(characterName);
-
-        public static int GetLevelExpValue(int level) => level * 100;
     }
 }

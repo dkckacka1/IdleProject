@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using IdleProject.Core.UI;
+using IdleProject.Data.DynamicData;
 using IdleProject.Data.Player;
 using UnityEngine;
 
@@ -22,11 +23,11 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             _expSlider = UIManager.Instance.GetUI<UISlider>("CharacterExpSlider");
         }
 
-        public void SetPlayerCharacter(PlayerCharacterData playerCharacter)
+        public void SetPlayerCharacter(DynamicCharacterData playerCharacter)
         {
-            _levelText.Text.text = playerCharacter.level.ToString();
+            _levelText.Text.text = playerCharacter.Level.ToString();
             _expSlider.Slider.maxValue = playerCharacter.GetLevelUpExpValue;
-            _expSlider.Slider.value = playerCharacter.exp;
+            _expSlider.Slider.value = playerCharacter.Exp;
         }
 
         
@@ -58,7 +59,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                 {
                     _levelText.Text.text = (++level).ToString();
                     currentExp -= maxExp;
-                    maxExp = PlayerCharacterData.GetLevelExpValue(level);
+                    maxExp = DynamicCharacterData.GetLevelExpValue(level);
                     _expSlider.Slider.maxValue = maxExp;
                 }
                 

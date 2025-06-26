@@ -4,6 +4,7 @@ using IdleProject.Core.GameData;
 using IdleProject.Data.StaticData;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace IdleProject.Data.Player
 {
@@ -13,32 +14,25 @@ namespace IdleProject.Data.Player
         public int playerLevel = 1;
         public int playerExp = 0;
         
-        public List<PlayerCharacterData> userCharacterList;
-        public List<PlayerConsumableItemData> userConsumableItemList;
-        public List<PlayerEquipmentItemData> userEquipmentItemList;
+        public List<PlayerCharacterData> playerCharacterList;
+        public List<PlayerConsumableItemData> playerConsumableItemList;
+        public List<PlayerEquipmentItemData> playerEquipmentItemList;
 
         public string frontMiddleCharacterName;
         public string frontRightCharacterName;
         public string frontLeftCharacterName;
         public string rearRightCharacterName;
         public string rearLeftCharacterName;
-
-        public PlayerCharacterData GetCharacter(string characterName) =>
-            userCharacterList.FirstOrDefault(data => data.characterName == characterName);
         
-        public PlayerConsumableItemData GetItem(string itemName) => userConsumableItemList.FirstOrDefault(data => data.itemName == itemName);
-
-        public PlayerEquipmentItemData GetEquipmentItem(string itemName) =>
-            userEquipmentItemList.FirstOrDefault(data => data.itemName == itemName);
         
         [Button]
         private void CreateConsumableItem()
         {
-            userConsumableItemList.Clear();
+            playerConsumableItemList.Clear();
             
             foreach (var itemData in DataManager.Instance.GetDataList<StaticConsumableItemData>())
             {
-                userConsumableItemList.Add(new PlayerConsumableItemData(itemData));
+                playerConsumableItemList.Add(new PlayerConsumableItemData(itemData));
             }
         }
     }

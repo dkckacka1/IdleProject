@@ -70,15 +70,11 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         private void LevelUp()
         {
-            var playerCharacter =
-                DataManager.Instance.DataController.Player.PlayerData.GetCharacter(_selectCharacter.CharacterData
-                    .addressValue.characterName);
-
             // 들어온 경험치양 만큼 캐릭터 레벨업
             // 레벨업 된 캐릭터 플레이어에 적용
-            playerCharacter.AddExp(_expAmount);
+            _selectCharacter.AddExp(_expAmount);
             _expAmount = 0;
-            _selectCharacter.UpdateCharacter(playerCharacter.level);
+            _selectCharacter.UpdateCharacter(_selectCharacter.Level);
             
             // 소비아이템 사용해주기
             foreach (var slot in _slotList)
@@ -149,7 +145,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             var itemName = itemSlot.SlotUI.GetData<StaticConsumableItemData>().itemName;
 
-            var userItem = DataManager.Instance.DataController.Player.PlayerData.GetItem(itemName);
+            var userItem = DataManager.Instance.DataController.Player.GetItem(itemName);
             userItem.itemCount = itemSlot.CurrentCount;
         }
 
@@ -159,10 +155,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
             if (_selectCharacter != null)
             {
-                var playerCharacter =
-                    DataManager.Instance.DataController.Player.PlayerData.GetCharacter(_selectCharacter.CharacterData.name);
-                
-                _expChangerUI.SetPlayerCharacter(playerCharacter);
+                _expChangerUI.SetPlayerCharacter(_selectCharacter);
             }
             
             _expAmount = 0;
@@ -173,25 +166,23 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             foreach (var slot in _slotList)
             {
                 var data = slot.GetData<StaticConsumableItemData>();
-                var playerHaveData = DataManager.Instance.DataController.Player.PlayerData.GetItem(data.itemName);
+                var playerHaveData = DataManager.Instance.DataController.Player.GetItem(data.itemName);
                 slot.GetSlotParts<ConsumableItemSlot>().SetCount(playerHaveData.itemCount, true);
             }
         }
 
         public void SelectCharacter(DynamicCharacterData character)
         {
-            var playerCharacter =
-                DataManager.Instance.DataController.Player.PlayerData.GetCharacter(character.CharacterData.name);
-
-            _expChangerUI.SetPlayerCharacter(playerCharacter);
             _selectCharacter = character;
+            _expChangerUI.SetPlayerCharacter(character);
 
             ResetUseExpPotion();
         }
-
-        public void SelectEquipmentItem(StaticEquipmentItemData item)
+        
+        public void SelectEquipmentItem(DynamicEquipmentItemData item)
         {
             ClosePanel();
+            
         }
     }
 }

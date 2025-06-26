@@ -34,12 +34,12 @@ namespace IdleProject.Battle.UI
             _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();
 
             var userMainCharacterList = DataManager.Instance.DataController.Player.GetPlayerFormation().GetCharacterNameList();
-            var characterList = DataManager.Instance.DataController.Player.PlayerCharacterDataList;
+            var characterList = DataManager.Instance.DataController.Player.GetCharacterList;
             
             foreach (var character in characterList)
             {
                 var createSlot = CreateSlot(character);
-                createSlot.SetOrganization(userMainCharacterList.Any(mainCharacterName => mainCharacterName == character.CharacterData.addressValue.characterName));
+                createSlot.SetOrganization(userMainCharacterList.Any(mainCharacterName => mainCharacterName == character.StaticData.addressValue.characterName));
                 _slotList.Add(createSlot.SlotUI);
             }
             
@@ -149,7 +149,7 @@ namespace IdleProject.Battle.UI
         private bool IsCharacterSpawnedSlot(OrganizationSlot organizationSlot, out CharacterController character)
         {
             var data = organizationSlot.SlotUI.GetData<DynamicCharacterData>();
-            var characterName = data.CharacterData.addressValue.characterName;
+            var characterName = data.StaticData.addressValue.characterName;
 
             var characterList = _battleManager.GetCharacterList(CharacterAIType.Player);
             character = characterList.FirstOrDefault(character => character.StatSystem.CharacterName == characterName);

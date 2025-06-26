@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerLevel: 1
   playerExp: 0
-  userCharacterList:
+  playerCharacterList:
   - characterName: Hiro
     level: 1
     exp: 0
@@ -42,7 +42,7 @@ MonoBehaviour:
     equipmentGloveIndex: 0
     equipmentBootsIndex: 0
     equipmentAccessoryIndex: 0
-  userConsumableItemList:
+  playerConsumableItemList:
   - itemName: ExpPotion01
     itemCount: 1000
   - itemName: ExpPotion02
@@ -53,15 +53,12 @@ MonoBehaviour:
     itemCount: 100
   - itemName: ExpPotion05
     itemCount: 0
-  userEquipmentItemList:
-  - index: 0
+  playerEquipmentItemList:
+  - index: 1
     itemName: Weapon_01
     equipmentCharacterName: 
-  - index: 1
-    itemName: Armor_01
-    equipmentCharacterName: Bak
-  frontMiddleCharacterName: Hiro
-  frontRightCharacterName: Bak
-  frontLeftCharacterName: Eli
+  frontMiddleCharacterName: 
+  frontRightCharacterName: 
+  frontLeftCharacterName: 
   rearRightCharacterName: 
   rearLeftCharacterName: 

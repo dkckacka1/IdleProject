@@ -71,7 +71,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         public void SelectCharacter(DynamicCharacterData selectData)
         {
-            _characterLoadingRotate.StartLoading(LoadCharacter(selectData.CharacterData)).Forget();
+            _characterLoadingRotate.StartLoading(LoadCharacter(selectData.StaticData)).Forget();
         }
     }
 }

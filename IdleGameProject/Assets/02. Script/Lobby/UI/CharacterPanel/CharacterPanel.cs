@@ -17,7 +17,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             UIManager.Instance.GetUI<UIButton>("CloseCharacterPopupButton").Button.onClick.AddListener(ClosePanel);
 
-            Selector ??= DataManager.Instance.DataController.Player.PlayerCharacterDataList[0];
+            Selector ??= DataManager.Instance.DataController.Player.GetCharacterList[0];
         }
 
         public override void OpenPanel()

@@ -1,5 +1,6 @@
 using IdleProject.Core.Resource;
 using IdleProject.Data;
+using IdleProject.Data.DynamicData;
 using IdleProject.Data.Player;
 using IdleProject.Data.StaticData;
 using IdleProject.Util;
@@ -34,10 +35,15 @@ namespace IdleProject.Core.UI.Slot
         public override void SetData<T>(T data)
         {
             equipmentCharacterIconImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(data.GetIconName);
-            if (data is StaticEquipmentItemData equipmentItemData)
+            if (data is StaticEquipmentItemData staticData)
             {
                 equipmentItemTypeImage.sprite =
-                    GetSpriteExtension.GetEquipmentTypeIconSprite(equipmentItemData.itemType);
+                    GetSpriteExtension.GetEquipmentTypeIconSprite(staticData.itemType);
+            }
+            else if (data is DynamicEquipmentItemData dynamicData)
+            {
+                equipmentItemTypeImage.sprite =
+                    GetSpriteExtension.GetEquipmentTypeIconSprite(dynamicData.StaticData.itemType);
             }
         }
     }

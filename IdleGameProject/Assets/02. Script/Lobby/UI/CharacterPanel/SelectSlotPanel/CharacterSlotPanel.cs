@@ -19,7 +19,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         
         public override void Initialized()
         {
-            var userCharacterList = DataManager.Instance.DataController.Player.PlayerCharacterDataList;
+            var userCharacterList = DataManager.Instance.DataController.Player.GetCharacterList;
 
             CreateSlot(userCharacterList);
         }
@@ -27,7 +27,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         public override void OpenPanel()
         {
             base.OpenPanel();
-            var userCharacterList = DataManager.Instance.DataController.Player.PlayerCharacterDataList;
+            var userCharacterList = DataManager.Instance.DataController.Player.GetCharacterList;
             var selectCharacter = UIManager.Instance.GetUI<CharacterPanel>().Selector;
             CreateSlot(userCharacterList);
             for (int i = 0; i < _slotList.Count; ++i)  

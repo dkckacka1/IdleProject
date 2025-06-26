@@ -1,9 +1,9 @@
-﻿using IdleProject.Data.StaticData;
+﻿using IdleProject.Data.DynamicData;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
 {
     public interface IUISelectEquipmentItemUpdatable
     {
-        public void SelectEquipmentItem(StaticEquipmentItemData item);
+        public void SelectEquipmentItem(DynamicEquipmentItemData item);
     }
 }

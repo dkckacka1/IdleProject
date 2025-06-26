@@ -138,7 +138,7 @@ namespace IdleProject.Battle.Spawn
             await SetPoolableObject(characterInstance, data.StaticData);
 
             SetAnimation(characterInstance, data.StaticData);
-            SetStat(characterInstance, data.StaticData);
+            SetStat(characterInstance, data);
             SetSkill(characterInstance, data.StaticData);
             AddCharacterUI(characterInstance, data.StaticData, aiType);
             AddCharacterAI(characterInstance, aiType);
@@ -148,10 +148,10 @@ namespace IdleProject.Battle.Spawn
         }
 
 
-        private void SetStat(CharacterController controller, StaticCharacterData data)
+        private void SetStat(CharacterController controller, DynamicCharacterData data)
         {
             var statSystem = new StatSystem();
-            statSystem.SetStatData(data.addressValue.characterName, data.stat);
+            statSystem.SetStatData(data.StaticData.addressValue.characterName, data.Stat);
 
             controller.StatSystem = statSystem;
         }

@@ -33,8 +33,8 @@ namespace IdleProject.Battle.UI
             _mainCamera = Camera.main;
             _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();
 
-            var userMainCharacterList = DataManager.Instance.DataController.Player.GetPlayerFormation().GetCharacterNameList();
-            var characterList = DataManager.Instance.DataController.Player.GetCharacterList;
+            var userMainCharacterList = DataManager.Instance.DataController.Player.PlayerFormation.GetCharacterNameList();
+            var characterList = DataManager.Instance.DataController.Player.PlayerCharacterDataDic.Values.ToList();
             
             foreach (var character in characterList)
             {

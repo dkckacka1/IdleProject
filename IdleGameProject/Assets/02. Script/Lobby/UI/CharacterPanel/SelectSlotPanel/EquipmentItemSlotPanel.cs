@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
@@ -27,7 +28,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             base.OpenPanel();
 
             var playerEquipmentItemList =
-                DataManager.Instance.DataController.Player.GetEquipmentItemList;
+                DataManager.Instance.DataController.Player.PlayerEquipmentItemDataDic.Values.ToList();
 
             int createCount =  playerEquipmentItemList.Count - _slotList.Count;
             

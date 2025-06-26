@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
@@ -19,7 +20,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         
         public override void Initialized()
         {
-            var userCharacterList = DataManager.Instance.DataController.Player.GetCharacterList;
+            var userCharacterList = DataManager.Instance.DataController.Player.PlayerCharacterDataDic.Values.ToList();
 
             CreateSlot(userCharacterList);
         }
@@ -27,7 +28,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         public override void OpenPanel()
         {
             base.OpenPanel();
-            var userCharacterList = DataManager.Instance.DataController.Player.GetCharacterList;
+            var userCharacterList = DataManager.Instance.DataController.Player.PlayerCharacterDataDic.Values.ToList();
             var selectCharacter = UIManager.Instance.GetUI<CharacterPanel>().Selector;
             CreateSlot(userCharacterList);
             for (int i = 0; i < _slotList.Count; ++i)  

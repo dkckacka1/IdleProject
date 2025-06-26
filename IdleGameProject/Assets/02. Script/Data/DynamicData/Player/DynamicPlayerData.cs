@@ -8,60 +8,54 @@ namespace IdleProject.Data.DynamicData
 {
     public class DynamicPlayerData
     {
-        private readonly PlayerData _playerData;
+        public readonly Dictionary<string, DynamicCharacterData> PlayerCharacterDataDic;
+        public readonly Dictionary<int, DynamicEquipmentItemData> PlayerEquipmentItemDataDic;
+        public readonly Dictionary<string, DynamicConsumableItemData> PlayerConsumableItemDataDic;
 
-        private readonly Dictionary<string, DynamicCharacterData> _playerCharacterDataDic;
-        private readonly Dictionary<int, DynamicEquipmentItemData> _playerEquipmentItemDataDic;
-        private readonly Dictionary<string, DynamicConsumableItemData> _playerConsumableItemDataDic;
-
+        public FormationInfo PlayerFormation;
+        
         public DynamicPlayerData(PlayerData playerData)
         {
-            _playerCharacterDataDic =
+            PlayerCharacterDataDic =
                 playerData.playerCharacterList.ToDictionary
                 (
                     data => data.characterName,
                     DynamicCharacterData.GetInstance
                 );
 
-            _playerEquipmentItemDataDic =
+            PlayerEquipmentItemDataDic =
                 playerData.playerEquipmentItemList.ToDictionary
                 (
                     data => data.index,
                     DynamicEquipmentItemData.GetInstance
                 );
 
-            _playerConsumableItemDataDic =
+            PlayerConsumableItemDataDic =
                 playerData.playerConsumableItemList.ToDictionary
                 (
                     data => data.itemName,
                     DynamicConsumableItemData.GetInstance
                 );
-
-            _playerData = playerData;
+            
+            PlayerFormation = GetPlayerFormation(playerData);
         }
 
-        public DynamicConsumableItemData GetItem(string itemName) => _playerConsumableItemDataDic[itemName];
-        public DynamicEquipmentItemData GetItem(int index) => _playerEquipmentItemDataDic[index];
-        public DynamicCharacterData GetCharacter(string characterName) => _playerCharacterDataDic[characterName];
-        public List<DynamicCharacterData> GetCharacterList => _playerCharacterDataDic.Values.ToList();
-        public List<DynamicEquipmentItemData> GetEquipmentItemList => _playerEquipmentItemDataDic.Values.ToList();
-
-        public FormationInfo GetPlayerFormation()
+        private FormationInfo GetPlayerFormation(PlayerData playerData)
         {
             var formation = new FormationInfo
             {
-                frontMiddlePositionInfo = GetPosition(_playerData.frontMiddleCharacterName),
-                frontLeftPositionInfo = GetPosition(_playerData.frontLeftCharacterName),
-                frontRightPositionInfo = GetPosition(_playerData.frontRightCharacterName),
-                rearLeftPositionInfo = GetPosition(_playerData.rearLeftCharacterName),
-                rearRightPositionInfo = GetPosition(_playerData.rearRightCharacterName)
+                frontMiddlePositionInfo = GetPosition(playerData.frontMiddleCharacterName),
+                frontLeftPositionInfo = GetPosition(playerData.frontLeftCharacterName),
+                frontRightPositionInfo = GetPosition(playerData.frontRightCharacterName),
+                rearLeftPositionInfo = GetPosition(playerData.rearLeftCharacterName),
+                rearRightPositionInfo = GetPosition(playerData.rearRightCharacterName)
             };
 
             return formation;
 
             PositionInfo GetPosition(string characterName)
             {
-                _playerCharacterDataDic.TryGetValue(characterName, out var character);
+                PlayerCharacterDataDic.TryGetValue(characterName, out var character);
                 
                 var position = new PositionInfo
                 {

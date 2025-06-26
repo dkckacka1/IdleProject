@@ -15,8 +15,8 @@ namespace IdleProject.Core.GameData
 
         private const string DATA_LABEL_REFERENCE_NAME = "Data";
         
-        [ShowInInspector]
         public DataController DataController { get; private set; }
+        public SaveController SaveController { get; private set; }
 
         public async UniTask LoadData()
         {
@@ -31,6 +31,7 @@ namespace IdleProject.Core.GameData
                 AddData(locate.ResourceType, loadData);                
             }
             
+            SaveController = TestManager.Instance.isTestPlay is false ? new SaveController() : new SaveController(TestManager.Instance.testPlayerData);
             DataController = TestManager.Instance.isTestPlay is false ? new DataController() : new DataController(TestManager.Instance.testPlayerData);
         }
 

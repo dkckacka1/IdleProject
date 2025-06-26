@@ -79,12 +79,15 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             // 소비아이템 사용해주기
             foreach (var slot in _slotList)
             {
-                AcceptExpPotion(slot.GetSlotParts<ConsumableItemSlot>());                
+                AcceptExpPotion(slot.GetSlotParts<ConsumableItemSlot>());
             }
             
             // UI 업데이트
             UIManager.Instance.GetUIsOfType<IUISelectCharacterUpdatable>()
                 .ForEach(ui => ui.SelectCharacter(_selectCharacter));
+            
+            // 세이브
+            DataManager.Instance.SaveController.SaveCharacter(_selectCharacter);
         }
 
         private void OnSlotPointerDown(PointerEventData eventData, SlotUI slot)
@@ -145,8 +148,9 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             var itemName = itemSlot.SlotUI.GetData<StaticConsumableItemData>().itemName;
 
-            var userItem = DataManager.Instance.DataController.Player.GetItem(itemName);
+            var userItem = DataManager.Instance.DataController.Player.PlayerConsumableItemDataDic[itemName];
             userItem.itemCount = itemSlot.CurrentCount;
+            DataManager.Instance.SaveController.SaveConsumableItem(userItem);
         }
 
         private void ResetUseExpPotion()
@@ -166,7 +170,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             foreach (var slot in _slotList)
             {
                 var data = slot.GetData<StaticConsumableItemData>();
-                var playerHaveData = DataManager.Instance.DataController.Player.GetItem(data.itemName);
+                var playerHaveData = DataManager.Instance.DataController.Player.PlayerConsumableItemDataDic[data.Index];
                 slot.GetSlotParts<ConsumableItemSlot>().SetCount(playerHaveData.itemCount, true);
             }
         }

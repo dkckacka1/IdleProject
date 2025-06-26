@@ -6,7 +6,6 @@ using UnityEngine.Serialization;
 namespace IdleProject.Core.GameData
 {
     // 씬 간 데이터 보존 클래스
-    [System.Serializable]
     public class DataController
     {
         public DynamicPlayerData Player;

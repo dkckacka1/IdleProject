@@ -1,3 +1,4 @@
+using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
 using IdleProject.Data.DynamicData;
@@ -27,6 +28,11 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         private void ShowEquipmentItemDetail(DynamicEquipmentItemData item)
         {
             itemSlot.SlotUI.SetData(item);
+            itemSlot.SetData(item);
+            var currentEquippedCharacter = string.IsNullOrEmpty(item.equipmentCharacterName)
+                ? null
+                : DataManager.Instance.GetData<StaticCharacterData>(item.equipmentCharacterName);
+            itemSlot.SetEquipmentCharacterIcon(currentEquippedCharacter);
             
             _equipmentItemNameText.Text.text = item.StaticData.itemName;
         }

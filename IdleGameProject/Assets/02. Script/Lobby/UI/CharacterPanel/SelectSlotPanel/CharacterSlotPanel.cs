@@ -19,22 +19,18 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         
         public override void Initialized()
         {
-            
+            var userCharacterList = DataManager.Instance.DataController.Player.PlayerCharacterDataList;
+
+            CreateSlot(userCharacterList);
         }
 
         public override void OpenPanel()
         {
             base.OpenPanel();
             var userCharacterList = DataManager.Instance.DataController.Player.PlayerCharacterDataList;
-
-            var createSlotCount = userCharacterList.Count - _slotList.Count;
-            for (int i = 0; i < createSlotCount; ++i)
-                // 부족한 슬롯 생성
-            {
-                _slotList.Add(CreateSlot());
-            }
-                
-            for (int i = 0; i < _slotList.Count; ++i)
+            var selectCharacter = UIManager.Instance.GetUI<CharacterPanel>().SelectCharacter;
+            CreateSlot(userCharacterList);
+            for (int i = 0; i < _slotList.Count; ++i)  
                 // 캐릭터 수만큼 슬롯에 정의
             {
                 var slot = _slotList[i];
@@ -42,6 +38,8 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                 {
                     slot.SetData(userCharacterList[i]);
                     slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, ClickCharacterSlot);
+                    if(selectCharacter == userCharacterList[i])
+                        SwapSlotFocus(slot);
                     slot.gameObject.SetActive(true);
                 }
                 else
@@ -50,6 +48,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                 }
             }
         }
+
 
         public override void ClosePanel()
         {
@@ -60,11 +59,19 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                 slot.gameObject.SetActive(false);
             }
         }
+        
+        private void CreateSlot(List<DynamicCharacterData> userCharacterList)
+        {
+            var createSlotCount = userCharacterList.Count - _slotList.Count;
+            for (int i = 0; i < createSlotCount; ++i)
+                // 부족한 슬롯 생성
+            {
+                _slotList.Add(CreateSlot());
+            }
+        }
 
         private void ClickCharacterSlot(PointerEventData eventData, SlotUI slot)
         {
-            Debug.Log("Test");
-            
             SwapSlotFocus(slot);
             var characterData = slot.GetData<DynamicCharacterData>();
 

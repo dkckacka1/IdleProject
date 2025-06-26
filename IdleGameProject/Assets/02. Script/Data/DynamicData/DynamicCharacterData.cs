@@ -1,4 +1,5 @@
 ﻿using System;
+using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Data.Player;
 using IdleProject.Data.StaticData;

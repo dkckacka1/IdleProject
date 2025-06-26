@@ -17,19 +17,7 @@ using UnityEngine.Serialization;
 
 namespace IdleProject.Battle.Character
 {
-    public struct CharacterState
-    {
-        public bool CanMove;
-        public bool CanAttack;
-        public bool IsDead;
 
-        public void Initialize()
-        {
-            CanMove = true;
-            CanAttack = true;
-            IsDead = false;
-        }
-    }
 
     [System.Serializable]
     public partial class CharacterController : MonoBehaviour, IEventGroup<BattleManager>, IEnumEvent<BattleGameStateType>, IEnumEvent<BattleStateType>

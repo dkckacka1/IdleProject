@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace IdleProject.Core.UI.Slot
 {
-    public class ConsumableItemSlot : SlotComponent
+    public class ConsumableItemSlot : SlotParts
     {
         [SerializeField] private Image shadowImage;
         [SerializeField] private TextMeshProUGUI haveCountText;
@@ -25,6 +25,10 @@ namespace IdleProject.Core.UI.Slot
             
             haveCountText.gameObject.SetActive(count > 0);
             haveCountText.text = count.ToString();
+        }
+
+        public override void SetData<T>(T data)
+        {
         }
     }
 }

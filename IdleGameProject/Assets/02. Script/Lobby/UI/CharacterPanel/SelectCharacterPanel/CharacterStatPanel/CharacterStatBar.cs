@@ -1,9 +1,10 @@
 using System;
-using IdleProject.Battle.Character;
 using IdleProject.Core;
 using IdleProject.Core.UI;
+using IdleProject.Util;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
 {
@@ -11,6 +12,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
     {
         [SerializeField] private TextMeshProUGUI statNameText;
         [SerializeField] private TextMeshProUGUI statValueText;
+        [SerializeField] private Image statTypeIconImage;
 
         public void ShowStat(CharacterStatType statType, float value)
         {
@@ -38,6 +40,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                     throw new ArgumentOutOfRangeException(nameof(statType), statType, null);
             }
 
+            statTypeIconImage.sprite = GetSpriteExtension.GetCharacterStatTypeIconSprite(statType);
             statValueText.text = value.ToString("0");
         }
     }

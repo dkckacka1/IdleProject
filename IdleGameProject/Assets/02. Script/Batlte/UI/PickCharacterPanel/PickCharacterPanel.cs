@@ -50,14 +50,14 @@ namespace IdleProject.Battle.UI
         
         private OrganizationSlot CreateSlot(DynamicCharacterData characterData)
         {
-            var slot = SlotUI.GetSlotUI<OrganizationSlot>(pickCharacterScrollView.content).SlotUI;
+            var slot = SlotUI.GetSlotUI<OrganizationSlot>(pickCharacterScrollView.content);
             slot.SetData(characterData);
             slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, OnSlotClick);
             slot.PublishEvent<PointerEventData>(EventTriggerType.BeginDrag, OnSlotDragBegin);
             slot.PublishEvent<PointerEventData>(EventTriggerType.Drag, OnSlotDrag);
             slot.PublishEvent<PointerEventData>(EventTriggerType.EndDrag, OnSlotDragEnd);
             
-            return slot.GetComponent<OrganizationSlot>();
+            return slot.GetSlotParts<OrganizationSlot>();
         }
 
         private void OnSlotDragBegin(PointerEventData eventData, SlotUI slot)
@@ -92,11 +92,11 @@ namespace IdleProject.Battle.UI
                 
                 if (targetSpawnPosition.SpawnAIType == CharacterAIType.Player)
                 {
-                    var organizationSlot = slot.GetComponent<OrganizationSlot>();
-                    if (!IsCharacterSpawnedSlot(organizationSlot, out var spawnedCharacter))
+                    var organizationParts = slot.GetSlotParts<OrganizationSlot>();
+                    if (!IsCharacterSpawnedSlot(organizationParts, out var spawnedCharacter))
                         // 스폰된 캐릭터가 없다면 생성
                     {
-                        organizationSlot.SetOrganization(true);
+                        organizationParts.SetOrganization(true);
                         _battleManager.spawnController
                             .SpawnCharacterBySpawnPosition(_pickData, targetSpawnPosition).Forget();
                     }
@@ -128,13 +128,13 @@ namespace IdleProject.Battle.UI
         
         private void OnSlotClick(PointerEventData eventData, SlotUI slot)
         {
-            var organizationSlot = slot.GetComponent<OrganizationSlot>();
+            var organizationSlotParts = slot.GetSlotParts<OrganizationSlot>();
 
-            if (IsCharacterSpawnedSlot(organizationSlot, out var character))
+            if (IsCharacterSpawnedSlot(organizationSlotParts, out var character))
             {
                 _battleManager.spawnController.RemoveCharacter(character, CharacterAIType.Player);
                 
-                organizationSlot.SetOrganization(false);
+                organizationSlotParts.SetOrganization(false);
             }
         }
         

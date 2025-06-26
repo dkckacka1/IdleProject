@@ -93,7 +93,6 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         private void SkillSelectToggleValueChanged(bool value)
         {
-            Debug.Log($"EquipmentToggle {value}"); 
         }
     }
 }

@@ -11,25 +11,25 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 {
     public class CharacterPanel : UIPanel, IUISelectCharacterUpdatable
     {
-        public DynamicCharacterData SelectCharacter;
+        public DynamicCharacterData Selector;
         
         public override void Initialized()
         {
             UIManager.Instance.GetUI<UIButton>("CloseCharacterPopupButton").Button.onClick.AddListener(ClosePanel);
 
-            SelectCharacter ??= DataManager.Instance.DataController.Player.PlayerCharacterDataList[0];
+            Selector ??= DataManager.Instance.DataController.Player.PlayerCharacterDataList[0];
         }
 
         public override void OpenPanel()
         {
             base.OpenPanel();
             UIManager.Instance.GetUIsOfType<IUISelectCharacterUpdatable>()
-                .ForEach(ui => ui.SetCharacter(SelectCharacter));
+                .ForEach(ui => ui.SelectCharacter(Selector));
         }
-
-        public void SetCharacter(DynamicCharacterData character)
+        
+        public void SelectCharacter(DynamicCharacterData character)
         {
-            SelectCharacter = character;
+            Selector = character;
         }
     }
 }

@@ -52,6 +52,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             {
                 UIManager.Instance.GetUI<CharacterStatPanel>("CharacterStatPanel").ClosePanel();
             }
+            UIManager.Instance.GetUI<SelectEquipmentItemPanel>().ClosePanel();
         }
 
         private void ShowCharacterStatPanelToggle(bool toggleValue)
@@ -64,9 +65,11 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             {
                 UIManager.Instance.GetUI<CharacterLevelUpPanel>("CharacterLevelUpPanel").ClosePanel();
             }
+            
+            UIManager.Instance.GetUI<SelectEquipmentItemPanel>().ClosePanel();
         }
 
-        public void SetCharacter(DynamicCharacterData selectData)
+        public void SelectCharacter(DynamicCharacterData selectData)
         {
             _characterLoadingRotate.StartLoading(LoadCharacter(selectData.CharacterData)).Forget();
         }

@@ -28,7 +28,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             base.OpenPanel();
             var userCharacterList = DataManager.Instance.DataController.Player.PlayerCharacterDataList;
-            var selectCharacter = UIManager.Instance.GetUI<CharacterPanel>().SelectCharacter;
+            var selectCharacter = UIManager.Instance.GetUI<CharacterPanel>().Selector;
             CreateSlot(userCharacterList);
             for (int i = 0; i < _slotList.Count; ++i)  
                 // 캐릭터 수만큼 슬롯에 정의
@@ -77,7 +77,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
             foreach (var selectCharacterUpdatableUI in UIManager.Instance.GetUIsOfType<IUISelectCharacterUpdatable>())
             {
-                selectCharacterUpdatableUI.SetCharacter(characterData);
+                selectCharacterUpdatableUI.SelectCharacter(characterData);
             }
         }
 

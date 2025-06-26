@@ -7,7 +7,7 @@ using IdleProject.Data.StaticData;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
 {
-    public class CharacterStatPanel : UIPanel, IUISelectCharacterUpdatable
+    public class CharacterStatPanel : UIPanel, IUISelectCharacterUpdatable, IUISelectEquipmentItemUpdatable
     {
         private CharacterStatBar _attackDamageStatBar;
         private CharacterStatBar _healthPointStatBar;
@@ -20,11 +20,16 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             _movementSpeedStatBar = UIManager.Instance.GetUI<CharacterStatBar>("CharacterStatBar_MovementSpeed");
         }
         
-        public void SetCharacter(DynamicCharacterData selectData)
+        public void SelectCharacter(DynamicCharacterData selectData)
         {
             _attackDamageStatBar.ShowStat(CharacterStatType.AttackDamage, selectData.Stat.attackDamage);
             _healthPointStatBar.ShowStat(CharacterStatType.HealthPoint, selectData.Stat.healthPoint);
             _movementSpeedStatBar.ShowStat(CharacterStatType.MovementSpeed, selectData.Stat.movementSpeed);
+        }
+
+        public void SelectEquipmentItem(StaticEquipmentItemData item)
+        {
+            ClosePanel();
         }
     }
 }

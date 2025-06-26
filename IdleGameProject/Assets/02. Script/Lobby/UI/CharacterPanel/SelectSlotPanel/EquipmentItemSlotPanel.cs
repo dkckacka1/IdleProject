@@ -4,6 +4,7 @@ using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
 using IdleProject.Data.StaticData;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
@@ -12,7 +13,9 @@ namespace IdleProject.Lobby.UI.CharacterPopup
     {
         [SerializeField] private ScrollRect scroll;
         
-        private readonly List<EquipmentItemSlot> _slotList = new List<EquipmentItemSlot>();
+        private readonly List<SlotUI> _slotList = new();
+        
+        private SlotUI _selectSlot;
         
         public override void Initialized()
         {
@@ -43,25 +46,41 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                         ? DataManager.Instance.GetData<StaticCharacterData>(playerEquipmentItemList[i].equipmentCharacterName)
                         : null;
                     
-                    slot.SlotUI.SetData(data);
-                    slot.SetIcon(equipmentCharacterData);
+                    slot.SetData(data);
+                    slot.GetSlotParts<EquipmentItemSlot>().SetEquipmentCharacterIcon(equipmentCharacterData);
                     
-                    // slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, ClickCharacterSlot);
+                    slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, ClickEquipmentSlot);
                     slot.gameObject.SetActive(true);
                 }
                 else
                 {
+                    slot.UnPublishAllEvent();
                     slot.gameObject.SetActive(false);
                 }
             }
         }
 
-        public override void ClosePanel()
+        private void ClickEquipmentSlot(PointerEventData eventData, SlotUI slot)
         {
-            base.ClosePanel();
+            SwapSlotFocus(slot);
+            var equipmentItemData = slot.GetData<StaticEquipmentItemData>();
+
+            foreach (var selectEquipmentItemUpdatable in UIManager.Instance.GetUIsOfType<IUISelectEquipmentItemUpdatable>())
+            {
+                selectEquipmentItemUpdatable.SelectEquipmentItem(equipmentItemData);
+            }
         }
 
-        private EquipmentItemSlot CreateSlot()
+        private void SwapSlotFocus(SlotUI slot)
+        {
+            if (_selectSlot is not null)
+                _selectSlot.SetFocus(false);
+
+            _selectSlot = slot;
+            _selectSlot.SetFocus(true);
+        }
+
+        private SlotUI CreateSlot()
         {
             return SlotUI.GetSlotUI<EquipmentItemSlot>(scroll.content);
         }

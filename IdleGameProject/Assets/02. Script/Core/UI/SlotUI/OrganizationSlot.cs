@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IdleProject.Core.UI.Slot
 {
-    public class OrganizationSlot : SlotComponent
+    public class OrganizationSlot : SlotParts
     {
         [SerializeField] private GameObject organizationObject;
 

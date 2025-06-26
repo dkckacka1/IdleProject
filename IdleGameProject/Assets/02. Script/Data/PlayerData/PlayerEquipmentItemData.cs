@@ -10,7 +10,6 @@ namespace IdleProject.Data.Player
         public int index;
         public string itemName;
         public string equipmentCharacterName;
-        private ISlotData _slotDataImplementation;
 
         public StaticEquipmentItemData GetData => DataManager.Instance.GetData<StaticEquipmentItemData>(itemName);
     }

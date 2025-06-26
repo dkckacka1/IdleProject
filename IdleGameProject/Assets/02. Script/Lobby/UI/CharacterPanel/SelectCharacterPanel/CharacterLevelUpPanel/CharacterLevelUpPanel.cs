@@ -13,13 +13,13 @@ using UnityEngine.EventSystems;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
 {
-    public class CharacterLevelUpPanel : UIPanel, IUISelectCharacterUpdatable
+    public class CharacterLevelUpPanel : UIPanel, IUISelectCharacterUpdatable, IUISelectEquipmentItemUpdatable
     {
         [SerializeField] private Transform slotContent;
         [SerializeField] private float longClickTime = 2f;
         [SerializeField] private float maxLongClickTime = 4f;
 
-        private readonly List<ConsumableItemSlot> _slotList = new();
+        private readonly List<SlotUI> _slotList = new();
 
         private ConsumableItemSlot _clickedSlot;
         private CharacterExpChangerUI _expChangerUI;
@@ -46,8 +46,8 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             foreach (var itemData in expItemDataList)
             {
                 var slot = CreateSlot(itemData);
-                slot.SlotUI.PublishEvent<PointerEventData>(EventTriggerType.PointerUp, OnSlotPointerUp);
-                slot.SlotUI.PublishEvent<PointerEventData>(EventTriggerType.PointerDown, OnSlotPointerDown);
+                slot.PublishEvent<PointerEventData>(EventTriggerType.PointerUp, OnSlotPointerUp);
+                slot.PublishEvent<PointerEventData>(EventTriggerType.PointerDown, OnSlotPointerDown);
                 _slotList.Add(slot);
             }
 
@@ -61,11 +61,11 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             ResetUseExpPotion();
         }
 
-        private ConsumableItemSlot CreateSlot(StaticConsumableItemData itemData)
+        private SlotUI CreateSlot(StaticConsumableItemData itemData)
         {
-            var slot = SlotUI.GetSlotUI<ConsumableItemSlot>(slotContent).SlotUI;
+            var slot = SlotUI.GetSlotUI<ConsumableItemSlot>(slotContent);
             slot.SetData(itemData);
-            return slot.GetComponent<ConsumableItemSlot>();
+            return slot;
         }
 
         private void LevelUp()
@@ -83,12 +83,12 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             // 소비아이템 사용해주기
             foreach (var slot in _slotList)
             {
-                AcceptExpPotion(slot);                
+                AcceptExpPotion(slot.GetSlotParts<ConsumableItemSlot>());                
             }
             
             // UI 업데이트
             UIManager.Instance.GetUIsOfType<IUISelectCharacterUpdatable>()
-                .ForEach(ui => ui.SetCharacter(_selectCharacter));
+                .ForEach(ui => ui.SelectCharacter(_selectCharacter));
         }
 
         private void OnSlotPointerDown(PointerEventData eventData, SlotUI slot)
@@ -172,13 +172,13 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             foreach (var slot in _slotList)
             {
-                var data = slot.SlotUI.GetData<StaticConsumableItemData>();
+                var data = slot.GetData<StaticConsumableItemData>();
                 var playerHaveData = DataManager.Instance.DataController.Player.PlayerData.GetItem(data.itemName);
-                slot.SetCount(playerHaveData.itemCount, true);
+                slot.GetSlotParts<ConsumableItemSlot>().SetCount(playerHaveData.itemCount, true);
             }
         }
 
-        public void SetCharacter(DynamicCharacterData character)
+        public void SelectCharacter(DynamicCharacterData character)
         {
             var playerCharacter =
                 DataManager.Instance.DataController.Player.PlayerData.GetCharacter(character.CharacterData.name);
@@ -187,6 +187,11 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             _selectCharacter = character;
 
             ResetUseExpPotion();
+        }
+
+        public void SelectEquipmentItem(StaticEquipmentItemData item)
+        {
+            ClosePanel();
         }
     }
 }

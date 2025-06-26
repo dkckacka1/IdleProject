@@ -62,7 +62,7 @@ namespace IdleProject.Data.DynamicData
         {
             SetStat(characterLevel, StaticData);
         }
-        
+
         public void AddExp(int expAmount)
         {
             Exp += expAmount;
@@ -91,7 +91,7 @@ namespace IdleProject.Data.DynamicData
         public static DynamicCharacterData GetInstance(PlayerCharacterData characterData)
         {
             var staticCharacterData = DataManager.Instance.GetData<StaticCharacterData>(characterData.characterName);
-
+            
             return new DynamicCharacterData(characterData.level, characterData.exp, staticCharacterData);
         }
 

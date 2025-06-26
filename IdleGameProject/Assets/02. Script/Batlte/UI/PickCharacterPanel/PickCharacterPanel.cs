@@ -50,7 +50,7 @@ namespace IdleProject.Battle.UI
         
         private OrganizationSlot CreateSlot(DynamicCharacterData characterData)
         {
-            var slot = SlotUI.GetSlotUI<OrganizationSlot>(pickCharacterScrollView.content);
+            var slot = SlotUI.GetSlotUI<OrganizationSlot>(pickCharacterScrollView.content).SlotUI;
             slot.SetData(characterData);
             slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, OnSlotClick);
             slot.PublishEvent<PointerEventData>(EventTriggerType.BeginDrag, OnSlotDragBegin);

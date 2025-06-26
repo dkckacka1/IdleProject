@@ -58,14 +58,12 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             base.ClosePanel();
             
-            Debug.Log("Close");
-            
             ResetUseExpPotion();
         }
 
         private ConsumableItemSlot CreateSlot(StaticConsumableItemData itemData)
         {
-            var slot = SlotUI.GetSlotUI<ConsumableItemSlot>(slotContent);
+            var slot = SlotUI.GetSlotUI<ConsumableItemSlot>(slotContent).SlotUI;
             slot.SetData(itemData);
             return slot.GetComponent<ConsumableItemSlot>();
         }

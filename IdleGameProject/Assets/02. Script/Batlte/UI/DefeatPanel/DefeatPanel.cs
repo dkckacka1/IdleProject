@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using IdleProject.Core;
 using IdleProject.Core.UI;
+using IdleProject.Lobby.UI.CharacterPopup;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -56,8 +57,8 @@ namespace IdleProject.Battle.UI
         {
             GameManager.Instance.LoadScene(SceneType.Lobby, () =>
             {
-                UIManager.Instance.GetUI<UIPanel>("CharacterPanel").OpenPanel();
-                UIManager.Instance.GetUI<UIToggle>("CharacterSelectToggle").Toggle.isOn = true;
+                UIManager.Instance.GetUI<CharacterPanel>().OpenPanel();
+                UIManager.Instance.GetUI<SelectSlotPanel>().OpenPanel(SlotPanelType.Character);
             }).Forget();
         }
 
@@ -65,8 +66,8 @@ namespace IdleProject.Battle.UI
         {
             GameManager.Instance.LoadScene(SceneType.Lobby, () =>
             {
-                UIManager.Instance.GetUI<UIPanel>("CharacterPanel").OpenPanel();
-                UIManager.Instance.GetUI<UIToggle>("EquipmentToggle").Toggle.isOn = true;
+                UIManager.Instance.GetUI<CharacterPanel>().OpenPanel();
+                UIManager.Instance.GetUI<SelectSlotPanel>().OpenPanel(SlotPanelType.EquipmentItem);
             }).Forget();
         }
 

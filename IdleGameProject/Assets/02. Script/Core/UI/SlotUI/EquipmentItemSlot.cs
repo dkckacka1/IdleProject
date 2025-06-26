@@ -15,8 +15,15 @@ namespace IdleProject.Core.UI.Slot
             equipmentCharacterObject.SetActive(isActive);
         }
         
-        public void SetIcon<T>(T data) where T : ISlotData
+        public void SetIcon<T>(T data) where T : class ,ISlotData, IData
         {
+            if (data is null)
+            {
+                SetEquipmentObject(false);
+                return;
+            }
+            
+            SetEquipmentObject(true);
             equipmentCharacterIconImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(data.GetIconName);
         }
     }

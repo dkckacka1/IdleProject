@@ -39,8 +39,6 @@ namespace IdleProject.Data.StaticData
     [CreateAssetMenu(fileName = "CharacterData", menuName = "Scriptable Objects/CharacterData")]
     public class StaticCharacterData : StaticData, ISlotData
     {
-        public override string Index => addressValue.characterName;
-        
         public CharacterAddressValue addressValue;
         public StatValue stat;
         [FormerlySerializedAs("levelData")] public LevelValue levelValue;

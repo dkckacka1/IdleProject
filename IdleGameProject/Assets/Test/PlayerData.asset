@@ -18,12 +18,30 @@ MonoBehaviour:
   - characterName: Hiro
     level: 1
     exp: 0
+    equipmentWeaponIndex: 0
+    equipmentHelmetIndex: 0
+    equipmentArmorIndex: 0
+    equipmentGloveIndex: 0
+    equipmentBootsIndex: 0
+    equipmentAccessoryIndex: 0
   - characterName: Eli
     level: 1
     exp: 0
+    equipmentWeaponIndex: 0
+    equipmentHelmetIndex: 0
+    equipmentArmorIndex: 0
+    equipmentGloveIndex: 0
+    equipmentBootsIndex: 0
+    equipmentAccessoryIndex: 0
   - characterName: Bak
     level: 1
     exp: 0
+    equipmentWeaponIndex: 0
+    equipmentHelmetIndex: 0
+    equipmentArmorIndex: 0
+    equipmentGloveIndex: 0
+    equipmentBootsIndex: 0
+    equipmentAccessoryIndex: 0
   userConsumableItemList:
   - itemName: ExpPotion01
     itemCount: 1000
@@ -35,6 +53,13 @@ MonoBehaviour:
     itemCount: 100
   - itemName: ExpPotion05
     itemCount: 0
+  userEquipmentItemList:
+  - index: 0
+    itemName: Weapon_01
+    equipmentCharacterName: 
+  - index: 1
+    itemName: Armor_01
+    equipmentCharacterName: Bak
   frontMiddleCharacterName: Hiro
   frontRightCharacterName: Bak
   frontLeftCharacterName: Eli

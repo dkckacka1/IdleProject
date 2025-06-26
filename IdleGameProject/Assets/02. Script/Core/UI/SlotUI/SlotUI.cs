@@ -64,10 +64,11 @@ namespace  IdleProject.Core.UI.Slot
             return Instantiate(slotObject, parent);
         }
         
-        public static SlotUI GetSlotUI<T>(Transform parent) where T : SlotComponent
+        public static T GetSlotUI<T>(Transform parent) where T : SlotComponent
         {
-            var slotObject = ResourceManager.Instance.GetPrefab(ResourceManager.SlotLabelName, typeof(T).Name).GetComponent<SlotUI>();
-            return Instantiate(slotObject, parent);
+            var slotObject = ResourceManager.Instance.GetPrefab(ResourceManager.SlotLabelName, typeof(T).Name).GetComponent<T>();
+            var slotInstance = Instantiate(slotObject, parent);
+            return slotInstance;
         }
     }
 }

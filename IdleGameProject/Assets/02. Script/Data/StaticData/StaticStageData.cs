@@ -43,10 +43,6 @@ namespace IdleProject.Data.StaticData
     [CreateAssetMenu(fileName = "StageData", menuName = "Scriptable Objects/StageData")]
     public class StaticStageData : StaticData
     {
-        public int stageNumber;
         public FormationInfo stageFormation;
-
-        public override string Index => stageNumber.ToString();
     }
-
 }

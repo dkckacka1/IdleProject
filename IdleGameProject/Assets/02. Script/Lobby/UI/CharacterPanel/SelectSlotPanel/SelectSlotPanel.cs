@@ -1,29 +1,71 @@
-using System.Collections.Generic;
-using IdleProject.Core.GameData;
+using System;
+using IdleProject.Core;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Loading;
-using IdleProject.Core.UI.Slot;
-using IdleProject.Data.DynamicData;
-using IdleProject.Data.StaticData;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
 {
     public class SelectSlotPanel : UIPanel
     {
         [SerializeField] private LoadingRotateUI loadingUI;
+
+        private UIToggle _characterSlotToggle;
+        private UIToggle _equipmentItemToggle;
+        private UIToggle _skillToggle;
         
         public override void Initialized()
         {
-            UIManager.Instance.GetUI<UIToggle>("CharacterSelectToggle").Toggle.onValueChanged.AddListener(CharacterSelectToggleValueChanged);
-            UIManager.Instance.GetUI<UIToggle>("SkillSelectToggle").Toggle.onValueChanged.AddListener(SkillSelectToggleValueChanged);
-            UIManager.Instance.GetUI<UIToggle>("EquipmentToggle").Toggle.onValueChanged.AddListener(EquipmentToggleValueChanged);
+            _characterSlotToggle = UIManager.Instance.GetUI<UIToggle>("CharacterSelectToggle");
+            _equipmentItemToggle = UIManager.Instance.GetUI<UIToggle>("SkillSelectToggle");
+            _skillToggle = UIManager.Instance.GetUI<UIToggle>("EquipmentToggle");
             
-            UIManager.Instance.GetUI<UIToggle>("CharacterSelectToggle").Toggle.isOn = true;
-            UIManager.Instance.GetUI<UIToggle>("CharacterSelectToggle").Toggle.onValueChanged.Invoke(true);
+            _characterSlotToggle.Toggle.onValueChanged.AddListener(CharacterSelectToggleValueChanged);
+            _equipmentItemToggle.Toggle.onValueChanged.AddListener(SkillSelectToggleValueChanged);
+            _skillToggle.Toggle.onValueChanged.AddListener(EquipmentToggleValueChanged);
+
+            OpenPanel(SlotPanelType.Character);
         }
+
+        public void OpenPanel(SlotPanelType panelType)
+        {
+            switch(panelType)
+            {
+                case SlotPanelType.Character:
+                    _characterSlotToggle.Toggle.isOn = true;
+                    _characterSlotToggle.Toggle.onValueChanged.Invoke(true);
+
+                    _equipmentItemToggle.Toggle.isOn = false;
+                    _equipmentItemToggle.Toggle.onValueChanged.Invoke(false);
+
+                    _skillToggle.Toggle.isOn = false;
+                    _skillToggle.Toggle.onValueChanged.Invoke(false);
+                    break;
+                case SlotPanelType.EquipmentItem:
+                    _characterSlotToggle.Toggle.isOn = false;
+                    _characterSlotToggle.Toggle.onValueChanged.Invoke(false);
+
+                    _equipmentItemToggle.Toggle.isOn = true;
+                    _equipmentItemToggle.Toggle.onValueChanged.Invoke(true);
+
+                    _skillToggle.Toggle.isOn = false;
+                    _skillToggle.Toggle.onValueChanged.Invoke(false);
+                    break;
+                case SlotPanelType.Skill:
+                    _characterSlotToggle.Toggle.isOn = false;
+                    _characterSlotToggle.Toggle.onValueChanged.Invoke(false);
+
+                    _equipmentItemToggle.Toggle.isOn = false;
+                    _equipmentItemToggle.Toggle.onValueChanged.Invoke(false);
+
+                    _skillToggle.Toggle.isOn = true;
+                    _skillToggle.Toggle.onValueChanged.Invoke(true);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(panelType), panelType, null);
+            }
+        }
+        
 
         private void CharacterSelectToggleValueChanged(bool value)
         {
@@ -39,7 +81,14 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         private void EquipmentToggleValueChanged(bool value)
         {
-            Debug.Log($"SkillSelectToggle {value}"); 
+            if (value)
+            {
+                UIManager.Instance.GetUI<UIPanel>("EquipmentItemSlotPanel").OpenPanel();
+            }
+            else
+            {
+                UIManager.Instance.GetUI<UIPanel>("EquipmentItemSlotPanel").ClosePanel();
+            }
         }
 
         private void SkillSelectToggleValueChanged(bool value)

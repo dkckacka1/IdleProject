@@ -63,6 +63,8 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         private void ClickCharacterSlot(PointerEventData eventData, SlotUI slot)
         {
+            Debug.Log("Test");
+            
             SwapSlotFocus(slot);
             var characterData = slot.GetData<DynamicCharacterData>();
 

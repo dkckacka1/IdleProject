@@ -15,6 +15,7 @@ namespace IdleProject.Data.Player
         
         public List<PlayerCharacterData> userCharacterList;
         public List<PlayerConsumableItemData> userConsumableItemList;
+        public List<PlayerEquipmentItemData> userEquipmentItemList;
 
         public string frontMiddleCharacterName;
         public string frontRightCharacterName;
@@ -26,6 +27,9 @@ namespace IdleProject.Data.Player
             userCharacterList.FirstOrDefault(data => data.characterName == characterName);
         
         public PlayerConsumableItemData GetItem(string itemName) => userConsumableItemList.FirstOrDefault(data => data.itemName == itemName);
+
+        public PlayerEquipmentItemData GetEquipmentItem(string itemName) =>
+            userEquipmentItemList.FirstOrDefault(data => data.itemName == itemName);
         
         [Button]
         private void CreateConsumableItem()

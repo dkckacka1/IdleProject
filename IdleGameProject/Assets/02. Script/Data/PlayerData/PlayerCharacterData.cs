@@ -12,6 +12,13 @@ namespace IdleProject.Data.Player
         public int level = 1;
         public int exp;
 
+        public int equipmentWeaponIndex;
+        public int equipmentHelmetIndex;
+        public int equipmentArmorIndex;
+        public int equipmentGloveIndex;
+        public int equipmentBootsIndex;
+        public int equipmentAccessoryIndex;
+        
         public int GetLevelUpExpValue => level * 100;
 
         public void AddExp(int expAmount)
@@ -24,10 +31,7 @@ namespace IdleProject.Data.Player
             }
         }
         
-        public StaticCharacterData GetCharacterData()
-        {
-            return DataManager.Instance.GetData<StaticCharacterData>(characterName);
-        }
+        public StaticCharacterData GetData => DataManager.Instance.GetData<StaticCharacterData>(characterName);
 
         public static int GetLevelExpValue(int level) => level * 100;
     }

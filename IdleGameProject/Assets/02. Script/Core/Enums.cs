@@ -1,5 +1,7 @@
 ﻿namespace IdleProject.Core
 {
+    #region Battle
+
     public enum BattleStateType
     {
         Ready = default,
@@ -41,6 +43,7 @@
         BattleEffect,
         Projectile,
     }
+    #endregion
 
     public enum CharacterStatType
     {
@@ -74,5 +77,12 @@
         Glove,
         Boots,
         Accessory
+    }
+
+    public enum SlotPanelType
+    {
+        Character,
+        EquipmentItem,
+        Skill
     }
 }

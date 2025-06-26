@@ -33,7 +33,7 @@ namespace IdleProject.Data.Player
             foreach (var itemData in DataManager.Instance.GetDataList<StaticConsumableItemData>())
             {
                 var item = new PlayerConsumableItemData();
-                item.itemName = itemData.itemName;
+                item.itemName = itemData.Index;
                 playerConsumableItemList.Add(item);
             }
         }

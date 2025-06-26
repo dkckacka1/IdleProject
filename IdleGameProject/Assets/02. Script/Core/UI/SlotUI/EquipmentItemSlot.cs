@@ -15,7 +15,7 @@ namespace IdleProject.Core.UI.Slot
         [SerializeField] private Image equipmentCharacterIconImage;
         [SerializeField] private Image equipmentItemTypeImage;
         
-        public void SetEquipmentCharacterIcon<T>(T data) where T : class ,ISlotData, IData
+        public void SetEquipmentCharacterIcon(StaticCharacterData data)
         {
             if (data is null)
             {

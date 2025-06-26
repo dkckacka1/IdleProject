@@ -146,9 +146,9 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         private void AcceptExpPotion(ConsumableItemSlot itemSlot)
         {
-            var itemName = itemSlot.SlotUI.GetData<StaticConsumableItemData>().itemName;
+            var itemIndex = itemSlot.SlotUI.GetData<StaticConsumableItemData>().Index;
 
-            var userItem = DataManager.Instance.DataController.Player.PlayerConsumableItemDataDic[itemName];
+            var userItem = DataManager.Instance.DataController.Player.PlayerConsumableItemDataDic[itemIndex];
             userItem.itemCount = itemSlot.CurrentCount;
             DataManager.Instance.SaveController.SaveConsumableItem(userItem);
         }

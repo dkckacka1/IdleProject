@@ -6,14 +6,12 @@ namespace IdleProject.Data.DynamicData
 {
     public class DynamicConsumableItemData : DynamicData<StaticConsumableItemData>, ISlotData
     {
-        public string itemName;
         public int itemCount = 0;
 
         public string GetIconName => StaticData.GetIconName;
 
         private DynamicConsumableItemData(StaticConsumableItemData staticData, int count) : base(staticData)
         {
-            itemName = staticData.itemName;
             itemCount = count;
         }
 

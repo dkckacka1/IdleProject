@@ -1,6 +1,7 @@
 ﻿using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Data.StaticData;
+using UnityEngine.Serialization;
 
 namespace IdleProject.Data.Player
 {
@@ -8,9 +9,9 @@ namespace IdleProject.Data.Player
     public class PlayerEquipmentItemData
     {
         public int index;
-        public string itemName;
+        public string itemIndex;
         public string equipmentCharacterName;
 
-        public StaticEquipmentItemData GetData => DataManager.Instance.GetData<StaticEquipmentItemData>(itemName);
+        public StaticEquipmentItemData GetData => DataManager.Instance.GetData<StaticEquipmentItemData>(itemIndex);
     }
 }

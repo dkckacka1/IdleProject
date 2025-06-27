@@ -123,7 +123,7 @@ namespace IdleProject.Core.GameData
                 var newItem = new PlayerEquipmentItemData
                 {
                     index = itemData.Index,
-                    itemName = itemData.StaticData.itemName,
+                    itemIndex = itemData.StaticData.itemName,
                 };
                 _playerData.playerEquipmentItemList.Add(newItem);
             }

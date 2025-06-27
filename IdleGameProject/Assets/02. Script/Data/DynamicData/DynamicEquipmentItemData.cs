@@ -30,7 +30,7 @@ namespace IdleProject.Data.DynamicData
 
         public static DynamicEquipmentItemData GetInstance(PlayerEquipmentItemData playerEquipmentItemData)
         {
-            var staticData = DataManager.Instance.GetData<StaticEquipmentItemData>(playerEquipmentItemData.itemName);
+            var staticData = DataManager.Instance.GetData<StaticEquipmentItemData>(playerEquipmentItemData.itemIndex);
             return new DynamicEquipmentItemData(staticData, playerEquipmentItemData.equipmentCharacterName, playerEquipmentItemData.index);
         }
     }

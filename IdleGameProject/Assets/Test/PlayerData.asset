@@ -60,8 +60,12 @@ MonoBehaviour:
   - index: 2
     itemName: Weapon_02
     equipmentCharacterName: 
+  - index: 3
+    itemName: Accessory_01
+    equipmentCharacterName: 
   frontMiddleCharacterName: Hiro
   frontRightCharacterName: Eli
   frontLeftCharacterName: Bak
   rearRightCharacterName: 
   rearLeftCharacterName: 
+  equipmentItemData: {fileID: 11400000, guid: d462f05c92d18aa4995db13d728ec1bf, type: 2}

@@ -13,7 +13,7 @@ namespace IdleProject.Data.Player
     {
         public int playerLevel = 1;
         public int playerExp = 0;
-        
+
         public List<PlayerCharacterData> playerCharacterList;
         public List<PlayerConsumableItemData> playerConsumableItemList;
         public List<PlayerEquipmentItemData> playerEquipmentItemList;
@@ -23,18 +23,51 @@ namespace IdleProject.Data.Player
         public string frontLeftCharacterName;
         public string rearRightCharacterName;
         public string rearLeftCharacterName;
-        
-        
-        [Button]
+
+
+        private bool IsGamePlay => Application.isPlaying;
+        [BoxGroup("Test"), Button, ShowIf("@this.IsGamePlay")]
         private void CreateConsumableItem()
         {
             playerConsumableItemList.Clear();
-            
+
             foreach (var itemData in DataManager.Instance.GetDataList<StaticConsumableItemData>())
             {
                 var item = new PlayerConsumableItemData();
                 item.itemName = itemData.Index;
                 playerConsumableItemList.Add(item);
+            }
+        }
+
+        [BoxGroup("Test/EquipmentItem"), SerializeField, ShowIf("@this.IsGamePlay")]
+        private StaticEquipmentItemData equipmentItemData;
+
+        [BoxGroup("Test/EquipmentItem"), Button, ShowIf("@this.IsGamePlay")]
+        private void CreateEquipmentItem()
+        {
+            if (equipmentItemData is null) return;
+
+            var newItem = new PlayerEquipmentItemData
+            {
+                index = playerEquipmentItemList.Count + 1,
+                itemIndex = equipmentItemData.Index
+            };
+            playerEquipmentItemList.Add(newItem);
+        }
+
+        [BoxGroup("Test/EquipmentItem"), Button, ShowIf("@this.IsGamePlay")]
+        private void CreateAllEquipmentItem()
+        {
+            playerEquipmentItemList.Clear();
+
+            foreach (var itemData in DataManager.Instance.GetDataList<StaticEquipmentItemData>())
+            {
+                var newItem = new PlayerEquipmentItemData
+                {
+                    index = playerEquipmentItemList.Count + 1,
+                    itemIndex = itemData.Index
+                };
+                playerEquipmentItemList.Add(newItem);
             }
         }
     }

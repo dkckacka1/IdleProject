@@ -7,7 +7,7 @@ using IdleProject.Data.StaticData;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
 {
-    public class CharacterStatPanel : UIPanel, IUISelectCharacterUpdatable, IUISelectEquipmentItemUpdatable
+    public class CharacterStatPanel : UIPanel, IUISelectCharacterUpdatable, IUISelectEquipmentItemUpdatable, IUIUpdatable
     {
         private CharacterStatBar _attackDamageStatBar;
         private CharacterStatBar _healthPointStatBar;
@@ -26,16 +26,28 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         
         public void SelectCharacterUpdatable(DynamicCharacterData selectCharacter)
         {
-            _attackDamageStatBar.ShowStat(CharacterStatType.AttackDamage, selectCharacter.Stat.attackDamage);
-            _healthPointStatBar.ShowStat(CharacterStatType.HealthPoint, selectCharacter.Stat.healthPoint);
-            _defensePointStatBar.ShowStat(CharacterStatType.DefensePoint, selectCharacter.Stat.defensePoint);
-            _criticalPercentStatBar.ShowStat(CharacterStatType.CriticalPercent, selectCharacter.Stat.criticalPercent);
-            _criticalResistance.ShowStat(CharacterStatType.CriticalResistance, selectCharacter.Stat.criticalResistance);
+            ShowCharacterStat(selectCharacter);
         }
-        
+
+        private void ShowCharacterStat(DynamicCharacterData selectCharacter)
+        {
+            var characterStat = selectCharacter.GetStat();
+            
+            _attackDamageStatBar.ShowStat(CharacterStatType.AttackDamage, characterStat.attackDamage);
+            _healthPointStatBar.ShowStat(CharacterStatType.HealthPoint, characterStat.healthPoint);
+            _defensePointStatBar.ShowStat(CharacterStatType.DefensePoint, characterStat.defensePoint);
+            _criticalPercentStatBar.ShowStat(CharacterStatType.CriticalPercent, characterStat.criticalPercent);
+            _criticalResistance.ShowStat(CharacterStatType.CriticalResistance, characterStat.criticalResistance);
+        }
+
         public void SelectEquipmentItemUpdatable(DynamicEquipmentItemData item)
         {
             ClosePanel();
+        }
+
+        public void UpdateUI()
+        {
+            ShowCharacterStat(UIManager.Instance.GetUI<SelectCharacterPanel>().SelectedCharacter);
         }
     }
 }

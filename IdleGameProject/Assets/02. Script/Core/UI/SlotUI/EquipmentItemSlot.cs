@@ -28,7 +28,7 @@ namespace IdleProject.Core.UI.Slot
             equipmentCharacterIconImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(data.GetIconName);
         }
 
-        private void SetEquipmentObject(bool isActive)
+        public void SetEquipmentObject(bool isActive)
         {
             equipmentCharacterObject.SetActive(isActive);
         }

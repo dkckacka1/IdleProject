@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Boots_01
   itemType: 4
-  itemValue01: 10
-  itemValue02: 0
+  firstValueStatType: 2
+  itemFirstValue: 5
+  secondValueStatType: 0
+  itemSecondValue: 0

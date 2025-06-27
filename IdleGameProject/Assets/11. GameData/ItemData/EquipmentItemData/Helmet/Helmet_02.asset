@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Helmet_01
   itemType: 1
-  itemValue01: 10
-  itemValue02: 0
+  firstValueStatType: 0
+  itemFirstValue: 100
+  secondValueStatType: 0
+  itemSecondValue: 0

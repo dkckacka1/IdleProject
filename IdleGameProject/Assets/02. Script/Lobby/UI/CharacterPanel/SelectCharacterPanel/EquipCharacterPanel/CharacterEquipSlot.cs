@@ -21,6 +21,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             {
                 equipmentItemSlot.SlotUI.BindData(itemData);
                 equipmentItemSlot.ShowParts(itemData);
+                equipmentItemSlot.SetEquipmentObject(false);
             }
         }
     }

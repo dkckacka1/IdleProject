@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Accessory_02
   itemType: 5
-  itemValue01: 10
-  itemValue02: 0
+  firstValueStatType: 7
+  itemFirstValue: 10
+  secondValueStatType: 0
+  itemSecondValue: 0

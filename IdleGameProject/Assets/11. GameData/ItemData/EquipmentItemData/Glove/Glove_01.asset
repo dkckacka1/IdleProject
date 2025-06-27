@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Glove_01
   itemType: 3
-  itemValue01: 10
-  itemValue02: 0
+  firstValueStatType: 7
+  itemFirstValue: 5
+  secondValueStatType: 8
+  itemSecondValue: 5

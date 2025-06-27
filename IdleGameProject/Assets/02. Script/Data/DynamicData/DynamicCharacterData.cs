@@ -1,39 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Engine.Util.Extension;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Data.Player;
 using IdleProject.Data.StaticData;
 using IdleProject.Util;
+using UnityEngine;
 
 namespace IdleProject.Data.DynamicData
 {
     public class DynamicCharacterData : DynamicData<StaticCharacterData>, ISlotData
     {
-        public StatValue Stat;
         public int Level;
         public int Exp;
 
-        private readonly Dictionary<EquipmentItemType, int> EquippedItemDic = new();
+        private readonly Dictionary<EquipmentItemType, int> _equippedItemDic = new();
         
         public string GetIconName => StaticData.GetIconName;
         public int GetLevelUpExpValue => Level * 100;
+
+        public int GetCombatPower()
+        {
+            var stat = GetStat();
+            var power = stat.healthPoint * 0.4f + stat.attackDamage * 2.0f + stat.defensePoint * 0.8f + stat.criticalPercent * 1.5f + stat.criticalResistance * 0.3f;
+            return Mathf.RoundToInt(power * 3);
+        }
+        
         private DynamicCharacterData(int characterLevel, int exp, StaticCharacterData staticCharacterData) : base(staticCharacterData)
         {
             EnumExtension.Foreach<EquipmentItemType>(type =>
             {
-                EquippedItemDic.Add(type, 0);
+                _equippedItemDic.Add(type, 0);
             });
             
             Level = characterLevel;
             Exp = exp;
-            SetStat(characterLevel, staticCharacterData);
         }
 
-        public void UpdateCharacter(int characterLevel)
+        public StatValue GetStat()
         {
-            SetStat(characterLevel, StaticData);
+            bool notDefaultLevel = Level > 1; 
+            
+            var statValue = new StatValue
+            {
+                healthPoint = StaticData.stat.healthPoint + GetEquipmentStatValue(CharacterStatType.HealthPoint) + (notDefaultLevel ? StaticData.levelValue.healthPointValue * (Level - 1) : 0),
+                manaPoint = StaticData.stat.manaPoint + GetEquipmentStatValue(CharacterStatType.ManaPoint),
+                attackDamage = StaticData.stat.attackDamage + GetEquipmentStatValue(CharacterStatType.AttackDamage) + (notDefaultLevel ? StaticData.levelValue.attackDamageValue * (Level - 1) : 0),
+                movementSpeed = StaticData.stat.movementSpeed + GetEquipmentStatValue(CharacterStatType.MovementSpeed),
+                attackRange = StaticData.stat.attackRange + GetEquipmentStatValue(CharacterStatType.AttackRange),
+                attackCoolTime = StaticData.stat.attackCoolTime + GetEquipmentStatValue(CharacterStatType.AttackCoolTime),
+                defensePoint = StaticData.stat.defensePoint + GetEquipmentStatValue(CharacterStatType.DefensePoint),
+                criticalPercent = StaticData.stat.criticalPercent + GetEquipmentStatValue(CharacterStatType.CriticalPercent),
+                criticalResistance = StaticData.stat.criticalResistance + GetEquipmentStatValue(CharacterStatType.CriticalResistance)
+            };
+            
+            return statValue;
+        }
+
+        public float GetEquipmentStatValue(CharacterStatType statType)
+        {
+            float result = 0f;
+
+            var equippedItemList = _equippedItemDic.Values.Where(index => index > 0).Select(index =>
+                DataManager.Instance.DataController.Player.PlayerEquipmentItemDataDic[index]);
+            
+
+            foreach (var equipmentItem in equippedItemList)
+            {
+                if (equipmentItem.StaticData.firstValueStatType == statType)
+                {
+                    result += equipmentItem.StaticData.itemFirstValue;
+                }
+                
+                if (equipmentItem.StaticData.secondValueStatType == statType)
+                {
+                    result += equipmentItem.StaticData.itemSecondValue;
+                }
+            }
+            
+            return result;
         }
 
         public void AddExp(int expAmount)
@@ -49,7 +96,7 @@ namespace IdleProject.Data.DynamicData
         public DynamicEquipmentItemData GetEquipmentItem(EquipmentItemType itemType)
         {
             DynamicEquipmentItemData result = null;
-            var index = EquippedItemDic[itemType];
+            var index = _equippedItemDic[itemType];
 
             if (index > 0)
             {
@@ -61,7 +108,7 @@ namespace IdleProject.Data.DynamicData
 
         public int GetEquipmentItemIndex(EquipmentItemType itemType)
         {
-            return EquippedItemDic[itemType];
+            return _equippedItemDic[itemType];
         }
         
         // 장비 장착
@@ -72,7 +119,7 @@ namespace IdleProject.Data.DynamicData
             
             // 신규 장비 장착
             equipmentItemData.equipmentCharacterName = StaticData.Index;
-            EquippedItemDic[itemType] = equipmentItemData.Index;
+            _equippedItemDic[itemType] = equipmentItemData.Index;
         }
 
         // 장비 해제
@@ -84,22 +131,14 @@ namespace IdleProject.Data.DynamicData
                 itemData.equipmentCharacterName = string.Empty;
             }
             
-            EquippedItemDic[itemType] = 0;
-        }
-
-        private void SetStat(int characterLevel, StaticCharacterData staticCharacterData)
-        {
-            var levelData = staticCharacterData.levelValue;
-            Stat = staticCharacterData.stat;
-            Stat.attackDamage += characterLevel > 1 ? levelData.attackDamageValue * (characterLevel - 1) : 0;
-            Stat.healthPoint += characterLevel > 1 ? levelData.healthPointValue * (characterLevel - 1) : 0;
+            _equippedItemDic[itemType] = 0;
         }
         
         private void EquipAllItem(PlayerCharacterData characterData)
         {
             EnumExtension.Foreach<EquipmentItemType>(type =>
             {
-                EquippedItemDic[type] = characterData.GetCharacterEquipmentItemIndex(type);
+                _equippedItemDic[type] = characterData.GetCharacterEquipmentItemIndex(type);
             });
         }
         

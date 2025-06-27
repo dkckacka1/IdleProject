@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using IdleProject.Core.Resource;
 using IdleProject.Data;
+using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,6 +25,8 @@ namespace  IdleProject.Core.UI.Slot
         private ISlotData _data;
 
         private EventTrigger SlotEventTrigger => _slotEventTrigger ??= GetComponent<EventTrigger>();
+
+        public bool HasData => _data is not null;
 
         public T GetData<T>() where T : class, ISlotData => _data.GetData<T>();
         

@@ -151,7 +151,7 @@ namespace IdleProject.Battle.Spawn
         private void SetStat(CharacterController controller, DynamicCharacterData data)
         {
             var statSystem = new StatSystem();
-            statSystem.SetStatData(data.StaticData.addressValue.characterName, data.Stat);
+            statSystem.SetStatData(data.StaticData.addressValue.characterName, data.GetStat());
 
             controller.StatSystem = statSystem;
         }

@@ -78,7 +78,6 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             // 레벨업 된 캐릭터 플레이어에 적용
             selectCharacter.AddExp(_expAmount);
             _expAmount = 0;
-            selectCharacter.UpdateCharacter(selectCharacter.Level);
             
             // 소비아이템 사용해주기
             foreach (var slot in _slotList)

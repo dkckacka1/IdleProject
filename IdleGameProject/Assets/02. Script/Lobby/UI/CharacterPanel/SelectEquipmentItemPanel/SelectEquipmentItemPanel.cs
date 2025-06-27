@@ -44,7 +44,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             
             _equipmentItemNameText.Text.text = item.StaticData.itemName;
 
-            _equipmentItemFirstStatBar.gameObject.SetActive(item.StaticData.firstValueStatType > 0);
+            _equipmentItemFirstStatBar.gameObject.SetActive(item.StaticData.itemFirstValue > 0);
             _equipmentItemFirstStatBar.ShowStat(item.StaticData.firstValueStatType, item.StaticData.itemFirstValue);
             _equipmentItemSecondStatBar.gameObject.SetActive(item.StaticData.itemSecondValue > 0);
             _equipmentItemSecondStatBar.ShowStat(item.StaticData.secondValueStatType, item.StaticData.itemSecondValue);

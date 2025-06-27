@@ -1,4 +1,6 @@
+using System;
 using Cysharp.Threading.Tasks;
+using Engine.Util.Extension;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.Resource;
@@ -26,6 +28,8 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         private CharacterEquipSlot _accessorySlot;
         private CharacterEquipSlot _gloveSlot;
         private CharacterEquipSlot _bootsSLot;
+
+        private UIText _combatPowerText;
         
         public override void Initialized()
         {
@@ -38,13 +42,10 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             _accessorySlot = UIManager.Instance.GetUI<CharacterEquipSlot>("EquipmentSlot_Accessory");
             _gloveSlot = UIManager.Instance.GetUI<CharacterEquipSlot>("EquipmentSlot_Glove");
             _bootsSLot = UIManager.Instance.GetUI<CharacterEquipSlot>("EquipmentSlot_Boots");
+
+            _combatPowerText = UIManager.Instance.GetUI<UIText>("CombatPowerText");
             
-            _helmetSlot.Slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, OnClickEquipSlot);
-            _armorSlot.Slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, OnClickEquipSlot);
-            _weaponSlot.Slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, OnClickEquipSlot);
-            _accessorySlot.Slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, OnClickEquipSlot);
-            _gloveSlot.Slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, OnClickEquipSlot);
-            _bootsSLot.Slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, OnClickEquipSlot);
+            EnumExtension.Foreach<EquipmentItemType>(type => GetEquipmentSlot(type).Slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, OnClickEquipSlot));
             
             var showCharacterStatPanelToggle = UIManager.Instance.GetUI<UIToggle>("ShowCharacterStatPanelToggle");
             showCharacterStatPanelToggle.Toggle.onValueChanged.AddListener(ShowCharacterLevelUpPanelToggle);
@@ -105,6 +106,8 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         private void ShowCharacterEquipment(DynamicCharacterData selectCharacter)
         {
+            _combatPowerText.Text.text = selectCharacter.GetCombatPower().ToString();
+            
             _helmetSlot.SetEquipmentItem(selectCharacter.GetEquipmentItem(EquipmentItemType.Helmet));
             _weaponSlot.SetEquipmentItem(selectCharacter.GetEquipmentItem(EquipmentItemType.Weapon));
             _armorSlot.SetEquipmentItem(selectCharacter.GetEquipmentItem(EquipmentItemType.Armor));
@@ -121,6 +124,20 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             {
                 UIManager.Instance.GetUI<SelectCharacterPanel>().SelectEquipmentItem(equipmentItemData);
             }
+        }
+
+        private CharacterEquipSlot GetEquipmentSlot(EquipmentItemType itemType)
+        {
+            return itemType switch
+            {
+                EquipmentItemType.Weapon => _weaponSlot,
+                EquipmentItemType.Helmet => _helmetSlot,
+                EquipmentItemType.Armor => _armorSlot,
+                EquipmentItemType.Glove => _gloveSlot,
+                EquipmentItemType.Boots => _bootsSLot,
+                EquipmentItemType.Accessory => _accessorySlot,
+                _ => throw new ArgumentOutOfRangeException(nameof(itemType), itemType, null)
+            };
         }
 
         public void UpdateUI()

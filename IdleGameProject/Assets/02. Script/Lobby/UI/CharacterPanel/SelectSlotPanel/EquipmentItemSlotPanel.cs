@@ -14,16 +14,16 @@ namespace IdleProject.Lobby.UI.CharacterPopup
     public class EquipmentItemSlotPanel : UIPanel, IUIUpdatable, IUISelectEquipmentItemUpdatable
     {
         [SerializeField] private ScrollRect scroll;
-        
+
         private readonly List<SlotUI> _slotList = new();
-        
+
         private SlotUI _selectSlot;
-        
+
         public override void Initialized()
         {
             var playerEquipmentItemList =
                 DataManager.Instance.DataController.Player.PlayerEquipmentItemDataDic.Values.ToList();
-            
+
             CreateSlots(playerEquipmentItemList);
         }
 
@@ -43,7 +43,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                 {
                     var data = playerEquipmentItemList[i].GetData<DynamicEquipmentItemData>();
                     slot.BindData(data);
-                    
+
                     slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, ClickEquipmentSlot);
                     slot.gameObject.SetActive(true);
                 }
@@ -57,7 +57,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         private void CreateSlots(List<DynamicEquipmentItemData> playerEquipmentItemList)
         {
-            int createCount =  playerEquipmentItemList.Count - _slotList.Count;
+            int createCount = playerEquipmentItemList.Count - _slotList.Count;
 
             for (int i = 0; i < createCount; ++i)
             {
@@ -70,7 +70,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             SwapFocusSlot(slot);
             var equipmentItemData = slot.GetData<DynamicEquipmentItemData>();
-            
+
             UIManager.Instance.GetUI<SelectCharacterPanel>().SelectEquipmentItem(equipmentItemData);
         }
 
@@ -78,7 +78,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             if (_selectSlot == slot)
                 return;
-            
+
             if (_selectSlot is not null)
                 _selectSlot.SetFocus(false);
 
@@ -93,14 +93,15 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         public void SelectEquipmentItemUpdatable(DynamicEquipmentItemData item)
         {
-            var targetItemSlot = _slotList.FirstOrDefault(slot => slot.GetData<DynamicEquipmentItemData>() == item);
+            var targetItemSlot = _slotList.Where(slot => slot.HasData)
+                .FirstOrDefault(slot => slot.GetData<DynamicEquipmentItemData>() == item);
 
             if (targetItemSlot)
             {
                 SwapFocusSlot(targetItemSlot);
             }
         }
-        
+
         public void UpdateUI()
         {
             foreach (var slotUI in _slotList.Where(slot => slot.gameObject.activeInHierarchy))

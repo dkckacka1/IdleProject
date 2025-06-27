@@ -73,7 +73,16 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         
         private void ReleaseItem()
         {
+            var selectedEquipmentItem = GetSelectedEquipmentItem;
             
+            // 장착중인 캐릭터에서 장착 해제
+            var prevEquippedCharacter = selectedEquipmentItem.GetEquippedCharacter();
+            prevEquippedCharacter?.ReleaseEquipmentItem(selectedEquipmentItem.StaticData.itemType);
+            
+            UIManager.Instance.GetUIsOfType<IUIUpdatable>()
+                .ForEach(updatable => updatable.UpdateUI());
+            
+            DataManager.Instance.SaveController.Save(selectedEquipmentItem, prevEquippedCharacter);
         }
         
         public void SelectEquipmentItemUpdatable(DynamicEquipmentItemData item)

@@ -24,12 +24,12 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             base.OpenPanel();
             UIManager.Instance.GetUIsOfType<IUISelectCharacterUpdatable>()
-                .ForEach(ui => ui.SelectCharacter(Selector));
+                .ForEach(ui => ui.SelectCharacterUpdatable(Selector));
         }
         
-        public void SelectCharacter(DynamicCharacterData character)
+        public void SelectCharacterUpdatable(DynamicCharacterData selectCharacter)
         {
-            Selector = character;
+            Selector = selectCharacter;
         }
     }
 }

@@ -20,14 +20,14 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             _movementSpeedStatBar = UIManager.Instance.GetUI<CharacterStatBar>("CharacterStatBar_MovementSpeed");
         }
         
-        public void SelectCharacter(DynamicCharacterData selectData)
+        public void SelectCharacterUpdatable(DynamicCharacterData selectCharacter)
         {
-            _attackDamageStatBar.ShowStat(CharacterStatType.AttackDamage, selectData.Stat.attackDamage);
-            _healthPointStatBar.ShowStat(CharacterStatType.HealthPoint, selectData.Stat.healthPoint);
-            _movementSpeedStatBar.ShowStat(CharacterStatType.MovementSpeed, selectData.Stat.movementSpeed);
+            _attackDamageStatBar.ShowStat(CharacterStatType.AttackDamage, selectCharacter.Stat.attackDamage);
+            _healthPointStatBar.ShowStat(CharacterStatType.HealthPoint, selectCharacter.Stat.healthPoint);
+            _movementSpeedStatBar.ShowStat(CharacterStatType.MovementSpeed, selectCharacter.Stat.movementSpeed);
         }
         
-        public void SelectEquipmentItem(DynamicEquipmentItemData item)
+        public void SelectEquipmentItemUpdatable(DynamicEquipmentItemData item)
         {
             ClosePanel();
         }

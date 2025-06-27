@@ -1,6 +1,7 @@
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Data;
+using IdleProject.Data.DynamicData;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,9 +9,36 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 {
     public class SelectCharacterPanel : UIPanel
     {
+        public DynamicCharacterData SelectedCharacter { get; private set; }
+        public DynamicEquipmentItemData SelectedEquipmentItem { get; private set; }
+        
         public override void Initialized()
         {
 
+        }
+
+        public void SelectCharacter(DynamicCharacterData selectCharacter)
+        {
+            if (SelectedCharacter == selectCharacter)
+                return;
+            
+            SelectedCharacter = selectCharacter;
+            foreach (var updatable in UIManager.Instance.GetUIsOfType<IUISelectCharacterUpdatable>())
+            {
+                updatable.SelectCharacterUpdatable(SelectedCharacter);
+            }
+        }
+
+        public void SelectEquipmentItem(DynamicEquipmentItemData selectEquipmentItem)
+        {
+            if (SelectedEquipmentItem == selectEquipmentItem)
+                return;
+            
+            SelectedEquipmentItem = selectEquipmentItem;
+            foreach (var updatable in UIManager.Instance.GetUIsOfType<IUISelectEquipmentItemUpdatable>())
+            {
+                updatable.SelectEquipmentItemUpdatable(SelectedEquipmentItem);
+            }
         }
     }
 }

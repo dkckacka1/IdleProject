@@ -1868,7 +1868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3420,6 +3420,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 60c3cfccc7be79c4b94878b14c6abdec, type: 3}
+    - target: {fileID: 7949535617629922920, guid: 4269c6fa95db2c74d95123fc8b80097d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000022888184
+      objectReference: {fileID: 0}
+    - target: {fileID: 7949535617629922920, guid: 4269c6fa95db2c74d95123fc8b80097d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000030517578
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3910,6 +3918,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 812da1f5d5965ed40bcd88c684541c28, type: 3}
+    - target: {fileID: 7949535617629922920, guid: 4269c6fa95db2c74d95123fc8b80097d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000022888184
+      objectReference: {fileID: 0}
+    - target: {fileID: 7949535617629922920, guid: 4269c6fa95db2c74d95123fc8b80097d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000030517578
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4122,6 +4138,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0e9977a364b84204599fd853fd6d6dae, type: 3}
+    - target: {fileID: 7949535617629922920, guid: 4269c6fa95db2c74d95123fc8b80097d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000022888184
+      objectReference: {fileID: 0}
+    - target: {fileID: 7949535617629922920, guid: 4269c6fa95db2c74d95123fc8b80097d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000030517578
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4453,6 +4477,14 @@ PrefabInstance:
     - target: {fileID: 3429764356082493417, guid: 4269c6fa95db2c74d95123fc8b80097d, type: 3}
       propertyPath: m_Name
       value: EquipmentSlot_Boots
+      objectReference: {fileID: 0}
+    - target: {fileID: 7949535617629922920, guid: 4269c6fa95db2c74d95123fc8b80097d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000022888184
+      objectReference: {fileID: 0}
+    - target: {fileID: 7949535617629922920, guid: 4269c6fa95db2c74d95123fc8b80097d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000030517578
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5697,6 +5729,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 7a5ce56c93d24814b86e1eb6997dc0ce, type: 3}
+    - target: {fileID: 7949535617629922920, guid: 4269c6fa95db2c74d95123fc8b80097d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000022888184
+      objectReference: {fileID: 0}
+    - target: {fileID: 7949535617629922920, guid: 4269c6fa95db2c74d95123fc8b80097d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000030517578
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6634,6 +6674,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: e02264f2511b0ef498d8533fd12d21ad, type: 3}
+    - target: {fileID: 7949535617629922920, guid: 4269c6fa95db2c74d95123fc8b80097d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000022888184
+      objectReference: {fileID: 0}
+    - target: {fileID: 7949535617629922920, guid: 4269c6fa95db2c74d95123fc8b80097d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000030517578
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7756,6 +7804,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1304465039}
     m_Modifications:
+    - target: {fileID: 2092326467232158486, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5537352697008251802, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
       propertyPath: m_Name
       value: CharacterPanel_CharacterLoadingUI

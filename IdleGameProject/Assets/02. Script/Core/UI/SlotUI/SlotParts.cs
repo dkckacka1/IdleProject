@@ -8,13 +8,9 @@ namespace IdleProject.Core.UI.Slot
     public abstract class SlotParts : MonoBehaviour
     {
         private SlotUI _slotUI;
-        public SlotUI SlotUI
-        {
-            get => _slotUI ??= GetComponent<SlotUI>();
-            private set => _slotUI = value;
-        }
+        public SlotUI SlotUI => _slotUI ??= GetComponent<SlotUI>();
 
-        public virtual void SetData<T>(T data) where T : IData, ISlotData
+        public virtual void ShowParts<T>(T data) where T : ISlotData
         {
             
         }

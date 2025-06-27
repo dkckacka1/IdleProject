@@ -21,18 +21,25 @@ namespace  IdleProject.Core.UI.Slot
         private readonly Dictionary<Type, SlotParts> _slotPartsDic = new();
         
         private EventTrigger _slotEventTrigger;
-        private IData _data;
+        private ISlotData _data;
 
         private EventTrigger SlotEventTrigger => _slotEventTrigger ??= GetComponent<EventTrigger>();
 
-        public T GetData<T>() where T : class, IData, ISlotData => _data.GetData<T>();
+        public T GetData<T>() where T : class, ISlotData => _data.GetData<T>();
         
-        public void SetData<T>(T data) where T:  class, IData, ISlotData
+        public void BindData<T>(T data) where T:  class, ISlotData
         {
             _data = data;
-            var iconName = data.GetIconName;
-            slotImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(iconName);
-            _slotPartsDic.Values.ForEach(parts => parts.SetData(data));
+            slotImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(data.GetIconName);
+            _slotPartsDic.Values.ForEach(parts => parts.ShowParts(data));
+        }
+        
+        public void RefreshUI()
+        {
+            if (_data is null) return;
+            
+            slotImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(_data.GetIconName);
+            _slotPartsDic.Values.ForEach(parts => parts.ShowParts(_data));
         }
         
         public void SetFocus(bool isFocus)
@@ -40,21 +47,6 @@ namespace  IdleProject.Core.UI.Slot
             if (focusFrameImage is null) return;
             
             focusFrameImage.enabled = isFocus;
-        }
-        
-        public void PublishEvent<T>(EventTriggerType triggerType, UnityAction<T, SlotUI> callback) where T : BaseEventData
-        {
-            var entry = new EventTrigger.Entry
-            {
-                eventID = triggerType
-            };
-            
-            entry.callback.AddListener(eventData=>
-            { 
-                callback.Invoke((T)eventData, this);
-            });
-            
-            SlotEventTrigger.triggers.Add(entry);
         }
         
         public T GetSlotParts<T>() where T : SlotParts
@@ -73,6 +65,21 @@ namespace  IdleProject.Core.UI.Slot
             _slotPartsDic.TryAdd(type, slotComponent);
         }
         
+        public void PublishEvent<T>(EventTriggerType triggerType, UnityAction<T, SlotUI> callback) where T : BaseEventData
+        {
+            var entry = new EventTrigger.Entry
+            {
+                eventID = triggerType
+            };
+            
+            entry.callback.AddListener(eventData=>
+            { 
+                callback.Invoke((T)eventData, this);
+            });
+            
+            SlotEventTrigger.triggers.Add(entry);
+        }
+
         public void UnPublishAllEvent()
         {
             SlotEventTrigger.triggers.Clear();
@@ -88,6 +95,7 @@ namespace  IdleProject.Core.UI.Slot
             }
         }
 
+        #region Factory
 
         public static SlotUI GetSlotUI(Transform parent)
         {
@@ -104,5 +112,7 @@ namespace  IdleProject.Core.UI.Slot
             slotInstance.RegisterOwnSlotComponents();
             return slotInstance;
         }
+
+        #endregion
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using IdleProject.Core;
 using IdleProject.Data.Player;
+using Sirenix.Utilities;
 
 namespace IdleProject.Data.DynamicData
 {
@@ -38,7 +39,7 @@ namespace IdleProject.Data.DynamicData
             
             PlayerFormation = GetPlayerFormation(playerData);
         }
-
+        
         private FormationInfo GetPlayerFormation(PlayerData playerData)
         {
             var formation = new FormationInfo

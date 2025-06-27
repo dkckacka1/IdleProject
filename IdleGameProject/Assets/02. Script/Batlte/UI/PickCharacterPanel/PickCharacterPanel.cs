@@ -51,7 +51,7 @@ namespace IdleProject.Battle.UI
         private OrganizationSlot CreateSlot(DynamicCharacterData characterData)
         {
             var slot = SlotUI.GetSlotUI<OrganizationSlot>(pickCharacterScrollView.content);
-            slot.SetData(characterData);
+            slot.BindData(characterData);
             slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, OnSlotClick);
             slot.PublishEvent<PointerEventData>(EventTriggerType.BeginDrag, OnSlotDragBegin);
             slot.PublishEvent<PointerEventData>(EventTriggerType.Drag, OnSlotDrag);
@@ -71,7 +71,7 @@ namespace IdleProject.Battle.UI
                 _pickData = selectCharacterData;
             }
             
-            dropSlot.SetData(selectCharacterData);
+            dropSlot.BindData(selectCharacterData);
         }
         
         private void OnSlotDragEnd(PointerEventData eventData, SlotUI slot)

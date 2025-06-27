@@ -2,7 +2,7 @@ using System;
 
 namespace IdleProject.Data
 {
-    public interface ISlotData
+    public interface ISlotData : IData
     {
         public string GetIconName { get; }
     }

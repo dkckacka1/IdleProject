@@ -16,9 +16,9 @@ MonoBehaviour:
   playerExp: 0
   playerCharacterList:
   - characterName: Hiro
-    level: 1
-    exp: 0
-    equipmentWeaponIndex: 0
+    level: 45
+    exp: 1000
+    equipmentWeaponIndex: 1
     equipmentHelmetIndex: 0
     equipmentArmorIndex: 0
     equipmentGloveIndex: 0
@@ -34,8 +34,8 @@ MonoBehaviour:
     equipmentBootsIndex: 0
     equipmentAccessoryIndex: 0
   - characterName: Bak
-    level: 1
-    exp: 0
+    level: 27
+    exp: 150
     equipmentWeaponIndex: 0
     equipmentHelmetIndex: 0
     equipmentArmorIndex: 0
@@ -48,17 +48,20 @@ MonoBehaviour:
   - itemName: ExpPotion02
     itemCount: 500
   - itemName: ExpPotion03
-    itemCount: 250
+    itemCount: 109
   - itemName: ExpPotion04
-    itemCount: 100
+    itemCount: 0
   - itemName: ExpPotion05
     itemCount: 0
   playerEquipmentItemList:
   - index: 1
     itemName: Weapon_01
+    equipmentCharacterName: Hiro
+  - index: 2
+    itemName: Weapon_02
     equipmentCharacterName: 
-  frontMiddleCharacterName: 
-  frontRightCharacterName: 
-  frontLeftCharacterName: 
+  frontMiddleCharacterName: Hiro
+  frontRightCharacterName: Eli
+  frontLeftCharacterName: Bak
   rearRightCharacterName: 
   rearLeftCharacterName: 

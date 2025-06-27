@@ -341,6 +341,7 @@ MonoBehaviour:
   loadingProgressBar: {fileID: 2001575945}
   loadingPercentText: {fileID: 2005787605}
   fadeOutDuration: 1
+  progressBarGageFillDuration: 0.2
   isLoading: 0
 --- !u!1 &597566157
 GameObject:

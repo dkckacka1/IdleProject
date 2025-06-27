@@ -26,9 +26,5 @@ namespace IdleProject.Core.UI.Slot
             haveCountText.gameObject.SetActive(count > 0);
             haveCountText.text = count.ToString();
         }
-
-        public override void SetData<T>(T data)
-        {
-        }
     }
 }

@@ -3,6 +3,7 @@ using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Data.StaticData;
+using UnityEngine;
 
 namespace IdleProject.Lobby.UI
 {

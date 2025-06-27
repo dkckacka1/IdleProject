@@ -1,30 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using IdleProject.Battle.Character;
-using CharacterController = IdleProject.Battle.Character.CharacterController;
 using IdleProject.Core;
 using Sirenix.OdinInspector;
 using IdleProject.Battle;
-using IdleProject.Battle.AI;
-using IdleProject.Core.ObjectPool;
-using UnityEngine.UI;
-using Engine.Core.Addressable;
-using IdleProject.Battle.Projectile;
-using System.Collections.Generic;
-using System.Collections;
-using Cysharp.Threading.Tasks;
-using System;
-using System.Threading.Tasks;
-using Engine.Core.Time;
 using Engine.Util;
-using IdleProject.Battle.Spawn;
-using IdleProject.Battle.UI;
-using IdleProject.Core.Loading;
-using IdleProject.Data;
 using IdleProject.Data.Player;
-using Unity.VisualScripting;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
-using UnityEngine.U2D;
+using UnityEngine.UI;
 
 public class TestManager : SingletonMonoBehaviour<TestManager>
 {

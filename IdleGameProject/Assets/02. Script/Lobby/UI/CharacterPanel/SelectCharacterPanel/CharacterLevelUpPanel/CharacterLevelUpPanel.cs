@@ -23,7 +23,6 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         private ConsumableItemSlot _clickedSlot;
         private CharacterExpChangerUI _expChangerUI;
-        private DynamicCharacterData _selectCharacter;
 
         private bool _isClickOver;
         private float _usePotionInterval = 0.5f;
@@ -33,6 +32,9 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         private const float LONG_CLICK_USE_POTION_INTERVAL = 0.1f;
         private const float MAX_LONG_CLICK_USE_POTION_INTERVAL = 0.025f;
 
+        private DynamicCharacterData GetSelectCharacter =>
+            UIManager.Instance.GetUI<SelectCharacterPanel>().SelectedCharacter;
+        
         public override void Initialized()
         {
             UIManager.Instance.GetUI<UIButton>("CharacterLevelUpButton").Button.onClick.AddListener(LevelUp);
@@ -64,17 +66,19 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         private SlotUI CreateSlot(StaticConsumableItemData itemData)
         {
             var slot = SlotUI.GetSlotUI<ConsumableItemSlot>(slotContent);
-            slot.SetData(itemData);
+            slot.BindData(itemData);
             return slot;
         }
 
         private void LevelUp()
         {
+            var selectCharacter = GetSelectCharacter;
+            
             // 들어온 경험치양 만큼 캐릭터 레벨업
             // 레벨업 된 캐릭터 플레이어에 적용
-            _selectCharacter.AddExp(_expAmount);
+            selectCharacter.AddExp(_expAmount);
             _expAmount = 0;
-            _selectCharacter.UpdateCharacter(_selectCharacter.Level);
+            selectCharacter.UpdateCharacter(selectCharacter.Level);
             
             // 소비아이템 사용해주기
             foreach (var slot in _slotList)
@@ -84,10 +88,10 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             
             // UI 업데이트
             UIManager.Instance.GetUIsOfType<IUISelectCharacterUpdatable>()
-                .ForEach(ui => ui.SelectCharacter(_selectCharacter));
+                .ForEach(ui => ui.SelectCharacterUpdatable(selectCharacter));
             
             // 세이브
-            DataManager.Instance.SaveController.SaveCharacter(_selectCharacter);
+            DataManager.Instance.SaveController.SaveCharacter(selectCharacter);
         }
 
         private void OnSlotPointerDown(PointerEventData eventData, SlotUI slot)
@@ -157,9 +161,10 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             SetSlotsItemCountByPlayer();
 
-            if (_selectCharacter != null)
+            var selectedCharacter = GetSelectCharacter;
+            if (selectedCharacter != null)
             {
-                _expChangerUI.SetPlayerCharacter(_selectCharacter);
+                _expChangerUI.SetPlayerCharacter(selectedCharacter);
             }
             
             _expAmount = 0;
@@ -175,18 +180,16 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             }
         }
 
-        public void SelectCharacter(DynamicCharacterData character)
+        public void SelectCharacterUpdatable(DynamicCharacterData selectCharacter)
         {
-            _selectCharacter = character;
-            _expChangerUI.SetPlayerCharacter(character);
+            _expChangerUI.SetPlayerCharacter(selectCharacter);
 
             ResetUseExpPotion();
         }
         
-        public void SelectEquipmentItem(DynamicEquipmentItemData item)
+        public void SelectEquipmentItemUpdatable(DynamicEquipmentItemData item)
         {
             ClosePanel();
-            
         }
     }
 }

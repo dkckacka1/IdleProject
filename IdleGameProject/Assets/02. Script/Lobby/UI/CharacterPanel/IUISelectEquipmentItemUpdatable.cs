@@ -4,6 +4,6 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 {
     public interface IUISelectEquipmentItemUpdatable
     {
-        public void SelectEquipmentItem(DynamicEquipmentItemData item);
+        public void SelectEquipmentItemUpdatable(DynamicEquipmentItemData item);
     }
 }

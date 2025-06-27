@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
 {
-    public class EquipmentItemSlotPanel : UIPanel
+    public class EquipmentItemSlotPanel : UIPanel, IUIUpdatable
     {
         [SerializeField] private ScrollRect scroll;
         
@@ -44,13 +44,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                 if (i <= playerEquipmentItemList.Count - 1)
                 {
                     var data = playerEquipmentItemList[i].GetData<DynamicEquipmentItemData>();
-                    var equipmentCharacterData = 
-                        !string.IsNullOrEmpty(playerEquipmentItemList[i].equipmentCharacterName)
-                        ? DataManager.Instance.GetData<StaticCharacterData>(playerEquipmentItemList[i].equipmentCharacterName)
-                        : null;
-                    
-                    slot.SetData(data);
-                    slot.GetSlotParts<EquipmentItemSlot>().SetEquipmentCharacterIcon(equipmentCharacterData);
+                    slot.BindData(data);
                     
                     slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, ClickEquipmentSlot);
                     slot.gameObject.SetActive(true);
@@ -67,11 +61,8 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             SwapSlotFocus(slot);
             var equipmentItemData = slot.GetData<DynamicEquipmentItemData>();
-
-            foreach (var selectEquipmentItemUpdatable in UIManager.Instance.GetUIsOfType<IUISelectEquipmentItemUpdatable>())
-            {
-                selectEquipmentItemUpdatable.SelectEquipmentItem(equipmentItemData);
-            }
+            
+            UIManager.Instance.GetUI<SelectCharacterPanel>().SelectEquipmentItem(equipmentItemData);
         }
 
         private void SwapSlotFocus(SlotUI slot)
@@ -86,6 +77,14 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         private SlotUI CreateSlot()
         {
             return SlotUI.GetSlotUI<EquipmentItemSlot>(scroll.content);
+        }
+
+        public void UpdateUI()
+        {
+            foreach (var slotUI in _slotList.Where(slot => slot.gameObject.activeInHierarchy))
+            {
+                slotUI.RefreshUI();
+            }
         }
     }
 }

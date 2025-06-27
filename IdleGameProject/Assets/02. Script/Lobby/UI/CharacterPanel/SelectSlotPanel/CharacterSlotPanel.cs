@@ -37,7 +37,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                 var slot = _slotList[i];
                 if (i <= userCharacterList.Count - 1)
                 {
-                    slot.SetData(userCharacterList[i]);
+                    slot.BindData(userCharacterList[i]);
                     slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, ClickCharacterSlot);
                     if(selectCharacter == userCharacterList[i])
                         SwapSlotFocus(slot);
@@ -76,10 +76,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             SwapSlotFocus(slot);
             var characterData = slot.GetData<DynamicCharacterData>();
 
-            foreach (var selectCharacterUpdatableUI in UIManager.Instance.GetUIsOfType<IUISelectCharacterUpdatable>())
-            {
-                selectCharacterUpdatableUI.SelectCharacter(characterData);
-            }
+            UIManager.Instance.GetUI<SelectCharacterPanel>().SelectCharacter(characterData);
         }
 
         private void SwapSlotFocus(SlotUI slot)

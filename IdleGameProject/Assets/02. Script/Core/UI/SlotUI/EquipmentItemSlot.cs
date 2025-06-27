@@ -1,3 +1,4 @@
+using IdleProject.Core.GameData;
 using IdleProject.Core.Resource;
 using IdleProject.Data;
 using IdleProject.Data.DynamicData;
@@ -32,7 +33,7 @@ namespace IdleProject.Core.UI.Slot
             equipmentCharacterObject.SetActive(isActive);
         }
 
-        public override void SetData<T>(T data)
+        public override void ShowParts<T>(T data)
         {
             equipmentCharacterIconImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(data.GetIconName);
             if (data is StaticEquipmentItemData staticData)
@@ -44,6 +45,13 @@ namespace IdleProject.Core.UI.Slot
             {
                 equipmentItemTypeImage.sprite =
                     GetSpriteExtension.GetEquipmentTypeIconSprite(dynamicData.StaticData.itemType);
+
+                var isEquippedCharacter = string.IsNullOrEmpty(dynamicData.equipmentCharacterName) is false;
+                var characterData = isEquippedCharacter
+                    ? DataManager.Instance.GetData<StaticCharacterData>(dynamicData.equipmentCharacterName)
+                    : null;
+                
+                SetEquipmentCharacterIcon(characterData);
             }
         }
     }

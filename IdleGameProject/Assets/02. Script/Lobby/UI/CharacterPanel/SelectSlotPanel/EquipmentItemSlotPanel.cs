@@ -21,6 +21,10 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         
         public override void Initialized()
         {
+            var playerEquipmentItemList =
+                DataManager.Instance.DataController.Player.PlayerEquipmentItemDataDic.Values.ToList();
+            
+            CreateSlots(playerEquipmentItemList);
         }
 
         public override void OpenPanel()
@@ -30,13 +34,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             var playerEquipmentItemList =
                 DataManager.Instance.DataController.Player.PlayerEquipmentItemDataDic.Values.ToList();
 
-            int createCount =  playerEquipmentItemList.Count - _slotList.Count;
-            
-            for (int i = 0; i < createCount; ++i)
-            {
-                var slot = CreateSlot();
-                _slotList.Add(slot);
-            }
+            CreateSlots(playerEquipmentItemList);
 
             for (int i = 0; i < playerEquipmentItemList.Count; ++i)
             {
@@ -54,6 +52,17 @@ namespace IdleProject.Lobby.UI.CharacterPopup
                     slot.UnPublishAllEvent();
                     slot.gameObject.SetActive(false);
                 }
+            }
+        }
+
+        private void CreateSlots(List<DynamicEquipmentItemData> playerEquipmentItemList)
+        {
+            int createCount =  playerEquipmentItemList.Count - _slotList.Count;
+
+            for (int i = 0; i < createCount; ++i)
+            {
+                var slot = CreateSlot();
+                _slotList.Add(slot);
             }
         }
 

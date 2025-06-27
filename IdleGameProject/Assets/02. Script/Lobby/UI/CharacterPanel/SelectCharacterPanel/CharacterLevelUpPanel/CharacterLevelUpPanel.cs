@@ -13,7 +13,7 @@ using UnityEngine.EventSystems;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
 {
-    public class CharacterLevelUpPanel : UIPanel, IUISelectCharacterUpdatable, IUISelectEquipmentItemUpdatable
+    public class CharacterLevelUpPanel : UIPanel, IUISelectCharacterUpdatable, IUISelectEquipmentItemUpdatable, IUIUpdatable
     {
         [SerializeField] private Transform slotContent;
         [SerializeField] private float longClickTime = 2f;
@@ -87,8 +87,8 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             }
             
             // UI 업데이트
-            UIManager.Instance.GetUIsOfType<IUISelectCharacterUpdatable>()
-                .ForEach(ui => ui.SelectCharacterUpdatable(selectCharacter));
+            UIManager.Instance.GetUIsOfType<IUIUpdatable>()
+                .ForEach(ui => ui.UpdateUI());
             
             // 세이브
             DataManager.Instance.SaveController.SaveCharacter(selectCharacter);
@@ -190,6 +190,11 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         public void SelectEquipmentItemUpdatable(DynamicEquipmentItemData item)
         {
             ClosePanel();
+        }
+
+        public void UpdateUI()
+        {
+            ResetUseExpPotion();
         }
     }
 }

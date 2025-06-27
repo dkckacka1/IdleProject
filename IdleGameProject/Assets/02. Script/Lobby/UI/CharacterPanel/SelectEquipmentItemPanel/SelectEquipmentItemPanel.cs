@@ -52,11 +52,23 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         
         private void EquipItem()
         {
-            var equipmentItem = GetSelectedEquipmentItem;
-            GetSelectedCharacter.SetEquipmentItem(equipmentItem.StaticData.itemType, equipmentItem);
+            var selectedEquipmentItem = GetSelectedEquipmentItem;
+            var selectedCharacter = GetSelectedCharacter;
+            
+            // 기존 장착한 무기
+            var prevEquipmentItem = selectedCharacter.GetEquipmentItem(selectedEquipmentItem.StaticData.itemType);
+            
+            // 기존 장착한 캐릭터가 있었다면
+            var prevEquippedCharacter = selectedEquipmentItem.GetEquippedCharacter();
+            prevEquippedCharacter?.ReleaseEquipmentItem(selectedEquipmentItem.StaticData.itemType);
+
+            // 선택한 캐릭터 장비 장착
+            selectedCharacter.SetEquipmentItem(selectedEquipmentItem.StaticData.itemType, selectedEquipmentItem);
             
             UIManager.Instance.GetUIsOfType<IUIUpdatable>()
                 .ForEach(updatable => updatable.UpdateUI());
+            
+            DataManager.Instance.SaveController.Save(selectedCharacter, selectedEquipmentItem, prevEquippedCharacter, prevEquipmentItem);
         }
         
         private void ReleaseItem()
@@ -73,7 +85,11 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         
         public void UpdateUI()
         {
-            ShowEquipmentItemDetail(UIManager.Instance.GetUI<SelectCharacterPanel>().SelectedEquipmentItem);
+            var selectedItem = UIManager.Instance.GetUI<SelectCharacterPanel>().SelectedEquipmentItem;
+            if (selectedItem is not null)
+            {
+                ShowEquipmentItemDetail(UIManager.Instance.GetUI<SelectCharacterPanel>().SelectedEquipmentItem);
+            }
         }
     }
 }

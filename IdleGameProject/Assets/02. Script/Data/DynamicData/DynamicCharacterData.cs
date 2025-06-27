@@ -46,7 +46,6 @@ namespace IdleProject.Data.DynamicData
             }
         }
 
-
         public DynamicEquipmentItemData GetEquipmentItem(EquipmentItemType itemType)
         {
             DynamicEquipmentItemData result = null;
@@ -59,18 +58,33 @@ namespace IdleProject.Data.DynamicData
 
             return result;
         }
+
+        public int GetEquipmentItemIndex(EquipmentItemType itemType)
+        {
+            return EquippedItemDic[itemType];
+        }
         
+        // 장비 장착
         public void SetEquipmentItem(EquipmentItemType itemType, DynamicEquipmentItemData equipmentItemData)
         {
-            var itemData = GetEquipmentItem(itemType);
+            // 기존 장비 해제
+            ReleaseEquipmentItem(itemType);
+            
+            // 신규 장비 장착
+            equipmentItemData.equipmentCharacterName = StaticData.Index;
+            EquippedItemDic[itemType] = equipmentItemData.Index;
+        }
 
+        // 장비 해제
+        public void ReleaseEquipmentItem(EquipmentItemType itemType)
+        {
+            var itemData = GetEquipmentItem(itemType);
             if (itemData is not null)
             {
                 itemData.equipmentCharacterName = string.Empty;
             }
-
-            equipmentItemData.equipmentCharacterName = StaticData.Index;
-            EquippedItemDic[itemType] = equipmentItemData.Index;
+            
+            EquippedItemDic[itemType] = 0;
         }
 
         private void SetStat(int characterLevel, StaticCharacterData staticCharacterData)

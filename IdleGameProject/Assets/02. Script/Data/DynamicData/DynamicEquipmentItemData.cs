@@ -9,6 +9,18 @@ namespace IdleProject.Data.DynamicData
         public int Index;
         public string equipmentCharacterName;
         public string GetIconName => StaticData.GetIconName;
+
+        public DynamicCharacterData GetEquippedCharacter()
+        {
+            DynamicCharacterData result = null;
+            
+            if (string.IsNullOrEmpty(equipmentCharacterName) is false)
+            {
+                result = DataManager.Instance.DataController.Player.PlayerCharacterDataDic[equipmentCharacterName];
+            }
+
+            return result;
+        }
         
         private DynamicEquipmentItemData(StaticEquipmentItemData equipmentItemData, string characterName, int index) : base(equipmentItemData)
         {

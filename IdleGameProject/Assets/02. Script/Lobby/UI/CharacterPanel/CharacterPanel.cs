@@ -4,6 +4,7 @@ using IdleProject.Core.UI;
 using IdleProject.Data.DynamicData;
 using IdleProject.Data.Player;
 using IdleProject.Data.StaticData;
+using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
 using UnityEngine;
 
@@ -23,8 +24,8 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         public override void OpenPanel()
         {
             base.OpenPanel();
-            UIManager.Instance.GetUIsOfType<IUISelectCharacterUpdatable>()
-                .ForEach(ui => ui.SelectCharacterUpdatable(Selector));
+
+            UIManager.Instance.GetUI<SelectCharacterPanel>().SelectCharacter(Selector);
         }
         
         public void SelectCharacterUpdatable(DynamicCharacterData selectCharacter)

@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace IdleProject.Lobby.UI.CharacterPopup
 {
-    public class EquipmentItemSlotPanel : UIPanel, IUIUpdatable
+    public class EquipmentItemSlotPanel : UIPanel, IUIUpdatable, IUISelectEquipmentItemUpdatable
     {
         [SerializeField] private ScrollRect scroll;
         
@@ -59,14 +59,17 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         private void ClickEquipmentSlot(PointerEventData eventData, SlotUI slot)
         {
-            SwapSlotFocus(slot);
+            SwapFocusSlot(slot);
             var equipmentItemData = slot.GetData<DynamicEquipmentItemData>();
             
             UIManager.Instance.GetUI<SelectCharacterPanel>().SelectEquipmentItem(equipmentItemData);
         }
 
-        private void SwapSlotFocus(SlotUI slot)
+        private void SwapFocusSlot(SlotUI slot)
         {
+            if (_selectSlot == slot)
+                return;
+            
             if (_selectSlot is not null)
                 _selectSlot.SetFocus(false);
 
@@ -79,6 +82,16 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             return SlotUI.GetSlotUI<EquipmentItemSlot>(scroll.content);
         }
 
+        public void SelectEquipmentItemUpdatable(DynamicEquipmentItemData item)
+        {
+            var targetItemSlot = _slotList.FirstOrDefault(slot => slot.GetData<DynamicEquipmentItemData>() == item);
+
+            if (targetItemSlot)
+            {
+                SwapFocusSlot(targetItemSlot);
+            }
+        }
+        
         public void UpdateUI()
         {
             foreach (var slotUI in _slotList.Where(slot => slot.gameObject.activeInHierarchy))

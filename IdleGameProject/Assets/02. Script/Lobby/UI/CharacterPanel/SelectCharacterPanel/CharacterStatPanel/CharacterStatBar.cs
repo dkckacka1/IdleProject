@@ -16,29 +16,19 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         public void ShowStat(CharacterStatType statType, float value)
         {
-            switch (statType)
+            statNameText.text = statType switch
             {
-                case CharacterStatType.HealthPoint:
-                    statNameText.text = "체력";
-                    break;
-                case CharacterStatType.ManaPoint:
-                    statNameText.text = "마나";
-                    break;
-                case CharacterStatType.MovementSpeed:
-                    statNameText.text = "이동속도";
-                    break;
-                case CharacterStatType.AttackDamage:
-                    statNameText.text = "공격력";
-                    break;
-                case CharacterStatType.AttackRange:
-                    statNameText.text = "공격 사거리";
-                    break;
-                case CharacterStatType.AttackCoolTime:
-                    statNameText.text = "공격 쿨타임";
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(statType), statType, null);
-            }
+                CharacterStatType.HealthPoint => "체력",
+                CharacterStatType.ManaPoint => "마나",
+                CharacterStatType.MovementSpeed => "이동속도",
+                CharacterStatType.AttackDamage => "공격력",
+                CharacterStatType.AttackRange => "공격 사거리",
+                CharacterStatType.AttackCoolTime => "공격 쿨타임",
+                CharacterStatType.DefensePoint => "방어력",
+                CharacterStatType.CriticalPercent => "치명타 확률",
+                CharacterStatType.CriticalResistance => "치명타 저항력",
+                _ => throw new ArgumentOutOfRangeException(nameof(statType), statType, null)
+            };
 
             statTypeIconImage.sprite = GetSpriteExtension.GetCharacterStatTypeIconSprite(statType);
             statValueText.text = value.ToString("0");

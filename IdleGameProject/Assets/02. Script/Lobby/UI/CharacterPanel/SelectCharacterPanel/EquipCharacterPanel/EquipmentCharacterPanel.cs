@@ -29,7 +29,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         private CharacterEquipSlot _gloveSlot;
         private CharacterEquipSlot _bootsSLot;
 
-        private UIText _combatPowerText;
+        private CombatPowerText _combatPowerText;
         
         public override void Initialized()
         {
@@ -43,7 +43,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
             _gloveSlot = UIManager.Instance.GetUI<CharacterEquipSlot>("EquipmentSlot_Glove");
             _bootsSLot = UIManager.Instance.GetUI<CharacterEquipSlot>("EquipmentSlot_Boots");
 
-            _combatPowerText = UIManager.Instance.GetUI<UIText>("CombatPowerText");
+            _combatPowerText = UIManager.Instance.GetUI<CombatPowerText>();
             
             EnumExtension.Foreach<EquipmentItemType>(type => GetEquipmentSlot(type).Slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, OnClickEquipSlot));
             
@@ -101,19 +101,13 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             _characterLoadingRotate.StartLoading(LoadCharacter(selectCharacter.StaticData)).Forget();
 
+            _combatPowerText.SetCombatPower(selectCharacter.GetCombatPower(), false);
             ShowCharacterEquipment(selectCharacter);
         }
 
         private void ShowCharacterEquipment(DynamicCharacterData selectCharacter)
         {
-            _combatPowerText.Text.text = selectCharacter.GetCombatPower().ToString();
-            
-            _helmetSlot.SetEquipmentItem(selectCharacter.GetEquipmentItem(EquipmentItemType.Helmet));
-            _weaponSlot.SetEquipmentItem(selectCharacter.GetEquipmentItem(EquipmentItemType.Weapon));
-            _armorSlot.SetEquipmentItem(selectCharacter.GetEquipmentItem(EquipmentItemType.Armor));
-            _accessorySlot.SetEquipmentItem(selectCharacter.GetEquipmentItem(EquipmentItemType.Accessory));
-            _gloveSlot.SetEquipmentItem(selectCharacter.GetEquipmentItem(EquipmentItemType.Glove));
-            _bootsSLot.SetEquipmentItem(selectCharacter.GetEquipmentItem(EquipmentItemType.Boots));
+            EnumExtension.Foreach<EquipmentItemType>(type => GetEquipmentSlot(type).SetEquipmentItem(selectCharacter.GetEquipmentItem(type)));
         }
 
         private void OnClickEquipSlot(PointerEventData eventData, SlotUI slot)
@@ -142,7 +136,10 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         public void UpdateUI()
         {
-            ShowCharacterEquipment(UIManager.Instance.GetUI<SelectCharacterPanel>().SelectedCharacter);
+            var selectedCharacter = UIManager.Instance.GetUI<SelectCharacterPanel>().SelectedCharacter;
+            
+            _combatPowerText.SetCombatPower(selectedCharacter.GetCombatPower());
+            ShowCharacterEquipment(selectedCharacter);
         }
     }
 }

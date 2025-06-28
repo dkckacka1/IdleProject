@@ -48,7 +48,7 @@ namespace IdleProject.Core.ObjectPool
         private async UniTask CreatePoolAsync(int createCount)
         {
             var poolInstances = await Object.InstantiateAsync(_originObject, createCount, _poolParent, Vector3.zero,
-                Quaternion.identity);
+                Quaternion.identity).ToUniTask();
 
             foreach (var instance in poolInstances)
             {

@@ -158,7 +158,7 @@ namespace IdleProject.Battle.Spawn
         private async UniTask SetModel(CharacterController controller, StaticCharacterData data)
         {
             var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.GamePrefab, $"Model_{data.addressValue.characterName}");
-            await InstantiateAsync(modelObject, controller.transform);
+            await InstantiateAsync(modelObject, controller.transform).ToUniTask();
             
             var characterOffset = controller.gameObject.AddComponent<CharacterOffset>();
             characterOffset.Initialized();

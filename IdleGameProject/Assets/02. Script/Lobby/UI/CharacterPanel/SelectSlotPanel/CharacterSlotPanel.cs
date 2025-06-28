@@ -90,7 +90,7 @@ namespace IdleProject.Lobby.UI.CharacterPanel
 
         private SlotUI CreateSlot()
         {
-            return SlotUI.GetSlotUI(slotScrollRect.content);
+            return SlotUI.GetSlotUI<CharacterSlot>(slotScrollRect.content);
         }
     }
 }

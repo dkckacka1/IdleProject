@@ -90,4 +90,12 @@ namespace IdleProject.Core
         public string skillHitEffectAddress;
         public string skillProjectileAddress;
     }
+
+    [Serializable]
+    public struct StageInfo
+    {
+        public int stageIndex;
+        public float posX;
+        public float posY;
+    }
 }

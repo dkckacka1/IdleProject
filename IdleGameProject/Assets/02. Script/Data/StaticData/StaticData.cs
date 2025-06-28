@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 namespace IdleProject.Data.StaticData

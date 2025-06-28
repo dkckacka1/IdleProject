@@ -11,7 +11,8 @@ namespace IdleProject.Data.DynamicData
         public readonly Dictionary<string, DynamicCharacterData> PlayerCharacterDataDic;
         public readonly Dictionary<int, DynamicEquipmentItemData> PlayerEquipmentItemDataDic;
         public readonly Dictionary<string, DynamicConsumableItemData> PlayerConsumableItemDataDic;
-
+        public readonly List<string> PlayerClearStageList;
+        
         public FormationInfo PlayerFormation;
         
         public DynamicPlayerData(PlayerData playerData)
@@ -36,6 +37,8 @@ namespace IdleProject.Data.DynamicData
                     data => data.characterName,
                     DynamicCharacterData.GetInstance
                 );
+
+            PlayerClearStageList = new List<string>(playerData.playerClearStageList);
             
             PlayerFormation = GetPlayerFormation(playerData);
         }

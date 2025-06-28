@@ -10,25 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: AssetGroup
   m_EditorClassIdentifier: 
-  m_GroupName: Default Local Group
-  m_GUID: 35e389a7d69f98f4a8c3d648c1d0af0c
+  m_GroupName: AssetGroup
+  m_GUID: cb891d7951778754ea64fc56f332b523
   m_SerializeEntries:
-  - m_GUID: 18de1684e4d77584a9eefdf2b8f62817
-    m_Address: GameData
+  - m_GUID: 83676e73926d19849ac30715154cb0dc
+    m_Address: Animation
     m_ReadOnly: 0
     m_SerializedLabels:
-    - Data
+    - Animation
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ffdd61c61c7432c418036d5d2afb9dba
-    m_Address: Scene
+  - m_GUID: 87845ff8ea6de5b47b8fcab3e79bd8b4
+    m_Address: Assets/10. Sprite/SpriteAtlas
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - SpriteAtlas
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7e150b1e3d4a57d4687b1ad9162195c0, type: 2}
   m_SchemaSet:
-    m_Schemas:
-    - {fileID: 11400000, guid: cbcf1f9282a38134d9a20712e95972a5, type: 2}
-    - {fileID: 11400000, guid: 752cf6477e4fb664cb63693a7fc1c9f6, type: 2}
+    m_Schemas: []

@@ -17,6 +17,7 @@ namespace IdleProject.Data.Player
         public List<PlayerCharacterData> playerCharacterList;
         public List<PlayerConsumableItemData> playerConsumableItemList;
         public List<PlayerEquipmentItemData> playerEquipmentItemList;
+        public List<string> playerClearStageList;
 
         public string frontMiddleCharacterName;
         public string frontRightCharacterName;

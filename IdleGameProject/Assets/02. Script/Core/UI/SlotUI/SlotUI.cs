@@ -102,7 +102,7 @@ namespace  IdleProject.Core.UI.Slot
 
         public static SlotUI GetSlotUI(Transform parent)
         {
-            var slotObject = ResourceManager.Instance.GetPrefab(ResourceManager.SlotLabelName, "Slot").GetComponent<SlotUI>();
+            var slotObject = ResourceManager.Instance.GetPrefab(ResourceManager.UIPrefab, "Slot").GetComponent<SlotUI>();
             var slotInstance = Instantiate(slotObject, parent);
             slotInstance.RegisterOwnSlotComponents();
             return slotInstance;
@@ -110,7 +110,7 @@ namespace  IdleProject.Core.UI.Slot
         
         public static SlotUI GetSlotUI<T>(Transform parent) where T : SlotParts
         {
-            var slotObject = ResourceManager.Instance.GetPrefab(ResourceManager.SlotLabelName, typeof(T).Name).GetComponent<SlotUI>();
+            var slotObject = ResourceManager.Instance.GetPrefab(ResourceManager.UIPrefab, typeof(T).Name).GetComponent<SlotUI>();
             var slotInstance = Instantiate(slotObject, parent);
             slotInstance.RegisterOwnSlotComponents();
             return slotInstance;

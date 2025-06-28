@@ -4,7 +4,7 @@ using IdleProject.Data.DynamicData;
 using IdleProject.Data.Player;
 using UnityEngine;
 
-namespace IdleProject.Lobby.UI.CharacterPopup
+namespace IdleProject.Lobby.UI.CharacterPanel
 {
     public class CharacterExpChangerUI : UIBase, IUIInit
     {

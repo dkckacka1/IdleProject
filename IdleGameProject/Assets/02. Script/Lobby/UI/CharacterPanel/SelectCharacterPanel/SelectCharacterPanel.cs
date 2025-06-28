@@ -5,7 +5,7 @@ using IdleProject.Data.DynamicData;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace IdleProject.Lobby.UI.CharacterPopup
+namespace IdleProject.Lobby.UI.CharacterPanel
 {
     public class SelectCharacterPanel : UIPanel
     {

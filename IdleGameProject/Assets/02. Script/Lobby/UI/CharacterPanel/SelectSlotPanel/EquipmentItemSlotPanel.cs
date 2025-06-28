@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace IdleProject.Lobby.UI.CharacterPopup
+namespace IdleProject.Lobby.UI.CharacterPanel
 {
     public class EquipmentItemSlotPanel : UIPanel, IUIUpdatable, IUISelectEquipmentItemUpdatable
     {

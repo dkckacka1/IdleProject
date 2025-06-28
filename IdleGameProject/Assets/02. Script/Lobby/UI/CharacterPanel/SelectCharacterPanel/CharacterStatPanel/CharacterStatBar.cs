@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace IdleProject.Lobby.UI.CharacterPopup
+namespace IdleProject.Lobby.UI.CharacterPanel
 {
     public class CharacterStatBar : UIBase
     {

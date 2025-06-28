@@ -6,7 +6,7 @@ using IdleProject.Data.StaticData;
 using Sirenix.Utilities;
 using UnityEngine;
 
-namespace IdleProject.Lobby.UI.CharacterPopup
+namespace IdleProject.Lobby.UI.CharacterPanel
 {
     public class SelectEquipmentItemPanel : UIPanel, IUISelectEquipmentItemUpdatable, IUIUpdatable
     {

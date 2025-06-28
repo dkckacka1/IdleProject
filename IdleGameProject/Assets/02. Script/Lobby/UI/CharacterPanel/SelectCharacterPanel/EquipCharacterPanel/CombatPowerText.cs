@@ -3,7 +3,7 @@ using IdleProject.Core.UI;
 using TMPro;
 using UnityEngine;
 
-namespace IdleProject.Lobby.UI.CharacterPopup
+namespace IdleProject.Lobby.UI.CharacterPanel
 {
     public class CombatPowerText : UIText
     {

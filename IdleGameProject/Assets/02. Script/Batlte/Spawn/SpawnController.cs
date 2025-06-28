@@ -130,13 +130,12 @@ namespace IdleProject.Battle.Spawn
 
         private async Task<CharacterController> CreateCharacter(DynamicCharacterData data, CharacterAIType aiType)
         {
-            var controller = await AddressableManager.Instance.Controller.LoadAssetAsync<CharacterController>("Prefab/Character/Character.prefab");
-            var characterInstance = Instantiate(controller);
+            var controllerObj = ResourceManager.Instance.GetPrefab(ResourceManager.GamePrefab, "Character");
+            var characterInstance = Instantiate(controllerObj).GetComponent<CharacterController>();
             characterInstance.name = data.StaticData.addressValue.characterName;
 
-            SetModel(characterInstance, data.StaticData);
+            await SetModel(characterInstance, data.StaticData);
             await SetPoolableObject(characterInstance, data.StaticData);
-
             SetAnimation(characterInstance, data.StaticData);
             SetStat(characterInstance, data);
             SetSkill(characterInstance, data.StaticData);
@@ -156,11 +155,11 @@ namespace IdleProject.Battle.Spawn
             controller.StatSystem = statSystem;
         }
 
-        private void SetModel(CharacterController controller, StaticCharacterData data)
+        private async UniTask SetModel(CharacterController controller, StaticCharacterData data)
         {
-            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.CharacterModelLabelName,
-                $"Model_{data.addressValue.characterName}");
-            Instantiate(modelObject, controller.transform);
+            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.GamePrefab, $"Model_{data.addressValue.characterName}");
+            await InstantiateAsync(modelObject, controller.transform);
+            
             var characterOffset = controller.gameObject.AddComponent<CharacterOffset>();
             characterOffset.Initialized();
 
@@ -183,8 +182,8 @@ namespace IdleProject.Battle.Spawn
                 await CreatePool<BattleEffect>(PoolableType.BattleEffect, data.addressValue.attackHitEffectAddress);
             controller.GetSkillHitEffect =
                 await CreatePool<BattleEffect>(PoolableType.BattleEffect, data.addressValue.skillHitEffectAddress);
-            controller.GetAttackProjectile = await CreatePool<BattleProjectile>(PoolableType.Projectile,
-                data.addressValue.attackProjectileAddress);
+            controller.GetAttackProjectile =
+                await CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.attackProjectileAddress);
             controller.GetSkillProjectile =
                 await CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.skillProjectileAddress);
         }
@@ -232,31 +231,17 @@ namespace IdleProject.Battle.Spawn
 
         private async UniTask<Func<T>> CreatePool<T>(PoolableType poolableType, string address) where T : IPoolable
         {
-            if (string.IsNullOrEmpty(address) is true) return null;
+            if (string.IsNullOrEmpty(address)) return null;
 
-            await ResourceLoader.CreatePool(poolableType, address, GetBattleTransformParent(poolableType));
-            return () => ResourceLoader.GetPoolableObject<T>(poolableType, address);
-        }
-
-        private Transform GetBattleTransformParent(PoolableType poolableType)
-        {
-            Transform parent = null;
-
-            switch (poolableType)
+            var parent = poolableType switch
             {
-                case PoolableType.UI:
-                    break;
-                case PoolableType.BattleEffect:
-                    parent = _battleManager.effectParent;
-                    break;
-                case PoolableType.Projectile:
-                    parent = _battleManager.projectileParent;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(poolableType), poolableType, null);
-            }
+                PoolableType.BattleEffect => _battleManager.effectParent,
+                PoolableType.Projectile => _battleManager.projectileParent,
+                _ => null
+            };
 
-            return parent;
+            await ObjectPoolManager.Instance.CreatePoolAsync(address, parent);
+            return () => ObjectPoolManager.Instance.Get<T>(address);
         }
 
         #endregion

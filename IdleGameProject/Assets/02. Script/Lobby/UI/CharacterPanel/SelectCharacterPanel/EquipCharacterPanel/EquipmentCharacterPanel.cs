@@ -15,7 +15,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace IdleProject.Lobby.UI.CharacterPopup
+namespace IdleProject.Lobby.UI.CharacterPanel
 {
     public class EquipmentCharacterPanel : UIPanel, IUISelectCharacterUpdatable, IUIUpdatable
     {
@@ -63,7 +63,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
 
         private async UniTask LoadCharacter(StaticCharacterData staticCharacterData)
         {
-            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.CharacterModelLabelName, $"Model_{staticCharacterData.addressValue.characterName}");
+            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.GamePrefab, $"Model_{staticCharacterData.addressValue.characterName}");
             var modelInstance = Instantiate(modelObject, _selectCharacterModel.transform);
             _selectCharacterModel.SetModel(modelInstance);
             var animatorController = ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(staticCharacterData.addressValue.characterAnimationName);

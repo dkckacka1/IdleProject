@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using IdleProject.Core;
 using IdleProject.Core.UI;
-using IdleProject.Lobby.UI.CharacterPopup;
+using IdleProject.Lobby.UI.CharacterPanel;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

@@ -18,8 +18,9 @@ namespace IdleProject.Core.Resource
 
         private const string ASSET_LOADING_TASK = "AssetLoading";
 
-        public const string CharacterModelLabelName = "CharacterModel";
-        public const string SlotLabelName = "SlotUI";
+        public const string GamePrefab = "GamePrefab";
+        public const string UIPrefab = "UIPrefab";
+        public const string PoolableObject = "PoolableObject";
         
         protected override void Initialized()
         {
@@ -27,8 +28,9 @@ namespace IdleProject.Core.Resource
             
             _assetLoaderDic.Add(typeof(Sprite), new SpriteLoader());
             _assetLoaderDic.Add(typeof(RuntimeAnimatorController), new AnimationControllerLoader());
-            _prefabLoaderDic.Add(CharacterModelLabelName, new PrefabLoader(CharacterModelLabelName));
-            _prefabLoaderDic.Add(SlotLabelName, new PrefabLoader(SlotLabelName));
+            _prefabLoaderDic.Add(GamePrefab, new PrefabLoader(GamePrefab));
+            _prefabLoaderDic.Add(UIPrefab, new PrefabLoader(UIPrefab));
+            _prefabLoaderDic.Add(PoolableObject, new PrefabLoader(PoolableObject));
         }
 
         public T GetAsset<T>(string assetName) where T : Object

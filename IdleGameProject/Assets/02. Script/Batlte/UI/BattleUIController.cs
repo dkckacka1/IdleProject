@@ -31,8 +31,8 @@ namespace IdleProject.Battle.UI
 
         public async UniTask Initialized()
         {
-            await ResourceLoader.CreatePool(PoolableType.UI, "BattleText", battleTextParent);
-            GetBattleText = () => ResourceLoader.GetPoolableObject<BattleText>(PoolableType.UI, "BattleText");
+            await ObjectPoolManager.Instance.CreatePoolAsync("BattleText", battleTextParent);
+            GetBattleText = () => ObjectPoolManager.Instance.Get<BattleText>("BattleText");
 
             SetSpeedText();
             UIManager.Instance.GetUI<UIPanel>("PausePanel").ClosePanel();

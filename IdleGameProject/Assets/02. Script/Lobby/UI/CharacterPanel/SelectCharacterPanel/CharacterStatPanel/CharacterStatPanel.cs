@@ -5,7 +5,7 @@ using IdleProject.Data.DynamicData;
 using IdleProject.Data.Player;
 using IdleProject.Data.StaticData;
 
-namespace IdleProject.Lobby.UI.CharacterPopup
+namespace IdleProject.Lobby.UI.CharacterPanel
 {
     public class CharacterStatPanel : UIPanel, IUISelectCharacterUpdatable, IUISelectEquipmentItemUpdatable, IUIUpdatable
     {

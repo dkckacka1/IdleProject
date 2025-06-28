@@ -4,7 +4,7 @@ using IdleProject.Core.UI;
 using IdleProject.Core.UI.Loading;
 using UnityEngine;
 
-namespace IdleProject.Lobby.UI.CharacterPopup
+namespace IdleProject.Lobby.UI.CharacterPanel
 {
     public class SelectSlotPanel : UIPanel
     {

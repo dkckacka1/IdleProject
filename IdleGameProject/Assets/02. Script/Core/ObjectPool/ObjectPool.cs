@@ -10,39 +10,51 @@ namespace IdleProject.Core.ObjectPool
         private readonly PoolableObject _originObject;
         private readonly Queue<PoolableObject> _poolQueue = new Queue<PoolableObject>();
 
-        private const uint DEFAULT_CREATE_COUNT = 10;
+        private const int DEFAULT_CREATE_COUNT = 10;
 
-        public ObjectPool(Transform poolParent, PoolableObject originObject, uint createCount = DEFAULT_CREATE_COUNT)
+        private ObjectPool(Transform poolParent, PoolableObject originObject)
         {
             _poolParent = poolParent;
             _originObject = originObject;
-            CreatePool(createCount);
         }
 
         public T Get<T>() where T : IPoolable
         {
-            if(_poolQueue.Count <= 0)
+            if (_poolQueue.Count <= 0)
                 CreateObject();
 
             var poolObject = _poolQueue.Dequeue();
             poolObject.OnGet();
             poolObject.gameObject.SetActive(true);
-            
+
             return poolObject.GetComponent<T>();
         }
-        
+
         public void Release(PoolableObject poolable)
         {
             poolable.OnRelease();
             poolable.gameObject.SetActive(false);
             _poolQueue.Enqueue(poolable);
         }
-        
-        private void CreatePool(uint createCount)
+
+        private void CreatePool(int createCount)
         {
             for (int i = 0; i < createCount; ++i)
             {
                 CreateObject();
+            }
+        }
+
+        private async UniTask CreatePoolAsync(int createCount)
+        {
+            var poolInstances = await Object.InstantiateAsync(_originObject, createCount, _poolParent, Vector3.zero,
+                Quaternion.identity);
+
+            foreach (var instance in poolInstances)
+            {
+                instance.OnCreate();
+                instance.gameObject.SetActive(false);
+                _poolQueue.Enqueue(instance);
             }
         }
 
@@ -52,6 +64,23 @@ namespace IdleProject.Core.ObjectPool
             poolInstance.OnCreate();
             poolInstance.gameObject.SetActive(false);
             _poolQueue.Enqueue(poolInstance);
+        }
+
+        public static ObjectPool GetInstance(Transform poolParent, PoolableObject originObject,
+            int createCount = DEFAULT_CREATE_COUNT)
+        {
+            var pool = new ObjectPool(poolParent, originObject);
+            pool.CreatePool(createCount);
+
+            return pool;
+        }
+
+        public static async UniTask<ObjectPool> GetInstanceAsync(Transform poolParent, PoolableObject originObject, int createCount = DEFAULT_CREATE_COUNT)
+        {
+            var pool = new ObjectPool(poolParent, originObject);
+            await pool.CreatePoolAsync(createCount);
+
+            return pool;
         }
     }
 }

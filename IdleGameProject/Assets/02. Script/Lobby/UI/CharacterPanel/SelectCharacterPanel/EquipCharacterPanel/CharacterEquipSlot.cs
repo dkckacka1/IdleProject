@@ -3,7 +3,7 @@ using IdleProject.Core.UI.Slot;
 using IdleProject.Data.DynamicData;
 using UnityEngine;
 
-namespace IdleProject.Lobby.UI.CharacterPopup
+namespace IdleProject.Lobby.UI.CharacterPanel
 {
     public class CharacterEquipSlot : UIBase
     {

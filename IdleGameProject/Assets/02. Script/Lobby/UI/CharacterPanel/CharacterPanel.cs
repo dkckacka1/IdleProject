@@ -1,36 +1,25 @@
 using System.Linq;
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
-using IdleProject.Data.DynamicData;
-using IdleProject.Data.Player;
-using IdleProject.Data.StaticData;
-using Sirenix.OdinInspector.Editor;
-using Sirenix.Utilities;
-using UnityEngine;
 
-namespace IdleProject.Lobby.UI.CharacterPopup
+namespace IdleProject.Lobby.UI.CharacterPanel
 {
-    public class CharacterPanel : UIPanel, IUISelectCharacterUpdatable
+    public class CharacterPanel : UIPanelCanvas
     {
-        public DynamicCharacterData Selector;
-        
         public override void Initialized()
         {
-            UIManager.Instance.GetUI<UIButton>("CloseCharacterPopupButton").Button.onClick.AddListener(ClosePanel);
-
-            Selector ??= DataManager.Instance.DataController.Player.PlayerCharacterDataDic.Values.First();
+            UIManager.Instance.GetUI<UIButton>("CloseCharacterPanelButton").Button.onClick.AddListener(ClosePanel);
         }
 
         public override void OpenPanel()
         {
             base.OpenPanel();
 
-            UIManager.Instance.GetUI<SelectCharacterPanel>().SelectCharacter(Selector);
-        }
-        
-        public void SelectCharacterUpdatable(DynamicCharacterData selectCharacter)
-        {
-            Selector = selectCharacter;
+            var selectedCharacter = UIManager.Instance.GetUI<SelectCharacterPanel>().SelectedCharacter;
+            if (selectedCharacter is null)
+            {
+                UIManager.Instance.GetUI<SelectCharacterPanel>().SelectCharacter(DataManager.Instance.DataController.Player.PlayerCharacterDataDic.Values.First());
+            }
         }
     }
 }

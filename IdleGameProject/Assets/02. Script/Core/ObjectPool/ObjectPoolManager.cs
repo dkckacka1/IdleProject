@@ -1,8 +1,7 @@
 using Cysharp.Threading.Tasks;
-using Engine.Core.Addressable;
 using Engine.Util;
 using System.Collections.Generic;
-using IdleProject.Battle.UI;
+using IdleProject.Core.Resource;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -35,20 +34,33 @@ namespace IdleProject.Core.ObjectPool
         {
             _poolableDic[poolable.address].Release(poolable);
         }
-
-        public async UniTask CreatePool<T>(string address, Transform parent = null) where T : PoolableObject
+        
+        public void CreatePool(string address, Transform parent = null)
         {
             if (_poolableDic.ContainsKey(address)) return;
 
-            if (parent is null)
-                parent = _defaultParent;
+            parent ??= _defaultParent;
             
-            var poolableObj = await AddressableManager.Instance.Controller.LoadAssetAsync<PoolableObject>(address);
+            var poolableObj = ResourceManager.Instance.GetPrefab(ResourceManager.PoolableObject, address).GetComponent<PoolableObject>();
             poolableObj.address = address;
-            _poolableDic.Add(address, new ObjectPool(parent , poolableObj, poolableObj.defaultPoolCount));
+            _poolableDic.Add(address, ObjectPool.GetInstance(parent, poolableObj, poolableObj.defaultPoolCount));
+        }
+        
+        public async UniTask CreatePoolAsync(string address, Transform parent = null)
+        {
+            if (_poolableDic.ContainsKey(address)) return;
+
+            parent ??= _defaultParent;
+            
+            var poolableObj = ResourceManager.Instance.GetPrefab(ResourceManager.PoolableObject, address).GetComponent<PoolableObject>();
+            poolableObj.address = address;
+
+            var objectPool = await ObjectPool.GetInstanceAsync(parent, poolableObj, poolableObj.defaultPoolCount);
+            _poolableDic.Add(address, objectPool);
         }
 
-        private void CleatObjectPool(Scene arg0, LoadSceneMode arg1)
+
+        private void CleatObjectPool(Scene scene, LoadSceneMode sceneMode)
         {
             _poolableDic.Clear();
         }

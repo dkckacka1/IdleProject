@@ -1,6 +1,6 @@
 ﻿using IdleProject.Data.DynamicData;
 
-namespace IdleProject.Lobby.UI.CharacterPopup
+namespace IdleProject.Lobby.UI.CharacterPanel
 {
     public interface IUISelectEquipmentItemUpdatable
     {

@@ -4,6 +4,7 @@ using Engine.Core.EventBus;
 using IdleProject.Battle.Character;
 using IdleProject.Battle.Character.EventGroup;
 using IdleProject.Core;
+using IdleProject.Core.Resource;
 using IdleProject.Core.UI;
 using IdleProject.Data;
 using IdleProject.Data.StaticData;
@@ -93,8 +94,9 @@ namespace IdleProject.Battle.UI
         
         private async UniTaskVoid SetFluidHealthBar(StatSystem characterStat)
         {
-            _fluidHealthBar = await ResourceLoader.InstantiateUI<HealthBar>(SceneType.Battle, "FluidHealthBar");
-            _fluidHealthBar.transform.SetParent(GetBattleUI.FluidHealthBarParent);
+            var obj = ResourceManager.Instance.GetPrefab(ResourceManager.UIPrefab, "FluidHealthBar").GetComponent<HealthBar>();
+            var healthBars = await InstantiateAsync(obj, GetBattleUI.FluidHealthBarParent).ToUniTask();
+            _fluidHealthBar = healthBars[0];
             _fluidHealthBar.Initialized(characterStat.GetStatValue(CharacterStatType.HealthPoint, true));
             _fluidHealthBar.transform.position =
                 UIManager.GetUIInScreen(_mainCamera.WorldToScreenPoint(_offset.GetFluidHealthBarPosition));

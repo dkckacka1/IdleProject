@@ -11,7 +11,7 @@ using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace IdleProject.Lobby.UI.CharacterPopup
+namespace IdleProject.Lobby.UI.CharacterPanel
 {
     public class CharacterLevelUpPanel : UIPanel, IUISelectCharacterUpdatable, IUISelectEquipmentItemUpdatable, IUIUpdatable
     {

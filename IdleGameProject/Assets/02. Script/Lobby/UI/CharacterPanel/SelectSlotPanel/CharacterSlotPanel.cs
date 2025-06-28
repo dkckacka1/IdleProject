@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace IdleProject.Lobby.UI.CharacterPopup
+namespace IdleProject.Lobby.UI.CharacterPanel
 {
     public class CharacterSlotPanel : UIPanel
     {
@@ -29,7 +29,7 @@ namespace IdleProject.Lobby.UI.CharacterPopup
         {
             base.OpenPanel();
             var userCharacterList = DataManager.Instance.DataController.Player.PlayerCharacterDataDic.Values.ToList();
-            var selectCharacter = UIManager.Instance.GetUI<CharacterPanel>().Selector;
+            var selectCharacter = UIManager.Instance.GetUI<SelectCharacterPanel>().SelectedCharacter;
             CreateSlot(userCharacterList);
             for (int i = 0; i < _slotList.Count; ++i)  
                 // 캐릭터 수만큼 슬롯에 정의

@@ -10,20 +10,29 @@ namespace IdleProject.Lobby.UI
 {
     public class LobbyUIController : UIController
     {
+        private readonly PanelRadioGroup _lobbyPanelRadioGroup = new();
+        
         public async UniTask Initialized()
         {
-            UIManager.Instance.GetUI<CharacterPanel.CharacterPanel>().ClosePanel();
-            UIManager.Instance.GetUI<StagePanel.StagePanel>().ClosePanel();
+            var characterPanel = UIManager.Instance.GetUI<CharacterPanel.CharacterPanel>();
+            var stagePanel = UIManager.Instance.GetUI<StagePanel.StagePanel>();
+            
+            _lobbyPanelRadioGroup.PublishPanel(characterPanel);
+            _lobbyPanelRadioGroup.PublishPanel(stagePanel);
+
             UIManager.Instance.GetUI<UIButton>("EquipmentButton").Button.onClick.AddListener(OpenEquipmentPanel);
             UIManager.Instance.GetUI<UIButton>("DungeonButton").Button.onClick.AddListener(GoToDungeon);
+            
+            characterPanel.ClosePanel();
+            stagePanel.ClosePanel();
         }
 
         private void GoToDungeon()
         {
-            // UIManager.Instance.GetUI<StagePanel.StagePanel>().OpenPanel();
+            UIManager.Instance.GetUI<StagePanel.StagePanel>().OpenPanel();
             
-            DataManager.Instance.DataController.selectStaticStageData = DataManager.Instance.GetData<StaticStageData>("1");
-            GameManager.Instance.LoadScene(SceneType.Battle);
+            // DataManager.Instance.DataController.selectStaticStageData = DataManager.Instance.GetData<StaticStageData>("1");
+            // GameManager.Instance.LoadScene(SceneType.Battle);
         }
 
         private void OpenEquipmentPanel()

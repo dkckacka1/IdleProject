@@ -13,7 +13,7 @@ using UnityEngine.EventSystems;
 
 namespace IdleProject.Lobby.UI.CharacterPanel
 {
-    public class CharacterLevelUpPanel : UIPanel, IUISelectCharacterUpdatable, IUISelectEquipmentItemUpdatable, IUIUpdatable
+    public class CharacterLevelUpPanel : UIPanel, IUISelectCharacterUpdatable, IUIUpdatable
     {
         [SerializeField] private Transform slotContent;
         [SerializeField] private float longClickTime = 2f;
@@ -184,11 +184,6 @@ namespace IdleProject.Lobby.UI.CharacterPanel
             _expChangerUI.SetPlayerCharacter(selectCharacter);
 
             ResetUseExpPotion();
-        }
-        
-        public void SelectEquipmentItemUpdatable(DynamicEquipmentItemData item)
-        {
-            ClosePanel();
         }
 
         public void UpdateUI()

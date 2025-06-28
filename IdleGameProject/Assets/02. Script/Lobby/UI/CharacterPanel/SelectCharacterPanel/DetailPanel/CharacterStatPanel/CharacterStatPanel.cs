@@ -7,7 +7,7 @@ using IdleProject.Data.StaticData;
 
 namespace IdleProject.Lobby.UI.CharacterPanel
 {
-    public class CharacterStatPanel : UIPanel, IUISelectCharacterUpdatable, IUISelectEquipmentItemUpdatable, IUIUpdatable
+    public class CharacterStatPanel : UIPanel, IUISelectCharacterUpdatable, IUIUpdatable
     {
         private CharacterStatBar _attackDamageStatBar;
         private CharacterStatBar _healthPointStatBar;
@@ -38,11 +38,6 @@ namespace IdleProject.Lobby.UI.CharacterPanel
             _defensePointStatBar.ShowStat(CharacterStatType.DefensePoint, characterStat.defensePoint);
             _criticalPercentStatBar.ShowStat(CharacterStatType.CriticalPercent, characterStat.criticalPercent);
             _criticalResistance.ShowStat(CharacterStatType.CriticalResistance, characterStat.criticalResistance);
-        }
-
-        public void SelectEquipmentItemUpdatable(DynamicEquipmentItemData item)
-        {
-            ClosePanel();
         }
 
         public void UpdateUI()

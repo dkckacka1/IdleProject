@@ -1,9 +1,5 @@
-using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
-using IdleProject.Data;
 using IdleProject.Data.DynamicData;
-using UnityEngine;
-using UnityEngine.UI;
 
 namespace IdleProject.Lobby.UI.CharacterPanel
 {

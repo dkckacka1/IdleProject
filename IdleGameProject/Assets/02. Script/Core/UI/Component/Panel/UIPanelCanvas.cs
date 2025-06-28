@@ -5,6 +5,7 @@ namespace IdleProject.Core.UI
     public abstract class UIPanelCanvas : UIPanel
     {
         [HideInInspector] public Canvas canvas;
+        public override bool IsOpened => canvas.enabled;
 
         protected override void Awake()
         {
@@ -12,12 +13,12 @@ namespace IdleProject.Core.UI
             canvas = GetComponent<Canvas>();
         }
 
-        public override void OpenPanel()
+        protected override void OpenAction()
         {
             canvas.enabled = true;
         }
 
-        public override void ClosePanel()
+        protected override void CloseAction()
         {
             canvas.enabled = false;
         }

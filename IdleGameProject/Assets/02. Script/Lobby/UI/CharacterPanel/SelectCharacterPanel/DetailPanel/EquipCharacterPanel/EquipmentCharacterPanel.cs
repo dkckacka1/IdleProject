@@ -2,17 +2,14 @@ using System;
 using Cysharp.Threading.Tasks;
 using Engine.Util.Extension;
 using IdleProject.Core;
-using IdleProject.Core.GameData;
 using IdleProject.Core.Resource;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Loading;
 using IdleProject.Core.UI.Slot;
-using IdleProject.Data;
 using IdleProject.Data.DynamicData;
 using IdleProject.Data.StaticData;
 using IdleProject.Lobby.Character;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace IdleProject.Lobby.UI.CharacterPanel
@@ -47,17 +44,8 @@ namespace IdleProject.Lobby.UI.CharacterPanel
             
             EnumExtension.Foreach<EquipmentItemType>(type => GetEquipmentSlot(type).Slot.PublishEvent<PointerEventData>(EventTriggerType.PointerClick, OnClickEquipSlot));
             
-            var showCharacterStatPanelToggle = UIManager.Instance.GetUI<UIToggle>("ShowCharacterStatPanelToggle");
-            showCharacterStatPanelToggle.Toggle.onValueChanged.AddListener(ShowCharacterLevelUpPanelToggle);
-
-            var showCharacterLevelUpPanelToggle = UIManager.Instance.GetUI<UIToggle>("ShowCharacterLevelUpPanelToggle");
-            showCharacterLevelUpPanelToggle.Toggle.onValueChanged.AddListener(ShowCharacterStatPanelToggle);
-                
-            showCharacterStatPanelToggle.Toggle.isOn = true;
-            showCharacterStatPanelToggle.Toggle.onValueChanged.Invoke(true);
-
-            showCharacterLevelUpPanelToggle.Toggle.isOn = false;
-            showCharacterLevelUpPanelToggle.Toggle.onValueChanged.Invoke(false);
+            UIManager.Instance.GetUI<UIButton>("ShowCharacterStatPanelButton").Button.onClick.AddListener(ShowCharacterLevelUpPanelToggle);
+            UIManager.Instance.GetUI<UIButton>("ShowCharacterLevelUpPanelButton").Button.onClick.AddListener(ShowCharacterStatPanelToggle);
         }
 
 
@@ -70,31 +58,14 @@ namespace IdleProject.Lobby.UI.CharacterPanel
             await _selectCharacterModel.SetAnimation(animatorController);
         }
         
-        private void ShowCharacterLevelUpPanelToggle(bool toggleValue)
+        private void ShowCharacterLevelUpPanelToggle()
         {
-            if (toggleValue)
-            {
-                UIManager.Instance.GetUI<CharacterStatPanel>("CharacterStatPanel").OpenPanel();
-            }
-            else
-            {
-                UIManager.Instance.GetUI<CharacterStatPanel>("CharacterStatPanel").ClosePanel();
-            }
-            UIManager.Instance.GetUI<SelectEquipmentItemPanel>().ClosePanel();
+            UIManager.Instance.GetUI<CharacterStatPanel>().OpenPanel();
         }
 
-        private void ShowCharacterStatPanelToggle(bool toggleValue)
+        private void ShowCharacterStatPanelToggle()
         {
-            if (toggleValue)    
-            {
-                UIManager.Instance.GetUI<CharacterLevelUpPanel>("CharacterLevelUpPanel").OpenPanel();
-            }
-            else
-            {
-                UIManager.Instance.GetUI<CharacterLevelUpPanel>("CharacterLevelUpPanel").ClosePanel();
-            }
-            
-            UIManager.Instance.GetUI<SelectEquipmentItemPanel>().ClosePanel();
+            UIManager.Instance.GetUI<CharacterLevelUpPanel>().OpenPanel();
         }
 
         public void SelectCharacterUpdatable(DynamicCharacterData selectCharacter)

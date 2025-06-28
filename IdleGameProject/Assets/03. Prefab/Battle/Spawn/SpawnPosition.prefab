@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc76e6b091867aa4d906f8239bafb126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  positionType: 0
   spawnParticle: {fileID: 5318458478910933273}
 --- !u!65 &1023395049783014289
 BoxCollider:
@@ -119,6 +120,14 @@ PrefabInstance:
     - target: {fileID: 471988, guid: cea12ef9b238e2a40ba9cf2907335b58, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19969192, guid: cea12ef9b238e2a40ba9cf2907335b58, type: 3}
+      propertyPath: m_EnableGPUInstancing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19981454, guid: cea12ef9b238e2a40ba9cf2907335b58, type: 3}
+      propertyPath: m_EnableGPUInstancing
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

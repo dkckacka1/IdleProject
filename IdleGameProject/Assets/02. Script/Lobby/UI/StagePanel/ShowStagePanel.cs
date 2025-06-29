@@ -60,7 +60,7 @@ namespace IdleProject.Lobby.UI.StagePanel
             SelectedChapter = chapterData;
             foreach (var updatable in UIManager.Instance.GetUIsOfType<IUISelectChapterUpdatable>())
             {
-                updatable.SelectCharacterUpdatable(chapterData);
+                updatable.SelectChapterUpdatable(chapterData);
             }
         }
 
@@ -68,16 +68,16 @@ namespace IdleProject.Lobby.UI.StagePanel
         {
             for (int i = 0; i < _stageSlotList.Count; ++i)
             {
+                var stageSlot = _stageSlotList[i];
                 if (i <= SelectedChapter.stageInfoList.Count - 1)
                 {
-                    var stageSlot = _stageSlotList[i];
                     var stageInfo = SelectedChapter.stageInfoList[i];
                     var stageName = $"{SelectedChapter.chapterIndex}-{stageInfo.stageIndex}";
                     var stageData = DataManager.Instance.GetData<StaticStageData>(stageName);
                     var isClear = DataManager.Instance.DataController.Player.PlayerClearStageList.Any(clearStage => clearStage == stageName);
                     
                     stageSlot.SetStage(stageData, isClear);
-                    (stageSlot.transform as RectTransform).anchoredPosition = new Vector2(stageInfo.posX, stageInfo.posY);
+                    ((RectTransform)stageSlot.transform).anchoredPosition = new Vector2(stageInfo.posX, stageInfo.posY);
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace IdleProject.Lobby.UI.StagePanel
         }
         
 
-        public void SelectCharacterUpdatable(StaticChapterData selectChapter)
+        public void SelectChapterUpdatable(StaticChapterData selectChapter)
         {
             CreateStageSlots(SelectedChapter);
             BindStageData();

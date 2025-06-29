@@ -14,19 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chapterIndex: 1
   stageIndex: 6
+  stageName: 
   stageFormation:
     frontMiddlePositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: GoblinMale
+      characterLevel: 3
     frontRightPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: GoblinMale
+      characterLevel: 3
     frontLeftPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: GoblinMale
+      characterLevel: 3
     rearRightPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: GoblinMale
+      characterLevel: 3
     rearLeftPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: GoblinMale
+      characterLevel: 3

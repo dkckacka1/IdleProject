@@ -125,6 +125,8 @@ namespace IdleProject.Battle
             if (characterList.Any(character => character.StatSystem.IsLive) is false)
                     BattleStateEventBus.ChangeEvent(BattleStateType.Defeat);
 
+            // TODO : 승리 스테이지 플레이더 데이터에 저장
+            // 전투 보상 설정
             characterList = GetCharacterList(CharacterAIType.Enemy);
             if (characterList.Any(character => character.StatSystem.IsLive) is false)
                 BattleStateEventBus.ChangeEvent(BattleStateType.Win);

@@ -30,9 +30,6 @@ namespace IdleProject.Lobby.UI
         private void GoToDungeon()
         {
             UIManager.Instance.GetUI<StagePanel.StagePanel>().OpenPanel();
-            
-            // DataManager.Instance.DataController.selectStaticStageData = DataManager.Instance.GetData<StaticStageData>("1");
-            // GameManager.Instance.LoadScene(SceneType.Battle);
         }
 
         private void OpenEquipmentPanel()

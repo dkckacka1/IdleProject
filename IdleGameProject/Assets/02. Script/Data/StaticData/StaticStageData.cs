@@ -8,6 +8,7 @@ namespace IdleProject.Data.StaticData
     {
         public int chapterIndex = 1;
         public int stageIndex = 1;
+        public string stageName;
         
         public FormationInfo stageFormation;
 

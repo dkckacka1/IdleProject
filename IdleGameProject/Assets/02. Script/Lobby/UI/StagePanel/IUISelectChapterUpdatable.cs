@@ -4,6 +4,6 @@ namespace IdleProject.Lobby.UI.StagePanel
 {
     public interface IUISelectChapterUpdatable
     {
-        public void SelectCharacterUpdatable(StaticChapterData selectChapter);
+        public void SelectChapterUpdatable(StaticChapterData selectChapter);
     }
 }

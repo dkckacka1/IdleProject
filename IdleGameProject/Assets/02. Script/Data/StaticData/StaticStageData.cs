@@ -10,5 +10,7 @@ namespace IdleProject.Data.StaticData
         public int stageIndex = 1;
         
         public FormationInfo stageFormation;
+
+        public override string Index => $"{chapterIndex}-{stageIndex}";
     }
 }

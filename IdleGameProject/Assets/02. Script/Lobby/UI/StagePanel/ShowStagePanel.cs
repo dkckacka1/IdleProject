@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
@@ -7,44 +8,82 @@ using IdleProject.Core.UI;
 using IdleProject.Data.StaticData;
 using IdleProject.EditorClass;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace IdleProject.Lobby.UI.StagePanel
 {
-    public class ShowStagePanel : UIPanel
+    public class ShowStagePanel : UIPanel, IUISelectChapterUpdatable
     {
+        public StaticChapterData SelectedChapter { get; private set; }
+        
         [SerializeField] private Image backgroundImage;
         [SerializeField] private Transform stageSlotParent;
 
+        private UIDropdown _chapterDropdown;
+
         private readonly List<StageSlot> _stageSlotList = new List<StageSlot>();
+
         
         public override void Initialized()
         {
-            // StaticChapterData selectChapterData = null;
-            //
-            // CreateStageSlots(selectChapterData);
-            //
-            // for (int i = 0; i < _stageSlotList.Count; ++i)
-            // {
-            //     if (i <= selectChapterData.stageInfoList.Count - 1)
-            //     {
-            //         var stageSlot = _stageSlotList[i];
-            //         var stageInfo = selectChapterData.stageInfoList[i];
-            //         var stageName = $"{selectChapterData.chapterIndex}-{stageInfo.stageIndex}";
-            //         var stageData = DataManager.Instance.GetData<StaticStageData>(stageName);
-            //         var isClear = DataManager.Instance.DataController.Player.PlayerClearStageList.Any(clearStage => clearStage == stageName);
-            //         
-            //         stageSlot.SetStage(stageData, isClear);
-            //         // TODO
-            //         // stageSlot.button.onClick.AddListener(GoStage(stageData));
-            //     }
-            //     else
-            //     {
-            //         _stageSlotList[i].gameObject.SetActive(false);
-            //     }
-            // }
+            _chapterDropdown = UIManager.Instance.GetUI<UIDropdown>("ChapterDropdown");
+
+            var chapterList = DataManager.Instance.GetDataList<StaticChapterData>();
+            
+            _chapterDropdown.Dropdown.AddOptions(chapterList.Select(chapter => $"<size=75%>Chapter</size> {chapter.chapterIndex}").ToList());
+            _chapterDropdown.Dropdown.onValueChanged.AddListener(OnDropdownChanged);
+        }
+
+        public override void OpenPanel()
+        {
+            base.OpenPanel();
+
+            if (SelectedChapter is null)
+            {
+                SelectChapter(DataManager.Instance.GetData<StaticChapterData>("1"));
+            }
+        }
+
+        private void OnDropdownChanged(int chapterIndex)
+        {
+            var selectIndex = chapterIndex + 1;
+            var chapterData = DataManager.Instance.GetData<StaticChapterData>($"{selectIndex}");
+
+            SelectChapter(chapterData);
+        }
+
+        public void SelectChapter(StaticChapterData chapterData)
+        {
+            SelectedChapter = chapterData;
+            foreach (var updatable in UIManager.Instance.GetUIsOfType<IUISelectChapterUpdatable>())
+            {
+                updatable.SelectCharacterUpdatable(chapterData);
+            }
+        }
+
+        private void BindStageData()
+        {
+            for (int i = 0; i < _stageSlotList.Count; ++i)
+            {
+                if (i <= SelectedChapter.stageInfoList.Count - 1)
+                {
+                    var stageSlot = _stageSlotList[i];
+                    var stageInfo = SelectedChapter.stageInfoList[i];
+                    var stageName = $"{SelectedChapter.chapterIndex}-{stageInfo.stageIndex}";
+                    var stageData = DataManager.Instance.GetData<StaticStageData>(stageName);
+                    var isClear = DataManager.Instance.DataController.Player.PlayerClearStageList.Any(clearStage => clearStage == stageName);
+                    
+                    stageSlot.SetStage(stageData, isClear);
+                    (stageSlot.transform as RectTransform).anchoredPosition = new Vector2(stageInfo.posX, stageInfo.posY);
+                }
+                else
+                {
+                    _stageSlotList[i].gameObject.SetActive(false);
+                }
+            }
         }
 
         private void CreateStageSlots(StaticChapterData selectChapterData)
@@ -57,33 +96,68 @@ namespace IdleProject.Lobby.UI.StagePanel
             }
         }
 
-        private StageSlot CreateStageSlot()
+        private void CreateStageSlot()
         {
             var slotObject = ResourceManager.Instance.GetPrefab(ResourceManager.UIPrefab, nameof(StageSlot));
             var slotInstance = Instantiate(slotObject, stageSlotParent).GetComponent<StageSlot>();
             _stageSlotList.Add(slotInstance);
-            
-            return slotInstance;
         }
         
 
-        [Button("CreateChapter")]
+        public void SelectCharacterUpdatable(StaticChapterData selectChapter)
+        {
+            CreateStageSlots(SelectedChapter);
+            BindStageData();
+        }
+
+        #region Creator
+
+        [BoxGroup("Creator"), Button]
         private void CreateChapterData()
         {
-            StaticDataCreator.CreateStaticData<StaticChapterData>("ChapterData", asset =>
+            StaticDataCreator.CreateStaticData<StaticChapterData>("ChapterData", chapterData =>
             {
-                asset.chapterImage = backgroundImage.sprite.name;
+                chapterData.chapterImage = backgroundImage.sprite.name;
 
+                var stageIndex = 0;
+                
                 foreach (var slot in GetComponentsInChildren<StageSlot>(true))
                 {
-                    asset.stageInfoList.Add(new StageInfo
+                    chapterData.stageInfoList.Add(new StageInfo
                     {
                         stageIndex = int.Parse(slot.gameObject.name),
                         posX = ((RectTransform)slot.transform).anchoredPosition.x,
                         posY = ((RectTransform)slot.transform).anchoredPosition.y
                     });
+
+                    ++stageIndex;
+                    var index = stageIndex;     
+                    StaticDataCreator.CreateStaticData<StaticStageData>($"StageData {stageIndex}", stageData =>
+                    {
+                        stageData.stageIndex = index;
+                    });
                 }
             });
         }
+
+        [BoxGroup("Creator"), SerializeField] private StageSlot slot;
+        [BoxGroup("Creator"), Button]
+        private void CreateSlot()
+        {
+            var slotInstance = Instantiate(slot, stageSlotParent).GetComponent<StageSlot>();
+            _stageSlotList.Add(slotInstance);
+            slotInstance.gameObject.name = _stageSlotList.Count.ToString();
+        }
+
+        [BoxGroup("Creator"), Button]
+        private void DestroySlots()
+        {
+            foreach (var slot in _stageSlotList)
+            {
+                Destroy(slot.gameObject);
+            }
+        }
+
+        #endregion
     }
 }

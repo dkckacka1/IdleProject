@@ -45,6 +45,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - GamePrefab
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7e4498bee843344cb3e69201f423adf
+    m_Address: Assets/03. Prefab/UI/StageSlot.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UIPrefab
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7e150b1e3d4a57d4687b1ad9162195c0, type: 2}
   m_SchemaSet:

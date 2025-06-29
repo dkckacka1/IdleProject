@@ -9,5 +9,12 @@ namespace IdleProject.Lobby.UI.StagePanel
         {
             UIManager.Instance.GetUI<UIButton>("CloseStagePanelButton").Button.onClick.AddListener(ClosePanel);
         }
+
+        public override void OpenPanel()
+        {
+            base.OpenPanel();
+            
+            UIManager.Instance.GetUI<ShowStagePanel>().OpenPanel();
+        }
     }
 }

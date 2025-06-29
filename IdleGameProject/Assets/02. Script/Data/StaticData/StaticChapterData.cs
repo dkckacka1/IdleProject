@@ -11,5 +11,7 @@ namespace IdleProject.Data.StaticData
         public string chapterImage;
 
         public List<StageInfo> stageInfoList = new List<StageInfo>();
+
+        public override string Index => chapterIndex.ToString();
     }
 }

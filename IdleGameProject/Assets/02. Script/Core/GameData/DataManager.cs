@@ -43,7 +43,16 @@ namespace IdleProject.Core.GameData
             }
 
             var targetDic = _dataDictionary[type];
-            targetDic.Add(staticData.Index, staticData);
+
+            try
+            {
+                targetDic.Add(staticData.Index, staticData);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(@$"{type.Name} : {staticData.Index}
+{e.Message}");
+            }
         }
 
         public T GetData<T>(string dataIndex) where T : Data.StaticData.StaticData

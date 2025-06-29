@@ -26,7 +26,6 @@ namespace IdleProject.Title
             TaskChecker.StartLoading(DATA_INIT_TASK, ResourceManager.Instance.LoadAssets);
             _titleUIController.Loading(TaskChecker.WaitTasking(DATA_INIT_TASK));
             await TaskChecker.WaitTasking(DATA_INIT_TASK);
-            Debug.Log("로딩 끝");
         }
     }
 }

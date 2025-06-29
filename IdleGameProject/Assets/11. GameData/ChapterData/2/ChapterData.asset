@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b8e3df390d4c35ab0e3bd95abcb758, type: 3}
   m_Name: ChapterData
   m_EditorClassIdentifier: 
-  chapterIndex: 1
+  chapterIndex: 2
   chapterImage: Stage
   stageInfoList:
   - stageIndex: 1
-    posX: -659.5
-    posY: -395
+    posX: 641
+    posY: -119
   - stageIndex: 2
-    posX: -491
-    posY: -195
+    posX: 541
+    posY: -356
   - stageIndex: 3
-    posX: -253
-    posY: -82
+    posX: 108
+    posY: -356
   - stageIndex: 4
-    posX: -547
-    posY: 100
+    posX: 264
+    posY: -89
   - stageIndex: 5
-    posX: 190
-    posY: 388
-  - stageIndex: 6
-    posX: 596
+    posX: 0
     posY: 117
+  - stageIndex: 6
+    posX: -376
+    posY: 267

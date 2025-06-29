@@ -50,7 +50,6 @@ namespace IdleProject.Battle
             spawnController.Initialize();
             
             EnumExtension.Foreach<BattleObjectType>(type => { BattleObjectEventDic.Add(type, new UnityEvent()); });
-            TaskChecker.StartLoading(BATTLE_INIT_TASK, _battleUIController.Initialized);
             TaskChecker.StartLoading(BATTLE_INIT_TASK, SpawnCharacter);
             
             await TaskChecker.WaitTasking(BATTLE_INIT_TASK);

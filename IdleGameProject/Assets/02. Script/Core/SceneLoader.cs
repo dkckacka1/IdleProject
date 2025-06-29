@@ -13,6 +13,7 @@ namespace IdleProject.Core
         Splash,
         Lobby,
         Battle,
+        Title,
         // Loading,
     }
 
@@ -24,25 +25,38 @@ namespace IdleProject.Core
 
         private const float REQUIRED_SCENE_LOADING_TIME = 1f; // 최소 로딩 시간 보장
 
-        public async UniTask<SceneController> LoadScene(SceneType sceneType)
+        public async UniTask<SceneController> LoadScene(SceneType sceneType, bool isLoadingUI = true)
         {
             SceneController sceneController = null;
-            
-            var loadingUI = UIManager.Instance.loadingUI;
-            loadingUI.LoadingStart();
 
-            var sceneInstance = await AddressableManager.Instance.Controller.LoadSceneAsync(
-                $"{SCENE_ADDRESSABLE_PATH}/{sceneType}.{SCENE_FILE_EXTENSION}", LoadSceneMode.Single);
-            await sceneInstance.ActivateAsync().ToUniTask();
+            if (isLoadingUI)
+            {
+                var loadingUI = UIManager.Instance.loadingUI;
+                loadingUI.LoadingStart();
 
-            loadingUI.ShowLoadingPercent(0.3f);
+                var sceneInstance = await AddressableManager.Instance.Controller.LoadSceneAsync(
+                    $"{SCENE_ADDRESSABLE_PATH}/{sceneType}.{SCENE_FILE_EXTENSION}", LoadSceneMode.Single);
+                await sceneInstance.ActivateAsync().ToUniTask();
 
-            sceneController = UnityEngine.Object.FindAnyObjectByType<SceneController>();
-            await sceneController.Initialize();
-            loadingUI.ShowLoadingPercent(0.6f);
+                loadingUI.ShowLoadingPercent(0.3f);
 
-            UIManager.Instance.InitializedUI();
-            loadingUI.ShowLoadingPercent(1f);
+                sceneController = UnityEngine.Object.FindAnyObjectByType<SceneController>();
+                await sceneController.Initialize();
+                loadingUI.ShowLoadingPercent(0.6f);
+
+                UIManager.Instance.InitializedUI();
+                loadingUI.ShowLoadingPercent(1f);
+            }
+            else
+            {
+                var sceneInstance = await AddressableManager.Instance.Controller.LoadSceneAsync($"{SCENE_ADDRESSABLE_PATH}/{sceneType}.{SCENE_FILE_EXTENSION}", LoadSceneMode.Single);
+                await sceneInstance.ActivateAsync().ToUniTask();
+                
+                sceneController = UnityEngine.Object.FindAnyObjectByType<SceneController>();
+                await sceneController.Initialize();
+                UIManager.Instance.InitializedUI();
+            }
+
 
             return sceneController;
         }

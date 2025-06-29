@@ -39,7 +39,6 @@ namespace IdleProject.Lobby
         {
             _lobbyUIController = UIManager.Instance.GetUIController<LobbyUIController>();
 
-            TaskChecker.StartLoading(LOBBY_INIT_TASK, _lobbyUIController.Initialized);
             TaskChecker.StartLoading(LOBBY_INIT_TASK, SetMainCharacter);
 
             await TaskChecker.WaitTasking(LOBBY_INIT_TASK);

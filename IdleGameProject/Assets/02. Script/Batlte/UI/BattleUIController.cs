@@ -29,7 +29,7 @@ namespace IdleProject.Battle.UI
 
         public Func<BattleText> GetBattleText;
 
-        public async UniTask Initialized()
+        public override async UniTask Initialized()
         {
             await ObjectPoolManager.Instance.CreatePoolAsync("BattleText", battleTextParent);
             GetBattleText = () => ObjectPoolManager.Instance.Get<BattleText>("BattleText");

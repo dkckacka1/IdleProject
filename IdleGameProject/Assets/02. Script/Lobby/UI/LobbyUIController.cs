@@ -12,7 +12,7 @@ namespace IdleProject.Lobby.UI
     {
         private readonly PanelRadioGroup _lobbyPanelRadioGroup = new();
         
-        public async UniTask Initialized()
+        public override async UniTask Initialized()
         {
             var characterPanel = UIManager.Instance.GetUI<CharacterPanel.CharacterPanel>();
             var stagePanel = UIManager.Instance.GetUI<StagePanel.StagePanel>();

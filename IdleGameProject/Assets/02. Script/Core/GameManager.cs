@@ -16,7 +16,6 @@ namespace IdleProject.Core
 
         private SceneController _currentSceneController;
 
-        private const string GAME_INIT_TASK = "GameInit";
 
         public static T GetCurrentSceneManager<T>() where T : SceneController => Instance._currentSceneController as T;
 
@@ -32,18 +31,20 @@ namespace IdleProject.Core
             _sceneLoader = new SceneLoader();
         }
 
-        public async UniTask LoadScene(SceneType sceneType, UnityAction sceneLoadComplete = null)
-        {
-            await _sceneLoader.LoadScene(sceneType);
-            sceneLoadComplete?.Invoke();
-        }
         
         private void Start()
         {
-            TaskChecker.StartLoading(GAME_INIT_TASK, DataManager.Instance.LoadData);
-            TaskChecker.StartLoading(GAME_INIT_TASK, ResourceManager.Instance.LoadAssets);
-            TaskChecker.AddOnCompleteCallback(GAME_INIT_TASK,
-                () => { LoadScene(SceneType.Lobby).Forget(); });
+            // TaskChecker.StartLoading(GAME_INIT_TASK, DataManager.Instance.LoadData);
+            // TaskChecker.StartLoading(GAME_INIT_TASK, ResourceManager.Instance.LoadAssets);
+            // TaskChecker.AddOnCompleteCallback(GAME_INIT_TASK,() => { LoadScene(SceneType.Lobby).Forget(); });
+            
+            LoadScene(SceneType.Title, isLoadingUI: false).Forget();
+        }
+        
+        public async UniTask LoadScene(SceneType sceneType, UnityAction sceneLoadComplete = null, bool isLoadingUI = true)
+        {
+            await _sceneLoader.LoadScene(sceneType, isLoadingUI);
+            sceneLoadComplete?.Invoke();
         }
     }
 }

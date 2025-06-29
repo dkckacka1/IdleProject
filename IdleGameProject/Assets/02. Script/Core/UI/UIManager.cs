@@ -12,8 +12,8 @@ namespace IdleProject.Core.UI
 {
     public class UIManager : SingletonMonoBehaviour<UIManager>
     {
-        private readonly Dictionary<Type, UIController> _uiControllerDic = new Dictionary<Type, UIController>();
         private readonly Dictionary<string, UIBase> _uiBaseDic = new();
+        private UIController _currentUIController;
 
         [HideInInspector] public LoadingUI loadingUI;
 
@@ -25,24 +25,14 @@ namespace IdleProject.Core.UI
             loadingUI = GetComponentInChildren<LoadingUI>();
         }
         
-        public void AddUIController(UIController controller)
+        public void SetUIController(UIController controller)
         {
-            var uiControllerType = controller.GetType();
-            _uiControllerDic.Add(uiControllerType, controller);
-        }
-
-        public void RemoveUIController(UIController controller)
-        {
-            var uiControllerType = controller.GetType();
-            _uiControllerDic.Remove(uiControllerType);
+            _currentUIController = controller;
         }
 
         public T GetUIController<T>() where T : UIController
         {
-            if (_uiControllerDic.TryGetValue(typeof(T), out var ctrl))
-                return ctrl as T;
-
-            return null;
+            return _currentUIController as T;
         }
 
         public void AddUI(string uiName, UIBase ui)
@@ -94,6 +84,7 @@ namespace IdleProject.Core.UI
 
         public void InitializedUI()
         {
+            _currentUIController.Initialized();
             foreach (var ui in _uiBaseDic.Values.OfType<IUIInit>())
             {
                 ui.Initialized();

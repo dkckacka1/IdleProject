@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace IdleProject.Core.UI
@@ -7,12 +8,9 @@ namespace IdleProject.Core.UI
     {
         protected virtual void Awake()
         {
-            UIManager.Instance.AddUIController(this);
+            UIManager.Instance.SetUIController(this);
         }
 
-        protected virtual void OnDestroy()
-        {
-            UIManager.Instance.RemoveUIController(this);
-        }
+        public abstract UniTask Initialized();
     }
 }

@@ -16,10 +16,10 @@ namespace IdleProject.Core.UI.Loading
             gameObject.SetActive(false);
         }
 
-        public async UniTaskVoid StartLoading(UniTask loadingTask)
+        public async UniTask StartLoading(UniTask loadingTask)
         {
             gameObject.SetActive(true);
-            _rotateTween = transform.DORotate(new Vector3(0, 360f, 0), rotateDuration, RotateMode.FastBeyond360)
+            _rotateTween = transform.DORotate(new Vector3(0, 0, 360f), rotateDuration, RotateMode.FastBeyond360)
                 .SetEase(Ease.Linear)
                 .SetLoops(-1, LoopType.Restart)
                 .OnKill(() => { transform.Rotate(Vector3.zero); });

@@ -90,7 +90,7 @@ namespace IdleProject.Lobby.UI.CharacterPanel
                 .ForEach(ui => ui.UpdateUI());
             
             // 세이브
-            DataManager.Instance.SaveController.SaveCharacter(selectCharacter);
+            DataManager.Instance.SaveController.Save(selectCharacter);
         }
 
         private void OnSlotPointerDown(PointerEventData eventData, SlotUI slot)
@@ -153,7 +153,7 @@ namespace IdleProject.Lobby.UI.CharacterPanel
 
             var userItem = DataManager.Instance.DataController.Player.PlayerConsumableItemDataDic[itemIndex];
             userItem.itemCount = itemSlot.CurrentCount;
-            DataManager.Instance.SaveController.SaveConsumableItem(userItem);
+            DataManager.Instance.SaveController.Save(userItem);
         }
 
         private void ResetUseExpPotion()

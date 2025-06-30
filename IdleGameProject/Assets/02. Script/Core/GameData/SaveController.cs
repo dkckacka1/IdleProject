@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using IdleProject.Data;
 using IdleProject.Data.DynamicData;
 using IdleProject.Data.Player;
 using IdleProject.Data.StaticData;
@@ -32,29 +33,46 @@ namespace IdleProject.Core.GameData
             }
         }
         
-        public void Save(params DynamicData[] dataParams)
+        public void Save(params IData[] dataParams)
         {
-            foreach (var data in dataParams)
+            foreach (var iData in dataParams)
             {
-                if (data is null)
+                if (iData is null)
                     continue;
-                
-                switch (data)
+
+                var dynamicData = iData.GetData<DynamicData>();
+                if (dynamicData is not null)
                 {
-                    case DynamicCharacterData characterData:
-                        SaveCharacter(characterData);
-                        break;
-                    case DynamicEquipmentItemData equipmentItemData:
-                        SaveEquipmentItem(equipmentItemData);
-                        break;
-                    case DynamicConsumableItemData consumableItemData:
-                        SaveConsumableItem(consumableItemData);
-                        break;
+                    switch (dynamicData)
+                    {
+                        case DynamicCharacterData characterData:
+                            SaveCharacter(characterData);
+                            break;
+                        case DynamicEquipmentItemData equipmentItemData:
+                            SaveEquipmentItem(equipmentItemData);
+                            break;
+                        case DynamicConsumableItemData consumableItemData:
+                            SaveConsumableItem(consumableItemData);
+                            break;
+                    }
+
+                    continue;
+                }
+
+                var staticData = iData.GetData<StaticData>();
+                if (staticData is not null)
+                {
+                    switch (staticData)
+                    {
+                        case StaticStageData stageData:
+                            SaveStageClear(stageData);
+                            break;
+                    }
                 }
             }
         }
 
-        public void SaveCharacter(DynamicCharacterData characterData)
+        private void SaveCharacter(DynamicCharacterData characterData)
         {
             var playerCharacter = _playerData.playerCharacterList.FirstOrDefault(character =>
                 character.characterName == characterData.StaticData.Index);
@@ -91,7 +109,7 @@ namespace IdleProject.Core.GameData
             }
         }
 
-        public void SaveConsumableItem(DynamicConsumableItemData itemData)
+        private void SaveConsumableItem(DynamicConsumableItemData itemData)
         {
             var playerItem = _playerData.playerConsumableItemList.FirstOrDefault(item =>
                 item.itemName == itemData.StaticData.Index);
@@ -112,7 +130,7 @@ namespace IdleProject.Core.GameData
             }
         }
 
-        public void SaveEquipmentItem(DynamicEquipmentItemData itemData)
+        private void SaveEquipmentItem(DynamicEquipmentItemData itemData)
         {
             var playerItem = _playerData.playerEquipmentItemList.FirstOrDefault(item =>
                 item.index == itemData.Index);
@@ -131,6 +149,11 @@ namespace IdleProject.Core.GameData
             {
                 playerItem.equipmentCharacterName = itemData.equipmentCharacterName;
             }
+        }
+
+        private void SaveStageClear(StaticStageData stageData)
+        {
+            _playerData.playerClearStageList.Add(stageData.Index);
         }
     }
 }

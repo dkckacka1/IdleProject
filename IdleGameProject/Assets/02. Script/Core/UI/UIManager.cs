@@ -1,12 +1,10 @@
 using Engine.Util;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using IdleProject.Core.UI.Loading;
+using IdleProject.Lobby.UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
+using UnityEngine.Events;
 
 namespace IdleProject.Core.UI
 {
@@ -19,6 +17,8 @@ namespace IdleProject.Core.UI
 
         public bool IsShowingLoading => loadingUI.isLoading;
 
+        [SerializeField] private ConfirmPopup confirmPopup;
+        
         protected override void Initialized()
         {
             base.Initialized();
@@ -94,6 +94,12 @@ namespace IdleProject.Core.UI
         public IEnumerable<T> GetUIsOfType<T>()
         {
             return _uiBaseDic.Values.OfType<T>();
+        }
+
+        public void OpenConfirmPopup(string description, UnityAction yesAction)
+        {
+            confirmPopup.SetConfirm(description, yesAction);
+            confirmPopup.Open();
         }
 
         public static Vector3 GetUIInScreen(Vector3 position)

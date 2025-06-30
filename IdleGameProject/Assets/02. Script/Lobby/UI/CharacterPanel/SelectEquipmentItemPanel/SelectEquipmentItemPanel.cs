@@ -57,18 +57,36 @@ namespace IdleProject.Lobby.UI.CharacterPanel
             
             // 기존 장착한 무기
             var prevEquipmentItem = selectedCharacter.GetEquipmentItem(selectedEquipmentItem.StaticData.itemType);
+
+            if (prevEquipmentItem == selectedEquipmentItem)
+                // 동일한 무기를 선택했다면
+                return;
             
             // 기존 장착한 캐릭터가 있었다면
             var prevEquippedCharacter = selectedEquipmentItem.GetEquippedCharacter();
-            prevEquippedCharacter?.ReleaseEquipmentItem(selectedEquipmentItem.StaticData.itemType);
-
-            // 선택한 캐릭터 장비 장착
-            selectedCharacter.SetEquipmentItem(selectedEquipmentItem.StaticData.itemType, selectedEquipmentItem);
-            
-            UIManager.Instance.GetUIsOfType<IUIUpdatable>()
-                .ForEach(updatable => updatable.UpdateUI());
-            
-            DataManager.Instance.SaveController.Save(selectedCharacter, selectedEquipmentItem, prevEquippedCharacter, prevEquipmentItem);
+            if (prevEquippedCharacter is not null)
+            {
+                // 알림 팝업창을 표시
+                UIManager.Instance.OpenConfirmPopup("기존에 장착중인 캐릭터의 장비가 해제 됩니다.", () =>
+                {
+                    // 기존 장착중인 캐릭터 장비 해제
+                    prevEquippedCharacter?.ReleaseEquipmentItem(selectedEquipmentItem.StaticData.itemType);
+                    
+                    // 선택한 캐릭터 장비 장착
+                    selectedCharacter.SetEquipmentItem(selectedEquipmentItem.StaticData.itemType, selectedEquipmentItem);
+                    UIManager.Instance.GetUIsOfType<IUIUpdatable>()
+                        .ForEach(updatable => updatable.UpdateUI());
+                    DataManager.Instance.SaveController.Save(selectedCharacter, selectedEquipmentItem, prevEquippedCharacter, prevEquipmentItem);
+                });                
+            }
+            else
+            {
+                // 선택한 캐릭터 장비 장착
+                selectedCharacter.SetEquipmentItem(selectedEquipmentItem.StaticData.itemType, selectedEquipmentItem);
+                UIManager.Instance.GetUIsOfType<IUIUpdatable>()
+                    .ForEach(updatable => updatable.UpdateUI());
+                DataManager.Instance.SaveController.Save(selectedCharacter, selectedEquipmentItem, prevEquipmentItem);
+            }
         }
         
         private void ReleaseItem()

@@ -15,11 +15,22 @@ namespace IdleProject.Data.DynamicData
             itemCount = count;
         }
 
+        #region Factory
         public static DynamicConsumableItemData GetInstance(PlayerConsumableItemData data)
         {
             var staticData = DataManager.Instance.GetData<StaticConsumableItemData>(data.itemName);
 
             return new DynamicConsumableItemData(staticData, data.itemCount);
         }
+
+        public static DynamicConsumableItemData GetInstance(string itemIndex, int count = 1)
+        {
+            var staticData = DataManager.Instance.GetData<StaticConsumableItemData>(itemIndex);
+
+            return new DynamicConsumableItemData(staticData, count);
+        }
+
+        #endregion
+
     }
 }

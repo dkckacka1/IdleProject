@@ -54,6 +54,20 @@ namespace IdleProject.Data.DynamicData
                 DataManager.Instance.SaveController.Save(stageData);
             }
         }
+
+        public void AddConsumableItem(string index, int count = 1)
+        {
+            if (PlayerConsumableItemDataDic.TryGetValue(index, out var item))
+            {
+                item.itemCount += count;
+            }
+            else
+            {
+                PlayerConsumableItemDataDic.Add(index, DynamicConsumableItemData.GetInstance(index, count));
+            }
+            
+            DataManager.Instance.SaveController.Save(PlayerConsumableItemDataDic[index]);
+        }
         
         private FormationInfo GetPlayerFormation(PlayerData playerData)
         {

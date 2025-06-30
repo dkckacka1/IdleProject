@@ -157,8 +157,20 @@ namespace IdleProject.Battle
         {
             var currentStage = DataManager.Instance.DataController.selectStaticStageData;
             DataManager.Instance.DataController.Player.ClearStage(currentStage);
-            // TODO
-            // 승리 아이템 플레이어 데이터에 넣기
+            foreach (var reward in currentStage.rewardList)
+            {
+                switch (reward.rewardType)
+                {
+                    case RewardType.ConsumableItem:
+                        DataManager.Instance.DataController.Player.AddConsumableItem(reward.itemIndex, reward.count);
+                        break;
+                    case RewardType.EquipmentItem:
+                        // TODO
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
         }
     }
 }

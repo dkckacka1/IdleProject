@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using IdleProject.Core;
+using IdleProject.Core.GameData;
 using IdleProject.Data.Player;
+using IdleProject.Data.StaticData;
 using Sirenix.Utilities;
 
 namespace IdleProject.Data.DynamicData
@@ -11,7 +13,7 @@ namespace IdleProject.Data.DynamicData
         public readonly Dictionary<string, DynamicCharacterData> PlayerCharacterDataDic;
         public readonly Dictionary<int, DynamicEquipmentItemData> PlayerEquipmentItemDataDic;
         public readonly Dictionary<string, DynamicConsumableItemData> PlayerConsumableItemDataDic;
-        public readonly List<string> PlayerClearStageList;
+        public readonly HashSet<string> PlayerClearStageSet;
         
         public FormationInfo PlayerFormation;
         
@@ -38,9 +40,19 @@ namespace IdleProject.Data.DynamicData
                     DynamicCharacterData.GetInstance
                 );
 
-            PlayerClearStageList = new List<string>(playerData.playerClearStageList);
+            PlayerClearStageSet = new HashSet<string>(playerData.playerClearStageList);
             
             PlayerFormation = GetPlayerFormation(playerData);
+        }
+
+        public void ClearStage(StaticStageData stageData)
+        {
+            var clearIndex = stageData.Index;
+
+            if (PlayerClearStageSet.Add(clearIndex))
+            {
+                DataManager.Instance.SaveController.Save(stageData);
+            }
         }
         
         private FormationInfo GetPlayerFormation(PlayerData playerData)

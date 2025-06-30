@@ -36,8 +36,6 @@ namespace IdleProject.Lobby.UI.StagePanel
         {
             if (_stageData is null) return;
 
-            Debug.Log(_stageData.Index);
-            
             foreach (var updatable in UIManager.Instance.GetUIsOfType<IUISelectStageUpdatable>())
             {
                 updatable.SelectStageUpdatable(_stageData);

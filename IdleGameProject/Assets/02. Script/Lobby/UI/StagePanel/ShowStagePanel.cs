@@ -74,7 +74,7 @@ namespace IdleProject.Lobby.UI.StagePanel
                     var stageInfo = SelectedChapter.stageInfoList[i];
                     var stageName = $"{SelectedChapter.chapterIndex}-{stageInfo.stageIndex}";
                     var stageData = DataManager.Instance.GetData<StaticStageData>(stageName);
-                    var isClear = DataManager.Instance.DataController.Player.PlayerClearStageList.Any(clearStage => clearStage == stageName);
+                    var isClear = DataManager.Instance.DataController.Player.PlayerClearStageSet.Contains(stageName);
                     
                     stageSlot.SetStage(stageData, isClear);
                     ((RectTransform)stageSlot.transform).anchoredPosition = new Vector2(stageInfo.posX, stageInfo.posY);

@@ -22,7 +22,7 @@ namespace IdleProject.Battle
 {
 
 
-    public partial class BattleManager : SceneController
+    public partial class BattleManager : SceneController, IEnumEvent<BattleStateType>
     {
         [HideInInspector] public List<CharacterController> playerCharacterList = new List<CharacterController>();
         [HideInInspector] public List<CharacterController> enemyCharacterList = new List<CharacterController>();
@@ -48,6 +48,8 @@ namespace IdleProject.Battle
             
             spawnController = GetComponent<SpawnController>();
             spawnController.Initialize();
+            
+            BattleStateEventBus.PublishEvent(this);
             
             EnumExtension.Foreach<BattleObjectType>(type => { BattleObjectEventDic.Add(type, new UnityEvent()); });
             TaskChecker.StartLoading(BATTLE_INIT_TASK, SpawnCharacter);
@@ -131,6 +133,32 @@ namespace IdleProject.Battle
             if (characterList.Any(character => character.StatSystem.IsLive) is false)
                 BattleStateEventBus.ChangeEvent(BattleStateType.Win);
             
+        }
+
+        public void OnEnumChange(BattleStateType type)
+        {
+            switch (type)
+            {
+                case BattleStateType.Ready:
+                case BattleStateType.Battle:
+                case BattleStateType.Skill:
+                    break;
+                case BattleStateType.Win:
+                    Win();
+                    break;
+                case BattleStateType.Defeat:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        private void Win()
+        {
+            var currentStage = DataManager.Instance.DataController.selectStaticStageData;
+            DataManager.Instance.DataController.Player.ClearStage(currentStage);
+            // TODO
+            // 승리 아이템 플레이어 데이터에 넣기
         }
     }
 }

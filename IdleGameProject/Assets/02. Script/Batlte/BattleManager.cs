@@ -126,9 +126,7 @@ namespace IdleProject.Battle
             var characterList = GetCharacterList(CharacterAIType.Player);
             if (characterList.Any(character => character.StatSystem.IsLive) is false)
                     BattleStateEventBus.ChangeEvent(BattleStateType.Defeat);
-
-            // TODO : 승리 스테이지 플레이더 데이터에 저장
-            // 전투 보상 설정
+            
             characterList = GetCharacterList(CharacterAIType.Enemy);
             if (characterList.Any(character => character.StatSystem.IsLive) is false)
                 BattleStateEventBus.ChangeEvent(BattleStateType.Win);
@@ -165,7 +163,7 @@ namespace IdleProject.Battle
                         DataManager.Instance.DataController.Player.AddConsumableItem(reward.itemIndex, reward.count);
                         break;
                     case RewardType.EquipmentItem:
-                        // TODO
+                        DataManager.Instance.DataController.Player.AddEquipmentItem(reward.itemIndex);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

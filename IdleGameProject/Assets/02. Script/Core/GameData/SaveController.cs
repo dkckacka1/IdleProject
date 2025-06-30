@@ -147,7 +147,7 @@ namespace IdleProject.Core.GameData
             }
             else
             {
-                playerItem.equipmentCharacterName = itemData.equipmentCharacterName;
+                playerItem.equipmentCharacterName = itemData.EquipmentCharacterName;
             }
         }
 

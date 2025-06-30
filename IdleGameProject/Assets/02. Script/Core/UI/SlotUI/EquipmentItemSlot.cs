@@ -46,9 +46,9 @@ namespace IdleProject.Core.UI.Slot
                 equipmentItemTypeImage.sprite =
                     GetSpriteExtension.GetEquipmentTypeIconSprite(dynamicData.StaticData.itemType);
 
-                var isEquippedCharacter = string.IsNullOrEmpty(dynamicData.equipmentCharacterName) is false;
+                var isEquippedCharacter = string.IsNullOrEmpty(dynamicData.EquipmentCharacterName) is false;
                 var characterData = isEquippedCharacter
-                    ? DataManager.Instance.GetData<StaticCharacterData>(dynamicData.equipmentCharacterName)
+                    ? DataManager.Instance.GetData<StaticCharacterData>(dynamicData.EquipmentCharacterName)
                     : null;
                 
                 SetEquipmentCharacterIcon(characterData);

@@ -16,7 +16,7 @@ namespace IdleProject.Data.DynamicData
         public int Level;
         public int Exp;
 
-        private readonly Dictionary<EquipmentItemType, int> _equippedItemDic = new();
+        private readonly Dictionary<EquipmentItemType, string> _equippedItemDic = new();
         
         public string GetIconName => StaticData.GetIconName;
         public int GetLevelUpExpValue => Level * 100;
@@ -32,7 +32,7 @@ namespace IdleProject.Data.DynamicData
         {
             EnumExtension.Foreach<EquipmentItemType>(type =>
             {
-                _equippedItemDic.Add(type, 0);
+                _equippedItemDic.Add(type, string.Empty);
             });
             
             Level = characterLevel;
@@ -63,7 +63,7 @@ namespace IdleProject.Data.DynamicData
         {
             float result = 0f;
 
-            var equippedItemList = _equippedItemDic.Values.Where(index => index > 0).Select(index =>
+            var equippedItemList = _equippedItemDic.Values.Where(index => string.IsNullOrEmpty(index) is false).Select(index =>
                 DataManager.Instance.DataController.Player.PlayerEquipmentItemDataDic[index]);
             
 
@@ -98,7 +98,7 @@ namespace IdleProject.Data.DynamicData
             DynamicEquipmentItemData result = null;
             var index = _equippedItemDic[itemType];
 
-            if (index > 0)
+            if (string.IsNullOrEmpty(index) is false)
             {
                 result = DataManager.Instance.DataController.Player.PlayerEquipmentItemDataDic[index];
             }
@@ -106,7 +106,7 @@ namespace IdleProject.Data.DynamicData
             return result;
         }
 
-        public int GetEquipmentItemIndex(EquipmentItemType itemType)
+        public string GetEquipmentItemIndex(EquipmentItemType itemType)
         {
             return _equippedItemDic[itemType];
         }
@@ -118,7 +118,7 @@ namespace IdleProject.Data.DynamicData
             ReleaseEquipmentItem(itemType);
             
             // 신규 장비 장착
-            equipmentItemData.equipmentCharacterName = StaticData.Index;
+            equipmentItemData.EquipmentCharacterName = StaticData.Index;
             _equippedItemDic[itemType] = equipmentItemData.Index;
         }
 
@@ -128,10 +128,10 @@ namespace IdleProject.Data.DynamicData
             var itemData = GetEquipmentItem(itemType);
             if (itemData is not null)
             {
-                itemData.equipmentCharacterName = string.Empty;
+                itemData.EquipmentCharacterName = string.Empty;
             }
             
-            _equippedItemDic[itemType] = 0;
+            _equippedItemDic[itemType] = string.Empty;
         }
         
         private void EquipAllItem(PlayerCharacterData characterData)

@@ -6,7 +6,14 @@ namespace IdleProject.Util
 {
     public static class PlayerDataExtension
     {
-        public static int GetCharacterEquipmentItemIndex(this PlayerCharacterData playerCharacterData, EquipmentItemType itemType)
+        public static string GetNewGUID(string itemIndex)
+        {
+            return
+                $"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}_{itemIndex}_{Guid.NewGuid().ToString("N").Substring(0, 8)}";
+        }
+
+        
+        public static string GetCharacterEquipmentItemIndex(this PlayerCharacterData playerCharacterData, EquipmentItemType itemType)
         {
             return itemType switch
             {

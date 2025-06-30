@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using System.Linq;
 using IdleProject.Core.GameData;
 using IdleProject.Data.StaticData;
+using IdleProject.Util;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace IdleProject.Data.Player
 {
@@ -50,7 +49,7 @@ namespace IdleProject.Data.Player
 
             var newItem = new PlayerEquipmentItemData
             {
-                index = playerEquipmentItemList.Count + 1,
+                index = PlayerDataExtension.GetNewGUID(equipmentItemData.Index),
                 itemIndex = equipmentItemData.Index
             };
             playerEquipmentItemList.Add(newItem);
@@ -65,7 +64,7 @@ namespace IdleProject.Data.Player
             {
                 var newItem = new PlayerEquipmentItemData
                 {
-                    index = playerEquipmentItemList.Count + 1,
+                    index = PlayerDataExtension.GetNewGUID(equipmentItemData.Index),
                     itemIndex = itemData.Index
                 };
                 playerEquipmentItemList.Add(newItem);

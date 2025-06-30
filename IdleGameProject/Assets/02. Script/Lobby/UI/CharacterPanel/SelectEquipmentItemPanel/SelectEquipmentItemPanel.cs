@@ -37,9 +37,9 @@ namespace IdleProject.Lobby.UI.CharacterPanel
         {
             itemSlot.SlotUI.BindData(item);
             itemSlot.ShowParts(item);
-            var currentEquippedCharacter = string.IsNullOrEmpty(item.equipmentCharacterName)
+            var currentEquippedCharacter = string.IsNullOrEmpty(item.EquipmentCharacterName)
                 ? null
-                : DataManager.Instance.GetData<StaticCharacterData>(item.equipmentCharacterName);
+                : DataManager.Instance.GetData<StaticCharacterData>(item.EquipmentCharacterName);
             itemSlot.SetEquipmentCharacterIcon(currentEquippedCharacter);
             
             _equipmentItemNameText.Text.text = item.StaticData.itemName;

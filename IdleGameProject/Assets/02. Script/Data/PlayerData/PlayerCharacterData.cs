@@ -12,11 +12,11 @@ namespace IdleProject.Data.Player
         public int level = 1;
         public int exp;
 
-        public int equipmentWeaponIndex;
-        public int equipmentHelmetIndex;
-        public int equipmentArmorIndex;
-        public int equipmentGloveIndex;
-        public int equipmentBootsIndex;
-        public int equipmentAccessoryIndex;
+        public string equipmentWeaponIndex;
+        public string equipmentHelmetIndex;
+        public string equipmentArmorIndex;
+        public string equipmentGloveIndex;
+        public string equipmentBootsIndex;
+        public string equipmentAccessoryIndex;
     }
 }

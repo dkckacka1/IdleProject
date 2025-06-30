@@ -4,14 +4,14 @@ using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Data.Player;
 using IdleProject.Data.StaticData;
-using Sirenix.Utilities;
+using IdleProject.Util;
 
 namespace IdleProject.Data.DynamicData
 {
     public class DynamicPlayerData
     {
         public readonly Dictionary<string, DynamicCharacterData> PlayerCharacterDataDic;
-        public readonly Dictionary<int, DynamicEquipmentItemData> PlayerEquipmentItemDataDic;
+        public readonly Dictionary<string, DynamicEquipmentItemData> PlayerEquipmentItemDataDic;
         public readonly Dictionary<string, DynamicConsumableItemData> PlayerConsumableItemDataDic;
         public readonly HashSet<string> PlayerClearStageSet;
         
@@ -67,6 +67,15 @@ namespace IdleProject.Data.DynamicData
             }
             
             DataManager.Instance.SaveController.Save(PlayerConsumableItemDataDic[index]);
+        }
+
+        public void AddEquipmentItem(string itemIndex)
+        {
+            var key = PlayerDataExtension.GetNewGUID(itemIndex);
+            var newItem = DynamicEquipmentItemData.GetInstance(itemIndex, key);
+            PlayerEquipmentItemDataDic.Add(key, newItem);
+            
+            DataManager.Instance.SaveController.Save(newItem);
         }
         
         private FormationInfo GetPlayerFormation(PlayerData playerData)

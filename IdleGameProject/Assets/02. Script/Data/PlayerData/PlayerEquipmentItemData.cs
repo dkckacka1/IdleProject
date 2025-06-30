@@ -8,7 +8,7 @@ namespace IdleProject.Data.Player
     [System.Serializable]
     public class PlayerEquipmentItemData
     {
-        public int index;
+        public string index;
         public string itemIndex;
         public string equipmentCharacterName;
 

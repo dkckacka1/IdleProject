@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using IdleProject.Core;
@@ -54,7 +55,7 @@ namespace IdleProject.Battle.UI
                 reward.alpha = 0f;
                 reward.DOFade(1f, 0.2f);
             });
-            openSequence.Append(SetRewardSequence(10));
+            openSequence.Append(SetRewardSequence());
             openSequence.AppendInterval(openActiveInterval);
             openSequence.AppendCallback(() =>
             {
@@ -64,15 +65,17 @@ namespace IdleProject.Battle.UI
             });
         }
 
-        private Sequence SetRewardSequence(int rewardCount)
+        private Sequence SetRewardSequence()
         {
             var rewardSequence = DOTween.Sequence();
-
-            for (int i = 0; i < rewardCount; ++i)
+            var rewardList = DataManager.Instance.DataController.selectStaticStageData.rewardList;
+            
+            for (int i = 0; i < rewardList.Count; ++i)
             {
+                var rewardInfo = rewardList[i];
                 rewardSequence.AppendCallback(() =>
                 {
-                    var slot = CreateSlot();
+                    var slot = CreateSlot(rewardInfo);
                     ((RectTransform)slot.transform).DOPunchScale(Vector3.one * slotPunchScale,
                         slotPunchDuration, 1, 0.3f);
                 });
@@ -82,9 +85,34 @@ namespace IdleProject.Battle.UI
             return rewardSequence;
         }
 
-        private SlotUI CreateSlot()
+        private SlotUI CreateSlot(RewardInfo info)
         {
-            return Instantiate(slotUIPrefab, rewardScroll.content);
+            SlotUI slot = null;
+
+            switch (info.rewardType)
+            {
+                case RewardType.ConsumableItem:
+                    {
+                        var data = DataManager.Instance.GetData<StaticConsumableItemData>(info.itemIndex);
+                        slot = SlotUI.GetSlotUI<ConsumableItemSlot>(rewardScroll.content);
+                        slot.BindData(data);
+                        slot.GetSlotParts<ConsumableItemSlot>().SetCount(info.count);
+                        slot.GetSlotParts<ConsumableItemSlot>().SetShadow(false);
+                    }
+                    break;
+                case RewardType.EquipmentItem:
+                    {
+                        var data = DataManager.Instance.GetData<StaticEquipmentItemData>(info.itemIndex);
+                        slot = SlotUI.GetSlotUI<EquipmentItemSlot>(rewardScroll.content);
+                        slot.BindData(data);
+                        slot.GetSlotParts<EquipmentItemSlot>().SetEquipmentObject(false);
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            return slot;
         }
 
         private void GotoNextStage()

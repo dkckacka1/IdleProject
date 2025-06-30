@@ -128,14 +128,14 @@ namespace IdleProject.Battle.Spawn
 
         #region 캐릭터 생성 부문
 
-        private async Task<CharacterController> CreateCharacter(DynamicCharacterData data, CharacterAIType aiType)
+        private async UniTask<CharacterController> CreateCharacter(DynamicCharacterData data, CharacterAIType aiType)
         {
             var controllerObj = ResourceManager.Instance.GetPrefab(ResourceManager.GamePrefab, "Character");
             var characterInstance = Instantiate(controllerObj).GetComponent<CharacterController>();
             characterInstance.name = data.StaticData.addressValue.characterName;
 
             await SetModel(characterInstance, data.StaticData);
-            await SetPoolableObject(characterInstance, data.StaticData);
+            SetPoolableObject(characterInstance, data.StaticData);
             SetAnimation(characterInstance, data.StaticData);
             SetStat(characterInstance, data);
             SetSkill(characterInstance, data.StaticData);
@@ -176,16 +176,16 @@ namespace IdleProject.Battle.Spawn
             controller.AnimController.SetAnimationController(animationController);
         }
 
-        private async UniTask SetPoolableObject(CharacterController controller, StaticCharacterData data)
+        private void SetPoolableObject(CharacterController controller, StaticCharacterData data)
         {
             controller.GetAttackHitEffect =
-                await CreatePool<BattleEffect>(PoolableType.BattleEffect, data.addressValue.attackHitEffectAddress);
+                CreatePool<BattleEffect>(PoolableType.BattleEffect, data.addressValue.attackHitEffectAddress);
             controller.GetSkillHitEffect =
-                await CreatePool<BattleEffect>(PoolableType.BattleEffect, data.addressValue.skillHitEffectAddress);
+                CreatePool<BattleEffect>(PoolableType.BattleEffect, data.addressValue.skillHitEffectAddress);
             controller.GetAttackProjectile =
-                await CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.attackProjectileAddress);
+                CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.attackProjectileAddress);
             controller.GetSkillProjectile =
-                await CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.skillProjectileAddress);
+                CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.skillProjectileAddress);
         }
 
         private void SetSkill(CharacterController controllerInstance, StaticCharacterData data)
@@ -229,7 +229,7 @@ namespace IdleProject.Battle.Spawn
         }
 
 
-        private async UniTask<Func<T>> CreatePool<T>(PoolableType poolableType, string address) where T : IPoolable
+        private Func<T> CreatePool<T>(PoolableType poolableType, string address) where T : IPoolable
         {
             if (string.IsNullOrEmpty(address)) return null;
 
@@ -240,7 +240,7 @@ namespace IdleProject.Battle.Spawn
                 _ => null
             };
 
-            await ObjectPoolManager.Instance.CreatePoolAsync(address, parent);
+            ObjectPoolManager.Instance.CreatePool(address, parent);
             return () => ObjectPoolManager.Instance.Get<T>(address);
         }
 

@@ -31,3 +31,13 @@ MonoBehaviour:
     rearLeftPositionInfo:
       characterName: 
       characterLevel: 0
+  rewardList:
+  - rewardType: 0
+    itemIndex: ExpPotion02
+    count: 10
+  - rewardType: 0
+    itemIndex: ExpPotion03
+    count: 1
+  - rewardType: 1
+    itemIndex: Armor_02
+    count: 1

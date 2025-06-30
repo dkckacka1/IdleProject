@@ -61,8 +61,13 @@ namespace  IdleProject.Core.UI.Slot
 
             return null;
         }
+        
+        public bool hasSlotParts<T>() where T : SlotParts
+        {
+            return _slotPartsDic.ContainsKey(typeof(T));
+        }
 
-        public void AddSlotParts<T>(T slotComponent) where T : SlotParts
+        private void AddSlotParts<T>(T slotComponent) where T : SlotParts
         {
             var type = slotComponent.GetType();
             _slotPartsDic.TryAdd(type, slotComponent);

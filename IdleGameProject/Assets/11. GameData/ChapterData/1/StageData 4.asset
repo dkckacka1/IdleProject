@@ -31,3 +31,19 @@ MonoBehaviour:
     rearLeftPositionInfo:
       characterName: 
       characterLevel: 0
+  rewardList:
+  - rewardType: 0
+    itemIndex: 
+    count: 1
+  - rewardType: 0
+    itemIndex: 
+    count: 1
+  - rewardType: 0
+    itemIndex: 
+    count: 1
+  - rewardType: 1
+    itemIndex: 
+    count: 1
+  - rewardType: 1
+    itemIndex: 
+    count: 1

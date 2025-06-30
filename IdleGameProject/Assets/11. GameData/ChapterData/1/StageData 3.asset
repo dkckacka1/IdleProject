@@ -31,3 +31,16 @@ MonoBehaviour:
     rearLeftPositionInfo:
       characterName: GoblinMale
       characterLevel: 1
+  rewardList:
+  - rewardType: 0
+    itemIndex: 
+    count: 1
+  - rewardType: 0
+    itemIndex: 
+    count: 1
+  - rewardType: 1
+    itemIndex: 
+    count: 1
+  - rewardType: 1
+    itemIndex: 
+    count: 1

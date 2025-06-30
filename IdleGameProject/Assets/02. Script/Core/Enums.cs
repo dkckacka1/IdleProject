@@ -88,4 +88,10 @@
         EquipmentItem,
         Skill
     }
+
+    public enum RewardType
+    {
+        ConsumableItem,
+        EquipmentItem
+    }
 }

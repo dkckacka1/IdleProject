@@ -98,4 +98,12 @@ namespace IdleProject.Core
         public float posX;
         public float posY;
     }
+
+    [Serializable]
+    public struct RewardInfo
+    {
+        public RewardType rewardType;
+        public string itemIndex;
+        public int count;
+    }
 }

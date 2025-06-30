@@ -75,6 +75,21 @@ namespace IdleProject.Core.GameData
 
             return null;
         }
+
+        public bool TryGetData<T>(string dataIndex, out T staticData) where T : Data.StaticData.StaticData
+        {
+            staticData = null;
+            if (_dataDictionary.TryGetValue(typeof(T), out var targetDic))
+            {
+                if (targetDic.TryGetValue(dataIndex, out var result))
+                {
+                    staticData = result as T;
+                }
+            }
+
+            return staticData is not null;
+        }
+        
         public List<T> GetDataList<T>() where T : Data.StaticData.StaticData
         {
             return _dataDictionary.TryGetValue(typeof(T), out var targetDic) ? targetDic.Values.Select(data => data as T).ToList() : null;

@@ -1,7 +1,10 @@
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using IdleProject.Core;
+using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
+using IdleProject.Data.StaticData;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -86,8 +89,41 @@ namespace IdleProject.Battle.UI
 
         private void GotoNextStage()
         {
-            // TODO
-            Debug.Log($"다음 스테이지 시작");
+            if (TryGetNextStage(DataManager.Instance.DataController.selectStaticStageData, out var nextStageData))
+                // 다음 스테이지 있음
+            {
+                DataManager.Instance.DataController.selectStaticStageData = nextStageData;
+                GameManager.Instance.LoadScene(SceneType.Battle).Forget();
+            }
+            else
+                // 다음 스테이지 없음
+            {
+                // TODO
+            }
+        }
+
+        private bool TryGetNextStage(StaticStageData currentStage, out StaticStageData nextStage)
+        {
+            nextStage = null;
+            
+            var nextStageIndex = currentStage.stageIndex + 1;
+            var currentChapter = DataManager.Instance.GetData<StaticChapterData>(currentStage.chapterIndex.ToString());
+            if (currentChapter.stageInfoList.Count >= nextStageIndex)
+                // 현재 챕터에 다음 스테이지 있음
+            {
+                nextStage = DataManager.Instance.GetData<StaticStageData>($"{currentChapter.chapterIndex}-{nextStageIndex}");
+            }
+            else
+                // 다음 챕터 확인
+            {
+                var nextChapterIndex = currentChapter.chapterIndex + 1;
+                if (DataManager.Instance.TryGetData(nextChapterIndex.ToString(), out StaticChapterData nextChapter))
+                {
+                    nextStage = DataManager.Instance.GetData<StaticStageData>($"{nextChapter.chapterIndex}-{1}");
+                }
+            }
+
+            return nextStage is not null;
         }
 
         private void RetryStage()

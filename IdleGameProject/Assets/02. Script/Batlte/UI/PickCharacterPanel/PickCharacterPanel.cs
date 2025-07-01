@@ -140,10 +140,18 @@ namespace IdleProject.Battle.UI
         
         private void StartBattle()
         {
-            _battleManager.BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
-            _battleManager.GameStateEventBus.ChangeEvent(BattleGameStateType.Play);
+            if (_battleManager.GetCharacterList(CharacterAIType.Player).Count <= 0)
+                // 편성 중인 캐릭터가 없다면
+            {
+                UIManager.Instance.OpenToastPopup("현재 편성중인 캐릭터가 없습니다. \n캐릭터를 편성해주세요.");                
+            }
+            else
+            {
+                _battleManager.BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
+                _battleManager.GameStateEventBus.ChangeEvent(BattleGameStateType.Play);
             
-            ClosePanel();
+                ClosePanel();
+            }
         }
 
         private bool IsCharacterSpawnedSlot(OrganizationSlot organizationSlot, out CharacterController character)

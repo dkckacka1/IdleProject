@@ -14,10 +14,11 @@ namespace IdleProject.Core.UI
         private UIController _currentUIController;
 
         [HideInInspector] public LoadingUI loadingUI;
-
-        public bool IsShowingLoading => loadingUI.isLoading;
-
+        
         [SerializeField] private ConfirmPopup confirmPopup;
+        [SerializeField] private ToastPopup toastPopup;        
+        
+        public bool IsShowingLoading => loadingUI.isLoading;
         
         protected override void Initialized()
         {
@@ -100,6 +101,12 @@ namespace IdleProject.Core.UI
         {
             confirmPopup.SetConfirm(description, yesAction);
             confirmPopup.Open();
+        }
+
+        public void OpenToastPopup(string description)
+        {
+            toastPopup.SetToast(description);
+            toastPopup.Open();
         }
 
         public static Vector3 GetUIInScreen(Vector3 position)

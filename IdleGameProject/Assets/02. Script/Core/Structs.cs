@@ -87,8 +87,8 @@ namespace IdleProject.Core
         public string characterAnimationName;
         public string attackProjectileAddress;
         public string attackHitEffectAddress;
-        public string skillHitEffectAddress;
         public string skillProjectileAddress;
+        public string skillHitEffectAddress;
     }
 
     [Serializable]

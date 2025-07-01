@@ -159,6 +159,9 @@ MonoBehaviour:
   hitEvent:
     m_PersistentCalls:
       m_Calls: []
+  releaseEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8920067324697447715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,8 +174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c23d448d573d30341b04e49999c79444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  address: 
-  defaultPoolCount: 30
+  address: Eli_Attack_Projectile
+  defaultPoolCount: 10
 --- !u!54 &1208705575498844345
 Rigidbody:
   m_ObjectHideFlags: 0

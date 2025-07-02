@@ -10297,6 +10297,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SelectStagePanel
       objectReference: {fileID: 0}
+    - target: {fileID: 4874209746874227239, guid: b94bdaeafd1e50c47b702407cebbc8fb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4907354518794422741, guid: b94bdaeafd1e50c47b702407cebbc8fb, type: 3}
       propertyPath: m_Pivot.x
       value: 1

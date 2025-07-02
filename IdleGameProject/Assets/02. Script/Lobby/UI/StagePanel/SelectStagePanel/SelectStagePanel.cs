@@ -221,7 +221,10 @@ namespace IdleProject.Lobby.UI.StagePanel
 
         public void SelectChapterUpdatable(StaticChapterData selectChapter)
         {
-            ClosePanel();
+            if (_selectedStageData is not null)
+            {
+                ClosePanel();
+            }
         }
     }
 }

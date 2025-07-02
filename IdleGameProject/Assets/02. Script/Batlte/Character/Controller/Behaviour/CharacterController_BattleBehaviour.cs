@@ -30,7 +30,7 @@ namespace IdleProject.Battle.Character
         protected virtual void SetBattleAnimEvent()
         {
             AnimController.AnimEventHandler.AttackStartEvent += OnAttackStart;
-            AnimController.AnimEventHandler.AttackHitEvent += OnAttackHit;
+            AnimController.AnimEventHandler.AttackActionEvent += OnAttackAction;
             AnimController.AnimEventHandler.AttackEndEvent += OnAttackEnd;
             AnimController.AnimEventHandler.SkillStartEvent += OnSkillStart;
             AnimController.AnimEventHandler.SkillEndEvent += OnSkillEnd;
@@ -51,7 +51,7 @@ namespace IdleProject.Battle.Character
             }
         }
 
-        public void OnAttackHit()
+        public void OnAttackAction(int attackNumber)
         {
             var targetCharacter = GetTargetCharacter?.Invoke();
 

@@ -8,10 +8,10 @@ namespace IdleProject.Battle.Character.Skill
     {
         public override void SetAnimationEvent(AnimationEventHandler eventHandler)
         {
-            eventHandler.SkillFirstEvent += SkillFirstHit;
+            eventHandler.SkillActionEvent += SkillAction;
         }
 
-        private void SkillFirstHit()
+        private void SkillAction(int skillNumber)
         {
             var target = Controller.GetTargetCharacter.Invoke();
             var attackDamage = Controller.StatSystem.GetStatValue(CharacterStatType.AttackDamage) * 1.6f;

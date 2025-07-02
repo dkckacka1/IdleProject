@@ -1,18 +1,16 @@
 ﻿using IdleProject.Core;
+using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill
 {
-    public class CharacterSkillBak : CharacterSkill
+    public sealed class CharacterSkillBak : CharacterSkill
     {
         public override void SetAnimationEvent(AnimationEventHandler eventHandler)
         {
-            eventHandler.SkillFirstEvent += SkillHit;
-            eventHandler.SkillSecondEvent += SkillHit;
-            eventHandler.SkillThirdEvent += SkillHit;
-            eventHandler.SkillFourthEvent += SkillHit;
+            eventHandler.SkillActionEvent += SkillAction;
         }
         
-        private void SkillHit()
+        private void SkillAction(int skillNumber)
         {
             if (TryGetSkillEffect(out var effect))
             {

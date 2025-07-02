@@ -107,7 +107,6 @@
     {
         Character,
         EquipmentItem,
-        Skill
     }
 
     public enum RewardType

@@ -20,7 +20,7 @@ MonoBehaviour:
     exp: 3150
     equipmentWeaponIndex: 
     equipmentHelmetIndex: 
-    equipmentArmorIndex: 1751267714577_Armor_01_653e8e38
+    equipmentArmorIndex: 
     equipmentGloveIndex: 
     equipmentBootsIndex: 
     equipmentAccessoryIndex: 
@@ -51,6 +51,15 @@ MonoBehaviour:
     equipmentGloveIndex: 
     equipmentBootsIndex: 
     equipmentAccessoryIndex: 
+  - characterName: Dig
+    level: 1
+    exp: 0
+    equipmentWeaponIndex: 
+    equipmentHelmetIndex: 
+    equipmentArmorIndex: 
+    equipmentGloveIndex: 
+    equipmentBootsIndex: 
+    equipmentAccessoryIndex: 
   playerConsumableItemList:
   - itemName: ExpPotion01
     itemCount: 695
@@ -65,15 +74,15 @@ MonoBehaviour:
   playerEquipmentItemList:
   - index: 1751267714577_Armor_01_653e8e38
     itemIndex: Armor_01
-    equipmentCharacterName: Hiro
+    equipmentCharacterName: 
   - index: 1751268497114_Armor_01_4efaa1ab
     itemIndex: Armor_01
     equipmentCharacterName: 
   playerClearStageList:
   - 1-1
-  frontMiddleCharacterName: Hiro
-  frontRightCharacterName: 
-  frontLeftCharacterName: 
-  rearRightCharacterName: Kosa
-  rearLeftCharacterName: 
+  frontMiddleCharacterName: Bak
+  frontRightCharacterName: Dig
+  frontLeftCharacterName: Hiro
+  rearRightCharacterName: Eli
+  rearLeftCharacterName: Kosa
   equipmentItemData: {fileID: 11400000, guid: d462f05c92d18aa4995db13d728ec1bf, type: 2}

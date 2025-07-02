@@ -71,6 +71,19 @@ namespace IdleProject.Core
         public float criticalPercent;
         public float criticalResistance;
 
+        public float GetStatType(CharacterStatType statType) => statType switch
+        {
+            CharacterStatType.HealthPoint => healthPoint,
+            CharacterStatType.ManaPoint => manaPoint,
+            CharacterStatType.MovementSpeed => movementSpeed,
+            CharacterStatType.AttackDamage => attackDamage,
+            CharacterStatType.AttackRange => attackRange,
+            CharacterStatType.AttackCoolTime => attackCoolTime,
+            CharacterStatType.DefensePoint => defensePoint,
+            CharacterStatType.CriticalPercent => criticalPercent,
+            CharacterStatType.CriticalResistance => criticalResistance,
+            _ => throw new ArgumentOutOfRangeException(nameof(statType), statType, null)
+        };
     }
 
     [Serializable]

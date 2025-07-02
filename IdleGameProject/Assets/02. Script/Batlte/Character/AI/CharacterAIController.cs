@@ -27,6 +27,11 @@ namespace IdleProject.Battle.AI
         private ChaseState _chaseState;
         private DeathState _deathState;
         private BattleState _battleState;
+
+        public CharacterAIType GetAllyType =>
+            (aiType == CharacterAIType.Player) ? CharacterAIType.Player : CharacterAIType.Enemy;
+        public CharacterAIType GetEnemyType =>
+            (aiType == CharacterAIType.Player) ? CharacterAIType.Enemy : CharacterAIType.Player;
         
         public void Initialized()
         {

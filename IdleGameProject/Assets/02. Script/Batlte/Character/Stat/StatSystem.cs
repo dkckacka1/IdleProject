@@ -30,14 +30,12 @@ namespace IdleProject.Battle.Character
 
         public void SetStatData(string characterName, StatValue statValue)
         {
-            CharacterName = characterName;            
+            CharacterName = characterName;
             
-            _characterStatDic[CharacterStatType.HealthPoint].SetStat(statValue.healthPoint);
-            _characterStatDic[CharacterStatType.MovementSpeed].SetStat(statValue.movementSpeed);
-            _characterStatDic[CharacterStatType.AttackDamage].SetStat(statValue.attackDamage);
-            _characterStatDic[CharacterStatType.AttackRange].SetStat(statValue.attackRange);
-            _characterStatDic[CharacterStatType.AttackCoolTime].SetStat(statValue.attackCoolTime);
-            _characterStatDic[CharacterStatType.ManaPoint].SetStat(statValue.manaPoint);
+            EnumExtension.Foreach<CharacterStatType>(type =>
+            {
+                _characterStatDic[type].SetStat(statValue.GetStatType(type));
+            });
         }
 
         public float GetStatValue(CharacterStatType statType, bool isDefault = false)
@@ -62,7 +60,17 @@ namespace IdleProject.Battle.Character
 
         public void RemoveValueChangedEvent(CharacterStatType statType, Action<float> onValueChanged)
         {
-            _characterStatDic[CharacterStatType.HealthPoint].OnValueChanged -= onValueChanged;
+            _characterStatDic[statType].OnValueChanged -= onValueChanged;
+        }
+
+        public void AddStatChanger(CharacterStatType statType, string key, float value)
+        {
+            _characterStatDic[statType].AddStatChanger(key, value);
+        }
+
+        public void RemoveStatChanger(CharacterStatType statType, string key)
+        {
+            _characterStatDic[statType].RemoveStatChanger(key);
         }
     }
 }

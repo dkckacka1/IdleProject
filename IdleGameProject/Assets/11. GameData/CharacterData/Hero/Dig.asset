@@ -18,13 +18,13 @@ MonoBehaviour:
     attackProjectileAddress: 
     attackHitEffectAddress: 
     skillProjectileAddress: 
-    skillHitEffectAddress: 
+    skillHitEffectAddress: ShieldSoftBlue
   stat:
     healthPoint: 100
-    manaPoint: 50
+    manaPoint: 10
     attackDamage: 10
     movementSpeed: 3.5
-    attackRange: 7
+    attackRange: 2
     attackCoolTime: 0.1
     defensePoint: 0
     criticalPercent: 0

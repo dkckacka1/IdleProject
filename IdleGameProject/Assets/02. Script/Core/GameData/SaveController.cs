@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using IdleProject.Data;
 using IdleProject.Data.DynamicData;
 using IdleProject.Data.Player;
@@ -18,19 +19,6 @@ namespace IdleProject.Core.GameData
         public SaveController(PlayerData playerData)
         {
             _playerData = playerData;
-        }
-
-        public void SaveAll(DynamicPlayerData playerData)
-        {
-            foreach (var character in playerData.PlayerCharacterDataDic.Values)
-            {
-                SaveCharacter(character);
-            }
-
-            foreach (var consumableItem in playerData.PlayerConsumableItemDataDic.Values)
-            {
-                SaveConsumableItem(consumableItem);
-            }
         }
         
         public void Save(params IData[] dataParams)
@@ -154,6 +142,15 @@ namespace IdleProject.Core.GameData
         private void SaveStageClear(StaticStageData stageData)
         {
             _playerData.playerClearStageList.Add(stageData.Index);
+        }
+
+        public void SaveFormation(FormationInfo formation)
+        {
+            _playerData.frontLeftCharacterName = formation.frontLeftPositionInfo.characterName;
+            _playerData.frontMiddleCharacterName = formation.frontMiddlePositionInfo.characterName;
+            _playerData.frontRightCharacterName = formation.frontRightPositionInfo.characterName;
+            _playerData.rearLeftCharacterName = formation.rearLeftPositionInfo.characterName;
+            _playerData.rearRightCharacterName = formation.rearRightPositionInfo.characterName;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace IdleProject.Battle.UI
     public class PickCharacterPanel : UIPanel
     {
         [SerializeField] private ScrollRect pickCharacterScrollView;
-        [FormerlySerializedAs("dorpSlot")] [SerializeField] private SlotUI dropSlot;
+        [SerializeField] private SlotUI dropSlot;
 
         private readonly List<SlotUI> _slotList = new();
 
@@ -89,7 +89,6 @@ namespace IdleProject.Battle.UI
                 if (!targetSpawnPosition) 
                     continue;
                 
-                
                 if (targetSpawnPosition.SpawnAIType == CharacterAIType.Player)
                 {
                     var organizationParts = slot.GetSlotParts<OrganizationSlot>();
@@ -123,8 +122,6 @@ namespace IdleProject.Battle.UI
         {
             dropSlot.transform.position = eventData.position;
         }
-
-
         
         private void OnSlotClick(PointerEventData eventData, SlotUI slot)
         {
@@ -149,7 +146,9 @@ namespace IdleProject.Battle.UI
             {
                 _battleManager.BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
                 _battleManager.GameStateEventBus.ChangeEvent(BattleGameStateType.Play);
-            
+
+                DataManager.Instance.DataController.Player.ChangePlayerFormation(_battleManager.spawnController.GetPlayerFormation());
+                
                 ClosePanel();
             }
         }

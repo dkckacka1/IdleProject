@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
 using Engine.Core;
+using Engine.Util.Extension;
 using UnityEngine;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Character;
@@ -34,11 +36,8 @@ namespace IdleProject.Battle.Spawn
 
     public class SpawnController : MonoBehaviour
     {
-        [FormerlySerializedAs("player")] [SerializeField]
-        private SpawnInfo playerSpawnInfo;
-
-        [FormerlySerializedAs("enemy")] [SerializeField]
-        private SpawnInfo enemySpawnInfo;
+        [SerializeField] private SpawnInfo playerSpawnInfo;
+        [SerializeField] private SpawnInfo enemySpawnInfo;
 
         private BattleManager _battleManager;
 
@@ -93,6 +92,26 @@ namespace IdleProject.Battle.Spawn
             var spawnInfo = aiType == CharacterAIType.Player ? playerSpawnInfo : enemySpawnInfo;
             return spawnInfo.spawnFormation.GetSpawnPosition(character);
         }
+
+        public List<(SpawnPositionType, string)> GetPlayerFormation()
+        {
+            var result = new List<(SpawnPositionType, string)>();
+            
+            EnumExtension.Foreach<SpawnPositionType>(type =>
+            {
+                result.Add((type, GetPlayerPosition(type)));
+            });
+
+            return result;
+        }
+
+        private string GetPlayerPosition(SpawnPositionType positionType)
+        {
+            return playerSpawnInfo.spawnFormation.GetSpawnPosition(positionType).Character is not null
+                ? playerSpawnInfo.spawnFormation.GetSpawnPosition(positionType).Character.name
+                : string.Empty;
+        }
+        
 
         private async UniTask SetCharacterSpawn(CharacterAIType aiType, SpawnPositionType spawnPositionType,
             PositionInfo info)

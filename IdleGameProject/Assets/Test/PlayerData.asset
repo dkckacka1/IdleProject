@@ -17,136 +17,63 @@ MonoBehaviour:
   playerCharacterList:
   - characterName: Hiro
     level: 47
-    exp: 900
-    equipmentWeaponIndex: 26
-    equipmentHelmetIndex: 22
-    equipmentArmorIndex: 8
-    equipmentGloveIndex: 19
-    equipmentBootsIndex: 15
-    equipmentAccessoryIndex: 1
+    exp: 3150
+    equipmentWeaponIndex: 
+    equipmentHelmetIndex: 
+    equipmentArmorIndex: 1751267714577_Armor_01_653e8e38
+    equipmentGloveIndex: 
+    equipmentBootsIndex: 
+    equipmentAccessoryIndex: 
   - characterName: Eli
     level: 5
     exp: 250
-    equipmentWeaponIndex: 0
-    equipmentHelmetIndex: 0
-    equipmentArmorIndex: 0
-    equipmentGloveIndex: 0
-    equipmentBootsIndex: 0
-    equipmentAccessoryIndex: 0
+    equipmentWeaponIndex: 
+    equipmentHelmetIndex: 
+    equipmentArmorIndex: 
+    equipmentGloveIndex: 
+    equipmentBootsIndex: 
+    equipmentAccessoryIndex: 
   - characterName: Bak
-    level: 27
-    exp: 150
-    equipmentWeaponIndex: 0
-    equipmentHelmetIndex: 0
-    equipmentArmorIndex: 0
-    equipmentGloveIndex: 0
-    equipmentBootsIndex: 0
-    equipmentAccessoryIndex: 0
+    level: 35
+    exp: 2650
+    equipmentWeaponIndex: 
+    equipmentHelmetIndex: 
+    equipmentArmorIndex: 
+    equipmentGloveIndex: 
+    equipmentBootsIndex: 
+    equipmentAccessoryIndex: 
+  - characterName: Kosa
+    level: 1
+    exp: 0
+    equipmentWeaponIndex: 
+    equipmentHelmetIndex: 
+    equipmentArmorIndex: 
+    equipmentGloveIndex: 
+    equipmentBootsIndex: 
+    equipmentAccessoryIndex: 
   playerConsumableItemList:
   - itemName: ExpPotion01
-    itemCount: 1000
+    itemCount: 695
   - itemName: ExpPotion02
-    itemCount: 500
+    itemCount: 357
   - itemName: ExpPotion03
-    itemCount: 65
+    itemCount: 0
   - itemName: ExpPotion04
     itemCount: 0
   - itemName: ExpPotion05
     itemCount: 0
   playerEquipmentItemList:
-  - index: 1
-    itemIndex: Accessory_01
+  - index: 1751267714577_Armor_01_653e8e38
+    itemIndex: Armor_01
     equipmentCharacterName: Hiro
-  - index: 2
-    itemIndex: Accessory_02
-    equipmentCharacterName: 
-  - index: 3
-    itemIndex: Accessory_03
-    equipmentCharacterName: 
-  - index: 4
-    itemIndex: Accessory_04
-    equipmentCharacterName: 
-  - index: 5
-    itemIndex: Accessory_05
-    equipmentCharacterName: 
-  - index: 6
+  - index: 1751268497114_Armor_01_4efaa1ab
     itemIndex: Armor_01
     equipmentCharacterName: 
-  - index: 7
-    itemIndex: Armor_02
-    equipmentCharacterName: 
-  - index: 8
-    itemIndex: Armor_03
-    equipmentCharacterName: Hiro
-  - index: 9
-    itemIndex: Armor_04
-    equipmentCharacterName: 
-  - index: 10
-    itemIndex: Armor_05
-    equipmentCharacterName: 
-  - index: 11
-    itemIndex: Boots_01
-    equipmentCharacterName: 
-  - index: 12
-    itemIndex: Boots_02
-    equipmentCharacterName: 
-  - index: 13
-    itemIndex: Boots_03
-    equipmentCharacterName: 
-  - index: 14
-    itemIndex: Boots_04
-    equipmentCharacterName: 
-  - index: 15
-    itemIndex: Boots_05
-    equipmentCharacterName: Hiro
-  - index: 16
-    itemIndex: Glove_01
-    equipmentCharacterName: 
-  - index: 17
-    itemIndex: Glove_02
-    equipmentCharacterName: 
-  - index: 18
-    itemIndex: Glove_03
-    equipmentCharacterName: 
-  - index: 19
-    itemIndex: Glove_04
-    equipmentCharacterName: Hiro
-  - index: 20
-    itemIndex: Glove_05
-    equipmentCharacterName: 
-  - index: 21
-    itemIndex: Helmet_01
-    equipmentCharacterName: 
-  - index: 22
-    itemIndex: Helmet_02
-    equipmentCharacterName: Hiro
-  - index: 23
-    itemIndex: Helmet_03
-    equipmentCharacterName: 
-  - index: 24
-    itemIndex: Helmet_04
-    equipmentCharacterName: 
-  - index: 25
-    itemIndex: Helmet_05
-    equipmentCharacterName: 
-  - index: 26
-    itemIndex: Weapon_01
-    equipmentCharacterName: Hiro
-  - index: 27
-    itemIndex: Weapon_02
-    equipmentCharacterName: 
-  - index: 28
-    itemIndex: Weapon_03
-    equipmentCharacterName: 
-  - index: 29
-    itemIndex: Weapon_04
-    equipmentCharacterName: 
-  - index: 30
-    itemIndex: Weapon_05
-    equipmentCharacterName: 
+  playerClearStageList:
+  - 1-1
   frontMiddleCharacterName: Hiro
-  frontRightCharacterName: Eli
-  frontLeftCharacterName: Bak
-  rearRightCharacterName: 
+  frontRightCharacterName: 
+  frontLeftCharacterName: 
+  rearRightCharacterName: Kosa
   rearLeftCharacterName: 
   equipmentItemData: {fileID: 11400000, guid: d462f05c92d18aa4995db13d728ec1bf, type: 2}

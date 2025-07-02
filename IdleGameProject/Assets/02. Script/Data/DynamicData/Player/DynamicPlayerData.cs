@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
@@ -76,6 +77,35 @@ namespace IdleProject.Data.DynamicData
             PlayerEquipmentItemDataDic.Add(key, newItem);
             
             DataManager.Instance.SaveController.Save(newItem);
+        }
+
+        public void ChangePlayerFormation(List<(SpawnPositionType, string)> getPlayerFormation)
+        {
+            foreach (var value in getPlayerFormation)
+            {
+                switch (value.Item1)
+                {
+                    case SpawnPositionType.FrontMiddle:
+                        PlayerFormation.frontMiddlePositionInfo.characterName = value.Item2;
+                        break;
+                    case SpawnPositionType.FrontRight:
+                        PlayerFormation.frontRightPositionInfo.characterName = value.Item2;
+                        break;
+                    case SpawnPositionType.FrontLeft:
+                        PlayerFormation.frontLeftPositionInfo.characterName = value.Item2;
+                        break;
+                    case SpawnPositionType.RearRight:
+                        PlayerFormation.rearRightPositionInfo.characterName = value.Item2;
+                        break;
+                    case SpawnPositionType.RearLeft:
+                        PlayerFormation.rearLeftPositionInfo.characterName = value.Item2;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            
+            DataManager.Instance.SaveController.SaveFormation(PlayerFormation);
         }
         
         private FormationInfo GetPlayerFormation(PlayerData playerData)

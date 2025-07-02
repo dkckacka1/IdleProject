@@ -9601,13 +9601,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c368d224a8681c147b173223256dacd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 5
   hitEvent:
     m_PersistentCalls:
       m_Calls: []
   releaseEvent:
     m_PersistentCalls:
       m_Calls: []
+  projectileInfo:
+    projectileSpeed: 5
+    moveType: 0
+    checkType: 0
 --- !u!114 &1992742676829045634
 MonoBehaviour:
   m_ObjectHideFlags: 0

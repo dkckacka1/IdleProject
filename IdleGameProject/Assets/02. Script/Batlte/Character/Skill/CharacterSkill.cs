@@ -1,6 +1,7 @@
 using IdleProject.Battle.Effect;
 using IdleProject.Battle.Projectile;
 using IdleProject.Core;
+using IdleProject.Core.ObjectPool;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill
@@ -9,8 +10,12 @@ namespace IdleProject.Battle.Character.Skill
     {
         public CharacterController Controller;
 
-        public abstract void SetAnimationEvent(AnimationEventHandler eventHandler);
-
+        public void SetAnimationEvent(AnimationEventHandler eventHandler)
+        {
+            eventHandler.SkillActionEvent += SkillAction;
+            eventHandler.SkillEffectEvent += SkillEffect;
+        }
+        
         protected bool TryGetSkillProjectile(out BattleProjectile projectile)
         {
             projectile = Controller.GetSkillProjectile?.Invoke();
@@ -34,5 +39,20 @@ namespace IdleProject.Battle.Character.Skill
             
             return false;
         }
+
+        private void SkillEffect(string effectParameter)
+        {
+            var split = effectParameter.Split(',');
+
+            var effectName = split[0];
+            var effectOffsetTransform = Controller.offset.GetOffsetTransform((CharacterOffsetType)int.Parse(split[1]));
+
+            var effect = ObjectPoolManager.Instance.Get<BattleEffect>(effectName);
+            effect.transform.position = effectOffsetTransform.position;
+            effect.transform.rotation = effectOffsetTransform.rotation;
+            effect.SetSkillEffect();
+        }
+
+        protected abstract void SkillAction(int skillNumber);
     }
 }

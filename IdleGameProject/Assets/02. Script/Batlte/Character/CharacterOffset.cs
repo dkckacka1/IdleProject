@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using Engine.Util.Extension;
+using IdleProject.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -8,21 +10,10 @@ namespace IdleProject.Battle.Character
     // 캐릭터 지정 오프셋
     public class CharacterOffset : MonoBehaviour
     {
-        [SerializeField] private Transform _hitEffectOffsetTransform;
-        [SerializeField] private Transform _createProjectileOffsetTransform;
-        [SerializeField] private Transform _fluidHealthBarOffsetTransform;
+        private Transform _hitEffectOffsetTransform;
+        private Transform _createProjectileOffsetTransform;
+        private Transform _fluidHealthBarOffsetTransform;
         public float BattleTextOffsetRadius { get; private set; }
-
-        public Vector3 GetHitEffectPosition =>
-            _hitEffectOffsetTransform ? _hitEffectOffsetTransform.position : transform.position;
-
-        public Vector3 GetProjectilePosition => _createProjectileOffsetTransform
-            ? _createProjectileOffsetTransform.position
-            : transform.position;
-
-        public Vector3 GetFluidHealthBarPosition => _fluidHealthBarOffsetTransform
-            ? _fluidHealthBarOffsetTransform.position
-            : transform.position;
 
         private const string HIT_EFFECT_OFFSET_NAME = "HitEffectOffset";
         private const string CREATE_PROJECTILE_OFFSET_NAME = "CreateProjectileOffset";
@@ -36,5 +27,14 @@ namespace IdleProject.Battle.Character
 
             BattleTextOffsetRadius = GetComponent<Collider>().bounds.size.x / 2;
         }
+
+        public Transform GetOffsetTransform(CharacterOffsetType offsetType) => offsetType switch
+        {
+            CharacterOffsetType.CharacterGround => transform,
+            CharacterOffsetType.ProjectileOffset => _createProjectileOffsetTransform ? _createProjectileOffsetTransform : transform,
+            CharacterOffsetType.HitOffset => _hitEffectOffsetTransform ? _hitEffectOffsetTransform: transform,
+            CharacterOffsetType.FluidHealthBarOffset => _fluidHealthBarOffsetTransform? _fluidHealthBarOffsetTransform: transform,
+            _ => throw new ArgumentOutOfRangeException(nameof(offsetType), offsetType, null)
+        };
     }
 }

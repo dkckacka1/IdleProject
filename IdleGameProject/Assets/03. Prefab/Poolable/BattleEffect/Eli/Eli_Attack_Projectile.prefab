@@ -155,13 +155,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c368d224a8681c147b173223256dacd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 10
   hitEvent:
     m_PersistentCalls:
       m_Calls: []
   releaseEvent:
     m_PersistentCalls:
       m_Calls: []
+  projectileInfo:
+    projectileSpeed: 10
+    moveType: 0
+    checkType: 0
 --- !u!114 &8920067324697447715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   address: Eli_Attack_Projectile
-  defaultPoolCount: 10
+  defaultPoolCount: 5
 --- !u!54 &1208705575498844345
 Rigidbody:
   m_ObjectHideFlags: 0

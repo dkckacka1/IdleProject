@@ -143,7 +143,7 @@ namespace IdleProject.Battle.UI
             if (_battleManager.GetCharacterList(CharacterAIType.Player).Count <= 0)
                 // 편성 중인 캐릭터가 없다면
             {
-                UIManager.Instance.OpenToastPopup("현재 편성중인 캐릭터가 없습니다. \n캐릭터를 편성해주세요.");                
+                UIManager.Instance.OpenToastPopup("현재 편성중인 캐릭터가 없습니다. 캐릭터를 편성해주세요.");                
             }
             else
             {

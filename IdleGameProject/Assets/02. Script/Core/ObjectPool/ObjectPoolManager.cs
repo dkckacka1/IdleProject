@@ -13,6 +13,8 @@ namespace IdleProject.Core.ObjectPool
 
         private Transform _defaultParent;
 
+        public bool HasPool(string address) => _poolableDic.ContainsKey(address);
+        
         protected override void Initialized()
         {
             base.Initialized();
@@ -23,6 +25,7 @@ namespace IdleProject.Core.ObjectPool
 
             SceneManager.sceneLoaded += CleatObjectPool;
         }
+        
         public T Get<T>(string address) where T : IPoolable
         {
             var pool = _poolableDic[address];

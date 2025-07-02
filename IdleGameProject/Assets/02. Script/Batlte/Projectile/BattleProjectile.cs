@@ -1,6 +1,7 @@
 using IdleProject.Battle.Character;
 using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
+using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,19 +9,23 @@ namespace IdleProject.Battle.Projectile
 {
     public class BattleProjectile : MonoBehaviour, IPoolable
     {
-        [SerializeField] private float projectileSpeed;
-
         [HideInInspector] public UnityEvent<ITakeDamagedAble> hitEvent;
         [HideInInspector] public ITakeDamagedAble Target;
         [HideInInspector] public UnityEvent releaseEvent = null;
+        
+        [SerializeField] private ProjectileInfo projectileInfo;
+
+        private BattleManager _battleManager;
+        private Vector3 _targetPosition;
 
         public void OnCreateAction()
         {
+            _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();
         }
 
         public void OnGetAction()
         {
-            GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.Projectile].AddListener(OnBattleEvent);
+            _battleManager.BattleObjectEventDic[BattleObjectType.Projectile].AddListener(OnBattleEvent);
         }
 
         public void OnReleaseAction()
@@ -29,20 +34,20 @@ namespace IdleProject.Battle.Projectile
             releaseEvent.RemoveAllListeners();
             hitEvent.RemoveAllListeners();
             Target = null;
-            GameManager.GetCurrentSceneManager<BattleManager>().BattleObjectEventDic[BattleObjectType.Projectile].RemoveListener(OnBattleEvent);
+            _battleManager.BattleObjectEventDic[BattleObjectType.Projectile].RemoveListener(OnBattleEvent);
         }
 
         public void SetSkillProjectile()
         {
-            GameManager.GetCurrentSceneManager<BattleManager>().AddSkillObject(this);
-            releaseEvent.AddListener(() => GameManager.GetCurrentSceneManager<BattleManager>().RemoveSkillObject(this));
+            _battleManager.AddSkillObject(this);
+            releaseEvent.AddListener(() => _battleManager.RemoveSkillObject(this));
         }
 
         private void OnBattleEvent()
         {
             var directionVector = (Target.HitEffectOffset - transform.position).normalized;
             transform.LookAt(Target.HitEffectOffset);
-            transform.position += directionVector * projectileSpeed * GameManager.GetCurrentSceneManager<BattleManager>().GetCurrentBattleDeltaTime;
+            transform.position += directionVector * projectileInfo.projectileSpeed * _battleManager.GetCurrentBattleDeltaTime;
         }
 
         private void OnTriggerEnter(Collider other)

@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Engine.Core.EventBus;
 using IdleProject.Battle.Character.EventGroup;
 using IdleProject.Core;
+using UnityEditor;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character
@@ -29,6 +32,28 @@ namespace IdleProject.Battle.Character
         {
             _animator.runtimeAnimatorController = animationController;
             _animator.Rebind();
+        }
+
+        public List<string> GetBattleAnimationEffectList()
+        {
+            var result = new List<string>();
+
+            var attackClip =
+                _animator.runtimeAnimatorController.animationClips.First(clip => clip.name.Contains("Attack"));
+            var skillClip =
+                _animator.runtimeAnimatorController.animationClips.First(clip => clip.name.Contains("Skill"));
+
+            var attackEffectNames = AnimationUtility.GetAnimationEvents(attackClip)
+                .Where(animEvent => string.IsNullOrEmpty(animEvent.stringParameter) is false)
+                .Select(animEvent => animEvent.stringParameter);
+            result.AddRange(attackEffectNames);
+            
+            var skillEffectNames = AnimationUtility.GetAnimationEvents(skillClip)
+                .Where(animEvent => string.IsNullOrEmpty(animEvent.stringParameter) is false)
+                .Select(animEvent => animEvent.stringParameter);
+            result.AddRange(skillEffectNames);
+
+            return result;
         }
 
         public void SetSkill()
@@ -74,7 +99,7 @@ namespace IdleProject.Battle.Character
                 }
             }
         }
-        
+
         public void SetAnimationSpeed(float speed)
         {
             _animator.speed = speed;

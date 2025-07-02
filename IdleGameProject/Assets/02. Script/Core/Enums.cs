@@ -43,6 +43,27 @@
         BattleEffect,
         Projectile,
     }
+
+    public enum CharacterOffsetType
+    {
+        CharacterGround,
+        ProjectileOffset,
+        HitOffset,
+        FluidHealthBarOffset,
+    }
+
+    public enum ProjectileMoveType
+    {
+        PositioningType, // 위치 지정
+        ChasingType, // 대상 추적
+    }
+
+    public enum ProjectileCheckType
+    {
+        CollisionTriggerCheck, // 콜리전 체크
+        ReachedType, // 도착시
+    }
+    
     #endregion
 
     public enum CharacterStatType

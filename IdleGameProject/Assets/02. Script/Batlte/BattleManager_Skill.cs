@@ -38,8 +38,8 @@ namespace IdleProject.Battle
 
         private void UseSkill(CharacterController useCharacter)
         {
-            useCharacter.isNowSkill = true;
-
+            useCharacter.AccessSkill();
+            
             BattleStateEventBus.ChangeEvent(BattleStateType.Skill);
             TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, true);
 
@@ -58,8 +58,7 @@ namespace IdleProject.Battle
 
         public void ExitSkill(CharacterController useCharacter)
         {
-            useCharacter.isNowSkill = false;
-            useCharacter.StartAttackCooltime().Forget();
+            useCharacter.ExitSkill();
 
             BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
             TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, false);

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
@@ -18,13 +19,12 @@ using IdleProject.Core.Resource;
 using IdleProject.Data;
 using IdleProject.Data.DynamicData;
 using IdleProject.Data.StaticData;
+using UnityEditor;
 using UnityEngine.Serialization;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.Spawn
 {
-
-
     [Serializable]
     public class SpawnInfo
     {
@@ -34,8 +34,11 @@ namespace IdleProject.Battle.Spawn
 
     public class SpawnController : MonoBehaviour
     {
-        [FormerlySerializedAs("player")] [SerializeField] private SpawnInfo playerSpawnInfo;
-        [FormerlySerializedAs("enemy")] [SerializeField] private SpawnInfo enemySpawnInfo;
+        [FormerlySerializedAs("player")] [SerializeField]
+        private SpawnInfo playerSpawnInfo;
+
+        [FormerlySerializedAs("enemy")] [SerializeField]
+        private SpawnInfo enemySpawnInfo;
 
         private BattleManager _battleManager;
 
@@ -90,7 +93,7 @@ namespace IdleProject.Battle.Spawn
             var spawnInfo = aiType == CharacterAIType.Player ? playerSpawnInfo : enemySpawnInfo;
             return spawnInfo.spawnFormation.GetSpawnPosition(character);
         }
-        
+
         private async UniTask SetCharacterSpawn(CharacterAIType aiType, SpawnPositionType spawnPositionType,
             PositionInfo info)
         {
@@ -135,13 +138,13 @@ namespace IdleProject.Battle.Spawn
             characterInstance.name = data.StaticData.addressValue.characterName;
 
             await SetModel(characterInstance, data.StaticData);
-            SetPoolableObject(characterInstance, data.StaticData);
             SetAnimation(characterInstance, data.StaticData);
+            SetPoolableObject(characterInstance, data.StaticData);
             SetStat(characterInstance, data);
             SetSkill(characterInstance, data.StaticData);
             AddCharacterUI(characterInstance, data.StaticData, aiType);
             AddCharacterAI(characterInstance, aiType);
-            
+
             characterInstance.Initialized();
             return characterInstance;
         }
@@ -157,9 +160,10 @@ namespace IdleProject.Battle.Spawn
 
         private async UniTask SetModel(CharacterController controller, StaticCharacterData data)
         {
-            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.GamePrefab, $"Model_{data.addressValue.characterName}");
+            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.GamePrefab,
+                $"Model_{data.addressValue.characterName}");
             await InstantiateAsync(modelObject, controller.transform).ToUniTask();
-            
+
             var characterOffset = controller.gameObject.AddComponent<CharacterOffset>();
             characterOffset.Initialized();
 
@@ -178,14 +182,17 @@ namespace IdleProject.Battle.Spawn
 
         private void SetPoolableObject(CharacterController controller, StaticCharacterData data)
         {
-            controller.GetAttackHitEffect =
-                CreatePool<BattleEffect>(PoolableType.BattleEffect, data.addressValue.attackHitEffectAddress);
-            controller.GetSkillHitEffect =
-                CreatePool<BattleEffect>(PoolableType.BattleEffect, data.addressValue.skillHitEffectAddress);
-            controller.GetAttackProjectile =
-                CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.attackProjectileAddress);
-            controller.GetSkillProjectile =
-                CreatePool<BattleProjectile>(PoolableType.Projectile, data.addressValue.skillProjectileAddress);
+            controller.GetAttackHitEffect = GetPoolable<BattleEffect>(PoolableType.BattleEffect, data.addressValue.attackHitEffectAddress);
+            controller.GetSkillHitEffect = GetPoolable<BattleEffect>(PoolableType.BattleEffect, data.addressValue.skillHitEffectAddress);
+            controller.GetAttackProjectile = GetPoolable<BattleProjectile>(PoolableType.Projectile, data.addressValue.attackProjectileAddress);
+            controller.GetSkillProjectile = GetPoolable<BattleProjectile>(PoolableType.Projectile, data.addressValue.skillProjectileAddress);
+
+            foreach (var parameter in controller.AnimController.GetBattleAnimationEffectList())
+            {
+                var effectName = parameter.Split(',')[0];
+                
+                CreatePool(PoolableType.BattleEffect, effectName);
+            }
         }
 
         private void SetSkill(CharacterController controllerInstance, StaticCharacterData data)
@@ -229,9 +236,21 @@ namespace IdleProject.Battle.Spawn
         }
 
 
-        private Func<T> CreatePool<T>(PoolableType poolableType, string address) where T : IPoolable
+        private Func<T> GetPoolable<T>(PoolableType poolableType, string address) where T : IPoolable
         {
             if (string.IsNullOrEmpty(address)) return null;
+            
+            if (ObjectPoolManager.Instance.HasPool(address) is false)
+            {
+                CreatePool(poolableType, address);
+            }
+
+            return () => ObjectPoolManager.Instance.Get<T>(address);
+        }
+
+        private void CreatePool(PoolableType poolableType, string address)
+        {
+            if (string.IsNullOrEmpty(address)) return;
 
             var parent = poolableType switch
             {
@@ -240,10 +259,8 @@ namespace IdleProject.Battle.Spawn
                 _ => null
             };
 
-            ObjectPoolManager.Instance.CreatePool(address, parent);
-            return () => ObjectPoolManager.Instance.Get<T>(address);
+            ObjectPoolManager.Instance.CreatePool(address, parent);   
         }
-
         #endregion
     }
 }

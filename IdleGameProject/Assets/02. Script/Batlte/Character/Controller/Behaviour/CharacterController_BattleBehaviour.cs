@@ -25,7 +25,7 @@ namespace IdleProject.Battle.Character
 
         public bool CanTakeDamage => !State.IsDead;
         public bool HasSkill => CharacterSkill is not null;
-        public Vector3 HitEffectOffset => offset.GetHitEffectPosition;
+        public Vector3 HitEffectOffset => offset.GetOffsetTransform(CharacterOffsetType.HitOffset).position;
 
         protected virtual void SetBattleAnimEvent()
         {
@@ -61,7 +61,7 @@ namespace IdleProject.Battle.Character
                 if (GetAttackProjectile is not null)
                 {
                     var projectile = GetAttackProjectile.Invoke();
-                    projectile.transform.position = offset.GetProjectilePosition;
+                    projectile.transform.position = offset.GetOffsetTransform(CharacterOffsetType.ProjectileOffset).position;
                     projectile.Target = targetCharacter;
                     projectile.hitEvent.AddListener(target =>
                     {
@@ -131,17 +131,28 @@ namespace IdleProject.Battle.Character
         
         private void OnSkillStart()
         {
-            StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
-            
-            (characterUI as PlayerCharacterUIController)?.StartSkill();
         }
 
         private void OnSkillEnd()
         {
             GetBattleManager.RemoveSkillObject(this);
-            
-            (characterUI as PlayerCharacterUIController)?.EndSkill();
         }
+
+        public void AccessSkill()
+        {
+            isNowSkill = true;
+            (characterUI as PlayerCharacterUIController)?.StartSkill();
+            StatSystem.SetStatValue(CharacterStatType.ManaPoint, 0);
+        }
+
+        public void ExitSkill()
+        {
+            isNowSkill = false;
+            isNowAttack = false;
+            (characterUI as PlayerCharacterUIController)?.EndSkill();
+            StartAttackCooltime().Forget();
+        }
+        
         
         public async UniTaskVoid StartAttackCooltime()
         {

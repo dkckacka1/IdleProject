@@ -35,7 +35,7 @@ namespace IdleProject.Battle.UI
         protected virtual void OnBattleUIEvent()
         {
             _fluidHealthBar.transform.position =
-                UIManager.GetUIInScreen(_mainCamera.WorldToScreenPoint(_offset.GetFluidHealthBarPosition));
+                UIManager.GetUIInScreen(_mainCamera.WorldToScreenPoint(_offset.GetOffsetTransform(CharacterOffsetType.FluidHealthBarOffset).position));
             _fluidHealthBar.PlayDamageSlider();
         }
 
@@ -54,7 +54,7 @@ namespace IdleProject.Battle.UI
             var battleText = GetBattleUI.GetBattleText.Invoke();
             Vector3 randomPos = Random.insideUnitCircle * _offset.BattleTextOffsetRadius * 50f;
             var textPosition =
-                UIManager.GetUIInScreen(_mainCamera.WorldToScreenPoint(_offset.GetHitEffectPosition) + randomPos);
+                UIManager.GetUIInScreen(_mainCamera.WorldToScreenPoint(_offset.GetOffsetTransform(CharacterOffsetType.FluidHealthBarOffset).position) + randomPos);
             battleText.ShowText(textPosition, text);
         }
 
@@ -99,7 +99,7 @@ namespace IdleProject.Battle.UI
             _fluidHealthBar = healthBars[0];
             _fluidHealthBar.Initialized(characterStat.GetStatValue(CharacterStatType.HealthPoint, true));
             _fluidHealthBar.transform.position =
-                UIManager.GetUIInScreen(_mainCamera.WorldToScreenPoint(_offset.GetFluidHealthBarPosition));
+                UIManager.GetUIInScreen(_mainCamera.WorldToScreenPoint(_offset.GetOffsetTransform(CharacterOffsetType.FluidHealthBarOffset).position));
             characterStat.PublishValueChangedEvent(CharacterStatType.HealthPoint, _fluidHealthBar.OnChangeHealthPoint);
             _fluidHealthBar.gameObject.SetActive(false);
         }

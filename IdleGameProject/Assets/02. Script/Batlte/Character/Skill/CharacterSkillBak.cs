@@ -5,12 +5,7 @@ namespace IdleProject.Battle.Character.Skill
 {
     public sealed class CharacterSkillBak : CharacterSkill
     {
-        public override void SetAnimationEvent(AnimationEventHandler eventHandler)
-        {
-            eventHandler.SkillActionEvent += SkillAction;
-        }
-        
-        private void SkillAction(int skillNumber)
+        protected override void SkillAction(int skillNumber)
         {
             if (TryGetSkillEffect(out var effect))
             {

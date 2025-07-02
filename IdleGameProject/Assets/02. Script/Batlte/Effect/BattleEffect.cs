@@ -17,6 +17,8 @@ namespace IdleProject.Battle.Effect
         public UnityEvent<ITakeDamagedAble> effectTriggerEnterEvent = null;
         public UnityEvent releaseEvent = null;
 
+        private BattleManager _battleManager;
+
         private void OnTriggerEnter(Collider other)
         {
             var takeDamageAble = other.GetComponent<ITakeDamagedAble>();
@@ -25,7 +27,7 @@ namespace IdleProject.Battle.Effect
                 effectTriggerEnterEvent?.Invoke(takeDamageAble);
             }
         }
-
+        
         private void OnParticleSystemStopped()
         {
             var poolableObject = GetComponent<PoolableObject>();
@@ -35,13 +37,14 @@ namespace IdleProject.Battle.Effect
         public void OnCreateAction()
         {
             _particleList = new List<ParticleSystem>(GetComponentsInChildren<ParticleSystem>());
+            _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();
         }
 
         public void OnGetAction()
         {
-            OnTimeFactorChange(GameManager.GetCurrentSceneManager<BattleManager>().GetCurrentBattleSpeed);
-            GameManager.GetCurrentSceneManager<BattleManager>().GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
-            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.PublishEvent(this);
+            OnTimeFactorChange(_battleManager.GetCurrentBattleSpeed);
+            _battleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
+            _battleManager.GameStateEventBus.PublishEvent(this);
         }
 
         public void OnReleaseAction()
@@ -50,14 +53,14 @@ namespace IdleProject.Battle.Effect
             releaseEvent.RemoveAllListeners();
             
             transform.position = Vector3.zero;
-            GameManager.GetCurrentSceneManager<BattleManager>().GetChangeBattleSpeedEvent.RemoveListener(OnTimeFactorChange);
-            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.UnPublishEvent(this);
+            _battleManager.GetChangeBattleSpeedEvent.RemoveListener(OnTimeFactorChange);
+            _battleManager.GameStateEventBus.UnPublishEvent(this);
         }
         
         public void SetSkillEffect()
         {
-            GameManager.GetCurrentSceneManager<BattleManager>().AddSkillObject(this);
-            releaseEvent.AddListener(() => GameManager.GetCurrentSceneManager<BattleManager>().RemoveSkillObject(this));
+            _battleManager.AddSkillObject(this);
+            releaseEvent.AddListener(() => _battleManager.RemoveSkillObject(this));
         }
 
         private void OnTimeFactorChange(float timeFactor)

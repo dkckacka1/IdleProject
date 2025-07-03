@@ -18,6 +18,8 @@ namespace IdleProject.Battle.UI
         private CharacterOffset _offset;
 
         private Camera _mainCamera;
+
+        private Func<bool> _isLive = null;
         
         protected static BattleUIController GetBattleUI => UIManager.Instance.GetUIController<BattleUIController>();
 
@@ -28,6 +30,8 @@ namespace IdleProject.Battle.UI
             _mainCamera = Camera.main;
 
             SetFluidHealthBar(stat).Forget();
+
+            _isLive = () => stat.IsLive;
         }
 
         protected virtual void OnBattleUIEvent()
@@ -63,7 +67,11 @@ namespace IdleProject.Battle.UI
                 case BattleStateType.Ready:
                     break;
                 case BattleStateType.Battle:
-                    _fluidHealthBar.gameObject.SetActive(true);
+                    if (_isLive.Invoke())
+                    {
+                        _fluidHealthBar.gameObject.SetActive(true);
+                    }
+                    
                     break;
                 case BattleStateType.Skill:
                     break;

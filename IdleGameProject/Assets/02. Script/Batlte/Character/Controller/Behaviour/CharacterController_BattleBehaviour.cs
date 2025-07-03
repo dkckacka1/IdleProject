@@ -12,21 +12,20 @@ using UnityEngine.Serialization;
 
 namespace IdleProject.Battle.Character
 {
-    public partial class CharacterController : ITakeDamagedAble
+    public partial class CharacterController : ITakeDamagedAble, ITakeCriticalAble
     {
         public Func<ITakeDamagedAble> GetTargetCharacter;
         public bool isNowSkill;
         public bool isNowAttack;
 
         private const float DEFAULT_GET_MANA_POINT = 10;
-
         public Transform GetTransform => transform;
         public CharacterAIType GetAiType => characterAI.aiType;
-
         public bool CanTakeDamage => !State.IsDead;
         public bool HasSkill => CharacterSkill is not null;
         public Vector3 HitEffectOffset => offset.GetOffsetTransform(CharacterOffsetType.HitOffset).position;
-
+        public float GetCriticalResist => StatSystem.GetStatValue(CharacterStatType.CriticalResistance);
+        
         protected virtual void SetBattleAnimEvent()
         {
             AnimController.AnimEventHandler.AttackStartEvent += OnAttackStart;
@@ -41,7 +40,6 @@ namespace IdleProject.Battle.Character
             isNowAttack = true;
         }
 
-
         public virtual void Attack()
         {
             transform.LookAt(GetTargetCharacter?.Invoke().GetTransform);
@@ -54,7 +52,6 @@ namespace IdleProject.Battle.Character
         public void OnAttackAction(int attackNumber)
         {
             var targetCharacter = GetTargetCharacter?.Invoke();
-
             if (targetCharacter is not null)
             {
                 var attackDamage = StatSystem.GetStatValue(CharacterStatType.AttackDamage);
@@ -78,6 +75,14 @@ namespace IdleProject.Battle.Character
 
             void HitTarget(ITakeDamagedAble target, float attackDamage)
             {
+                if (target is ITakeCriticalAble takeCritical)
+                {
+                    if (CheckCritical(StatSystem.GetStatValue(CharacterStatType.CriticalResistance), takeCritical))
+                    {
+                        attackDamage *= 1.5f;
+                    }
+                }
+                
                 Hit(target, attackDamage);
                 
                 var attackHitEffect = GetAttackHitEffect?.Invoke();
@@ -92,18 +97,26 @@ namespace IdleProject.Battle.Character
         {
             if (IsTargetInsideAttackRange(this, iTakeDamage) is false)
                 return;
-                
             
             if (iTakeDamage.CanTakeDamage)
             {
                 iTakeDamage.TakeDamage(attackDamage);
             }
         }
+        
+        private bool CheckCritical(float critRate, ITakeCriticalAble takeCriticalAble)
+        {
+            var finalCritChance = Mathf.Clamp01(critRate - takeCriticalAble.GetCriticalResist);
+            var isCrit = UnityEngine.Random.value < finalCritChance;
+            return isCrit;
+        }
 
         public virtual void TakeDamage(float takeDamage)
         {
-            characterUI.ShowBattleText(takeDamage.ToString());
-            StatSystem.SetStatValue(CharacterStatType.HealthPoint, StatSystem.GetStatValue(CharacterStatType.HealthPoint) - takeDamage);
+            var damage = CalculateTakeDamage(takeDamage);
+            
+            characterUI.ShowBattleText(damage.ToString("0"));
+            StatSystem.SetStatValue(CharacterStatType.HealthPoint, StatSystem.GetStatValue(CharacterStatType.HealthPoint) - damage);
 
             if (StatSystem.GetStatValue(CharacterStatType.HealthPoint) <= 0)
             {
@@ -111,11 +124,16 @@ namespace IdleProject.Battle.Character
             }
         }
 
+        private float CalculateTakeDamage(float takeDamage)
+        {
+            var damage = takeDamage * (100f / (100f + StatSystem.GetStatValue(CharacterStatType.DefensePoint)));
+            return damage;
+        }
 
         private void OnAttackEnd()
         {
             isNowAttack = false;
-            StartAttackCooltime().Forget();
+            StartAttackCoolTime().Forget();
         }
 
         #region 스킬 관련
@@ -150,11 +168,10 @@ namespace IdleProject.Battle.Character
             isNowSkill = false;
             isNowAttack = false;
             (characterUI as PlayerCharacterUIController)?.EndSkill();
-            StartAttackCooltime().Forget();
+            StartAttackCoolTime().Forget();
         }
         
-        
-        public async UniTaskVoid StartAttackCooltime()
+        public async UniTaskVoid StartAttackCoolTime()
         {
             State.CanAttack = false;
             await GetBattleManager.GetBattleTimer(StatSystem.GetStatValue(CharacterStatType.AttackCoolTime));
@@ -181,5 +198,6 @@ namespace IdleProject.Battle.Character
         {
             return Vector3.Distance(mine, targetCharacter.GetTransform.position) < mine.StatSystem.GetStatValue(CharacterStatType.AttackRange);
         }
+
     }
 }

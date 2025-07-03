@@ -1,4 +1,3 @@
-using IdleProject.Battle.AI;
 using IdleProject.Core;
 using UnityEngine;
 
@@ -15,5 +14,10 @@ namespace IdleProject.Battle.Character
         public Vector3 HitEffectOffset { get; }
         public bool CanTakeDamage { get; }
         public void TakeDamage(float attackDamage);
+    }
+
+    public interface ITakeCriticalAble : ITakeDamagedAble
+    {
+        public float GetCriticalResist { get; }
     }
 }

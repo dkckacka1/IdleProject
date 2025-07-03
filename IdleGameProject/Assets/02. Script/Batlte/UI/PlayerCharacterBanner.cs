@@ -20,9 +20,6 @@ namespace IdleProject.Battle.UI
         [SerializeField] private GameObject characterSkillBannerObj;
         [SerializeField] private Image characterSkillBannerImage;
 
-        private const string ICON_TYPE = "Banner";
-        private const string SKILL_ICON_TYPE = "SkillBanner";
-
         public HealthBar CharacterHealthBar => characterHealthBar;
 
         public void Initialized(StaticCharacterData data, StatSystem characterStat)

@@ -17,8 +17,6 @@ namespace IdleProject.Lobby
 {
     public class LobbyManager : SceneController
     {
-        private LobbyUIController _lobbyUIController;
-
         private const string LOBBY_INIT_TASK = "LobbyInit";
         private const string MAIN_CHARACTER_INIT_TASK = "MainCharacterInit";
 
@@ -39,8 +37,6 @@ namespace IdleProject.Lobby
 
         public override async UniTask Initialize()
         {
-            _lobbyUIController = UIManager.Instance.GetUIController<LobbyUIController>();
-
             TaskChecker.StartLoading(LOBBY_INIT_TASK, SetMainCharacter);
 
             await TaskChecker.WaitTasking(LOBBY_INIT_TASK);
@@ -48,7 +44,7 @@ namespace IdleProject.Lobby
 
         private void Start()
         {
-            SoundManager.Instance.PlayBGM("BGM_Title");
+            SoundManager.Instance.PlayBGM(DataManager.Instance.ConstData.LobbySceneBgmName);
         }
 
         private async UniTask SetMainCharacter()

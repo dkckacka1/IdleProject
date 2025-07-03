@@ -1,5 +1,12 @@
 ﻿namespace IdleProject.Core
 {
+    public enum SceneType
+    {
+        Lobby,
+        Battle,
+        Title,
+    }
+    
     #region Battle
 
     public enum BattleStateType
@@ -65,6 +72,7 @@
     }
     
     #endregion
+
 
     public enum CharacterStatType
     {

@@ -8,23 +8,13 @@ using UnityEngine.SceneManagement;
 
 namespace IdleProject.Core
 {
-    public enum SceneType
-    {
-        Splash,
-        Lobby,
-        Battle,
-        Title,
-        // Loading,
-    }
 
     // 씬 이동 관리 클래스
     public class SceneLoader
     {
         private const string SCENE_ADDRESSABLE_PATH = "Scene";
         private const string SCENE_FILE_EXTENSION = "unity";
-
-        private const float REQUIRED_SCENE_LOADING_TIME = 1f; // 최소 로딩 시간 보장
-
+        
         public async UniTask<SceneController> LoadScene(SceneType sceneType, bool isLoadingUI = true)
         {
             SceneController sceneController = null;
@@ -56,7 +46,6 @@ namespace IdleProject.Core
                 await sceneController.Initialize();
                 UIManager.Instance.InitializedUI();
             }
-
 
             return sceneController;
         }

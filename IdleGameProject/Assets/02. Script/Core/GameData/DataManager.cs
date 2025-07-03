@@ -14,9 +14,17 @@ namespace IdleProject.Core.GameData
         private readonly Dictionary<Type, Dictionary<string, Data.StaticData.StaticData>> _dataDictionary = new();
 
         private const string DATA_LABEL_REFERENCE_NAME = "Data";
-        
+        private const string LOAD_CONST_DATA_ASSET_NAME = "ConstData";
         public DataController DataController { get; private set; }
         public SaveController SaveController { get; private set; }
+        public ConstData ConstData { get; private set; }
+
+        protected override void Initialized()
+        {
+            base.Initialized();
+
+            ConstData = Resources.Load<ConstData>(LOAD_CONST_DATA_ASSET_NAME);
+        }
 
         public async UniTask LoadData()
         {

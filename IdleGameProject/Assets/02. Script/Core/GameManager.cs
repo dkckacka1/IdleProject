@@ -16,7 +16,6 @@ namespace IdleProject.Core
 
         private SceneController _currentSceneController;
 
-
         public static T GetCurrentSceneManager<T>() where T : SceneController => Instance._currentSceneController as T;
 
         public static void SetCurrentSceneManager(SceneController controller)
@@ -34,10 +33,6 @@ namespace IdleProject.Core
         
         private void Start()
         {
-            // TaskChecker.StartLoading(GAME_INIT_TASK, DataManager.Instance.LoadData);
-            // TaskChecker.StartLoading(GAME_INIT_TASK, ResourceManager.Instance.LoadAssets);
-            // TaskChecker.AddOnCompleteCallback(GAME_INIT_TASK,() => { LoadScene(SceneType.Lobby).Forget(); });
-            
             LoadScene(SceneType.Title, isLoadingUI: false).Forget();
         }
         

@@ -34,17 +34,14 @@ namespace IdleProject.Battle
         public Transform projectileParent;
 
         [HideInInspector] public SpawnController spawnController;
-        private BattleUIController _battleUIController;
+
+        public List<CharacterController> GetCharacterList(CharacterAIType aiType) =>
+            aiType == CharacterAIType.Player ? playerCharacterList : enemyCharacterList;
 
         private const string BATTLE_INIT_TASK = "BattleInit";
         
-        public List<CharacterController> GetCharacterList(CharacterAIType aiType) =>
-            aiType == CharacterAIType.Player ? playerCharacterList : enemyCharacterList;
-        
         public override async UniTask Initialize()
         {
-            _battleUIController = UIManager.Instance.GetUIController<BattleUIController>();
-            
             spawnController = GetComponent<SpawnController>();
             spawnController.Initialize();
             
@@ -52,7 +49,6 @@ namespace IdleProject.Battle
             
             EnumExtension.Foreach<BattleObjectType>(type => { BattleObjectEventDic.Add(type, new UnityEvent()); });
             TaskChecker.StartLoading(BATTLE_INIT_TASK, SpawnCharacter);
-            
             await TaskChecker.WaitTasking(BATTLE_INIT_TASK);
         }
 
@@ -66,7 +62,7 @@ namespace IdleProject.Battle
 
         private void Start()
         {
-            SoundManager.Instance.PlayBGM("BGM_Battle");
+            SoundManager.Instance.PlayBGM(DataManager.Instance.ConstData.BattleSceneBgmName);
         }
 
         private void FixedUpdate()

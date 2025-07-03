@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Engine.Util;
+using IdleProject.Core.GameData;
 using IdleProject.Core.Resource;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -14,7 +15,6 @@ namespace IdleProject.Core.Sound
         [SerializeField]
         private AudioSource bgmSource;
 
-        [SerializeField] private int defaultCreateSoundObjectCount = 10;
         [SerializeField] private SoundObject soundObjectPrefab;
         [SerializeField] private AudioMixerGroup sfxAudioMixerGroup;
         
@@ -27,7 +27,8 @@ namespace IdleProject.Core.Sound
         {
             base.Initialized();
 
-            for (int i = 0; i < defaultCreateSoundObjectCount; ++i)
+            var createCount = DataManager.Instance.ConstData.defaultCreateSoundObjectCount;
+            for (int i = 0; i < createCount; ++i)
             {
                 _sfxSoundObjectQueue.Enqueue(CreateSoundObject());
             }

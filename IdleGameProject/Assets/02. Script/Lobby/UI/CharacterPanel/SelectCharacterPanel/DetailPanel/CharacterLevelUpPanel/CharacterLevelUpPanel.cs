@@ -28,10 +28,6 @@ namespace IdleProject.Lobby.UI.CharacterPanel
         private float _usePotionInterval = 0.5f;
         private int _expAmount = 0;
 
-        private const float DEFAULT_USE_POTION_INTERVAL = 0.5f;
-        private const float LONG_CLICK_USE_POTION_INTERVAL = 0.1f;
-        private const float MAX_LONG_CLICK_USE_POTION_INTERVAL = 0.025f;
-
         private DynamicCharacterData GetSelectCharacter =>
             UIManager.Instance.GetUI<SelectCharacterPanel>().SelectedCharacter;
         
@@ -119,11 +115,11 @@ namespace IdleProject.Lobby.UI.CharacterPanel
 
                 if (timer > maxLongClickTime)
                 {
-                    _usePotionInterval = MAX_LONG_CLICK_USE_POTION_INTERVAL;
+                    _usePotionInterval = DataManager.Instance.ConstData.longClickUsePotionInterval;
                 }
                 else if (timer > longClickTime)
                 {
-                    _usePotionInterval = LONG_CLICK_USE_POTION_INTERVAL;
+                    _usePotionInterval = DataManager.Instance.ConstData.maxLongClickUsePotionInterval;
                 }
 
                 if (intervalTimer >= _usePotionInterval)
@@ -133,7 +129,7 @@ namespace IdleProject.Lobby.UI.CharacterPanel
                 }
             }
 
-            _usePotionInterval = DEFAULT_USE_POTION_INTERVAL;
+            _usePotionInterval = DataManager.Instance.ConstData.defaultLongClickInterval;
         }
 
         private void UseExpPotion(ConsumableItemSlot itemSlot)

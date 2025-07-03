@@ -4919,14 +4919,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576508625749478}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.9685137, y: 0, z: 0, w: -0.24896023}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4959922670865152}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -208.832, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &199531868794233082
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -5016,6 +5016,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ac056f021ea30746b49ec27d22b94ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectTriggerEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  releaseEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2222626416515870019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5028,7 +5034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c23d448d573d30341b04e49999c79444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  address: 
+  address: SwordSlashMiniWhite
   defaultPoolCount: 10
 --- !u!198 &198289660349720170
 ParticleSystem:
@@ -5389,7 +5395,7 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -5442,8 +5448,8 @@ ParticleSystem:
     startRotationY:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0
+      scalar: 1.5707963
+      minScalar: 1.5707963
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5495,8 +5501,8 @@ ParticleSystem:
     startRotation:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0
-      minScalar: 0
+      scalar: 1.5707963
+      minScalar: 1.5707963
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5532,7 +5538,7 @@ ParticleSystem:
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 1
-    rotation3D: 0
+    rotation3D: 1
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0

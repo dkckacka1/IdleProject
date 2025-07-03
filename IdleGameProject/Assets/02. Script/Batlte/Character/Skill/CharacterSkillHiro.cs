@@ -14,6 +14,7 @@ namespace IdleProject.Battle.Character.Skill
             if (TryGetSkillEffect(out var effect))
             {
                 effect.transform.position = target.HitEffectOffset;
+                effect.transform.rotation = Controller.transform.rotation;
             }
         }
     }

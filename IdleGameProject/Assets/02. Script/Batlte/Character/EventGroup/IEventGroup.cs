@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace IdleProject.Battle.Character.EventGroup
 {
     public interface IEventGroup<in T>

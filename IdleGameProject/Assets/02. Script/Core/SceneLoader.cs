@@ -1,9 +1,5 @@
-using System;
 using Cysharp.Threading.Tasks;
-using Engine.Core.Time;
 using IdleProject.Core.UI;
-using Unity.VisualScripting;
-using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 
 namespace IdleProject.Core

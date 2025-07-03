@@ -1,5 +1,3 @@
-using System;
-
 namespace IdleProject.Data
 {
     public interface ISlotData : IData

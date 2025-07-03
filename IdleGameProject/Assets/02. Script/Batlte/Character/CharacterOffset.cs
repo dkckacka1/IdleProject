@@ -1,8 +1,6 @@
 using System;
-using System.Linq;
 using Engine.Util.Extension;
 using IdleProject.Core;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character

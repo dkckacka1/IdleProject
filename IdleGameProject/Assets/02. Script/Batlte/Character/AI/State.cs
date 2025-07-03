@@ -1,6 +1,4 @@
 using System;
-using UnityEngine;
-
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.AI.State

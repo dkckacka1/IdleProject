@@ -1,9 +1,7 @@
 using System;
 using Engine.Core.EventBus;
-using IdleProject.Battle.AI;
 using IdleProject.Core;
 using UnityEngine;
-using UnityEngine.Serialization;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.Spawn

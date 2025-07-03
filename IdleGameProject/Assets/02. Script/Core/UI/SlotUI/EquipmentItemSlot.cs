@@ -1,8 +1,6 @@
 using IdleProject.Core.GameData;
 using IdleProject.Core.Resource;
-using IdleProject.Data;
 using IdleProject.Data.DynamicData;
-using IdleProject.Data.Player;
 using IdleProject.Data.StaticData;
 using IdleProject.Util;
 using UnityEngine;

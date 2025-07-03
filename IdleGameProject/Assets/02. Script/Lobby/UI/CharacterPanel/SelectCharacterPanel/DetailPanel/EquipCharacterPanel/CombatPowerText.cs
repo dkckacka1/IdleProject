@@ -1,6 +1,5 @@
 using DG.Tweening;
 using IdleProject.Core.UI;
-using TMPro;
 using UnityEngine;
 
 namespace IdleProject.Lobby.UI.CharacterPanel

@@ -1,16 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
-using IdleProject.Battle.AI;
 using IdleProject.Battle.Spawn;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
 using IdleProject.Data.DynamicData;
-using IdleProject.Data.StaticData;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 using CharacterController = IdleProject.Battle.Character.CharacterController;

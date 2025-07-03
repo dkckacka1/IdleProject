@@ -1,7 +1,6 @@
 using IdleProject.Battle.Character;
 using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
-using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.Events;
 

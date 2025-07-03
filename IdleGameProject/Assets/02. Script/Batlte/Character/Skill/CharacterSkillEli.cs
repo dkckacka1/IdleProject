@@ -1,7 +1,4 @@
-using System;
-using IdleProject.Battle.Projectile;
 using IdleProject.Core;
-using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill
 {

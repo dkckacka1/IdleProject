@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using IdleProject.Data;
 using IdleProject.Data.DynamicData;
 using IdleProject.Data.Player;
 using IdleProject.Data.StaticData;
-using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 
 namespace IdleProject.Core.GameData
 {

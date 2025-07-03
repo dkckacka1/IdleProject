@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace IdleProject.Core.ObjectPool
 {
     public interface IPoolable

@@ -1,10 +1,5 @@
 using Cysharp.Threading.Tasks;
-using IdleProject.Core;
-using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
-using IdleProject.Data.StaticData;
-using IdleProject.Lobby.UI.CharacterPanel;
-using UnityEngine;
 
 namespace IdleProject.Lobby.UI
 {

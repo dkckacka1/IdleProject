@@ -4,7 +4,6 @@ using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
 using IdleProject.Data.DynamicData;
-using IdleProject.Data.StaticData;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

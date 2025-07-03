@@ -1,6 +1,3 @@
-using System;
-using System.Data;
-using Engine.Core.EventBus;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 

@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using IdleProject.Core.UI;
 using IdleProject.Data.DynamicData;
-using IdleProject.Data.Player;
 using UnityEngine;
 
 namespace IdleProject.Lobby.UI.CharacterPanel

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using IdleProject.Core;
 using Sirenix.OdinInspector;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 
 namespace IdleProject.Data.StaticData

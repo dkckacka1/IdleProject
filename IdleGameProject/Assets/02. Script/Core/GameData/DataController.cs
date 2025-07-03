@@ -1,7 +1,6 @@
 using IdleProject.Data.DynamicData;
 using IdleProject.Data.Player;
 using IdleProject.Data.StaticData;
-using UnityEngine.Serialization;
 
 namespace IdleProject.Core.GameData
 {

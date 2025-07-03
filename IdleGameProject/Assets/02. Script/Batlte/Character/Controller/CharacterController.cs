@@ -1,19 +1,14 @@
-using Cysharp.Threading.Tasks;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Effect;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
-using IdleProject.Core.ObjectPool;
 using IdleProject.Battle.Projectile;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
 using IdleProject.Battle.Character.Skill;
-using Engine.Core;
 using Engine.Core.EventBus;
 using IdleProject.Battle.Character.EventGroup;
-using IdleProject.Data;
-using UnityEngine.Serialization;
 
 namespace IdleProject.Battle.Character
 {

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
@@ -8,9 +7,7 @@ using IdleProject.Core.UI;
 using IdleProject.Data.StaticData;
 using IdleProject.EditorClass;
 using Sirenix.OdinInspector;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace IdleProject.Lobby.UI.StagePanel

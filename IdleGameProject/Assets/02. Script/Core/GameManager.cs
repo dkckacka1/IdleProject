@@ -1,10 +1,5 @@
-using System;
 using Cysharp.Threading.Tasks;
 using Engine.Util;
-using IdleProject.Core.GameData;
-using IdleProject.Core.Loading;
-using IdleProject.Core.Resource;
-using Sirenix.OdinInspector;
 using UnityEngine.Events;
 
 namespace IdleProject.Core

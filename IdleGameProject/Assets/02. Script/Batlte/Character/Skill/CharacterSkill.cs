@@ -2,7 +2,6 @@ using IdleProject.Battle.Effect;
 using IdleProject.Battle.Projectile;
 using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
-using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill
 {

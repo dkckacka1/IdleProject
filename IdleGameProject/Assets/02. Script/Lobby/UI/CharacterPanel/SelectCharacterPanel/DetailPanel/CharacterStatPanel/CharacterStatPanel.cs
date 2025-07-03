@@ -1,9 +1,6 @@
-using IdleProject.Battle.Character;
 using IdleProject.Core;
 using IdleProject.Core.UI;
 using IdleProject.Data.DynamicData;
-using IdleProject.Data.Player;
-using IdleProject.Data.StaticData;
 
 namespace IdleProject.Lobby.UI.CharacterPanel
 {

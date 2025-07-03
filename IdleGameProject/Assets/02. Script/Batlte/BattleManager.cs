@@ -5,19 +5,13 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using Engine.Core.EventBus;
-using Engine.Core.Time;
 using Engine.Util.Extension;
-using IdleProject.Core.UI;
-using IdleProject.Battle.AI;
 using IdleProject.Battle.Spawn;
-using IdleProject.Battle.UI;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.Loading;
 using IdleProject.Core.Sound;
-using UnityEngine.Serialization;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
-using Object = UnityEngine.Object;
 
 namespace IdleProject.Battle
 {

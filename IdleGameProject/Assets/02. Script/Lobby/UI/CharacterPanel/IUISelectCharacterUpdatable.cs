@@ -1,5 +1,4 @@
 ﻿using IdleProject.Data.DynamicData;
-using IdleProject.Data.Player;
 
 namespace IdleProject.Lobby.UI.CharacterPanel
 {

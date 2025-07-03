@@ -1,7 +1,5 @@
-﻿using IdleProject.Core;
-using IdleProject.Core.GameData;
+﻿using IdleProject.Core.GameData;
 using IdleProject.Data.StaticData;
-using UnityEngine.Serialization;
 
 namespace IdleProject.Data.Player
 {

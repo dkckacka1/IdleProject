@@ -2,7 +2,6 @@ using Cysharp.Threading.Tasks;
 using IdleProject.Core;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Loading;
-using UnityEngine;
 
 namespace IdleProject.Title.UI
 {

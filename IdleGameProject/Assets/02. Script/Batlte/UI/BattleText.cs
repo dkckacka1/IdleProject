@@ -2,7 +2,6 @@ using System;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
 using TMPro;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Engine.Core.EventBus;
 using IdleProject.Core;

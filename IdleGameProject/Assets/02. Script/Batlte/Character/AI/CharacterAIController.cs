@@ -1,9 +1,5 @@
-using System;
 using System.Linq;
 using UnityEngine;
-
-using Engine.AI.BehaviourTree;
-using Engine.Core.EventBus;
 using IdleProject.Battle.AI.State;
 using IdleProject.Battle.Character.EventGroup;
 using IdleProject.Core;

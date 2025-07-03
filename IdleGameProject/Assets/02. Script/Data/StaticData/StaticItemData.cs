@@ -1,5 +1,3 @@
-using IdleProject.Data;
-
 namespace IdleProject.Data.StaticData
 {
     public abstract class StaticItemData : StaticData, ISlotData

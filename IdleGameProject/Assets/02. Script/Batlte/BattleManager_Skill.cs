@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Engine.Core.Time;
-using IdleProject.Battle.AI;
 using IdleProject.Battle.Character;
 using IdleProject.Core;
 using Sirenix.OdinInspector;

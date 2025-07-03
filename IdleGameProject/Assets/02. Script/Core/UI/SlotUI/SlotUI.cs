@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using IdleProject.Core.Resource;
 using IdleProject.Data;
-using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.Events;

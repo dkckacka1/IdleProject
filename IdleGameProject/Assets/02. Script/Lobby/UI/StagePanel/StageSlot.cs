@@ -1,9 +1,7 @@
-using System;
 using IdleProject.Core.UI;
 using IdleProject.Data.StaticData;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace IdleProject.Lobby.UI.StagePanel

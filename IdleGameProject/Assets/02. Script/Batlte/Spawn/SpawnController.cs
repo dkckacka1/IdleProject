@@ -1,28 +1,20 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Triggers;
 using Engine.Core;
 using Engine.Util.Extension;
 using UnityEngine;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Character;
-using IdleProject.Battle.Character.EventGroup;
 using IdleProject.Battle.Character.Skill;
 using IdleProject.Battle.Effect;
 using IdleProject.Battle.Projectile;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
-using IdleProject.Core.GameData;
 using IdleProject.Core.ObjectPool;
 using IdleProject.Core.Resource;
-using IdleProject.Data;
 using IdleProject.Data.DynamicData;
 using IdleProject.Data.StaticData;
-using UnityEditor;
-using UnityEngine.Serialization;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.Spawn

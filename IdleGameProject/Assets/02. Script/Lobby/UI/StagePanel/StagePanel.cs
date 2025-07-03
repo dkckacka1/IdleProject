@@ -1,5 +1,4 @@
 using IdleProject.Core.UI;
-using UnityEngine;
 
 namespace IdleProject.Lobby.UI.StagePanel
 {

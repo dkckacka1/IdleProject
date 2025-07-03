@@ -1,15 +1,9 @@
 using Cysharp.Threading.Tasks;
-using IdleProject.Battle.Effect;
-using IdleProject.Core.ObjectPool;
-using Sirenix.OdinInspector;
 using System;
-using Engine.Core.Time;
-using IdleProject.Battle.AI;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace IdleProject.Battle.Character
 {

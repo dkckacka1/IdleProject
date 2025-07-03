@@ -1,7 +1,5 @@
-using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace IdleProject.Core.UI
 {

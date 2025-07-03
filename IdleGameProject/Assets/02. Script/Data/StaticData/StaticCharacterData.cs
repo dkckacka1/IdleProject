@@ -1,4 +1,3 @@
-using System;
 using IdleProject.Core;
 using UnityEngine;
 using UnityEngine.Serialization;

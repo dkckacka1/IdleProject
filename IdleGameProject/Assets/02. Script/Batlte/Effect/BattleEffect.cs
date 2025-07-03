@@ -4,9 +4,9 @@ using Engine.Core.EventBus;
 using IdleProject.Battle.Character;
 using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
+using IdleProject.Core.Sound;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace IdleProject.Battle.Effect
 {
@@ -45,6 +45,7 @@ namespace IdleProject.Battle.Effect
             OnTimeFactorChange(_battleManager.GetCurrentBattleSpeed);
             _battleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
             _battleManager.GameStateEventBus.PublishEvent(this);
+            SoundManager.Instance.PlaySfx(name);
         }
 
         public void OnReleaseAction()

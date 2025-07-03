@@ -1,5 +1,4 @@
-﻿using System;
-using IdleProject.Data;
+﻿using IdleProject.Data;
 using UnityEngine;
 
 namespace IdleProject.Core.UI.Slot

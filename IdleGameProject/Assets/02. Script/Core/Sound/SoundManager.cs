@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Engine.Util;
 using IdleProject.Core.GameData;
 using IdleProject.Core.Resource;

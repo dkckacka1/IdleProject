@@ -1,6 +1,3 @@
-using IdleProject.Data.StaticData;
-using UnityEngine;
-
 namespace IdleProject.Data.Player
 {
     [System.Serializable]

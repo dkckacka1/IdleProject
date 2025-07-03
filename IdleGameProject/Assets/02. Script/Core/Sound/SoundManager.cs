@@ -13,6 +13,7 @@ namespace IdleProject.Core.Sound
         [SerializeField]
         private AudioSource bgmSource;
 
+        [SerializeField] private int defaultCreateSoundObjectCount = 10;
         [SerializeField] private SoundObject soundObjectPrefab;
         [SerializeField] private AudioMixerGroup sfxAudioMixerGroup;
         
@@ -25,7 +26,7 @@ namespace IdleProject.Core.Sound
         {
             base.Initialized();
 
-            var createCount = DataManager.Instance.ConstData.defaultCreateSoundObjectCount;
+            var createCount = defaultCreateSoundObjectCount;
             for (int i = 0; i < createCount; ++i)
             {
                 _sfxSoundObjectQueue.Enqueue(CreateSoundObject());

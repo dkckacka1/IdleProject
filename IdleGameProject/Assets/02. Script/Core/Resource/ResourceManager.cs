@@ -23,6 +23,7 @@ namespace IdleProject.Core.Resource
         public const string PoolableObject = "PoolableObject";
         private const string SPRITE_ATLAS_LABEL_NAME = "SpriteAtlas";
         private const string ANIMATION_LABEL_NAME = "Animation";
+        private const string AUDIO_CLIP_LABEL_NAME = "AudioClip";
         
         protected override void Initialized()
         {
@@ -30,6 +31,7 @@ namespace IdleProject.Core.Resource
             
             _assetLoaderDic.Add(typeof(Sprite), new SpriteLoader(SPRITE_ATLAS_LABEL_NAME));
             _assetLoaderDic.Add(typeof(RuntimeAnimatorController), new AnimationControllerLoader(ANIMATION_LABEL_NAME));
+            _assetLoaderDic.Add(typeof(AudioClip), new AudioLoader(AUDIO_CLIP_LABEL_NAME));
             _prefabLoaderDic.Add(GamePrefab, new PrefabLoader(GamePrefab));
             _prefabLoaderDic.Add(UIPrefab, new PrefabLoader(UIPrefab));
             _prefabLoaderDic.Add(PoolableObject, new PrefabLoader(PoolableObject));

@@ -27,6 +27,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - SpriteAtlas
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 934848eaf1ee9fa439e10e200ae527d6
+    m_Address: Assets/09. Audio
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AudioClip
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 7e150b1e3d4a57d4687b1ad9162195c0, type: 2}
   m_SchemaSet:

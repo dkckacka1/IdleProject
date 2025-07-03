@@ -21,14 +21,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Animation
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 84f5faf56f9e48d4da3cf465a13b59c6
+    m_Address: Assets/09. Audio/SFX
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AudioClip
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 87845ff8ea6de5b47b8fcab3e79bd8b4
     m_Address: Assets/10. Sprite/SpriteAtlas
     m_ReadOnly: 0
     m_SerializedLabels:
     - SpriteAtlas
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 934848eaf1ee9fa439e10e200ae527d6
-    m_Address: Assets/09. Audio
+  - m_GUID: f72c83d30bd66bd4a96db5f2d45e5800
+    m_Address: Assets/09. Audio/BGM
     m_ReadOnly: 0
     m_SerializedLabels:
     - AudioClip

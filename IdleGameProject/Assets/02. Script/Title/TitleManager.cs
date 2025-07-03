@@ -4,6 +4,7 @@ using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.Loading;
 using IdleProject.Core.Resource;
+using IdleProject.Core.Sound;
 using IdleProject.Core.UI;
 using IdleProject.Title.UI;
 using UnityEngine;

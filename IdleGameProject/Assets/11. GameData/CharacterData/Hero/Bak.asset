@@ -16,18 +16,18 @@ MonoBehaviour:
     characterName: Bak
     characterAnimationName: HeroBak
     attackProjectileAddress: 
-    attackHitEffectAddress: SharpExplosionFire
+    attackHitEffectAddress: ExplosionSharp
     skillProjectileAddress: 
     skillHitEffectAddress: SwordSpinWhite
   stat:
     healthPoint: 200
-    manaPoint: 70
-    attackDamage: 20
+    manaPoint: 100
+    attackDamage: 10
     movementSpeed: 3.5
     attackRange: 2
     attackCoolTime: 0.1
     defensePoint: 0
-    criticalPercent: 0
+    criticalPercent: 0.5
     criticalResistance: 0
   levelValue:
     healthPointValue: 20

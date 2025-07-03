@@ -1,8 +1,10 @@
+using System;
 using Cysharp.Threading.Tasks;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.Loading;
 using IdleProject.Core.Resource;
+using IdleProject.Core.Sound;
 using IdleProject.Core.UI;
 using IdleProject.Data;
 using IdleProject.Data.StaticData;
@@ -42,6 +44,11 @@ namespace IdleProject.Lobby
             TaskChecker.StartLoading(LOBBY_INIT_TASK, SetMainCharacter);
 
             await TaskChecker.WaitTasking(LOBBY_INIT_TASK);
+        }
+
+        private void Start()
+        {
+            SoundManager.Instance.PlayBGM("BGM_Title");
         }
 
         private async UniTask SetMainCharacter()

@@ -15,7 +15,6 @@ using UnityEngine.Serialization;
 
 namespace IdleProject.Lobby.UI.StagePanel
 {
-    // TODO : 보상 슬롯 UI 작업
     public class SelectStagePanel : UIPanel, IUISelectStageUpdatable, IUISelectChapterUpdatable
     {
         [BoxGroup("StagePanel"), SerializeField]

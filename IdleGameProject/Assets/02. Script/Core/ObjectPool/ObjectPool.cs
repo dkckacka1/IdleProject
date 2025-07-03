@@ -63,6 +63,7 @@ namespace IdleProject.Core.ObjectPool
             var poolInstance = Object.Instantiate(_originObject, _poolParent);
             poolInstance.OnCreate();
             poolInstance.gameObject.SetActive(false);
+            poolInstance.name = _originObject.name;
             _poolQueue.Enqueue(poolInstance);
         }
 

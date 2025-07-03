@@ -20,14 +20,14 @@ MonoBehaviour:
     skillProjectileAddress: Eli_Attack_Projectile
     skillHitEffectAddress: BloodExplosionRound
   stat:
-    healthPoint: 50
+    healthPoint: 100
     manaPoint: 50
     attackDamage: 20
     movementSpeed: 4.5
     attackRange: 10
     attackCoolTime: 0.1
     defensePoint: 0
-    criticalPercent: 0
+    criticalPercent: 0.5
     criticalResistance: 0
   levelValue:
     healthPointValue: 5

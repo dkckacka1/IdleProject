@@ -20,15 +20,15 @@ MonoBehaviour:
     skillProjectileAddress: 
     skillHitEffectAddress: 
   stat:
-    healthPoint: 10000000
+    healthPoint: 100
     manaPoint: 10
-    attackDamage: 1
+    attackDamage: 5
     movementSpeed: 4.5
     attackRange: 2
     attackCoolTime: 0.1
-    defensePoint: 0
+    defensePoint: 10
     criticalPercent: 0
-    criticalResistance: 0
+    criticalResistance: 0.25
   levelValue:
     healthPointValue: 1
     attackDamageValue: 1

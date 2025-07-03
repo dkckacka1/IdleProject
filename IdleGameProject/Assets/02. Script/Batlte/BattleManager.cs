@@ -14,14 +14,13 @@ using IdleProject.Battle.UI;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.Loading;
+using IdleProject.Core.Sound;
 using UnityEngine.Serialization;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 using Object = UnityEngine.Object;
 
 namespace IdleProject.Battle
 {
-
-
     public partial class BattleManager : SceneController, IEnumEvent<BattleStateType>
     {
         [HideInInspector] public List<CharacterController> playerCharacterList = new List<CharacterController>();
@@ -63,6 +62,11 @@ namespace IdleProject.Battle
                 DataManager.Instance.DataController.Player.PlayerFormation);
             await spawnController.SpawnCharacterByFormation(CharacterAIType.Enemy,
                 DataManager.Instance.DataController.selectStaticStageData.stageFormation);
+        }
+
+        private void Start()
+        {
+            SoundManager.Instance.PlayBGM("BGM_Battle");
         }
 
         private void FixedUpdate()
@@ -143,8 +147,12 @@ namespace IdleProject.Battle
                     break;
                 case BattleStateType.Win:
                     Win();
+                    SoundManager.Instance.PauseBGM();
+                    SoundManager.Instance.PlaySfx("SFX_Win");
                     break;
                 case BattleStateType.Defeat:
+                    SoundManager.Instance.PauseBGM();
+                    SoundManager.Instance.PlaySfx("SFX_Defeat");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

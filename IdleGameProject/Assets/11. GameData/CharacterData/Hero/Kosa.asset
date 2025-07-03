@@ -20,14 +20,14 @@ MonoBehaviour:
     skillProjectileAddress: FireballMissileFire
     skillHitEffectAddress: ExplosionFireballFire
   stat:
-    healthPoint: 100
-    manaPoint: 50
-    attackDamage: 10
+    healthPoint: 80
+    manaPoint: 40
+    attackDamage: 30
     movementSpeed: 3.5
     attackRange: 7
     attackCoolTime: 0.1
     defensePoint: 0
-    criticalPercent: 0
+    criticalPercent: 0.5
     criticalResistance: 0
   levelValue:
     healthPointValue: 10

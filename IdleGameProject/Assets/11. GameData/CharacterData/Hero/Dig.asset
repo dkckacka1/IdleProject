@@ -16,18 +16,18 @@ MonoBehaviour:
     characterName: Dig
     characterAnimationName: HeroDig
     attackProjectileAddress: 
-    attackHitEffectAddress: 
+    attackHitEffectAddress: ExplosionSharp
     skillProjectileAddress: 
     skillHitEffectAddress: ShieldSoftBlue
   stat:
-    healthPoint: 100
-    manaPoint: 10
-    attackDamage: 10
+    healthPoint: 250
+    manaPoint: 80
+    attackDamage: 5
     movementSpeed: 3.5
     attackRange: 2
     attackCoolTime: 0.1
-    defensePoint: 0
-    criticalPercent: 0
+    defensePoint: 2
+    criticalPercent: 0.5
     criticalResistance: 0
   levelValue:
     healthPointValue: 10

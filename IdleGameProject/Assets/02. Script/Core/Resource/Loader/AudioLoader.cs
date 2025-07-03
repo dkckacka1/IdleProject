@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -20,12 +21,7 @@ namespace IdleProject.Core.Resource
 
         public override AudioClip GetAsset(string address)
         {
-            if (AssetCacheDic.TryGetValue(address, out var audioClip) is false)
-            {
-                throw new Exception($"{address} is Invalid Key");
-            }
-
-            return audioClip;
+            return AssetCacheDic.GetValueOrDefault(address);
         }
     }
 }

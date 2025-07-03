@@ -16,16 +16,19 @@ MonoBehaviour:
     characterName: Hiro
     characterAnimationName: HeroHiro
     attackProjectileAddress: 
-    attackHitEffectAddress: SharpExplosionFire
-    skillHitEffectAddress: SwordSlashMiniWhite
+    attackHitEffectAddress: ExplosionSharp
     skillProjectileAddress: 
+    skillHitEffectAddress: SwordSlashMiniWhite
   stat:
-    healthPoint: 100
+    healthPoint: 200
     manaPoint: 50
-    attackDamage: 10
-    movementSpeed: 3.5
+    attackDamage: 15
+    movementSpeed: 4
     attackRange: 2
     attackCoolTime: 0.1
+    defensePoint: 0
+    criticalPercent: 0.5
+    criticalResistance: 0
   levelValue:
     healthPointValue: 10
     attackDamageValue: 2

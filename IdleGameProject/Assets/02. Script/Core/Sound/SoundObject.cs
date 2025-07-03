@@ -1,5 +1,6 @@
 using UniRx;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 
 namespace IdleProject.Core.Sound
@@ -8,24 +9,40 @@ namespace IdleProject.Core.Sound
     {
         private AudioSource _source;
 
+        private UnityAction _onPlayEnd;
+        
         private void Awake()
         {
             _source = GetComponent<AudioSource>();
         }
 
-        public void PlayAudioLoop(AudioClip audioClip)
+        public void SetMixerGroup(AudioMixerGroup group)
         {
-            _source.clip = audioClip;
+            _source.outputAudioMixerGroup = group;
         }
 
-        public void PlayAudio(AudioClip audioClip, UnityAction onPlayEnd = null)
+        public void SetPlayEndEvent(UnityAction onPlayEnd)
+        {
+            _onPlayEnd = onPlayEnd;
+        }
+
+        public void PauseAudio()
+        {
+            _source.Pause();
+            _onPlayEnd?.Invoke();
+        }
+
+        public void PlayAudio(AudioClip audioClip)
         {
             _source.PlayOneShot(audioClip);
-
-            _source.ObserveEveryValueChanged(source => source.isPlaying).Where(isPlaying => false).Subscribe(_ =>
-            {
-                onPlayEnd?.Invoke();
-            });
+            _source.ObserveEveryValueChanged(source => source.isPlaying)
+                .Pairwise()
+                .Where(pair => pair.Previous == true && pair.Current == false)
+                .Take(1) // 한 번만 실행되도록 제한
+                .Subscribe(_ =>
+                {
+                    _onPlayEnd?.Invoke();
+                });
         }
     }
 }

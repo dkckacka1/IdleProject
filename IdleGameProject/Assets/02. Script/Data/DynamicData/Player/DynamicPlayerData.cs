@@ -56,6 +56,26 @@ namespace IdleProject.Data.DynamicData
             }
         }
 
+        public StaticStageData GetLastStage()
+        {
+            var lastClearStageIndex = PlayerClearStageSet.LastOrDefault();
+            StaticStageData result = null;
+            
+            if (string.IsNullOrEmpty(lastClearStageIndex))
+                // 클리어 스테이지가 없다면 첫번째 스테이지 반환
+            {
+                result = DataExtension.GetFirstStage();
+            }
+            else
+                // 클리어 바로 다음 스테이지 
+            {
+                var lastClearStage = DataManager.Instance.GetData<StaticStageData>(lastClearStageIndex);
+                DataExtension.TryGetNextStage(lastClearStage, out result);
+            }
+
+            return result;
+        }
+
         public void AddConsumableItem(string index, int count = 1)
         {
             if (PlayerConsumableItemDataDic.TryGetValue(index, out var item))

@@ -63,6 +63,7 @@ namespace IdleProject.Lobby.UI.StagePanel
 
         private void BindStageData()
         {
+            var lastStage  =DataManager.Instance.DataController.Player.GetLastStage();
             for (int i = 0; i < _stageSlotList.Count; ++i)
             {
                 var stageSlot = _stageSlotList[i];
@@ -72,8 +73,9 @@ namespace IdleProject.Lobby.UI.StagePanel
                     var stageName = $"{SelectedChapter.chapterIndex}-{stageInfo.stageIndex}";
                     var stageData = DataManager.Instance.GetData<StaticStageData>(stageName);
                     var isClear = DataManager.Instance.DataController.Player.PlayerClearStageSet.Contains(stageName);
+                    var isLastStage = lastStage == stageData; 
                     
-                    stageSlot.SetStage(stageData, isClear);
+                    stageSlot.SetStage(stageData, isClear, isLastStage);
                     ((RectTransform)stageSlot.transform).anchoredPosition = new Vector2(stageInfo.posX, stageInfo.posY);
                 }
                 else

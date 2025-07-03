@@ -22,11 +22,13 @@ namespace IdleProject.Lobby.UI.StagePanel
             button.onClick.AddListener(OnClick);
         }
 
-        public void SetStage(StaticStageData stageData, bool isClear)
+        public void SetStage(StaticStageData stageData, bool isClear, bool isLastStage)
         {
             stageText.text = $"{stageData.chapterIndex}-{stageData.stageIndex}";
             clearTypoImage.enabled = isClear;
 
+            button.interactable = isClear || isLastStage; 
+            
             _stageData = stageData;
         }
 

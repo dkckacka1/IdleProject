@@ -10,14 +10,13 @@ namespace IdleProject.Core.Resource
     public class SpriteLoader : AssetLoader<Sprite> 
     {
         private readonly Dictionary<string, SpriteAtlas> _atlasCacheDic = new();
-
-        private const string SPRITEATLAS_ADDRESSABLE_LABEL_NAME = "SpriteAtlas";
+        public SpriteLoader(string assetLabelName) : base(assetLabelName) {}
 
         public override async UniTask LoadAsset()
         {
             var atlasList =
                 await AddressableManager.Instance.Controller.LoadAssetsLabelAsync<SpriteAtlas>(
-                    SPRITEATLAS_ADDRESSABLE_LABEL_NAME);
+                    AssetLabelName);
 
             foreach (var atlas in atlasList)
             {

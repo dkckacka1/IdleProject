@@ -6,16 +6,11 @@ namespace IdleProject.Core.Resource
 {
     public class PrefabLoader : AssetLoader<GameObject>
     {
-        private string _labelName;
-        
-        public PrefabLoader(string labelName)
-        {
-            _labelName = labelName;
-        }
-        
+        public PrefabLoader(string assetLabelName) : base(assetLabelName) {}
+
         public override async UniTask LoadAsset()
         {
-            var atlasList = await AddressableManager.Instance.Controller.LoadAssetsLabelAsync<GameObject>(_labelName);
+            var atlasList = await AddressableManager.Instance.Controller.LoadAssetsLabelAsync<GameObject>(AssetLabelName);
 
             foreach (var atlas in atlasList)
             {

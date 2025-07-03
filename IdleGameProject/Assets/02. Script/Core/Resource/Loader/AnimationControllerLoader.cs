@@ -6,17 +6,16 @@ namespace IdleProject.Core.Resource
 {
     public class AnimationControllerLoader : AssetLoader<RuntimeAnimatorController>
     {
-        private const string ANIMATION_CONTROLLER_ADDRESSABLE_L_ABEL_NAME = "Animation";
+        public AnimationControllerLoader(string assetLabelName) : base(assetLabelName) {}
 
         public override async UniTask LoadAsset()
         {
-            var atlasList =
-                await AddressableManager.Instance.Controller.LoadAssetsLabelAsync<RuntimeAnimatorController>(
-                    ANIMATION_CONTROLLER_ADDRESSABLE_L_ABEL_NAME);
+            var animationList =
+                await AddressableManager.Instance.Controller.LoadAssetsLabelAsync<RuntimeAnimatorController>(AssetLabelName);
 
-            foreach (var atlas in atlasList)
+            foreach (var animation in animationList)
             {
-                AssetCacheDic.Add(atlas.name, atlas);
+                AssetCacheDic.Add(animation.name, animation);
             }
         }
 

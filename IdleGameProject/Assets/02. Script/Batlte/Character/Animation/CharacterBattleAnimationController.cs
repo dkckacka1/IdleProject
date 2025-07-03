@@ -4,7 +4,6 @@ using System.Linq;
 using Engine.Core.EventBus;
 using IdleProject.Battle.Character.EventGroup;
 using IdleProject.Core;
-using UnityEditor;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character
@@ -43,12 +42,12 @@ namespace IdleProject.Battle.Character
             var skillClip =
                 _animator.runtimeAnimatorController.animationClips.First(clip => clip.name.Contains("Skill"));
 
-            var attackEffectNames = AnimationUtility.GetAnimationEvents(attackClip)
+            var attackEffectNames = attackClip.events
                 .Where(animEvent => string.IsNullOrEmpty(animEvent.stringParameter) is false)
                 .Select(animEvent => animEvent.stringParameter);
             result.AddRange(attackEffectNames);
             
-            var skillEffectNames = AnimationUtility.GetAnimationEvents(skillClip)
+            var skillEffectNames = skillClip.events
                 .Where(animEvent => string.IsNullOrEmpty(animEvent.stringParameter) is false)
                 .Select(animEvent => animEvent.stringParameter);
             result.AddRange(skillEffectNames);

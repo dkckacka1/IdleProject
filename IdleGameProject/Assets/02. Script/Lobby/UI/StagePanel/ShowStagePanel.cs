@@ -5,7 +5,9 @@ using IdleProject.Core.GameData;
 using IdleProject.Core.Resource;
 using IdleProject.Core.UI;
 using IdleProject.Data.StaticData;
+#if UNITY_EDITOR
 using IdleProject.EditorClass;
+#endif
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +17,7 @@ namespace IdleProject.Lobby.UI.StagePanel
     public class ShowStagePanel : UIPanel, IUISelectChapterUpdatable
     {
         public StaticChapterData SelectedChapter { get; private set; }
-        
+
         [SerializeField] private Image backgroundImage;
         [SerializeField] private Transform stageSlotParent;
 
@@ -23,14 +25,15 @@ namespace IdleProject.Lobby.UI.StagePanel
 
         private readonly List<StageSlot> _stageSlotList = new List<StageSlot>();
 
-        
+
         public override void Initialized()
         {
             _chapterDropdown = UIManager.Instance.GetUI<UIDropdown>("ChapterDropdown");
 
             var chapterList = DataManager.Instance.GetDataList<StaticChapterData>();
-            
-            _chapterDropdown.Dropdown.AddOptions(chapterList.Select(chapter => $"<size=75%>Chapter</size> {chapter.chapterIndex}").ToList());
+
+            _chapterDropdown.Dropdown.AddOptions(chapterList
+                .Select(chapter => $"<size=75%>Chapter</size> {chapter.chapterIndex}").ToList());
             _chapterDropdown.Dropdown.onValueChanged.AddListener(OnDropdownChanged);
         }
 
@@ -63,7 +66,7 @@ namespace IdleProject.Lobby.UI.StagePanel
 
         private void BindStageData()
         {
-            var lastStage  =DataManager.Instance.DataController.Player.GetLastStage();
+            var lastStage = DataManager.Instance.DataController.Player.GetLastStage();
             for (int i = 0; i < _stageSlotList.Count; ++i)
             {
                 var stageSlot = _stageSlotList[i];
@@ -73,8 +76,8 @@ namespace IdleProject.Lobby.UI.StagePanel
                     var stageName = $"{SelectedChapter.chapterIndex}-{stageInfo.stageIndex}";
                     var stageData = DataManager.Instance.GetData<StaticStageData>(stageName);
                     var isClear = DataManager.Instance.DataController.Player.PlayerClearStageSet.Contains(stageName);
-                    var isLastStage = lastStage == stageData; 
-                    
+                    var isLastStage = lastStage == stageData;
+
                     stageSlot.SetStage(stageData, isClear, isLastStage);
                     ((RectTransform)stageSlot.transform).anchoredPosition = new Vector2(stageInfo.posX, stageInfo.posY);
                 }
@@ -101,14 +104,14 @@ namespace IdleProject.Lobby.UI.StagePanel
             var slotInstance = Instantiate(slotObject, stageSlotParent).GetComponent<StageSlot>();
             _stageSlotList.Add(slotInstance);
         }
-        
+
 
         public void SelectChapterUpdatable(StaticChapterData selectChapter)
         {
             CreateStageSlots(SelectedChapter);
             BindStageData();
         }
-
+#if UNITY_EDITOR
         #region Creator
 
         [BoxGroup("Creator"), Button]
@@ -119,7 +122,7 @@ namespace IdleProject.Lobby.UI.StagePanel
                 chapterData.chapterImage = backgroundImage.sprite.name;
 
                 var stageIndex = 0;
-                
+
                 foreach (var slot in GetComponentsInChildren<StageSlot>(true))
                 {
                     chapterData.stageInfoList.Add(new StageInfo
@@ -130,16 +133,15 @@ namespace IdleProject.Lobby.UI.StagePanel
                     });
 
                     ++stageIndex;
-                    var index = stageIndex;     
-                    StaticDataCreator.CreateStaticData<StaticStageData>($"StageData {stageIndex}", stageData =>
-                    {
-                        stageData.stageIndex = index;
-                    });
+                    var index = stageIndex;
+                    StaticDataCreator.CreateStaticData<StaticStageData>($"StageData {stageIndex}",
+                        stageData => { stageData.stageIndex = index; });
                 }
             });
         }
 
         [BoxGroup("Creator"), SerializeField] private StageSlot slot;
+
         [BoxGroup("Creator"), Button]
         private void CreateSlot()
         {
@@ -158,5 +160,6 @@ namespace IdleProject.Lobby.UI.StagePanel
         }
 
         #endregion
+#endif
     }
 }

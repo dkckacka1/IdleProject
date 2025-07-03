@@ -1,4 +1,5 @@
-﻿using IdleProject.Data.StaticData;
+﻿#if UNITY_EDITOR
+using IdleProject.Data.StaticData;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,3 +20,4 @@ namespace IdleProject.EditorClass
         }
     }
 }
+#endif

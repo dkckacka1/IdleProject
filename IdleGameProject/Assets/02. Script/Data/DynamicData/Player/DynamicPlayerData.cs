@@ -11,6 +11,8 @@ namespace IdleProject.Data.DynamicData
 {
     public class DynamicPlayerData
     {
+        public PlayerInfo PlayerInfo;
+        
         public readonly Dictionary<string, DynamicCharacterData> PlayerCharacterDataDic;
         public readonly Dictionary<string, DynamicEquipmentItemData> PlayerEquipmentItemDataDic;
         public readonly Dictionary<string, DynamicConsumableItemData> PlayerConsumableItemDataDic;
@@ -20,6 +22,8 @@ namespace IdleProject.Data.DynamicData
         
         public DynamicPlayerData(PlayerData playerData)
         {
+            PlayerInfo = playerData.PlayerInfo;
+            
             PlayerEquipmentItemDataDic =
                 playerData.playerEquipmentItemList.ToDictionary
                 (

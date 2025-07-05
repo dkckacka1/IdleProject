@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 
 namespace IdleProject.Lobby.UI
@@ -20,6 +21,8 @@ namespace IdleProject.Lobby.UI
             
             characterPanel.ClosePanel();
             stagePanel.ClosePanel();
+            
+            UIManager.Instance.GetUI<PlayerInfoUI>().SetPlayerInfo(DataManager.Instance.DataController.Player.PlayerInfo);
         }
 
         private void GoToDungeon()

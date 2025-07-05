@@ -18,7 +18,7 @@ namespace IdleProject.Data.DynamicData
         private readonly Dictionary<EquipmentItemType, string> _equippedItemDic = new();
         
         public string GetIconName => StaticData.GetIconName;
-        public int GetLevelUpExpValue => Level * 100;
+        public int GetLevelUpExpValue => Level * DataManager.Instance.ConstData.characterLevelUpExpFactor;
 
         public int GetCombatPower()
         {

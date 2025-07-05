@@ -12,6 +12,12 @@ namespace IdleProject.Core.GameData
 
         [FoldoutGroup("Game"), BoxGroup("Game/Loading")]
         public float requiredSceneLoadingTime = 1f;
+
+        [FoldoutGroup("Game"), BoxGroup("Game/Player")]
+        public int playerLevelUpExpFactor = 100;
+        
+        [FoldoutGroup("Game"), BoxGroup("Game/Character")]
+        public int characterLevelUpExpFactor = 100;
         
         #endregion
         

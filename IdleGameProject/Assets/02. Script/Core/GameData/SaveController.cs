@@ -18,6 +18,11 @@ namespace IdleProject.Core.GameData
         {
             _playerData = playerData;
         }
+
+        public void Save(PlayerInfo playerInfo)
+        {
+            _playerData.PlayerInfo = playerInfo;
+        }
         
         public void Save(params IData[] dataParams)
         {

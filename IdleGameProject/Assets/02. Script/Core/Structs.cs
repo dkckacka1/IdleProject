@@ -1,9 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using IdleProject.Core.GameData;
 using UnityEngine;
 
 namespace IdleProject.Core
 {
+    [Serializable]
+    public struct PlayerInfo
+    {
+        public string playerName;
+        public int playerLevel;
+        public int playerExp;
+
+        public PlayerInfo(string playerName)
+        {   
+            this.playerName = playerName;
+            playerLevel = 1;
+            playerExp = 0;
+        }
+
+        public int GetMaxExp() => playerLevel * DataManager.Instance.ConstData.playerLevelUpExpFactor;
+    }
+    
     [System.Serializable]
     public struct PositionInfo
     {

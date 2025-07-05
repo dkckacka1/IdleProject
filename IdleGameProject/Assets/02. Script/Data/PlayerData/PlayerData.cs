@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Data.StaticData;
 using IdleProject.Util;
@@ -10,9 +11,8 @@ namespace IdleProject.Data.Player
     [CreateAssetMenu(fileName = "PlayerData", menuName = "Create/PlayerData")]
     public class PlayerData : ScriptableObject
     {
-        public int playerLevel = 1;
-        public int playerExp = 0;
-
+        public PlayerInfo PlayerInfo;
+        
         public List<PlayerCharacterData> playerCharacterList;
         public List<PlayerConsumableItemData> playerConsumableItemList;
         public List<PlayerEquipmentItemData> playerEquipmentItemList;

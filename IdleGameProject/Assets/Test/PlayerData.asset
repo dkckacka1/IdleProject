@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd8c69bf2bd0f3340abcecbb162b787e, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  playerLevel: 1
-  playerExp: 0
+  PlayerInfo:
+    playerName: Kimhawon
+    playerLevel: 1
+    playerExp: 0
   playerCharacterList:
   - characterName: Hiro
     level: 47

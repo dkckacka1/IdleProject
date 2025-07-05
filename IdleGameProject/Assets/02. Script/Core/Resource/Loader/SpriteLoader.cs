@@ -20,7 +20,7 @@ namespace IdleProject.Core.Resource
 
             foreach (var atlas in atlasList)
             {
-                _atlasCacheDic.Add(atlas.name, atlas);
+                _atlasCacheDic.TryAdd(atlas.name, atlas);
             }
         }
 

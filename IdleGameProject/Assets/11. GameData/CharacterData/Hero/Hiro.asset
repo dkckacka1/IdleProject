@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee708b51cec1264fbb31a84dce962ef, type: 3}
   m_Name: Hiro
   m_EditorClassIdentifier: 
+  characterName: "\uD788\uB85C"
   addressValue:
-    characterName: Hiro
     characterAnimationName: HeroHiro
     attackProjectileAddress: 
     attackHitEffectAddress: ExplosionSharp
@@ -21,7 +21,7 @@ MonoBehaviour:
     skillHitEffectAddress: SwordSlashMiniWhite
   stat:
     healthPoint: 200
-    manaPoint: 50
+    manaPoint: 10
     attackDamage: 15
     movementSpeed: 4
     attackRange: 2

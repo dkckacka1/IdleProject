@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee708b51cec1264fbb31a84dce962ef, type: 3}
   m_Name: Eli
   m_EditorClassIdentifier: 
+  characterName: "\uC5D8\uB9AC"
   addressValue:
-    characterName: Eli
     characterAnimationName: HeroEli
     attackProjectileAddress: Eli_Attack_Projectile
     attackHitEffectAddress: BloodExplosionRound

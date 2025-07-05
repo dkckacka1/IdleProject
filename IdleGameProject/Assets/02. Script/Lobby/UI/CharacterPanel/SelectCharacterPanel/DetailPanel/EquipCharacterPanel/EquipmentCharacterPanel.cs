@@ -27,12 +27,16 @@ namespace IdleProject.Lobby.UI.CharacterPanel
         private CharacterEquipSlot _bootsSLot;
 
         private CombatPowerText _combatPowerText;
+
+        private UIText _characterNameText;
         
         public override void Initialized()
         {
             _selectCharacterModel = UIManager.Instance.GetUI<LobbyCharacter>("CharacterPanel_Character");
             _characterLoadingRotate = UIManager.Instance.GetUI<LoadingRotateUI>("CharacterPanel_CharacterLoadingUI");
 
+            _characterNameText = UIManager.Instance.GetUI<UIText>("CharacterNameText");
+            
             _helmetSlot = UIManager.Instance.GetUI<CharacterEquipSlot>("EquipmentSlot_Helmet");
             _armorSlot = UIManager.Instance.GetUI<CharacterEquipSlot>("EquipmentSlot_Armor");
             _weaponSlot = UIManager.Instance.GetUI<CharacterEquipSlot>("EquipmentSlot_Weapon");
@@ -51,7 +55,7 @@ namespace IdleProject.Lobby.UI.CharacterPanel
 
         private async UniTask LoadCharacter(StaticCharacterData staticCharacterData)
         {
-            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.GamePrefab, $"Model_{staticCharacterData.addressValue.characterName}");
+            var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.GamePrefab, $"Model_{staticCharacterData.Index}");
             var modelInstance = Instantiate(modelObject, _selectCharacterModel.transform);
             _selectCharacterModel.SetModel(modelInstance);
             var animatorController = ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(staticCharacterData.addressValue.characterAnimationName);
@@ -72,6 +76,7 @@ namespace IdleProject.Lobby.UI.CharacterPanel
         {
             _characterLoadingRotate.StartLoading(LoadCharacter(selectCharacter.StaticData)).Forget();
 
+            _characterNameText.Text.text = selectCharacter.StaticData.characterName;
             _combatPowerText.SetCombatPower(selectCharacter.GetCombatPower(), false);
             ShowCharacterEquipment(selectCharacter);
         }

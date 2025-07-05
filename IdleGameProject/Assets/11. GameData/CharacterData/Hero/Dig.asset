@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee708b51cec1264fbb31a84dce962ef, type: 3}
   m_Name: Dig
   m_EditorClassIdentifier: 
+  characterName: "\uB514\uADF8"
   addressValue:
-    characterName: Dig
     characterAnimationName: HeroDig
     attackProjectileAddress: 
     attackHitEffectAddress: ExplosionSharp

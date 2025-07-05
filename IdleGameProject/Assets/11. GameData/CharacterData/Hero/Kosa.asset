@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee708b51cec1264fbb31a84dce962ef, type: 3}
   m_Name: Kosa
   m_EditorClassIdentifier: 
+  characterName: "\uCF54\uC0AC"
   addressValue:
-    characterName: Kosa
     characterAnimationName: HeroKosa
     attackProjectileAddress: FireballSharpMissileFire
     attackHitEffectAddress: ExplosionFireballSharpFire

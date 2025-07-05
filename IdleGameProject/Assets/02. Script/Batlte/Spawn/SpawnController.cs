@@ -146,7 +146,7 @@ namespace IdleProject.Battle.Spawn
         {
             var controllerObj = ResourceManager.Instance.GetPrefab(ResourceManager.GamePrefab, "Character");
             var characterInstance = Instantiate(controllerObj).GetComponent<CharacterController>();
-            characterInstance.name = data.StaticData.addressValue.characterName;
+            characterInstance.name = data.StaticData.Index;
 
             await SetModel(characterInstance, data.StaticData);
             SetAnimation(characterInstance, data.StaticData);
@@ -164,7 +164,7 @@ namespace IdleProject.Battle.Spawn
         private void SetStat(CharacterController controller, DynamicCharacterData data)
         {
             var statSystem = new StatSystem();
-            statSystem.SetStatData(data.StaticData.addressValue.characterName, data.GetStat());
+            statSystem.SetStatData(data.StaticData.Index, data.GetStat());
 
             controller.StatSystem = statSystem;
         }
@@ -172,7 +172,7 @@ namespace IdleProject.Battle.Spawn
         private async UniTask SetModel(CharacterController controller, StaticCharacterData data)
         {
             var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.GamePrefab,
-                $"Model_{data.addressValue.characterName}");
+                $"Model_{data.Index}");
             await InstantiateAsync(modelObject, controller.transform).ToUniTask();
 
             var characterOffset = controller.gameObject.AddComponent<CharacterOffset>();
@@ -209,7 +209,7 @@ namespace IdleProject.Battle.Spawn
         private void SetSkill(CharacterController controllerInstance, StaticCharacterData data)
         {
             var skillName =
-                $"{typeof(CharacterSkill).FullName}{data.addressValue.characterName}, {typeof(CharacterSkill).Assembly}";
+                $"{typeof(CharacterSkill).FullName}{data.Index}, {typeof(CharacterSkill).Assembly}";
 
             if (Type.GetType(skillName) is not null)
             {

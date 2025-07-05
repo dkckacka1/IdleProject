@@ -24,7 +24,7 @@ namespace IdleProject.Battle.UI
         {
             characterIconImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(data.GetCharacterBannerIconName);
             characterSkillBannerImage.sprite = ResourceManager.Instance.GetAsset<Sprite>(data.GetCharacterSkillBannerIconName);
-            characterNameText.text = data.addressValue.characterName;
+            characterNameText.text = data.Index;
             characterHealthBar.Initialized(characterStat.GetStatValue(CharacterStatType.HealthPoint, true));
             characterManaBar.Initialized(characterStat.GetStatValue(CharacterStatType.ManaPoint, true));
             characterStat.PublishValueChangedEvent(CharacterStatType.HealthPoint, characterHealthBar.OnChangeHealthPoint);

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee708b51cec1264fbb31a84dce962ef, type: 3}
   m_Name: Bak
   m_EditorClassIdentifier: 
+  characterName: "\uBC14\uD06C"
   addressValue:
-    characterName: Bak
     characterAnimationName: HeroBak
     attackProjectileAddress: 
     attackHitEffectAddress: ExplosionSharp

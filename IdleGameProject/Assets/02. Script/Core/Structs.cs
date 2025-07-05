@@ -114,7 +114,6 @@ namespace IdleProject.Core
     [Serializable]
     public struct CharacterAddressValue
     {
-        public string characterName;
         public string characterAnimationName;
         public string attackProjectileAddress;
         public string attackHitEffectAddress;

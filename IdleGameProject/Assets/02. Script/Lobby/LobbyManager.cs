@@ -68,7 +68,7 @@ namespace IdleProject.Lobby
             var data = DataManager.Instance.GetData<StaticCharacterData>(positionInfo.characterName);
             
             var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.GamePrefab,
-                $"Model_{data.addressValue.characterName}");
+                $"Model_{data.Index}");
             character.SetModel(Instantiate(modelObject,character.transform));
 
             var animatorController =

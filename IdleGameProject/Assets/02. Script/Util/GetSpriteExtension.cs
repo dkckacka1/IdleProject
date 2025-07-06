@@ -8,12 +8,12 @@ namespace IdleProject.Util
     {
         public static Sprite GetCharacterStatTypeIconSprite(CharacterStatType statType)
         {
-            return ResourceManager.Instance.GetAsset<Sprite>($"Icon_CharacterStatType_{statType}");
+            return ResourceManager.Instance.GetAsset<Sprite>($"UI_CharacterStatType_{statType}");
         }
         
         public static Sprite GetEquipmentTypeIconSprite(EquipmentItemType itemType)
         {
-            return ResourceManager.Instance.GetAsset<Sprite>($"Icon_EquipmentType_{itemType}");
+            return ResourceManager.Instance.GetAsset<Sprite>($"UI_EquipmentType_{itemType}");
         }
     }
 }

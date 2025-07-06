@@ -5,6 +5,7 @@ using IdleProject.Core.UI.Loading;
 using IdleProject.Lobby.UI;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace IdleProject.Core.UI
 {
@@ -15,8 +16,8 @@ namespace IdleProject.Core.UI
 
         [HideInInspector] public LoadingUI loadingUI;
         
-        [SerializeField] private ConfirmPopup confirmPopup;
-        [SerializeField] private ToastPopup toastPopup;        
+        [FormerlySerializedAs("confirmPopup")] [SerializeField] private ConfirmUIPopup confirmUIPopup;
+        [FormerlySerializedAs("toastPopup")] [SerializeField] private ToastUIPopup toastUIPopup;        
         
         public bool IsShowingLoading => loadingUI.isLoading;
         
@@ -99,14 +100,14 @@ namespace IdleProject.Core.UI
 
         public void OpenConfirmPopup(string description, UnityAction yesAction)
         {
-            confirmPopup.SetConfirm(description, yesAction);
-            confirmPopup.Open();
+            confirmUIPopup.SetConfirm(description, yesAction);
+            confirmUIPopup.OpenPopup();
         }
 
         public void OpenToastPopup(string description)
         {
-            toastPopup.SetToast(description);
-            toastPopup.Open();
+            toastUIPopup.SetToast(description);
+            toastUIPopup.OpenPopup();
         }
 
         public static Vector3 GetUIInScreen(Vector3 position)

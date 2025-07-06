@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace IdleProject.Lobby.UI
 {
-    public class ConfirmPopup : StaticPopupUI
+    public class ConfirmUIPopup : UIPopup
     {
         [BoxGroup("ConfirmPopup"), SerializeField] private Button yesButton;
         [BoxGroup("ConfirmPopup"), SerializeField] protected TextMeshProUGUI descriptionText;
@@ -17,7 +17,7 @@ namespace IdleProject.Lobby.UI
         {
             base.Awake();
             yesButton.onClick.AddListener(() => _yesAction?.Invoke());
-            yesButton.onClick.AddListener(Close);
+            yesButton.onClick.AddListener(ClosePopup);
         }
 
         public void SetConfirm(string description, UnityAction yesAction)
@@ -26,9 +26,9 @@ namespace IdleProject.Lobby.UI
             _yesAction = yesAction;
         }
 
-        public override void Close()
+        public override void ClosePopup()
         {
-            base.Close();
+            base.ClosePopup();
             _yesAction = null;
         }
     }

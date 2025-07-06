@@ -12,6 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1031a66bc1bf46dfb4ba73c1a90fbf67, type: 3}
   m_Name: ConstData
   m_EditorClassIdentifier: 
+  requiredSceneLoadingTime: 1
+  playerLevelUpExpFactor: 100
+  characterLevelUpExpFactor: 100
+  minAudioDecibel: 10
   battleSceneBgmName: Assets/09. Audio/BGM/BGM_Battle.wav
   lobbySceneBgmName: Assets/09. Audio/BGM/BGM_Title.mp3
+  minBattleSpeed: 1
+  maxBattleSpeed: 3
+  defaultGetManaValue: 10
   defenseScalingFactor: 100
+  attackRangeCorrectionValue: 0.1
+  defaultLongClickInterval: 0.5
+  longClickUsePotionInterval: 0.1
+  maxLongClickUsePotionInterval: 0.025

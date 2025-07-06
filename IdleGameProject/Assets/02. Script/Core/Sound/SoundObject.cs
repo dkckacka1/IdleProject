@@ -16,11 +16,6 @@ namespace IdleProject.Core.Sound
             _source = GetComponent<AudioSource>();
         }
 
-        public void SetMixerGroup(AudioMixerGroup group)
-        {
-            _source.outputAudioMixerGroup = group;
-        }
-
         public void SetPlayEndEvent(UnityAction onPlayEnd)
         {
             _onPlayEnd = onPlayEnd;

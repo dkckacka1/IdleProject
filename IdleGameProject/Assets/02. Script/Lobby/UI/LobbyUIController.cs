@@ -18,11 +18,18 @@ namespace IdleProject.Lobby.UI
 
             UIManager.Instance.GetUI<UIButton>("EquipmentButton").Button.onClick.AddListener(OpenEquipmentPanel);
             UIManager.Instance.GetUI<UIButton>("DungeonButton").Button.onClick.AddListener(GoToDungeon);
+            UIManager.Instance.GetUI<UIButton>("SettingButton").Button.onClick.AddListener(OpenSettingPopup);
             
             characterPanel.ClosePanel();
             stagePanel.ClosePanel();
+            UIManager.Instance.GetUI<IdleProject.SettingPopup>().ClosePopup();
             
             UIManager.Instance.GetUI<PlayerInfoUI>().SetPlayerInfo(DataManager.Instance.DataController.Player.PlayerInfo);
+        }
+
+        private void OpenSettingPopup()
+        {
+            UIManager.Instance.GetUI<IdleProject.SettingPopup>().OpenPopup();
         }
 
         private void GoToDungeon()

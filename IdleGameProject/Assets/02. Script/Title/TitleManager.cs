@@ -3,6 +3,7 @@ using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.Loading;
 using IdleProject.Core.Resource;
+using IdleProject.Core.Sound;
 using IdleProject.Core.UI;
 using IdleProject.Title.UI;
 
@@ -24,6 +25,13 @@ namespace IdleProject.Title
             TaskChecker.StartLoading(DATA_INIT_TASK, ResourceManager.Instance.LoadAssets);
             _titleUIController.Loading(TaskChecker.WaitTasking(DATA_INIT_TASK));
             await TaskChecker.WaitTasking(DATA_INIT_TASK);
+            SetPreference();
+        }
+
+        private void SetPreference()
+        {
+            SoundManager.Instance.ChangeBGMVolume(PreferenceData.BgmSoundVolume);
+            SoundManager.Instance.ChangeSfxVolume(PreferenceData.SfxSoundVolume);
         }
     }
 }

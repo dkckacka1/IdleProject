@@ -1,29 +1,32 @@
 ﻿using DG.Tweening;
+using IdleProject.Core.UI;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace IdleProject.Lobby.UI
 {
-    public class StaticPopupUI : MonoBehaviour
+    public class UIPopup : UIBase, IUIInit
     {
-        [BoxGroup("StaticPopup"), SerializeField] protected Button closeButton;
-        [BoxGroup("StaticPopup"), SerializeField] protected Button shadow;
-        [BoxGroup("StaticPopup"), SerializeField] protected GameObject popup;
+        [BoxGroup("Popup"), SerializeField] protected Button closeButton;
+        [BoxGroup("Popup"), SerializeField] protected Button shadow;
+        [BoxGroup("Popup"), SerializeField] protected GameObject popup;
         
         [BoxGroup("Tween"), SerializeField] private float tweenDuration = 0.2f;
         [BoxGroup("Tween"), SerializeField] private Ease openTweenEase = Ease.OutBack;
         
         private Tween _openTween;
 
-        protected virtual void Awake()
+        protected override void Awake()
         {
-            closeButton.onClick.AddListener(Close);
-            shadow.onClick.AddListener(Close);
+            base.Awake();
+            
+            closeButton.onClick.AddListener(ClosePopup);
+            shadow.onClick.AddListener(ClosePopup);
         }
 
         [BoxGroup("Tween"), Button]
-        public virtual void Open()
+        public virtual void OpenPopup()
         {
             gameObject.SetActive(true);
             popup.transform.localScale = Vector3.zero;
@@ -31,7 +34,7 @@ namespace IdleProject.Lobby.UI
         }
 
         [BoxGroup("Tween"), Button]
-        public virtual void Close()
+        public virtual void ClosePopup()
         {
             gameObject.SetActive(false);
 
@@ -41,5 +44,7 @@ namespace IdleProject.Lobby.UI
                 _openTween = null;
             }
         }
+
+        public virtual void Initialized() {}
     }
 }

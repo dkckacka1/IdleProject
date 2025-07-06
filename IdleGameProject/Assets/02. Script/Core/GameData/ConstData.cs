@@ -22,8 +22,8 @@ namespace IdleProject.Core.GameData
         #endregion
         
         #region Audio
-        [FoldoutGroup("Audio"), BoxGroup("Audio/BGM")]
-        public int defaultCreateSoundObjectCount = 10;
+        [FoldoutGroup("Audio")]
+        public int minAudioDecibel = 80;
         
         [FoldoutGroup("Audio"), BoxGroup("Audio/BGM")]
         [FilePath(Extensions = "mp3,wav", AbsolutePath = false), SerializeField]

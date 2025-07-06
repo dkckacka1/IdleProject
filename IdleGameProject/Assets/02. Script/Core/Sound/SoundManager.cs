@@ -15,11 +15,12 @@ namespace IdleProject.Core.Sound
 
         [SerializeField] private int defaultCreateSoundObjectCount = 10;
         [SerializeField] private SoundObject soundObjectPrefab;
-        [SerializeField] private AudioMixerGroup sfxAudioMixerGroup;
+        [SerializeField] private AudioMixer audioMixer;
         
         private readonly Queue<SoundObject> _sfxSoundObjectQueue = new();
         private readonly List<SoundObject> _playingSoundObjectList = new();
         private readonly HashSet<string> _sfxPlaySet = new(); // 한 프레임 내에 같은 이름의 SFX 호출 방지  
+
         private AudioClip GetAudioClip(string clipName) => ResourceManager.Instance.GetAsset<AudioClip>(clipName);
 
         protected override void Initialized()
@@ -49,6 +50,18 @@ namespace IdleProject.Core.Sound
             bgmSource.Play();
         }
 
+        public void ChangeBGMVolume(float normalizedVolume)
+        {
+            var dB = Mathf.Log10(Mathf.Clamp(normalizedVolume, 0.0001f, 1f)) * DataManager.Instance.ConstData.minAudioDecibel;
+            audioMixer.SetFloat("BGMVolume", dB);
+        }
+
+        public void ChangeSfxVolume(float normalizedVolume)
+        {
+            var dB = Mathf.Log10(Mathf.Clamp(normalizedVolume, 0.0001f, 1f)) * DataManager.Instance.ConstData.minAudioDecibel;
+            audioMixer.SetFloat("SFXVolume", dB);
+        }
+
         public void PauseBGM()
         {
             bgmSource.Pause();
@@ -76,7 +89,6 @@ namespace IdleProject.Core.Sound
         private SoundObject CreateSoundObject()
         {
             var soundObject = Instantiate(soundObjectPrefab, transform);
-            soundObject.SetMixerGroup(sfxAudioMixerGroup);
             soundObject.SetPlayEndEvent(() => PlayEndSoundObject(soundObject));
             
             return soundObject;

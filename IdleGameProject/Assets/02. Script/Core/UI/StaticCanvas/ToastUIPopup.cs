@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace IdleProject.Lobby.UI
 {
-    public class ToastPopup : StaticPopupUI
+    public class ToastUIPopup : UIPopup
     {
         [BoxGroup("ToastPopup"), SerializeField] protected TextMeshProUGUI descriptionText;
         

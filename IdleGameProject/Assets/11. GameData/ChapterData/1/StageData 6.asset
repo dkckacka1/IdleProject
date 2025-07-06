@@ -18,16 +18,17 @@ MonoBehaviour:
   stageFormation:
     frontMiddlePositionInfo:
       characterName: GoblinMale
-      characterLevel: 3
+      characterLevel: 10
     frontRightPositionInfo:
       characterName: GoblinMale
-      characterLevel: 3
+      characterLevel: 10
     frontLeftPositionInfo:
       characterName: GoblinMale
-      characterLevel: 3
+      characterLevel: 10
     rearRightPositionInfo:
-      characterName: GoblinMale
-      characterLevel: 3
+      characterName: GoblinFemale
+      characterLevel: 10
     rearLeftPositionInfo:
-      characterName: GoblinMale
-      characterLevel: 3
+      characterName: GoblinFemale
+      characterLevel: 10
+  rewardList: []

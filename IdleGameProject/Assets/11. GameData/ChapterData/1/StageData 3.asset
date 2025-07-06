@@ -33,14 +33,14 @@ MonoBehaviour:
       characterLevel: 1
   rewardList:
   - rewardType: 0
-    itemIndex: 
-    count: 1
+    itemIndex: ExpPotion03
+    count: 10
   - rewardType: 0
-    itemIndex: 
+    itemIndex: ExpPotion04
     count: 1
   - rewardType: 1
-    itemIndex: 
+    itemIndex: Boots_01
     count: 1
   - rewardType: 1
-    itemIndex: 
+    itemIndex: Helmet_01
     count: 1

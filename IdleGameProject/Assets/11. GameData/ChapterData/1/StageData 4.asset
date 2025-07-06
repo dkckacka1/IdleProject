@@ -26,24 +26,24 @@ MonoBehaviour:
       characterName: GoblinMale
       characterLevel: 3
     rearRightPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: GoblinFemale
+      characterLevel: 3
     rearLeftPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: GoblinFemale
+      characterLevel: 3
   rewardList:
   - rewardType: 0
-    itemIndex: 
+    itemIndex: ExpPotion04
     count: 1
   - rewardType: 0
-    itemIndex: 
-    count: 1
-  - rewardType: 0
-    itemIndex: 
+    itemIndex: ExpPotion05
     count: 1
   - rewardType: 1
-    itemIndex: 
+    itemIndex: Glove_01
     count: 1
   - rewardType: 1
-    itemIndex: 
+    itemIndex: Helmet_01
+    count: 1
+  - rewardType: 1
+    itemIndex: Weapon_01
     count: 1

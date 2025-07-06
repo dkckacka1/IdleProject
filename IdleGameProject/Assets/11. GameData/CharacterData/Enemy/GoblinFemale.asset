@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ee708b51cec1264fbb31a84dce962ef, type: 3}
-  m_Name: GoblinMale
+  m_Name: GoblinFemale
   m_EditorClassIdentifier: 
-  characterName: "\uACE0\uBE14\uB9B0"
+  characterName: "\uACE0\uBE14\uB9B0 \uAD81\uC218"
   addressValue:
-    characterAnimationName: MonsterFist
-    attackProjectileAddress: 
-    attackHitEffectAddress: 
+    characterAnimationName: MonsterBow
+    attackProjectileAddress: Eli_Attack_Projectile
+    attackHitEffectAddress: BloodExplosionRound
     skillProjectileAddress: 
     skillHitEffectAddress: 
   stat:
@@ -24,11 +24,11 @@ MonoBehaviour:
     manaPoint: 10
     attackDamage: 5
     movementSpeed: 4.5
-    attackRange: 2
-    attackCoolTime: 0.1
+    attackRange: 10
+    attackCoolTime: 0.5
     defensePoint: 10
-    criticalPercent: 0
+    criticalPercent: 10
     criticalResistance: 0.25
   levelValue:
-    healthPointValue: 10
-    attackDamageValue: 1
+    healthPointValue: 5
+    attackDamageValue: 5

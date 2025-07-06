@@ -15,6 +15,7 @@ namespace IdleProject.Battle.Effect
         private List<ParticleSystem> _particleList;
 
         public UnityEvent<ITakeDamagedAble> effectTriggerEnterEvent = null;
+        public UnityEvent onBattleEvent = null;
         public UnityEvent releaseEvent = null;
 
         private BattleManager _battleManager;
@@ -45,6 +46,7 @@ namespace IdleProject.Battle.Effect
             OnTimeFactorChange(_battleManager.GetCurrentBattleSpeed);
             _battleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
             _battleManager.GameStateEventBus.PublishEvent(this);
+            _battleManager.BattleObjectEventDic[BattleObjectType.Effect].AddListener(OnBattleEvent);
             SoundManager.Instance.PlaySfx(name);
         }
 
@@ -56,6 +58,8 @@ namespace IdleProject.Battle.Effect
             transform.position = Vector3.zero;
             _battleManager.GetChangeBattleSpeedEvent.RemoveListener(OnTimeFactorChange);
             _battleManager.GameStateEventBus.UnPublishEvent(this);
+            _battleManager.BattleObjectEventDic[BattleObjectType.Effect].RemoveListener(OnBattleEvent);
+            onBattleEvent.RemoveAllListeners();
         }
         
         public void SetSkillEffect()
@@ -63,6 +67,12 @@ namespace IdleProject.Battle.Effect
             _battleManager.AddSkillObject(this);
             releaseEvent.AddListener(() => _battleManager.RemoveSkillObject(this));
         }
+        
+        private void OnBattleEvent()
+        {
+            onBattleEvent?.Invoke();
+        }
+
 
         private void OnTimeFactorChange(float timeFactor)
         {

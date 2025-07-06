@@ -72,7 +72,6 @@ namespace IdleProject.Battle
                         {
                             UseSkill(_skillQueue.Peek());
                         }
-
                         BattleObjectEventDic[BattleObjectType.Character].Invoke();
                         BattleObjectEventDic[BattleObjectType.Projectile].Invoke();
                         BattleObjectEventDic[BattleObjectType.Effect].Invoke();

@@ -17,10 +17,14 @@ namespace IdleProject.Battle.Character.Skill
             {
                 var skillEffect = Controller.GetSkillHitEffect();
                 skillEffect.transform.position = allyCharacter.HitEffectOffset;
+                skillEffect.onBattleEvent.AddListener(() =>
+                {
+                    skillEffect.transform.position = allyCharacter.HitEffectOffset;
+                });
                 AddBuff(allyCharacter).Forget();
             }
         }
-
+        
         private async UniTaskVoid AddBuff(CharacterController targetController)
         {
             targetController.StatSystem.AddStatChanger(CharacterStatType.DefensePoint, nameof(GetType), VALUE);

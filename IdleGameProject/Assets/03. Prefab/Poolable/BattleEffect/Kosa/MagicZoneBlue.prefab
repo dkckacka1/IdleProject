@@ -41,7 +41,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 103044}
   serializedVersion: 8
-  lengthInSec: 4
+  lengthInSec: 3
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
@@ -4809,7 +4809,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 121774}
   serializedVersion: 8
-  lengthInSec: 4.5
+  lengthInSec: 3
   simulationSpeed: 1
   stopAction: 3
   cullingMode: 1
@@ -9565,6 +9565,9 @@ MonoBehaviour:
   effectTriggerEnterEvent:
     m_PersistentCalls:
       m_Calls: []
+  onBattleEvent:
+    m_PersistentCalls:
+      m_Calls: []
   releaseEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -9580,7 +9583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c23d448d573d30341b04e49999c79444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  address: 
+  address: MagicZoneBlue
   defaultPoolCount: 1
 --- !u!1 &149124
 GameObject:
@@ -9623,7 +9626,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 149124}
   serializedVersion: 8
-  lengthInSec: 3.5
+  lengthInSec: 2.5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 1

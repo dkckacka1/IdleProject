@@ -32,6 +32,19 @@ namespace IdleProject.Lobby.UI.CharacterPanel
 
             statTypeIconImage.sprite = GetSpriteExtension.GetCharacterStatTypeIconSprite(statType);
             statValueText.text = value.ToString("0");
+            statValueText.text = statType switch
+            {
+                CharacterStatType.HealthPoint => value.ToString("0"),
+                CharacterStatType.ManaPoint => value.ToString("0"),
+                CharacterStatType.MovementSpeed => value.ToString("0"),
+                CharacterStatType.AttackDamage => value.ToString("0"),
+                CharacterStatType.AttackRange => value.ToString("0"),
+                CharacterStatType.AttackCoolTime => value.ToString("0"),
+                CharacterStatType.DefensePoint => value.ToString("0"),
+                CharacterStatType.CriticalPercent => (value / 100f).ToString("0.0 %"),
+                CharacterStatType.CriticalResistance => (value / 100f).ToString("0.0 %"),
+                _ => throw new ArgumentOutOfRangeException(nameof(statType), statType, null)
+            };
         }
     }
 }

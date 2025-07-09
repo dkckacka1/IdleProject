@@ -73,6 +73,35 @@
     
     #endregion
 
+    #region Skill
+
+    public enum SkillType
+    {
+        Attack,
+        Buff
+    }
+
+    public enum SkillRangeType
+    {
+        Single,
+        Multi,
+        SelfRange,
+        TargetRange,
+    }
+    
+    public enum SkillTargetType
+    {
+        NealyTarget,
+        Ally,
+    }
+
+    public enum ProjectileType
+    {
+        Direct,
+        Howitzer
+    }
+
+    #endregion
 
     public enum CharacterStatType
     {

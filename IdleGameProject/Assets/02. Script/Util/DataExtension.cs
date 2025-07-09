@@ -1,14 +1,24 @@
 ﻿using IdleProject.Core.GameData;
 using IdleProject.Data.StaticData;
+using IdleProject.Data.StaticData.Skill;
 
 namespace IdleProject.Util
 {
     public static class DataExtension
     {
-
         public static StaticStageData GetFirstStage()
         {
             return DataManager.Instance.GetData<StaticStageData>("1-1");
+        }
+
+        public static StaticSkillProjectileData GetSkillProjectileData(this StaticSkillData skillData)
+        {
+            return DataManager.Instance.GetData<StaticSkillProjectileData>($"{skillData.Index}_projectile");
+        }
+        
+        public static StaticSkillBuffData GetSkillBuffData(this StaticSkillData skillData)
+        {
+            return DataManager.Instance.GetData<StaticSkillBuffData>($"{skillData.Index}_buff");
         }
         
         public static bool TryGetNextStage(StaticStageData currentStage, out StaticStageData nextStage)

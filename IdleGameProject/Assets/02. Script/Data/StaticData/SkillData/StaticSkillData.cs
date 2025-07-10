@@ -1,7 +1,5 @@
 using IdleProject.Core;
-using IdleProject.Lobby.UI.StagePanel;
 using Sirenix.OdinInspector;
-using Unity.VisualScripting;
 using UnityEngine;
 #if UNITY_EDITOR
 using System.IO;
@@ -20,10 +18,10 @@ namespace IdleProject.Data.StaticData.Skill
         public string skillDirectingEffect;
         public string skillHitEffect;
 
-        public SkillType skillType;
+        public SkillActionType skillActionType;
         public SkillRangeType skillRangeType;
         public float skillRange;
-        public SkillTargetType targetType;
+        public SkillTargetType skillTargetType;
         
         public string skillValue;
 

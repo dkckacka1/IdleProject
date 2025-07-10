@@ -10,5 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ea5386ca99c31640adf11f2d98887cc, type: 3}
-  m_Name: SkillData
+  m_Name: DefaultMeleeAttack
   m_EditorClassIdentifier: 
+  skillName: "\uAE30\uBCF8 \uACF5\uACA9"
+  skillDesc: "\uAE30\uBCF8 \uACF5\uACA9\uC785\uB2C8\uB2E4. \uC124\uBA85 \uC5C6\uC74C"
+  skillDirectingEffect: 
+  skillHitEffect: ExplosionSharp
+  skillActionType: 0
+  skillRangeType: 0
+  skillRange: 0
+  targetType: 0
+  skillValue: 1

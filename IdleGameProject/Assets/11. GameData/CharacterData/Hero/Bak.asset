@@ -13,12 +13,9 @@ MonoBehaviour:
   m_Name: Bak
   m_EditorClassIdentifier: 
   characterName: "\uBC14\uD06C"
-  addressValue:
-    characterAnimationName: HeroBak
-    attackProjectileAddress: 
-    attackHitEffectAddress: ExplosionSharp
-    skillProjectileAddress: 
-    skillHitEffectAddress: SwordSpinWhite
+  characterAttackName: DefaultMeleeAttack
+  characterSkillName: BakSkill
+  characterAnimationName: HeroBak
   stat:
     healthPoint: 200
     manaPoint: 100

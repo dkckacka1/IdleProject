@@ -13,12 +13,9 @@ MonoBehaviour:
   m_Name: Hiro
   m_EditorClassIdentifier: 
   characterName: "\uD788\uB85C"
-  addressValue:
-    characterAnimationName: HeroHiro
-    attackProjectileAddress: 
-    attackHitEffectAddress: ExplosionSharp
-    skillProjectileAddress: 
-    skillHitEffectAddress: SwordSlashMiniWhite
+  characterAttackName: DefaultMeleeAttack
+  characterSkillName: HiroSkill
+  characterAnimationName: HeroHiro
   stat:
     healthPoint: 200
     manaPoint: 10

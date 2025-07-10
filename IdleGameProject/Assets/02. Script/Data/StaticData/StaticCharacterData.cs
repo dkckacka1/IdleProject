@@ -10,8 +10,11 @@ namespace IdleProject.Data.StaticData
     public class StaticCharacterData : StaticData, ISlotData
     {
         public string characterName;
+
+        public string characterAttackName;
+        public string characterSkillName;
+        public string characterAnimationName;
         
-        public CharacterAddressValue addressValue;
         public StatValue stat;
         [FormerlySerializedAs("levelData")] public LevelValue levelValue;
 

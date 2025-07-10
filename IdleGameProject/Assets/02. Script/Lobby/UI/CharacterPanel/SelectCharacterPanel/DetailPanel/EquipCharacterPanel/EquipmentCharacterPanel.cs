@@ -58,7 +58,7 @@ namespace IdleProject.Lobby.UI.CharacterPanel
             var modelObject = ResourceManager.Instance.GetPrefab(ResourceManager.GamePrefab, $"Model_{staticCharacterData.Index}");
             var modelInstance = Instantiate(modelObject, _selectCharacterModel.transform);
             _selectCharacterModel.SetModel(modelInstance);
-            var animatorController = ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(staticCharacterData.addressValue.characterAnimationName);
+            var animatorController = ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(staticCharacterData.characterAnimationName);
             await _selectCharacterModel.SetAnimation(animatorController);
         }
         

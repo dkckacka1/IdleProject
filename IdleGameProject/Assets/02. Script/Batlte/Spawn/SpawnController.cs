@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using Engine.Core;
 using Engine.Util.Extension;
@@ -7,14 +8,22 @@ using UnityEngine;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Character;
 using IdleProject.Battle.Character.Skill;
+using IdleProject.Battle.Character.Skill.SkillAction;
+using IdleProject.Battle.Character.Skill.SkillAction.Implement;
+using IdleProject.Battle.Character.Skill.SkillRange;
+using IdleProject.Battle.Character.Skill.SkillRange.Implement;
+using IdleProject.Battle.Character.Skill.SkillTarget;
+using IdleProject.Battle.Character.Skill.SkillTarget.Implement;
 using IdleProject.Battle.Effect;
 using IdleProject.Battle.Projectile;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
+using IdleProject.Core.GameData;
 using IdleProject.Core.ObjectPool;
 using IdleProject.Core.Resource;
 using IdleProject.Data.DynamicData;
 using IdleProject.Data.StaticData;
+using IdleProject.Data.StaticData.Skill;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.Spawn
@@ -88,11 +97,8 @@ namespace IdleProject.Battle.Spawn
         public List<(SpawnPositionType, string)> GetPlayerFormation()
         {
             var result = new List<(SpawnPositionType, string)>();
-            
-            EnumExtension.Foreach<SpawnPositionType>(type =>
-            {
-                result.Add((type, GetPlayerPosition(type)));
-            });
+
+            EnumExtension.Foreach<SpawnPositionType>(type => { result.Add((type, GetPlayerPosition(type))); });
 
             return result;
         }
@@ -103,7 +109,7 @@ namespace IdleProject.Battle.Spawn
                 ? playerSpawnInfo.spawnFormation.GetSpawnPosition(positionType).Character.name
                 : string.Empty;
         }
-        
+
 
         private async UniTask SetCharacterSpawn(CharacterAIType aiType, SpawnPositionType spawnPositionType,
             PositionInfo info)
@@ -150,9 +156,17 @@ namespace IdleProject.Battle.Spawn
 
             await SetModel(characterInstance, data.StaticData);
             SetAnimation(characterInstance, data.StaticData);
-            SetPoolableObject(characterInstance, data.StaticData);
             SetStat(characterInstance, data);
-            SetSkill(characterInstance, data.StaticData);
+
+            characterInstance.CharacterAttack = GetSkill(characterInstance,
+                DataManager.Instance.GetData<StaticSkillData>(data.StaticData.characterAttackName));
+
+            if (string.IsNullOrEmpty(data.StaticData.characterSkillName) is false)
+            {
+                characterInstance.CharacterSkill = GetSkill(characterInstance,
+                    DataManager.Instance.GetData<StaticSkillData>(data.StaticData.characterSkillName));
+            }
+
             AddCharacterUI(characterInstance, data.StaticData, aiType);
             AddCharacterAI(characterInstance, aiType);
 
@@ -184,38 +198,72 @@ namespace IdleProject.Battle.Spawn
         private void SetAnimation(CharacterController controller, StaticCharacterData data)
         {
             var animationController =
-                ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(data.addressValue.characterAnimationName);
+                ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(data.characterAnimationName);
             controller.AnimController = new CharacterBattleAnimationController(
                 controller.GetComponentInChildren<Animator>(),
                 controller.GetComponentInChildren<AnimationEventHandler>());
             controller.AnimController.SetAnimationController(animationController);
         }
 
-        private void SetPoolableObject(CharacterController controller, StaticCharacterData data)
+        private CharacterSkill GetSkill(CharacterController controllerInstance, StaticSkillData data)
         {
-            controller.GetAttackHitEffect = GetPoolable<BattleEffect>(PoolableType.BattleEffect, data.addressValue.attackHitEffectAddress);
-            controller.GetSkillHitEffect = GetPoolable<BattleEffect>(PoolableType.BattleEffect, data.addressValue.skillHitEffectAddress);
-            controller.GetAttackProjectile = GetPoolable<BattleProjectile>(PoolableType.Projectile, data.addressValue.attackProjectileAddress);
-            controller.GetSkillProjectile = GetPoolable<BattleProjectile>(PoolableType.Projectile, data.addressValue.skillProjectileAddress);
-
-            foreach (var parameter in controller.AnimController.GetBattleAnimationEffectList())
+            ISkillAction skillAction = data.skillActionType switch
             {
-                var effectName = parameter.Split(',')[0];
-                
-                CreatePool(PoolableType.BattleEffect, effectName);
+                SkillActionType.ImmediatelyAttack => new ImmediatelyAttack(
+                    GetPoolable<BattleEffect>(PoolableType.BattleEffect, data.skillHitEffect),
+                    GetSkillValues(data.skillValue).ListLoop()),
+                SkillActionType.ProjectileAttack => null,
+                SkillActionType.Buff => null,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            ISkillRange skillRange = data.skillRangeType switch
+            {
+                SkillRangeType.InAttackRange => new InAttackRange(controllerInstance),
+                SkillRangeType.All => null,
+                SkillRangeType.SelfRange => null,
+                SkillRangeType.TargetRange => null,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            ISkillGetTarget skillGetTarget = data.skillTargetType switch
+            {
+                SkillTargetType.CurrentTarget => new CurrentTargeting(),
+                SkillTargetType.AllEnemy => null,
+                SkillTargetType.AllAlly => null,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            var skillDirectingEffects = string.IsNullOrEmpty(data.skillDirectingEffect)
+                ? null
+                : data.skillDirectingEffect.Split(',').Select(GetEffectCaller).ToList().ListLoop();
+
+            return new CharacterSkill(controllerInstance, skillRange, skillAction, skillGetTarget,
+                skillDirectingEffects);
+
+            List<float> GetSkillValues(string valueData)
+            {
+                var result = new List<float>();
+                var values = valueData.Split(',');
+
+                foreach (var value in values)
+                {
+                    if (float.TryParse(value, out var floatValue))
+                    {
+                        result.Add(floatValue);
+                    }
+                }
+
+                return result;
             }
-        }
 
-        private void SetSkill(CharacterController controllerInstance, StaticCharacterData data)
-        {
-            var skillName =
-                $"{typeof(CharacterSkill).FullName}{data.Index}, {typeof(CharacterSkill).Assembly}";
-
-            if (Type.GetType(skillName) is not null)
+            EffectCaller GetEffectCaller(string effectValueData)
             {
-                controllerInstance.CharacterSkill = ReflectionController.CreateInstance<CharacterSkill>(skillName);
-                controllerInstance.CharacterSkill.Controller = controllerInstance;
-                controllerInstance.CharacterSkill.SetAnimationEvent(controllerInstance.AnimController.AnimEventHandler);
+                var values = effectValueData.Split(':');
+                var getEffect = GetPoolable<BattleEffect>(PoolableType.BattleEffect, values[0]);
+                var offsetType = Enum.Parse<EffectCallOffsetType>(values[1]);
+
+                return new EffectCaller(getEffect, offsetType);
             }
         }
 
@@ -250,7 +298,7 @@ namespace IdleProject.Battle.Spawn
         private Func<T> GetPoolable<T>(PoolableType poolableType, string address) where T : IPoolable
         {
             if (string.IsNullOrEmpty(address)) return null;
-            
+
             if (ObjectPoolManager.Instance.HasPool(address) is false)
             {
                 CreatePool(poolableType, address);
@@ -270,8 +318,9 @@ namespace IdleProject.Battle.Spawn
                 _ => null
             };
 
-            ObjectPoolManager.Instance.CreatePool(address, parent);   
+            ObjectPoolManager.Instance.CreatePool(address, parent);
         }
+
         #endregion
     }
 }

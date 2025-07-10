@@ -1,57 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using IdleProject.Battle.Character.Skill.SkillAction;
+using IdleProject.Battle.Character.Skill.SkillRange;
+using IdleProject.Battle.Character.Skill.SkillTarget;
 using IdleProject.Battle.Effect;
-using IdleProject.Battle.Projectile;
 using IdleProject.Core;
-using IdleProject.Core.ObjectPool;
 
 namespace IdleProject.Battle.Character.Skill
 {
-    public abstract class CharacterSkill
+    public class CharacterSkill
     {
-        public CharacterController Controller;
-
-        public void SetAnimationEvent(AnimationEventHandler eventHandler)
-        {
-            eventHandler.SkillActionEvent += SkillAction;
-            eventHandler.SkillEffectEvent += SkillEffect;
-        }
+        private readonly CharacterController _controller;
+        private readonly ISkillRange _skillRange;
+        private readonly ISkillAction _skillAction;
+        private readonly ISkillGetTarget _getTarget;
+        private readonly IEnumerator<EffectCaller> _directingEffects;
         
-        protected bool TryGetSkillProjectile(out BattleProjectile projectile)
+        public CharacterSkill(CharacterController controller, ISkillRange skillRange, ISkillAction skillAction, ISkillGetTarget getTarget, IEnumerable<EffectCaller> directingEffects)
         {
-            projectile = Controller.GetSkillProjectile?.Invoke();
-            if (projectile)
+            _controller = controller;
+            _skillRange = skillRange;
+            _skillAction = skillAction;
+            _getTarget = getTarget;
+            _directingEffects = directingEffects?.GetEnumerator();
+        }
+
+        public void ExecuteSkill()
+        {
+            if (_directingEffects is not null)
             {
-                projectile.SetSkillProjectile();
-                return true;
+                _directingEffects.MoveNext();
+                _directingEffects.Current.GetBattleEffect(_controller);
             }
-            
-            return false;
+
+            var targetList = _getTarget.GetTargetList(_controller).Where(_skillRange.GetInRange);
+
+            _skillAction.ExecuteSkillAction(_controller, targetList);
         }
-
-        protected bool TryGetSkillEffect(out BattleEffect effect)
-        {
-            effect = Controller.GetSkillHitEffect?.Invoke();
-            if (effect)
-            {
-                effect.SetSkillEffect();
-                return true;
-            }
-            
-            return false;
-        }
-
-        private void SkillEffect(string effectParameter)
-        {
-            var split = effectParameter.Split(',');
-
-            var effectName = split[0];
-            var effectOffsetTransform = Controller.offset.GetOffsetTransform((CharacterOffsetType)int.Parse(split[1]));
-
-            var effect = ObjectPoolManager.Instance.Get<BattleEffect>(effectName);
-            effect.transform.position = effectOffsetTransform.position;
-            effect.transform.rotation = effectOffsetTransform.rotation;
-            effect.SetSkillEffect();
-        }
-
-        protected abstract void SkillAction(int skillNumber);
     }
 }

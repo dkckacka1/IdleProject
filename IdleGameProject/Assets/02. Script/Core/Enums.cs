@@ -37,12 +37,6 @@
         Player,
         Enemy,
     }
-    
-    public enum ResourceType
-    {
-        Character,
-        UI,
-    }
 
     public enum PoolableType
     {
@@ -58,47 +52,49 @@
         HitOffset,
         FluidHealthBarOffset,
     }
-
-    public enum ProjectileMoveType
-    {
-        PositioningType, // 위치 지정
-        ChasingType, // 대상 추적
-    }
-
-    public enum ProjectileCheckType
-    {
-        CollisionTriggerCheck, // 콜리전 체크
-        ReachedType, // 도착시
-    }
     
     #endregion
 
     #region Skill
 
-    public enum SkillType
+    public enum SkillActionType
     {
-        Attack,
+        ImmediatelyAttack,
+        ProjectileAttack,
         Buff
     }
 
     public enum SkillRangeType
     {
-        Single,
-        Multi,
+        InAttackRange,
+        All,
         SelfRange,
         TargetRange,
     }
     
     public enum SkillTargetType
     {
-        NealyTarget,
-        Ally,
+        CurrentTarget,
+        AllEnemy,
+        AllAlly
     }
 
     public enum ProjectileType
     {
         Direct,
         Howitzer
+    }
+
+    public enum EffectCallTargetType
+    {
+        Controller,
+        Target,
+    }
+
+    public enum EffectCallOffsetType
+    {
+        HitOffset,
+        Ground,
     }
 
     #endregion

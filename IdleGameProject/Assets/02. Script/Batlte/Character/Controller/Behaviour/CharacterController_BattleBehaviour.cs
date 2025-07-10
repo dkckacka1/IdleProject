@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace IdleProject.Battle.Character
 {
-    public partial class CharacterController : ITakeDamagedAble, ITakeCriticalAble
+    public partial class CharacterController : ITakeCriticalAble
     {
-        public Func<ITakeDamagedAble> GetTargetCharacter;
+        public Func<CharacterController> GetTargetCharacter;
         public bool isNowSkill;
         public bool isNowAttack;
 
@@ -27,6 +27,11 @@ namespace IdleProject.Battle.Character
             AnimController.AnimEventHandler.AttackEndEvent += OnAttackEnd;
             AnimController.AnimEventHandler.SkillStartEvent += OnSkillStart;
             AnimController.AnimEventHandler.SkillEndEvent += OnSkillEnd;
+            
+            if (CharacterSkill is not null)
+            {
+                AnimController.AnimEventHandler.SkillActionEvent += CharacterSkill.ExecuteSkill;
+            }
         }
 
         private void OnAttackStart()
@@ -45,44 +50,8 @@ namespace IdleProject.Battle.Character
 
         public void OnAttackAction(int attackNumber)
         {
-            var targetCharacter = GetTargetCharacter?.Invoke();
-            if (targetCharacter is not null)
-            {
-                var attackDamage = StatSystem.GetStatValue(CharacterStatType.AttackDamage);
-                if (GetAttackProjectile is not null)
-                {
-                    var projectile = GetAttackProjectile.Invoke();
-                    projectile.transform.position =
-                        offset.GetOffsetTransform(CharacterOffsetType.ProjectileOffset).position;
-                    projectile.Target = targetCharacter;
-                    projectile.hitEvent.AddListener(target => { HitTarget(target, attackDamage); });
-                }
-                else
-                {
-                    HitTarget(targetCharacter, attackDamage);
-                }
-            }
-
-            return;
-
-            void HitTarget(ITakeDamagedAble target, float attackDamage)
-            {
-                if (target is ITakeCriticalAble takeCritical)
-                {
-                    if (CheckCritical(StatSystem.GetStatValue(CharacterStatType.CriticalResistance), takeCritical))
-                    {
-                        attackDamage *= 1.5f;
-                    }
-                }
-
-                Hit(target, attackDamage);
-
-                var attackHitEffect = GetAttackHitEffect?.Invoke();
-                if (attackHitEffect)
-                    attackHitEffect.transform.position = target.HitEffectOffset;
-
-                GetMana();
-            }
+            CharacterAttack.ExecuteSkill();
+            GetMana();
         }
 
         public virtual void Hit(ITakeDamagedAble iTakeDamage, float attackDamage)

@@ -13,12 +13,9 @@ MonoBehaviour:
   m_Name: GoblinMale
   m_EditorClassIdentifier: 
   characterName: "\uACE0\uBE14\uB9B0"
-  addressValue:
-    characterAnimationName: MonsterFist
-    attackProjectileAddress: 
-    attackHitEffectAddress: 
-    skillProjectileAddress: 
-    skillHitEffectAddress: 
+  characterAttackName: DefaultMeleeAttack
+  characterSkillName: 
+  characterAnimationName: MonsterFist
   stat:
     healthPoint: 100
     manaPoint: 10

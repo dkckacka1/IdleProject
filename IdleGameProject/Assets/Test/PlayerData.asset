@@ -26,42 +26,6 @@ MonoBehaviour:
     equipmentGloveIndex: 
     equipmentBootsIndex: 
     equipmentAccessoryIndex: 
-  - characterName: Eli
-    level: 13
-    exp: 800
-    equipmentWeaponIndex: 1751529679089_Weapon_01_82dbdcc5
-    equipmentHelmetIndex: 1751529679089_Helmet_01_d11898bc
-    equipmentArmorIndex: 1751268497114_Armor_01_4efaa1ab
-    equipmentGloveIndex: 1751529679089_Glove_01_bc18c63e
-    equipmentBootsIndex: 
-    equipmentAccessoryIndex: 
-  - characterName: Bak
-    level: 35
-    exp: 2650
-    equipmentWeaponIndex: 
-    equipmentHelmetIndex: 
-    equipmentArmorIndex: 
-    equipmentGloveIndex: 
-    equipmentBootsIndex: 
-    equipmentAccessoryIndex: 
-  - characterName: Kosa
-    level: 1
-    exp: 0
-    equipmentWeaponIndex: 
-    equipmentHelmetIndex: 
-    equipmentArmorIndex: 
-    equipmentGloveIndex: 
-    equipmentBootsIndex: 
-    equipmentAccessoryIndex: 
-  - characterName: Dig
-    level: 1
-    exp: 0
-    equipmentWeaponIndex: 
-    equipmentHelmetIndex: 
-    equipmentArmorIndex: 
-    equipmentGloveIndex: 
-    equipmentBootsIndex: 
-    equipmentAccessoryIndex: 
   playerConsumableItemList:
   - itemName: ExpPotion01
     itemCount: 745
@@ -73,43 +37,11 @@ MonoBehaviour:
     itemCount: 0
   - itemName: ExpPotion05
     itemCount: 0
-  playerEquipmentItemList:
-  - index: 1751267714577_Armor_01_653e8e38
-    itemIndex: Armor_01
-    equipmentCharacterName: 
-  - index: 1751268497114_Armor_01_4efaa1ab
-    itemIndex: Armor_01
-    equipmentCharacterName: Eli
-  - index: 1751520793713_Armor_01_c25ad637
-    itemIndex: Armor_01
-    equipmentCharacterName: 
-  - index: 1751522074604_Armor_01_c0d3ab1f
-    itemIndex: Armor_01
-    equipmentCharacterName: 
-  - index: 1751522211899_Armor_01_d658fea5
-    itemIndex: Armor_01
-    equipmentCharacterName: 
-  - index: 1751522870737_Armor_01_cdba9830
-    itemIndex: Armor_01
-    equipmentCharacterName: 
-  - index: 1751529470884_Armor_01_e2070db7
-    itemIndex: Armor_01
-    equipmentCharacterName: 
-  - index: 1751529679089_Glove_01_bc18c63e
-    itemIndex: Glove_01
-    equipmentCharacterName: Eli
-  - index: 1751529679089_Helmet_01_d11898bc
-    itemIndex: Helmet_01
-    equipmentCharacterName: Eli
-  - index: 1751529679089_Weapon_01_82dbdcc5
-    itemIndex: Weapon_01
-    equipmentCharacterName: Eli
-  playerClearStageList:
-  - 1-1
-  - 1-2
-  frontMiddleCharacterName: Bak
-  frontRightCharacterName: Dig
+  playerEquipmentItemList: []
+  playerClearStageList: []
+  frontMiddleCharacterName: 
+  frontRightCharacterName: 
   frontLeftCharacterName: Hiro
-  rearRightCharacterName: Eli
-  rearLeftCharacterName: Kosa
+  rearRightCharacterName: 
+  rearLeftCharacterName: 
   equipmentItemData: {fileID: 11400000, guid: d462f05c92d18aa4995db13d728ec1bf, type: 2}

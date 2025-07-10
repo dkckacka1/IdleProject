@@ -72,7 +72,7 @@ namespace IdleProject.Lobby
             character.SetModel(Instantiate(modelObject,character.transform));
 
             var animatorController =
-                ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(data.addressValue.characterAnimationName);
+                ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(data.characterAnimationName);
 
             character.SetAnimation(animatorController).Forget();
         }

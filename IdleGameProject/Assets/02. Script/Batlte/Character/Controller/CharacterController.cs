@@ -23,16 +23,12 @@ namespace IdleProject.Battle.Character
 
         public CharacterBattleAnimationController AnimController;
         public CharacterSkill CharacterSkill;
+        public CharacterSkill CharacterAttack;
         public StatSystem StatSystem;
         public CharacterState State;
         public EventGroup<BattleManager> BattleEventGroup;
 
         protected NavMeshAgent Agent;
-
-        public Func<BattleEffect> GetAttackHitEffect;
-        public Func<BattleEffect> GetSkillHitEffect;
-        public Func<BattleProjectile> GetAttackProjectile;
-        public Func<BattleProjectile> GetSkillProjectile;
 
         private BattleManager _battleManager;
 

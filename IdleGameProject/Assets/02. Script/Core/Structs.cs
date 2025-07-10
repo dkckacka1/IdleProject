@@ -115,10 +115,6 @@ namespace IdleProject.Core
     public struct CharacterAddressValue
     {
         public string characterAnimationName;
-        public string attackProjectileAddress;
-        public string attackHitEffectAddress;
-        public string skillProjectileAddress;
-        public string skillHitEffectAddress;
     }
 
     [Serializable]
@@ -141,7 +137,5 @@ namespace IdleProject.Core
     public struct ProjectileInfo
     {
         public float projectileSpeed;
-        public ProjectileMoveType moveType;
-        public ProjectileCheckType checkType;
     }
 }

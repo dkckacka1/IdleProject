@@ -13,7 +13,7 @@ namespace IdleProject.Battle.Character
         public event UnityAction SkillEndEvent;
         public event UnityAction<int> AttackActionEvent;
         public event UnityAction<string> AttackEffectEvent;
-        public event UnityAction<int> SkillActionEvent;
+        public event UnityAction SkillActionEvent;
         public event UnityAction<string> SkillEffectEvent;
 
         private void AttackAction(int attackNumber)
@@ -26,9 +26,9 @@ namespace IdleProject.Battle.Character
             AttackEffectEvent?.Invoke(effectName);
         }
 
-        private void SkillAction(int skillNumber)
+        private void SkillAction()
         {
-            SkillActionEvent?.Invoke(skillNumber);
+            SkillActionEvent?.Invoke();
         }
 
         private void SkillEffectPlay(string effectName)

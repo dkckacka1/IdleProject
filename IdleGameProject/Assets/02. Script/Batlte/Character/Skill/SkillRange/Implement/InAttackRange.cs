@@ -5,14 +5,19 @@ using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill.SkillRange.Implement
 {
-    public class InAttackRange : SkillRange
+    public class InAttackRange : ISkillRange
     {
-        public InAttackRange(CharacterController controller) : base(controller) {}
+        private CharacterController _controller;
 
-        public override bool GetInRange(CharacterController target)
+        public InAttackRange(CharacterController controller)
         {
-            return Vector3.Distance(target, Controller) <
-                   Controller.StatSystem.GetStatValue(CharacterStatType.AttackRange);
+            _controller = controller;
+        }
+
+        public bool GetInRange(CharacterController target)
+        {
+            return Vector3.Distance(target, _controller) <
+                   _controller.StatSystem.GetStatValue(CharacterStatType.AttackRange);
         }
     }
 }

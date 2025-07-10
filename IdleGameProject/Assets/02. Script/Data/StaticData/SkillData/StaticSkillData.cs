@@ -19,9 +19,9 @@ namespace IdleProject.Data.StaticData.Skill
         public string skillHitEffect;
 
         public SkillActionType skillActionType;
+        public SkillTargetType skillTargetType;
         public SkillRangeType skillRangeType;
         public float skillRange;
-        public SkillTargetType skillTargetType;
         
         public string skillValue;
 

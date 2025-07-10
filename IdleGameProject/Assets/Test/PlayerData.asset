@@ -26,19 +26,38 @@ MonoBehaviour:
     equipmentGloveIndex: 
     equipmentBootsIndex: 
     equipmentAccessoryIndex: 
+  - characterName: Bak
+    level: 1
+    exp: 0
+    equipmentWeaponIndex: 
+    equipmentHelmetIndex: 
+    equipmentArmorIndex: 
+    equipmentGloveIndex: 
+    equipmentBootsIndex: 
+    equipmentAccessoryIndex: 
   playerConsumableItemList:
   - itemName: ExpPotion01
-    itemCount: 745
+    itemCount: 775
   - itemName: ExpPotion02
-    itemCount: 335
+    itemCount: 338
   - itemName: ExpPotion03
     itemCount: 0
   - itemName: ExpPotion04
     itemCount: 0
   - itemName: ExpPotion05
     itemCount: 0
-  playerEquipmentItemList: []
-  playerClearStageList: []
+  playerEquipmentItemList:
+  - index: 1752132639678_Armor_01_d9564ec5
+    itemIndex: Armor_01
+    equipmentCharacterName: 
+  - index: 1752132820070_Armor_01_84e7fb10
+    itemIndex: Armor_01
+    equipmentCharacterName: 
+  - index: 1752135974573_Armor_01_897b428d
+    itemIndex: Armor_01
+    equipmentCharacterName: 
+  playerClearStageList:
+  - 1-1
   frontMiddleCharacterName: 
   frontRightCharacterName: 
   frontLeftCharacterName: Hiro

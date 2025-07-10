@@ -221,7 +221,7 @@ namespace IdleProject.Battle.Spawn
             {
                 SkillRangeType.InAttackRange => new InAttackRange(controllerInstance),
                 SkillRangeType.All => null,
-                SkillRangeType.SelfRange => null,
+                SkillRangeType.SelfRange => new SelfRange(controllerInstance, data.skillRange),
                 SkillRangeType.TargetRange => null,
                 _ => throw new ArgumentOutOfRangeException()
             };
@@ -229,7 +229,7 @@ namespace IdleProject.Battle.Spawn
             ISkillGetTarget skillGetTarget = data.skillTargetType switch
             {
                 SkillTargetType.CurrentTarget => new CurrentTargeting(),
-                SkillTargetType.AllEnemy => null,
+                SkillTargetType.AllEnemy => new AllEnemy(),
                 SkillTargetType.AllAlly => null,
                 _ => throw new ArgumentOutOfRangeException()
             };

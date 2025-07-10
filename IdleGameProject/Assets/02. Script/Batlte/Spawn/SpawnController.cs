@@ -24,6 +24,7 @@ using IdleProject.Core.Resource;
 using IdleProject.Data.DynamicData;
 using IdleProject.Data.StaticData;
 using IdleProject.Data.StaticData.Skill;
+using IdleProject.Util;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.Spawn
@@ -209,13 +210,21 @@ namespace IdleProject.Battle.Spawn
         {
             ISkillAction skillAction = data.skillActionType switch
             {
-                SkillActionType.ImmediatelyAttack => new ImmediatelyAttack(
-                    GetPoolable<BattleEffect>(PoolableType.BattleEffect, data.skillHitEffect),
-                    GetSkillValues(data.skillValue).ListLoop()),
-                SkillActionType.ProjectileAttack => null,
+                SkillActionType.ImmediatelyAttack =>
+                    new ImmediatelyAttack(
+                        getHitEffect: GetPoolable<BattleEffect>(PoolableType.BattleEffect, data.skillHitEffect),
+                        skillValues: GetSkillValues(data.skillValue).ListLoop()),
+                SkillActionType.ProjectileAttack =>
+                    new ProjectileAttack(
+                        getHitEffect: GetPoolable<BattleEffect>(PoolableType.BattleEffect, data.skillHitEffect),
+                        getProjectile: GetPoolable<BattleProjectile>(PoolableType.Projectile,
+                            data.GetSkillProjectileData().projectileObject),
+                        projectileSpeed: data.GetSkillProjectileData().projectileSpeed,
+                        skillValues: GetSkillValues(data.skillValue).ListLoop()),
                 SkillActionType.Buff => null,
                 _ => throw new ArgumentOutOfRangeException()
             };
+
 
             ISkillRange skillRange = data.skillRangeType switch
             {

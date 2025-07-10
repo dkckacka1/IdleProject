@@ -132,10 +132,4 @@ namespace IdleProject.Core
         public string itemIndex;
         public int count;
     }
-
-    [Serializable]
-    public struct ProjectileInfo
-    {
-        public float projectileSpeed;
-    }
 }

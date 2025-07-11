@@ -231,7 +231,7 @@ namespace IdleProject.Battle.Spawn
                 SkillRangeType.InAttackRange => new InAttackRange(controllerInstance),
                 SkillRangeType.All => null,
                 SkillRangeType.SelfRange => new SelfRange(controllerInstance, data.skillRange),
-                SkillRangeType.TargetRange => null,
+                SkillRangeType.TargetRange => new TargetRange(controllerInstance, data.skillRange),
                 _ => throw new ArgumentOutOfRangeException()
             };
 

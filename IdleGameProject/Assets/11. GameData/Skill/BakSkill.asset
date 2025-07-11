@@ -18,7 +18,7 @@ MonoBehaviour:
   skillDirectingEffect: SwordSpinWhite:HitOffset,SwordSpinWhite:HitOffset,SwordSpinWhite:HitOffset,SwordSpinWhite:HitOffset
   skillHitEffect: 
   skillActionType: 0
+  skillTargetType: 1
   skillRangeType: 2
   skillRange: 2.5
-  skillTargetType: 0
   skillValue: 0.3,0.4,0.5,0.6

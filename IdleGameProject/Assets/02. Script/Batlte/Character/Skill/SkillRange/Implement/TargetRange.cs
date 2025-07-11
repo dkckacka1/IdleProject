@@ -2,18 +2,18 @@
 
 namespace IdleProject.Battle.Character.Skill.SkillRange.Implement
 {
-    public class SelfRange : SkillRange
+    public class TargetRange : SkillRange
     {
         private readonly float _skillRange;
 
-        public SelfRange(CharacterController controller, float skillRange) : base(controller)
+        public TargetRange(CharacterController controller, float skillRange) : base(controller)
         {
             _skillRange = skillRange;
         }
 
         public override bool GetInRange(CharacterController target)
         {
-            return Vector3.Distance(target, Controller) < _skillRange;
+            return Vector3.Distance(target, Controller.GetTargetCharacter.Invoke()) < _skillRange;
         }
     }
 }

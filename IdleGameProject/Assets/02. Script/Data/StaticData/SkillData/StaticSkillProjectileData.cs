@@ -6,6 +6,6 @@ namespace IdleProject.Data.StaticData.Skill
     {
         public string projectileObject;
         public float projectileSpeed;
-        public ProjectileType projectileType; 
+        public ProjectileMoveType projectileType; 
     }
 }

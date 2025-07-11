@@ -29,8 +29,11 @@ namespace IdleProject.Battle
 
         [HideInInspector] public SpawnController spawnController;
 
+        public List<CharacterController> GetCharacterList() => new List<CharacterController>()
+            .Concat(playerCharacterList).Concat(enemyCharacterList).ToList();
+        
         public List<CharacterController> GetCharacterList(CharacterAIType aiType) =>
-            aiType == CharacterAIType.Player ? playerCharacterList : enemyCharacterList;
+            aiType == CharacterAIType.Ally ? playerCharacterList : enemyCharacterList;
 
         private const string BATTLE_INIT_TASK = "BattleInit";
         
@@ -48,7 +51,7 @@ namespace IdleProject.Battle
 
         private async UniTask SpawnCharacter()
         {
-            await spawnController.SpawnCharacterByFormation(CharacterAIType.Player,
+            await spawnController.SpawnCharacterByFormation(CharacterAIType.Ally,
                 DataManager.Instance.DataController.Player.PlayerFormation);
             await spawnController.SpawnCharacterByFormation(CharacterAIType.Enemy,
                 DataManager.Instance.DataController.selectStaticStageData.stageFormation);
@@ -116,7 +119,7 @@ namespace IdleProject.Battle
 
         private void SetBattleResultState()
         {
-            var characterList = GetCharacterList(CharacterAIType.Player);
+            var characterList = GetCharacterList(CharacterAIType.Ally);
             if (characterList.Any(character => character.StatSystem.IsLive) is false)
                     BattleStateEventBus.ChangeEvent(BattleStateType.Defeat);
             

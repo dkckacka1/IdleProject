@@ -34,7 +34,7 @@
     
     public enum CharacterAIType
     {
-        Player,
+        Ally,
         Enemy,
     }
 
@@ -79,7 +79,7 @@
         AllAlly
     }
 
-    public enum ProjectileType
+    public enum ProjectileMoveType
     {
         Direct,
         Howitzer

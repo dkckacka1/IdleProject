@@ -86,7 +86,7 @@ namespace IdleProject.Battle.UI
                 if (!targetSpawnPosition) 
                     continue;
                 
-                if (targetSpawnPosition.SpawnAIType == CharacterAIType.Player)
+                if (targetSpawnPosition.SpawnAIType == CharacterAIType.Ally)
                 {
                     var organizationParts = slot.GetSlotParts<OrganizationSlot>();
                     if (!IsCharacterSpawnedSlot(organizationParts, out var spawnedCharacter))
@@ -100,7 +100,7 @@ namespace IdleProject.Battle.UI
                         // 스폰된 캐릭터가 있다면
                     {
                         var spawnedPosition = _battleManager.spawnController
-                            .GetSpawnPosition(spawnedCharacter, CharacterAIType.Player);
+                            .GetSpawnPosition(spawnedCharacter, CharacterAIType.Ally);
 
                         if (spawnedPosition == targetSpawnPosition)
                             // 동일한 위치를 선택했다면
@@ -126,7 +126,7 @@ namespace IdleProject.Battle.UI
 
             if (IsCharacterSpawnedSlot(organizationSlotParts, out var character))
             {
-                _battleManager.spawnController.RemoveCharacter(character, CharacterAIType.Player);
+                _battleManager.spawnController.RemoveCharacter(character, CharacterAIType.Ally);
                 
                 organizationSlotParts.SetOrganization(false);
             }
@@ -134,7 +134,7 @@ namespace IdleProject.Battle.UI
         
         private void StartBattle()
         {
-            if (_battleManager.GetCharacterList(CharacterAIType.Player).Count <= 0)
+            if (_battleManager.GetCharacterList(CharacterAIType.Ally).Count <= 0)
                 // 편성 중인 캐릭터가 없다면
             {
                 UIManager.Instance.OpenToastPopup("현재 편성중인 캐릭터가 없습니다. 캐릭터를 편성해주세요.");                
@@ -155,7 +155,7 @@ namespace IdleProject.Battle.UI
             var data = organizationSlot.SlotUI.GetData<DynamicCharacterData>();
             var characterName = data.StaticData.Index;
 
-            var characterList = _battleManager.GetCharacterList(CharacterAIType.Player);
+            var characterList = _battleManager.GetCharacterList(CharacterAIType.Ally);
             character = characterList.FirstOrDefault(character => character.StatSystem.CharacterName == characterName);
 
             return character is not null;

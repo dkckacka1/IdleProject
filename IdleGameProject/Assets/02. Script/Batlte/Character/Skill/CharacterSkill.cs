@@ -1,42 +1,27 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using IdleProject.Battle.Character.Skill.SkillAction;
-using IdleProject.Battle.Character.Skill.SkillRange;
-using IdleProject.Battle.Character.Skill.SkillTarget;
-using IdleProject.Battle.Effect;
-using IdleProject.Core;
 
 namespace IdleProject.Battle.Character.Skill
 {
     public class CharacterSkill
     {
         private readonly CharacterController _controller;
-        private readonly ISkillRange _skillRange;
-        private readonly ISkillAction _skillAction;
-        private readonly ISkillGetTarget _getTarget;
-        private readonly IEnumerator<EffectCaller> _directingEffects;
-        
-        public CharacterSkill(CharacterController controller, ISkillRange skillRange, ISkillAction skillAction, ISkillGetTarget getTarget, IEnumerable<EffectCaller> directingEffects)
+
+        private readonly List<ISkillAction> _skillActions;
+
+        public CharacterSkill(List<SkillAction.SkillAction> skillActions)
         {
-            _controller = controller;
-            _skillRange = skillRange;
-            _skillAction = skillAction;
-            _getTarget = getTarget;
-            _directingEffects = directingEffects?.GetEnumerator();
+            _skillActions = new List<ISkillAction>(skillActions);
         }
 
+        // 스킬을 사용한다.
         public void ExecuteSkill()
         {
-            if (_directingEffects is not null)
+            // 각 액션을 실행
+            foreach (var action in _skillActions)
             {
-                _directingEffects.MoveNext();
-                _directingEffects.Current.GetBattleEffect(_controller);
+                action.ActionExecute();
             }
-
-            var targetList = _getTarget.GetTargetList(_controller).Where(_skillRange.GetInRange);
-
-            _skillAction.ExecuteSkillAction(_controller, targetList);
         }
     }
 }

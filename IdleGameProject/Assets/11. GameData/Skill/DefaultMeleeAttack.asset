@@ -17,7 +17,24 @@ MonoBehaviour:
   skillDirectingEffect: 
   skillHitEffect: ExplosionSharp
   skillActionType: 0
+  skillTargetType: 0
   skillRangeType: 0
   skillRange: 0
-  targetType: 0
   skillValue: 1
+  executeDataList:
+  - rid: 896382601119924373
+  references:
+    version: 2
+    RefIds:
+    - rid: 896382601119924373
+      type: {class: ExecuteAttack, ns: IdleProject.Data.StaticData.Skill, asm: Assembly-CSharp}
+      data:
+        skillTargetList:
+        - rid: 896382601119924374
+        canCritical: 1
+        attackDamage: 1
+    - rid: 896382601119924374
+      type: {class: AITarget, ns: IdleProject.Data.StaticData.Skill, asm: Assembly-CSharp}
+      data:
+        isCheckFromSelf: 0
+        targetAIType: 0

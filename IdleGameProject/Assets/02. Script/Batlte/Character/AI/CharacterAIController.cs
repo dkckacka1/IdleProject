@@ -25,9 +25,9 @@ namespace IdleProject.Battle.AI
         private BattleState _battleState;
 
         public CharacterAIType GetAllyType =>
-            (aiType == CharacterAIType.Player) ? CharacterAIType.Player : CharacterAIType.Enemy;
+            (aiType == CharacterAIType.Ally) ? CharacterAIType.Ally : CharacterAIType.Enemy;
         public CharacterAIType GetEnemyType =>
-            (aiType == CharacterAIType.Player) ? CharacterAIType.Enemy : CharacterAIType.Player;
+            (aiType == CharacterAIType.Ally) ? CharacterAIType.Enemy : CharacterAIType.Ally;
         
         public void Initialized()
         {
@@ -82,7 +82,7 @@ namespace IdleProject.Battle.AI
 
         private CharacterAIType EnemyType()
         {
-            return (aiType == CharacterAIType.Player) ? CharacterAIType.Enemy : CharacterAIType.Player;
+            return (aiType == CharacterAIType.Ally) ? CharacterAIType.Enemy : CharacterAIType.Ally;
         }
 
         public void Publish(BattleManager publisher)

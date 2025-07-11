@@ -8,12 +8,6 @@ using UnityEngine;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Character;
 using IdleProject.Battle.Character.Skill;
-using IdleProject.Battle.Character.Skill.SkillAction;
-using IdleProject.Battle.Character.Skill.SkillAction.Implement;
-using IdleProject.Battle.Character.Skill.SkillRange;
-using IdleProject.Battle.Character.Skill.SkillRange.Implement;
-using IdleProject.Battle.Character.Skill.SkillTarget;
-using IdleProject.Battle.Character.Skill.SkillTarget.Implement;
 using IdleProject.Battle.Effect;
 using IdleProject.Battle.Projectile;
 using IdleProject.Battle.UI;
@@ -47,7 +41,7 @@ namespace IdleProject.Battle.Spawn
         {
             _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();
 
-            playerSpawnInfo.spawnFormation.SetDefaultSpawn(CharacterAIType.Player);
+            playerSpawnInfo.spawnFormation.SetDefaultSpawn(CharacterAIType.Ally);
             enemySpawnInfo.spawnFormation.SetDefaultSpawn(CharacterAIType.Enemy);
         }
 
@@ -82,7 +76,7 @@ namespace IdleProject.Battle.Spawn
         {
             character.BattleEventGroup.UnPublishAll(_battleManager);
             character.characterUI.OnCharacterRemove();
-            var spawnInfo = aiType == CharacterAIType.Player ? playerSpawnInfo : enemySpawnInfo;
+            var spawnInfo = aiType == CharacterAIType.Ally ? playerSpawnInfo : enemySpawnInfo;
             var targetPosition = spawnInfo.spawnFormation.GetSpawnPosition(character);
             targetPosition.SetCharacter(null);
             _battleManager.GetCharacterList(targetPosition.SpawnAIType).Remove(character);
@@ -91,7 +85,7 @@ namespace IdleProject.Battle.Spawn
 
         public SpawnPosition GetSpawnPosition(CharacterController character, CharacterAIType aiType)
         {
-            var spawnInfo = aiType == CharacterAIType.Player ? playerSpawnInfo : enemySpawnInfo;
+            var spawnInfo = aiType == CharacterAIType.Ally ? playerSpawnInfo : enemySpawnInfo;
             return spawnInfo.spawnFormation.GetSpawnPosition(character);
         }
 
@@ -121,7 +115,7 @@ namespace IdleProject.Battle.Spawn
             }
             else
             {
-                var spawnInfo = aiType == CharacterAIType.Player ? playerSpawnInfo : enemySpawnInfo;
+                var spawnInfo = aiType == CharacterAIType.Ally ? playerSpawnInfo : enemySpawnInfo;
                 var spawnPosition = spawnInfo.spawnFormation.GetSpawnPosition(spawnPositionType);
                 spawnPosition.SetCharacter(null);
             }
@@ -140,7 +134,7 @@ namespace IdleProject.Battle.Spawn
         private void SetCharacterPosition(CharacterController character, CharacterAIType aiType,
             SpawnPositionType spawnPositionType)
         {
-            var spawnInfo = aiType == CharacterAIType.Player ? playerSpawnInfo : enemySpawnInfo;
+            var spawnInfo = aiType == CharacterAIType.Ally ? playerSpawnInfo : enemySpawnInfo;
             var spawnPosition = spawnInfo.spawnFormation.GetSpawnPosition(spawnPositionType);
 
             character.transform.SetParent(spawnInfo.spawnObject);
@@ -208,72 +202,73 @@ namespace IdleProject.Battle.Spawn
 
         private CharacterSkill GetSkill(CharacterController controllerInstance, StaticSkillData data)
         {
-            ISkillAction skillAction = data.skillActionType switch
-            {
-                SkillActionType.ImmediatelyAttack =>
-                    new ImmediatelyAttack(
-                        getHitEffect: GetPoolable<BattleEffect>(PoolableType.BattleEffect, data.skillHitEffect),
-                        skillValues: GetSkillValues(data.skillValue).ListLoop()),
-                SkillActionType.ProjectileAttack =>
-                    new ProjectileAttack(
-                        getHitEffect: GetPoolable<BattleEffect>(PoolableType.BattleEffect, data.skillHitEffect),
-                        getProjectile: GetPoolable<BattleProjectile>(PoolableType.Projectile,
-                            data.GetSkillProjectileData().projectileObject),
-                        projectileSpeed: data.GetSkillProjectileData().projectileSpeed,
-                        skillValues: GetSkillValues(data.skillValue).ListLoop()),
-                SkillActionType.Buff => null,
-                _ => throw new ArgumentOutOfRangeException()
-            };
-
-
-            ISkillRange skillRange = data.skillRangeType switch
-            {
-                SkillRangeType.InAttackRange => new InAttackRange(controllerInstance),
-                SkillRangeType.All => null,
-                SkillRangeType.SelfRange => new SelfRange(controllerInstance, data.skillRange),
-                SkillRangeType.TargetRange => new TargetRange(controllerInstance, data.skillRange),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-
-            ISkillGetTarget skillGetTarget = data.skillTargetType switch
-            {
-                SkillTargetType.CurrentTarget => new CurrentTargeting(),
-                SkillTargetType.AllEnemy => new AllEnemy(),
-                SkillTargetType.AllAlly => null,
-                _ => throw new ArgumentOutOfRangeException()
-            };
-
-            var skillDirectingEffects = string.IsNullOrEmpty(data.skillDirectingEffect)
-                ? null
-                : data.skillDirectingEffect.Split(',').Select(GetEffectCaller).ToList().ListLoop();
-
-            return new CharacterSkill(controllerInstance, skillRange, skillAction, skillGetTarget,
-                skillDirectingEffects);
-
-            List<float> GetSkillValues(string valueData)
-            {
-                var result = new List<float>();
-                var values = valueData.Split(',');
-
-                foreach (var value in values)
-                {
-                    if (float.TryParse(value, out var floatValue))
-                    {
-                        result.Add(floatValue);
-                    }
-                }
-
-                return result;
-            }
-
-            EffectCaller GetEffectCaller(string effectValueData)
-            {
-                var values = effectValueData.Split(':');
-                var getEffect = GetPoolable<BattleEffect>(PoolableType.BattleEffect, values[0]);
-                var offsetType = Enum.Parse<EffectCallOffsetType>(values[1]);
-
-                return new EffectCaller(getEffect, offsetType);
-            }
+            return null;
+            // ISkillAction skillAction = data.skillActionType switch
+            // {
+            //     SkillActionType.ImmediatelyAttack =>
+            //         new ImmediatelyAttack(
+            //             getHitEffect: GetPoolable<BattleEffect>(PoolableType.BattleEffect, data.skillHitEffect),
+            //             skillValues: GetSkillValues(data.skillValue).ListLoop()),
+            //     SkillActionType.ProjectileAttack =>
+            //         new ProjectileAttack(
+            //             getHitEffect: GetPoolable<BattleEffect>(PoolableType.BattleEffect, data.skillHitEffect),
+            //             getProjectile: GetPoolable<BattleProjectile>(PoolableType.Projectile,
+            //                 data.GetSkillProjectileData().projectileObject),
+            //             projectileSpeed: data.GetSkillProjectileData().projectileSpeed,
+            //             skillValues: GetSkillValues(data.skillValue).ListLoop()),
+            //     SkillActionType.Buff => null,
+            //     _ => throw new ArgumentOutOfRangeException()
+            // };
+            //
+            //
+            // ISkillRange skillRange = data.skillRangeType switch
+            // {
+            //     SkillRangeType.InAttackRange => new InAttackRange(controllerInstance),
+            //     SkillRangeType.All => null,
+            //     SkillRangeType.SelfRange => new SelfRange(controllerInstance, data.skillRange),
+            //     SkillRangeType.TargetRange => new TargetRange(controllerInstance, data.skillRange),
+            //     _ => throw new ArgumentOutOfRangeException()
+            // };
+            //
+            // ISkillGetTarget skillGetTarget = data.skillTargetType switch
+            // {
+            //     SkillTargetType.CurrentTarget => new CurrentTargeting(),
+            //     SkillTargetType.AllEnemy => new AllEnemy(),
+            //     SkillTargetType.AllAlly => null,
+            //     _ => throw new ArgumentOutOfRangeException()
+            // };
+            //
+            // var skillDirectingEffects = string.IsNullOrEmpty(data.skillDirectingEffect)
+            //     ? null
+            //     : data.skillDirectingEffect.Split(',').Select(GetEffectCaller).ToList().ListLoop();
+            //
+            // return new CharacterSkill(controllerInstance, skillRange, skillAction, skillGetTarget,
+            //     skillDirectingEffects);
+            //
+            // List<float> GetSkillValues(string valueData)
+            // {
+            //     var result = new List<float>();
+            //     var values = valueData.Split(',');
+            //
+            //     foreach (var value in values)
+            //     {
+            //         if (float.TryParse(value, out var floatValue))
+            //         {
+            //             result.Add(floatValue);
+            //         }
+            //     }
+            //
+            //     return result;
+            // }
+            //
+            // EffectCaller GetEffectCaller(string effectValueData)
+            // {
+            //     var values = effectValueData.Split(':');
+            //     var getEffect = GetPoolable<BattleEffect>(PoolableType.BattleEffect, values[0]);
+            //     var offsetType = Enum.Parse<EffectCallOffsetType>(values[1]);
+            //
+            //     return new EffectCaller(getEffect, offsetType);
+            // }
         }
 
         private void AddCharacterAI(CharacterController controller, CharacterAIType aiType)
@@ -291,7 +286,7 @@ namespace IdleProject.Battle.Spawn
 
             switch (aiType)
             {
-                case CharacterAIType.Player:
+                case CharacterAIType.Ally:
                     uiController = controller.gameObject.AddComponent<PlayerCharacterUIController>();
                     break;
                 case CharacterAIType.Enemy:

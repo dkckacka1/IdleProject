@@ -11,9 +11,9 @@ namespace IdleProject.Battle.Projectile
         [HideInInspector] public UnityEvent<ITakeDamagedAble> hitEvent;
         [HideInInspector] public ITakeDamagedAble Target;
         [HideInInspector] public UnityEvent releaseEvent = null;
-        
-        [SerializeField] private ProjectileInfo projectileInfo;
 
+        public float projectileSpeed;
+        
         private BattleManager _battleManager;
         private Vector3 _targetPosition;
 
@@ -46,7 +46,7 @@ namespace IdleProject.Battle.Projectile
         {
             var directionVector = (Target.HitEffectOffset - transform.position).normalized;
             transform.LookAt(Target.HitEffectOffset);
-            transform.position += directionVector * projectileInfo.projectileSpeed * _battleManager.GetCurrentBattleDeltaTime;
+            transform.position += directionVector * projectileSpeed * _battleManager.GetCurrentBattleDeltaTime;
         }
 
         private void OnTriggerEnter(Collider other)

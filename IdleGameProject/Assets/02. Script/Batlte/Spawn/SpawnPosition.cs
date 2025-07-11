@@ -23,7 +23,7 @@ namespace IdleProject.Battle.Spawn
         public void Initialize(CharacterAIType aiType)
         {
             SpawnAIType = aiType;
-            spawnParticle.gameObject.SetActive(aiType == CharacterAIType.Player);
+            spawnParticle.gameObject.SetActive(aiType == CharacterAIType.Ally);
         }
 
         public void SetCharacter(CharacterController character)
@@ -41,7 +41,7 @@ namespace IdleProject.Battle.Spawn
             switch (type)
             {
                 case BattleStateType.Ready:
-                    spawnParticle.gameObject.SetActive(SpawnAIType == CharacterAIType.Player);
+                    spawnParticle.gameObject.SetActive(SpawnAIType == CharacterAIType.Ally);
                     break;
                 case BattleStateType.Battle:
                     spawnParticle.gameObject.SetActive(false);

@@ -1,11 +1,8 @@
+using System.Collections.Generic;
 using IdleProject.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
-#if UNITY_EDITOR
-using System.IO;
-using UnityEditor;
-using IdleProject.EditorClass;
-#endif
+using UnityEngine.Serialization;
 
 namespace IdleProject.Data.StaticData.Skill
 {
@@ -15,53 +12,101 @@ namespace IdleProject.Data.StaticData.Skill
         public string skillName;
         public string skillDesc;
 
-        public string skillDirectingEffect;
-        public string skillHitEffect;
+        [SerializeReference] public List<SkillActionData> executeDataList;
+    }
 
-        public SkillActionType skillActionType;
-        public SkillTargetType skillTargetType;
-        public SkillRangeType skillRangeType;
-        public float skillRange;
+    [System.Serializable]
+    public abstract class SkillActionData
+    {
+        [SerializeReference] 
+        public List<SkillTargetingData> skillTargetList;
+    } 
+    
+    [System.Serializable]
+    public class EffectActionData : SkillActionData
+    {
+        [SerializeReference] 
+        public SkillEffectData effectData;
+    }
+
+    [System.Serializable]
+    public class AttackActionData : SkillActionData
+    {
+        [PropertySpace(10)]
+        public bool canCritical;
+        [FormerlySerializedAs("attackDamage")] public float attackValue;
+    }
+    
+    [System.Serializable]
+    public class ProjectileActionData : SkillActionData
+    {
+        [PropertySpace(10)]
+        public string projectileObjectName;
+        public float projectileSpeed;
+        public ProjectileMoveType projectileMoveType;
+        public CharacterOffsetType projectileCreateOffset;
+        public CharacterOffsetType projectileTargetingOffset;
+            
+        [FormerlySerializedAs("projectileHitExecute")] [SerializeReference]
+        public List<SkillActionData> projectileOnHitAction;
+    }
+
+    [System.Serializable]
+    public class BuffActionData : SkillActionData
+    {
+        [PropertySpace(10)] 
+        public CharacterStatType buffStatType;
+        public float value;
+        public float duration;
+        public LoopEffect buffEffect;
+    }
+
+    [System.Serializable]
+    public abstract class SkillEffectData
+    {
+        public string effectName;
+        public CharacterOffsetType offsetType;
+    }
+
+    [System.Serializable]
+    public class LoopEffect : SkillEffectData
+    {
+        public float duration;
+    }
+
+    [System.Serializable]
+    public class OneShotEffect : SkillEffectData
+    {
         
-        public string skillValue;
+    }
 
-#if UNITY_EDITOR
-        [Button]
-        private void CreateProjectileData()
+    [System.Serializable]
+    public abstract class SkillTargetingData
+    {
+        public bool isCheckFromTarget;
+    }
+
+    [System.Serializable]
+    public class AITargetingData : SkillTargetingData
+    {
+        public CharacterAIType targetAIType;
+    }
+    
+    [System.Serializable]
+    public class RangeTargetingData : SkillTargetingData
+    {
+        public float skillRange;
+    }
+
+    [System.Serializable]
+    public class SingleTargetingData : SkillTargetingData
+    {
+        public enum SingleTargetType
         {
-            var createData = StaticDataCreator.CreateStaticData<StaticSkillProjectileData>($"{name}_projectile");
-
-            Selection.activeInstanceID = createData.GetInstanceID();
-            
-            SetPath(createData);
+            Self,
+            NealyController
         }
 
-        [Button]
-        private void CreateBuffData()
-        {
-            var createData = StaticDataCreator.CreateStaticData<StaticSkillBuffData>($"{name}_buff");
-
-            Selection.activeInstanceID = createData.GetInstanceID();
-            
-            SetPath(createData);
-        }
-
-        private void SetPath<T>(T createData) where T : StaticData
-        {
-            // 현재 스크립트 오브젝트 위치를 기준으로 경로 계산
-            var currentAssetPath = AssetDatabase.GetAssetPath(this);
-            var currentDirectory = Path.GetDirectoryName(currentAssetPath);
-
-            // 생성된 오브젝트의 경로
-            var newAssetPath = AssetDatabase.GetAssetPath(createData);
-            var newFileName = Path.GetFileName(newAssetPath);
-
-            // 새로운 경로로 이동
-            var targetPath = Path.Combine(currentDirectory, newFileName);
-            AssetDatabase.MoveAsset(newAssetPath, targetPath);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-#endif
+        public SingleTargetType singleTargetType;
     }
 }

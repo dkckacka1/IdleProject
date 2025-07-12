@@ -59,7 +59,7 @@ namespace IdleProject.Battle.Character.Skill.SkillAction
                 // 공격 수행
                 AttackSkillActionData attackActionData => new AttackAction(attackActionData, controller),
                 // 버프 발동
-                BuffSkillActionData buffActionData => throw new NotImplementedException(),
+                BuffSkillActionData buffActionData => new BuffAction(buffActionData, controller),
                 // 이펙트 호출
                 EffectSkillActionData effectActionData => new EffectAction(effectActionData, controller),
                 // 투사체 발사

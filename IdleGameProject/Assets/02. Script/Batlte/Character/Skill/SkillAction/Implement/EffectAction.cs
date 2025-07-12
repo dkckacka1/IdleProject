@@ -14,6 +14,8 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
 
         private readonly bool _isUseCharacterEffect;
         
+        // TODO 루프 이펙트 만들기
+        
         public EffectAction(SkillEffectData effectData, CharacterController controller) : base(null, controller)
         {
             _effectData = effectData;

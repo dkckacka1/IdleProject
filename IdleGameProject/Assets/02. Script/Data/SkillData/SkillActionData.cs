@@ -53,6 +53,8 @@ namespace IdleProject.Data.SkillData
         public CharacterStatType buffStatType;
         public float value;
         public float duration;
+        
+        [SerializeReference]
         public LoopEffect buffEffect;
     }
 

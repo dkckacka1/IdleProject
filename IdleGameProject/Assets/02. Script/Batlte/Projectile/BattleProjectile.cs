@@ -3,13 +3,15 @@ using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
+using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.Projectile
 {
     public class BattleProjectile : MonoBehaviour, IPoolable
     {
-        [HideInInspector] public UnityEvent<ITakeDamagedAble> hitEvent;
-        [HideInInspector] public ITakeDamagedAble Target;
+        [HideInInspector] public UnityEvent hitEvent;
+        [HideInInspector] public CharacterController target;
         [HideInInspector] public UnityEvent releaseEvent = null;
 
         public float projectileSpeed;
@@ -32,7 +34,7 @@ namespace IdleProject.Battle.Projectile
             releaseEvent.Invoke();
             releaseEvent.RemoveAllListeners();
             hitEvent.RemoveAllListeners();
-            Target = null;
+            target = null;
             _battleManager.BattleObjectEventDic[BattleObjectType.Projectile].RemoveListener(OnBattleEvent);
         }
 
@@ -44,27 +46,27 @@ namespace IdleProject.Battle.Projectile
 
         private void OnBattleEvent()
         {
-            var directionVector = (Target.HitEffectOffset - transform.position).normalized;
-            transform.LookAt(Target.HitEffectOffset);
+            var directionVector = (target.HitEffectOffset - transform.position).normalized;
+            transform.LookAt(target.HitEffectOffset);
             transform.position += directionVector * projectileSpeed * _battleManager.GetCurrentBattleDeltaTime;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            var takeAble = other.GetComponent<ITakeDamagedAble>();
-            if (takeAble is not null && takeAble == Target)
+            var character = other.GetComponent<CharacterController>();
+            if (character is not null && character == target)
             {
-                hitEvent.Invoke(Target);
+                hitEvent.Invoke();
                 ObjectPoolManager.Instance.Release(GetComponent<PoolableObject>());
             }
         }
 
         private void DistanceCheck()
         {
-            var distance = Vector3.Distance(Target.HitEffectOffset, this.transform.position);
+            var distance = Vector3.Distance(target.HitEffectOffset, this.transform.position);
             if (distance < 0.5f)
             {
-                hitEvent.Invoke(Target);
+                hitEvent.Invoke();
                 ObjectPoolManager.Instance.Release(GetComponent<PoolableObject>());
             }
         }

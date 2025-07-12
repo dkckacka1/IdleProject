@@ -11,11 +11,10 @@ namespace IdleProject.Battle.Character.Skill.SkillAction
     public abstract class SkillAction : ISkillAction
     {
         protected readonly CharacterController Controller;
-        public CharacterController CurrentTarget;
 
-        protected readonly Func<List<CharacterController>> GetTargetList;
+        protected CharacterController CurrentTarget;
+        protected Func<List<CharacterController>> GetTargetList;
 
-        
         protected SkillAction(SkillActionData skillActionData, CharacterController controller)
         {
             Controller = controller;
@@ -23,24 +22,27 @@ namespace IdleProject.Battle.Character.Skill.SkillAction
             GetTargetList = () => GetTarget(skillActionData.skillTargetList.Select(targetingData =>
                 SkillTargeting.SkillTargeting.GetSkillTargeting(controller, targetingData)));
         }
-        
+
         private List<CharacterController> GetTarget(IEnumerable<ISkillTargeting> skillTargetList)
         {
             var characterList = GameManager.GetCurrentSceneManager<BattleManager>().GetCharacterList();
 
-            return skillTargetList.Aggregate(characterList, (current, targeting) => targeting.TargetingCharacterList(current, CurrentTarget).ToList());
+            return skillTargetList.Aggregate(characterList,
+                (current, targeting) => targeting.TargetingCharacterList(current, CurrentTarget).ToList());
         }
 
-        
+
         public void SetTarget(CharacterController target)
         {
             CurrentTarget = target;
+
+            GetTargetList = () => new List<CharacterController> { target };
         }
 
         // 액션을 수행합니다.
         public abstract void ActionExecute();
 
-        
+
         public static ISkillAction GetSkillAction(SkillActionData skillActionData, CharacterController controller)
         {
             return skillActionData switch
@@ -52,10 +54,10 @@ namespace IdleProject.Battle.Character.Skill.SkillAction
                 // 이펙트 호출
                 EffectSkillActionData effectActionData => new EffectAction(effectActionData, controller),
                 // 투사체 발사
-                ProjectileSkillActionData projectileActionData => new ProjectileAction(projectileActionData, controller),
+                ProjectileSkillActionData projectileActionData =>
+                    new ProjectileAction(projectileActionData, controller),
                 _ => throw new ArgumentOutOfRangeException(nameof(skillActionData))
             };
         }
-
     }
 }

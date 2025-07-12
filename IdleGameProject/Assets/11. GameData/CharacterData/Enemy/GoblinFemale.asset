@@ -13,12 +13,9 @@ MonoBehaviour:
   m_Name: GoblinFemale
   m_EditorClassIdentifier: 
   characterName: "\uACE0\uBE14\uB9B0 \uAD81\uC218"
-  addressValue:
-    characterAnimationName: MonsterBow
-    attackProjectileAddress: Eli_Attack_Projectile
-    attackHitEffectAddress: BloodExplosionRound
-    skillProjectileAddress: 
-    skillHitEffectAddress: 
+  characterAttackName: DefaultRangeAttack
+  characterSkillName: 
+  characterAnimationName: MonsterBow
   stat:
     healthPoint: 100
     manaPoint: 10

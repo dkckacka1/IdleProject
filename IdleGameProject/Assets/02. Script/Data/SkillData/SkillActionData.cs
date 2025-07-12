@@ -16,6 +16,8 @@ namespace IdleProject.Data.SkillData
     [System.Serializable]
     public class EffectSkillActionData : SkillActionData
     {
+        public bool isUseCharacterEffect;
+        
         [SerializeReference] 
         public SkillEffectData effectData;
     }

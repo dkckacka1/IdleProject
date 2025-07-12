@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks.Triggers;
 using IdleProject.Battle.Effect;
 using IdleProject.Core;
 using IdleProject.Data.SkillData;
+using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
 {
@@ -10,6 +11,8 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
     {
         private readonly SkillEffectData _effectData;
         private readonly Func<BattleEffect> _getBattleEffect;
+
+        private readonly bool _isUseCharacterEffect;
         
         public EffectAction(SkillEffectData effectData, CharacterController controller) : base(null, controller)
         {
@@ -20,6 +23,7 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
         public EffectAction(EffectSkillActionData actionData, CharacterController controller) : base(actionData, controller)
         {
             _effectData = actionData.effectData;
+            _isUseCharacterEffect = actionData.isUseCharacterEffect;
             _getBattleEffect = GameManager.GetCurrentSceneManager<BattleManager>().GetPoolable<BattleEffect>(PoolableType.BattleEffect, _effectData.effectName);
         }
 
@@ -31,22 +35,23 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
     
         private void SetBattleEffect()
         {
-            if (CurrentTarget is null) return;
+            var effectTarget = _isUseCharacterEffect ? Controller : CurrentTarget; 
+            if (effectTarget is null) return;
             
             var effect = _getBattleEffect.Invoke();
             switch (_effectData.offsetType)
             {
                 case CharacterOffsetType.CharacterGround:
-                    effect.transform.position = CurrentTarget.transform.position;
+                    effect.transform.position = effectTarget.transform.position;
                     break;
                 case CharacterOffsetType.ProjectileOffset:
-                    effect.transform.position = CurrentTarget.offset.GetOffsetTransform(CharacterOffsetType.ProjectileOffset).position;
+                    effect.transform.position = effectTarget.offset.GetOffsetTransform(CharacterOffsetType.ProjectileOffset).position;
                     break;
                 case CharacterOffsetType.HitOffset:
-                    effect.transform.position = CurrentTarget.offset.GetOffsetTransform(CharacterOffsetType.HitOffset).position;
+                    effect.transform.position = effectTarget.offset.GetOffsetTransform(CharacterOffsetType.HitOffset).position;
                     break;
                 case CharacterOffsetType.FluidHealthBarOffset:
-                    effect.transform.position = CurrentTarget.offset.GetOffsetTransform(CharacterOffsetType.FluidHealthBarOffset).position;
+                    effect.transform.position = effectTarget.offset.GetOffsetTransform(CharacterOffsetType.FluidHealthBarOffset).position;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

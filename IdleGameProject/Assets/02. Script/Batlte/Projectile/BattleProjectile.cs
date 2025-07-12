@@ -46,9 +46,8 @@ namespace IdleProject.Battle.Projectile
 
         private void OnBattleEvent()
         {
-            var directionVector = (target.HitEffectOffset - transform.position).normalized;
             transform.LookAt(target.HitEffectOffset);
-            transform.position += directionVector * projectileSpeed * _battleManager.GetCurrentBattleDeltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, target.HitEffectOffset, projectileSpeed * _battleManager.GetCurrentBattleDeltaTime);
         }
 
         private void OnTriggerEnter(Collider other)

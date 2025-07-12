@@ -53,11 +53,11 @@ MonoBehaviour:
     - rid: 896382623545557150
       type: {class: CharacterStateTargetingData, ns: IdleProject.Data.SkillData, asm: Assembly-CSharp}
       data:
-        isCheckFromTarget: 0
+        isCheckFromTarget: 1
         isNot: 0
         characterStateTargetType: 0
     - rid: 896382623545557151
       type: {class: SingleTargetingData, ns: IdleProject.Data.SkillData, asm: Assembly-CSharp}
       data:
-        isCheckFromTarget: 0
+        isCheckFromTarget: 1
         singleTargetType: 1

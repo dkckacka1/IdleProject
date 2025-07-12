@@ -1,61 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1060199860847109808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a399d173e7e48d0b3971069c8fbf493, type: 3}
-  m_Name: DefaultRangeAttack_0
-  m_EditorClassIdentifier: 
-  skillActionDataList:
-  - rid: 896382623545557162
-  references:
-    version: 2
-    RefIds:
-    - rid: 896382623545557162
-      type: {class: ProjectileSkillActionData, ns: IdleProject.Data.SkillData, asm: Assembly-CSharp}
-      data:
-        skillTargetList:
-        - rid: 896382623545557165
-        - rid: 896382623545557166
-        - rid: 896382623545557167
-        projectileObjectName: Eli_Attack_Projectile
-        projectileSpeed: 20
-        projectileMoveType: 0
-        projectileCreateOffset: 1
-        projectileTargetingOffset: 2
-        projectileOnHitAction:
-        - rid: 896382623545557163
-    - rid: 896382623545557163
-      type: {class: AttackSkillActionData, ns: IdleProject.Data.SkillData, asm: Assembly-CSharp}
-      data:
-        skillTargetList: []
-        canCritical: 0
-        attackValue: 1
-        hitEffect:
-          effectName: BloodExplosionRound
-          offsetType: 2
-    - rid: 896382623545557165
-      type: {class: AITargetingData, ns: IdleProject.Data.SkillData, asm: Assembly-CSharp}
-      data:
-        isCheckFromTarget: 0
-        targetAIType: 1
-    - rid: 896382623545557166
-      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.SkillData, asm: Assembly-CSharp}
-      data:
-        isCheckFromTarget: 1
-        isNot: 0
-        characterStateTargetType: 0
-    - rid: 896382623545557167
-      type: {class: SingleTargetingData, ns: IdleProject.Data.SkillData, asm: Assembly-CSharp}
-      data:
-        isCheckFromTarget: 1
-        singleTargetType: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,9 +10,65 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ea5386ca99c31640adf11f2d98887cc, type: 3}
-  m_Name: DefaultRangeAttack
+  m_Name: EliSkill
   m_EditorClassIdentifier: 
   skillName: 
   skillDesc: 
   executeDataList:
-  - {fileID: -1060199860847109808}
+  - {fileID: 5660031290103928888}
+--- !u!114 &5660031290103928888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a399d173e7e48d0b3971069c8fbf493, type: 3}
+  m_Name: EliSkill_0
+  m_EditorClassIdentifier: 
+  skillActionDataList:
+  - rid: 896382623545557172
+  references:
+    version: 2
+    RefIds:
+    - rid: 896382623545557172
+      type: {class: ProjectileSkillActionData, ns: IdleProject.Data.SkillData, asm: Assembly-CSharp}
+      data:
+        skillTargetList:
+        - rid: 896382623545557173
+        - rid: 896382623545557177
+        - rid: 896382623545557183
+        projectileObjectName: Eli_Attack_Projectile
+        projectileSpeed: 20
+        projectileMoveType: 0
+        projectileCreateOffset: 1
+        projectileTargetingOffset: 2
+        projectileOnHitAction:
+        - rid: 896382623545557175
+    - rid: 896382623545557173
+      type: {class: AITargetingData, ns: IdleProject.Data.SkillData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        targetAIType: 1
+    - rid: 896382623545557175
+      type: {class: AttackSkillActionData, ns: IdleProject.Data.SkillData, asm: Assembly-CSharp}
+      data:
+        skillTargetList: []
+        canCritical: 0
+        attackValue: 1.5
+        hitEffect:
+          effectName: BloodExplosionRound
+          offsetType: 2
+    - rid: 896382623545557177
+      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.SkillData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        isNot: 0
+        characterStateTargetType: 0
+    - rid: 896382623545557183
+      type: {class: SingleTargetingData, ns: IdleProject.Data.SkillData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        singleTargetType: 1

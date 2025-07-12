@@ -26,9 +26,15 @@ namespace IdleProject.Battle.Character.Skill.SkillAction
         private List<CharacterController> GetTarget(IEnumerable<ISkillTargeting> skillTargetList)
         {
             var characterList = GameManager.GetCurrentSceneManager<BattleManager>().GetCharacterList();
+            var targetList = new List<CharacterController>();
 
-            return skillTargetList.Aggregate(characterList,
-                (current, targeting) => targeting.TargetingCharacterList(current, CurrentTarget).ToList());
+            foreach (var targeting in skillTargetList)
+            {
+                targetList = targeting.GetTargetingCharacterList(Controller, characterList, targetList);
+            }
+            
+            
+            return targetList;
         }
 
 

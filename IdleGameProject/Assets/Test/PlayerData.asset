@@ -35,17 +35,26 @@ MonoBehaviour:
     equipmentGloveIndex: 
     equipmentBootsIndex: 
     equipmentAccessoryIndex: 
+  - characterName: Eli
+    level: 10
+    exp: 0
+    equipmentWeaponIndex: 
+    equipmentHelmetIndex: 
+    equipmentArmorIndex: 
+    equipmentGloveIndex: 
+    equipmentBootsIndex: 
+    equipmentAccessoryIndex: 
   playerConsumableItemList:
   - itemName: ExpPotion01
-    itemCount: 775
+    itemCount: 825
   - itemName: ExpPotion02
-    itemCount: 338
+    itemCount: 353
   - itemName: ExpPotion03
-    itemCount: 0
+    itemCount: 11
   - itemName: ExpPotion04
-    itemCount: 0
+    itemCount: 2
   - itemName: ExpPotion05
-    itemCount: 0
+    itemCount: 1
   playerEquipmentItemList:
   - index: 1752132639678_Armor_01_d9564ec5
     itemIndex: Armor_01
@@ -56,8 +65,44 @@ MonoBehaviour:
   - index: 1752135974573_Armor_01_897b428d
     itemIndex: Armor_01
     equipmentCharacterName: 
+  - index: 1752277157514_Armor_01_6be46a6f
+    itemIndex: Armor_01
+    equipmentCharacterName: 
+  - index: 1752290582133_Armor_01_47c80ba6
+    itemIndex: Armor_01
+    equipmentCharacterName: 
+  - index: 1752290947206_Armor_01_1d281e8c
+    itemIndex: Armor_01
+    equipmentCharacterName: 
+  - index: 1752291040399_Armor_01_74b47f35
+    itemIndex: Armor_01
+    equipmentCharacterName: 
+  - index: 1752291116720_Armor_01_6e71198b
+    itemIndex: Armor_01
+    equipmentCharacterName: 
+  - index: 1752293033472_Armor_02_4ca94d26
+    itemIndex: Armor_01
+    equipmentCharacterName: 
+  - index: 1752293052384_Boots_01_fa98b1ea
+    itemIndex: Boots_01
+    equipmentCharacterName: 
+  - index: 1752293052384_Helmet_01_da27eff3
+    itemIndex: Helmet_01
+    equipmentCharacterName: 
+  - index: 1752293517103_Glove_01_e37e7abc
+    itemIndex: Glove_01
+    equipmentCharacterName: 
+  - index: 1752293517104_Helmet_01_6814c319
+    itemIndex: Helmet_01
+    equipmentCharacterName: 
+  - index: 1752293517104_Weapon_01_7903e017
+    itemIndex: Weapon_01
+    equipmentCharacterName: 
   playerClearStageList:
   - 1-1
+  - 1-2
+  - 1-3
+  - 1-4
   frontMiddleCharacterName: 
   frontRightCharacterName: 
   frontLeftCharacterName: Hiro

@@ -13,15 +13,12 @@ MonoBehaviour:
   m_Name: Eli
   m_EditorClassIdentifier: 
   characterName: "\uC5D8\uB9AC"
-  addressValue:
-    characterAnimationName: HeroEli
-    attackProjectileAddress: Eli_Attack_Projectile
-    attackHitEffectAddress: BloodExplosionRound
-    skillProjectileAddress: Eli_Attack_Projectile
-    skillHitEffectAddress: BloodExplosionRound
+  characterAttackName: DefaultRangeAttack
+  characterSkillName: EliSkill
+  characterAnimationName: HeroEli
   stat:
-    healthPoint: 100
-    manaPoint: 50
+    healthPoint: 1000000
+    manaPoint: 10
     attackDamage: 20
     movementSpeed: 4.5
     attackRange: 10

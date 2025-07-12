@@ -4,7 +4,11 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting
 {
     public interface ISkillTargeting
     {
-        public IEnumerable<CharacterController> TargetingCharacterList(List<CharacterController> compareTargetList,
-            CharacterController currentTarget = null);
+        public List<CharacterController> GetTargetingCharacterList
+        (
+            CharacterController userCharacter,
+            List<CharacterController> allCharacterList,
+            List<CharacterController> currentTargetList
+        );
     }
 }

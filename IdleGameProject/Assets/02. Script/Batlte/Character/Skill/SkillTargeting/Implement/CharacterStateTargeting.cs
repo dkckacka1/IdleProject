@@ -9,24 +9,26 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
     {
         private readonly bool _isNot;
         private readonly CharacterStateTargetingData.CharacterStateTargetType _characterStateTargetType;
-        
-        public CharacterStateTargeting(CharacterController useSkillController, CharacterStateTargetingData targetingDataData) : base(useSkillController, targetingDataData)
+
+        public CharacterStateTargeting(CharacterController useSkillController,
+            CharacterStateTargetingData targetingDataData) : base(useSkillController, targetingDataData)
         {
             _isNot = targetingDataData.isNot;
             _characterStateTargetType = targetingDataData.characterStateTargetType;
         }
 
-        public override IEnumerable<CharacterController> TargetingCharacterList(List<CharacterController> compareTargetList, CharacterController currentTarget = null)
+        public override List<CharacterController> GetTargetingCharacterList(CharacterController userCharacter,
+            List<CharacterController> allCharacterList, List<CharacterController> currentTargetList)
         {
-            var checkController = GetCheckController(currentTarget);
+            var checkList = GetCheckList(allCharacterList, currentTargetList);
 
             return _characterStateTargetType switch
             {
-                CharacterStateTargetingData.CharacterStateTargetType.IsLive => GetIsLive(compareTargetList),
+                CharacterStateTargetingData.CharacterStateTargetType.IsLive => GetIsLive(checkList).ToList(),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
-        
+
         private IEnumerable<CharacterController> GetIsLive(List<CharacterController> compareTargetList)
         {
             return compareTargetList.Where(target => target.StatSystem.IsLive == !_isNot);

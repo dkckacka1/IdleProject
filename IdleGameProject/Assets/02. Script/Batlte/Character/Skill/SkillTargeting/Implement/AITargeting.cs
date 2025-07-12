@@ -13,15 +13,20 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
         {
             _checkAIType = aiTargetingData.targetAIType;
         }
-        
-        public override IEnumerable<CharacterController> TargetingCharacterList(List<CharacterController> compareTargetList,
-            CharacterController currentTarget = null)
+        public override List<CharacterController> GetTargetingCharacterList(CharacterController userCharacter, List<CharacterController> allCharacterList, List<CharacterController> currentTargetList)
         {
-            var targetAIType = _checkAIType == CharacterAIType.Ally ? GetCheckController(currentTarget).GetAiType :
-                GetCheckController(currentTarget).GetAiType == CharacterAIType.Ally ? CharacterAIType.Enemy :
-                CharacterAIType.Ally;
+            var targetAIType = GetTargetAIType(UseSkillController);
 
-            return compareTargetList.Where(target => target.GetAiType == targetAIType);
+            var checkList = GetCheckList(allCharacterList, currentTargetList);
+            
+            return checkList.Where(target => target.GetAiType == targetAIType).ToList();
+        }
+        
+        private CharacterAIType GetTargetAIType(CharacterController controller)
+        {
+            return _checkAIType == CharacterAIType.Ally
+                ? UseSkillController.characterAI.GetAllyType
+                : UseSkillController.characterAI.GetEnemyType;
         }
     }
 }

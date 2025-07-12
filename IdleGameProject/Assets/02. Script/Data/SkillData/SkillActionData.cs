@@ -88,6 +88,9 @@ namespace IdleProject.Data.SkillData
     public class RangeTargetingData : SkillTargetingData
     {
         public float skillRange;
+        public bool distinct;
+        public bool hasSelf;
+        public bool isSelf;
     }
 
     [System.Serializable]

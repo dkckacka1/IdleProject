@@ -6,14 +6,14 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting
     public abstract class SkillTargeting : ISkillTargeting
     {
         private readonly bool _isCheckFromTarget;
-        private readonly CharacterController _useSkillController;
+        protected readonly CharacterController UseSkillController;
 
-        protected CharacterController GetCheckController(CharacterController target) =>
-            target is not null && _isCheckFromTarget ? target : _useSkillController;
+        protected List<CharacterController> GetCheckList(List<CharacterController> allCharacterList,
+            List<CharacterController> targetList) => _isCheckFromTarget ? targetList : allCharacterList;
 
         protected SkillTargeting(CharacterController useSkillController, SkillTargetingData targetingDataData)
         {
-            _useSkillController = useSkillController;
+            UseSkillController = useSkillController;
             _isCheckFromTarget = targetingDataData.isCheckFromTarget;
         }
 
@@ -28,8 +28,7 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting
                 _ => null
             };
         }
-        
-        public abstract IEnumerable<CharacterController> TargetingCharacterList(List<CharacterController> compareTargetList,
-            CharacterController currentTarget = null);
+
+        public abstract List<CharacterController> GetTargetingCharacterList(CharacterController userCharacter, List<CharacterController> allCharacterList, List<CharacterController> currentTargetList);
     }
 }

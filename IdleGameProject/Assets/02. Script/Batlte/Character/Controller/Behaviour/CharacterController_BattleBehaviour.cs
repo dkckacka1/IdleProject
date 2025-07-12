@@ -56,9 +56,6 @@ namespace IdleProject.Battle.Character
 
         public virtual void Hit(ITakeDamagedAble iTakeDamage, float attackDamage)
         {
-            if (IsTargetInsideAttackRange(this, iTakeDamage) is false)
-                return;
-
             if (iTakeDamage.CanTakeDamage)
             {
                 iTakeDamage.TakeDamage(attackDamage);

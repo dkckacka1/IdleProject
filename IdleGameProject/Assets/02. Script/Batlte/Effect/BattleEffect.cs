@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Engine.Core.EventBus;
 using IdleProject.Battle.Character;
 using IdleProject.Core;
@@ -7,6 +8,7 @@ using IdleProject.Core.ObjectPool;
 using IdleProject.Core.Sound;
 using UnityEngine;
 using UnityEngine.Events;
+using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.Effect
 {
@@ -14,21 +16,11 @@ namespace IdleProject.Battle.Effect
     {
         private List<ParticleSystem> _particleList;
 
-        public UnityEvent<ITakeDamagedAble> effectTriggerEnterEvent = null;
         public UnityEvent onBattleEvent = null;
         public UnityEvent releaseEvent = null;
 
         private BattleManager _battleManager;
 
-        private void OnTriggerEnter(Collider other)
-        {
-            var takeDamageAble = other.GetComponent<ITakeDamagedAble>();
-            if (takeDamageAble is not null)
-            {
-                effectTriggerEnterEvent?.Invoke(takeDamageAble);
-            }
-        }
-        
         private void OnParticleSystemStopped()
         {
             var poolableObject = GetComponent<PoolableObject>();
@@ -71,6 +63,34 @@ namespace IdleProject.Battle.Effect
         private void OnBattleEvent()
         {
             onBattleEvent?.Invoke();
+        }
+
+        public void LoopEffect(float loopTime)
+        {
+            _particleList.ForEach(particle =>
+            {
+                var particleMain = particle.main;
+                particleMain.loop = true;
+            });
+            
+            LoopTimer(loopTime).Forget();
+            return;
+
+            async UniTaskVoid LoopTimer(float time)
+            {
+                await _battleManager.GetBattleTimer(time);
+                var poolableObject = GetComponent<PoolableObject>();
+                ObjectPoolManager.Instance.Release(poolableObject);
+            }
+        }
+
+        public void OneShotEffect()
+        {
+            _particleList.ForEach(particle =>
+            {
+                var particleMain = particle.main;
+                particleMain.loop = false;
+            });
         }
 
 

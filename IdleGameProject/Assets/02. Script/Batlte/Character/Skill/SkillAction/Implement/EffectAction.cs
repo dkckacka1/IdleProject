@@ -14,8 +14,6 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
 
         private readonly bool _isUseCharacterEffect;
         
-        // TODO 루프 이펙트 만들기
-        
         public EffectAction(SkillEffectData effectData, CharacterController controller) : base(null, controller)
         {
             _effectData = effectData;
@@ -62,6 +60,25 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
             if (_effectData.canRotate)
             {
                 effect.transform.rotation = Controller.transform.rotation;
+            }
+            
+            BindEffectData(effect, effectTarget, _effectData.offsetType);
+        }
+
+        private void BindEffectData(BattleEffect effect, CharacterController target, CharacterOffsetType offsetType)
+        {
+            switch (_effectData)
+            {
+                case OneShotEffect oneShotEffect:
+                    effect.OneShotEffect();
+                    break;
+                case LoopEffect loopEffect:
+                    effect.LoopEffect(loopEffect.duration);
+                    effect.onBattleEvent.AddListener(() =>
+                    {
+                        effect.transform.position = target.offset.GetOffsetTransform(offsetType).position;
+                    });
+                    break;
             }
         }
     }

@@ -1,5 +1,5 @@
-using Cysharp.Threading.Tasks;
 using System;
+using Cysharp.Threading.Tasks;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
 using IdleProject.Core.GameData;

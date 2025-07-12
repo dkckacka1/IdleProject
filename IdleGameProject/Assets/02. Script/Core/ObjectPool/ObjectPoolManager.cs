@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Engine.Util;
-using System.Collections.Generic;
 using IdleProject.Core.Resource;
 using UnityEngine;
 using UnityEngine.SceneManagement;

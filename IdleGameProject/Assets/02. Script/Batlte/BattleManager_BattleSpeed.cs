@@ -1,8 +1,7 @@
-using UnityEngine.Events;
-
 using Cysharp.Threading.Tasks;
 using Engine.Core.Time;
 using IdleProject.Core.GameData;
+using UnityEngine.Events;
 
 namespace IdleProject.Battle
 {

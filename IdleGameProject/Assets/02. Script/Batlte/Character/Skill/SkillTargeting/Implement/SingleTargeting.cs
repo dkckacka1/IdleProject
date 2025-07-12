@@ -1,5 +1,8 @@
 ﻿using System;
-using IdleProject.Data.StaticData.Skill;
+using System.Collections.Generic;
+using System.Linq;
+using IdleProject.Data.SkillData;
+using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
 {
@@ -12,12 +15,15 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
             _targetType = targetingDataData.singleTargetType;
         }
 
-        public override bool TargetingCharacterList(CharacterController compareTarget, CharacterController currentTarget = null)
+        public override IEnumerable<CharacterController> TargetingCharacterList(List<CharacterController> compareTargetList,
+            CharacterController currentTarget = null)
         {
+            var checkController = GetCheckController(currentTarget);
+            
             return _targetType switch
             {
-                SingleTargetingData.SingleTargetType.Self => CheckController(currentTarget),
-                SingleTargetingData.SingleTargetType.NealyController => CheckController(currentTarget),
+                SingleTargetingData.SingleTargetType.Self => new List<CharacterController> {GetCheckController(currentTarget)},
+                SingleTargetingData.SingleTargetType.NealyController => compareTargetList.OrderBy(target => Vector3.Distance(target, checkController)).Take(1),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

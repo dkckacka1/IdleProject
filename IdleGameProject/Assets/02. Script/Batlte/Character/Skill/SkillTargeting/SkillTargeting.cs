@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using IdleProject.Data.StaticData.Skill;
+using IdleProject.Data.SkillData;
 
 namespace IdleProject.Battle.Character.Skill.SkillTargeting
 {
@@ -8,7 +8,7 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting
         private readonly bool _isCheckFromTarget;
         private readonly CharacterController _useSkillController;
 
-        protected CharacterController CheckController(CharacterController target) =>
+        protected CharacterController GetCheckController(CharacterController target) =>
             target is not null && _isCheckFromTarget ? target : _useSkillController;
 
         protected SkillTargeting(CharacterController useSkillController, SkillTargetingData targetingDataData)
@@ -22,12 +22,14 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting
             return targetingData switch
             {
                 AITargetingData aiTargeting => new Implement.AITargeting(useSkillController, aiTargeting),
-                RangeTargetingData rangeTargeting => new Implement.RangeTarget(useSkillController, rangeTargeting),
+                CharacterStateTargetingData characterStateTargetingData => new Implement.CharacterStateTargeting(useSkillController, characterStateTargetingData),
+                RangeTargetingData rangeTargeting => new Implement.RangeTargeting(useSkillController, rangeTargeting),
                 SingleTargetingData singleTargeting => new Implement.SingleTargeting(useSkillController, singleTargeting),
                 _ => null
             };
         }
         
-        public abstract bool TargetingCharacterList(CharacterController compareTarget, CharacterController currentTarget = null);
+        public abstract IEnumerable<CharacterController> TargetingCharacterList(List<CharacterController> compareTargetList,
+            CharacterController currentTarget = null);
     }
 }

@@ -1,6 +1,6 @@
-using Engine.Util;
 using System.Collections.Generic;
 using System.Linq;
+using Engine.Util;
 using IdleProject.Core.UI.Loading;
 using IdleProject.Lobby.UI;
 using UnityEngine;

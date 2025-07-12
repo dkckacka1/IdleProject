@@ -1,26 +1,29 @@
 using System.Collections.Generic;
+using Engine.Util.Extension;
 using IdleProject.Battle.Character.Skill.SkillAction;
+using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill
 {
-    public class CharacterSkill
+    public class CharacterSkill 
     {
-        private readonly CharacterController _controller;
+        private readonly IEnumerator<ExecuteSkill> _skillActionList;
 
-        private readonly List<ISkillAction> _skillActions;
-
-        public CharacterSkill(List<SkillAction.SkillAction> skillActions)
+        public CharacterSkill(List<ExecuteSkill> skillActionList)
         {
-            _skillActions = new List<ISkillAction>(skillActions);
+            _skillActionList = skillActionList.ListLoop().GetEnumerator();
         }
 
         // 스킬을 사용한다.
         public void ExecuteSkill()
         {
-            // 각 액션을 실행
-            foreach (var action in _skillActions)
+            // 무한 순회
+            if (_skillActionList is not null && _skillActionList.MoveNext())
             {
-                action.ActionExecute();
+                var currentSkill = _skillActionList.Current;
+            
+                // 각 액션을 실행
+                currentSkill.Execute();
             }
         }
     }

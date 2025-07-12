@@ -1,10 +1,10 @@
 using System;
-using UnityEngine;
-using IdleProject.Core;
-using Sirenix.OdinInspector;
-using IdleProject.Battle;
 using Engine.Util;
+using IdleProject.Battle;
+using IdleProject.Core;
 using IdleProject.Data.Player;
+using Sirenix.OdinInspector;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TestManager : SingletonMonoBehaviour<TestManager>

@@ -15,9 +15,9 @@
 //use UNITY_CHANGE3 for unity 5.3 (fix for new SceneManger system)
 //use UNITY_CHANGE4 for unity 2018.3 (Networking system)
 
-using UnityEngine;
 using System.Collections;
 using System.Threading;
+using UnityEngine;
 #if UNITY_CHANGE3
 using UnityEngine.SceneManagement;
 #endif

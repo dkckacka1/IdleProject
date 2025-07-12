@@ -4,7 +4,7 @@ using System.Linq;
 using IdleProject.Battle.Character.Skill.SkillAction.Implement;
 using IdleProject.Battle.Character.Skill.SkillTargeting;
 using IdleProject.Core;
-using IdleProject.Data.StaticData.Skill;
+using IdleProject.Data.SkillData;
 
 namespace IdleProject.Battle.Character.Skill.SkillAction
 {
@@ -16,27 +16,19 @@ namespace IdleProject.Battle.Character.Skill.SkillAction
         protected readonly Func<List<CharacterController>> GetTargetList;
 
         
-        protected SkillAction(SkillActionData actionData, CharacterController controller)
+        protected SkillAction(SkillActionData skillActionData, CharacterController controller)
         {
             Controller = controller;
 
-            GetTargetList = () => GetTarget(actionData.skillTargetList.Select(targetingData =>
+            GetTargetList = () => GetTarget(skillActionData.skillTargetList.Select(targetingData =>
                 SkillTargeting.SkillTargeting.GetSkillTargeting(controller, targetingData)));
         }
-        
-        
-        protected SkillAction(SkillActionData actionData, CharacterController controller, CharacterController currentTarget) : this(actionData, controller)
-        {
-        }
-
-        
         
         private List<CharacterController> GetTarget(IEnumerable<ISkillTargeting> skillTargetList)
         {
             var characterList = GameManager.GetCurrentSceneManager<BattleManager>().GetCharacterList();
 
-            return skillTargetList.Aggregate(characterList, (current, skillTarget) => current.Where(target => skillTarget.TargetingCharacterList(target, CurrentTarget))
-                .ToList());
+            return skillTargetList.Aggregate(characterList, (current, targeting) => targeting.TargetingCharacterList(current, CurrentTarget).ToList());
         }
 
         
@@ -49,19 +41,19 @@ namespace IdleProject.Battle.Character.Skill.SkillAction
         public abstract void ActionExecute();
 
         
-        public static ISkillAction GetSkillAction(SkillActionData actionData, CharacterController controller, CharacterController currentTarget)
+        public static ISkillAction GetSkillAction(SkillActionData skillActionData, CharacterController controller)
         {
-            return actionData switch
+            return skillActionData switch
             {
                 // 공격 수행
-                AttackActionData attackActionData => throw new NotImplementedException(),
+                AttackSkillActionData attackActionData => new AttackAction(attackActionData, controller),
                 // 버프 발동
-                BuffActionData buffActionData => throw new NotImplementedException(),
+                BuffSkillActionData buffActionData => throw new NotImplementedException(),
                 // 이펙트 호출
-                EffectActionData effectActionData => throw new NotImplementedException(),
+                EffectSkillActionData effectActionData => new EffectAction(effectActionData, controller),
                 // 투사체 발사
-                ProjectileActionData projectileActionData => new ProjectileAction(projectileActionData, controller,currentTarget),
-                _ => throw new ArgumentOutOfRangeException(nameof(actionData))
+                ProjectileSkillActionData projectileActionData => new ProjectileAction(projectileActionData, controller),
+                _ => throw new ArgumentOutOfRangeException(nameof(skillActionData))
             };
         }
 

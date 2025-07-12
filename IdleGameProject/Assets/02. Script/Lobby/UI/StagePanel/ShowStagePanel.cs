@@ -117,7 +117,7 @@ namespace IdleProject.Lobby.UI.StagePanel
         [BoxGroup("Creator"), Button]
         private void CreateChapterData()
         {
-            StaticDataCreator.CreateStaticData<StaticChapterData>("ChapterData", chapterData =>
+            ScriptableObjectUtil.CreateStaticData<StaticChapterData>("ChapterData", chapterData =>
             {
                 chapterData.chapterImage = backgroundImage.sprite.name;
 
@@ -134,7 +134,7 @@ namespace IdleProject.Lobby.UI.StagePanel
 
                     ++stageIndex;
                     var index = stageIndex;
-                    StaticDataCreator.CreateStaticData<StaticStageData>($"StageData {stageIndex}",
+                    ScriptableObjectUtil.CreateStaticData<StaticStageData>($"StageData {stageIndex}",
                         stageData => { stageData.stageIndex = index; });
                 }
             });

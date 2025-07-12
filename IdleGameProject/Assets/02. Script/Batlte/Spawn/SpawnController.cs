@@ -2,23 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using Engine.Core;
 using Engine.Util.Extension;
-using UnityEngine;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Character;
 using IdleProject.Battle.Character.Skill;
-using IdleProject.Battle.Effect;
-using IdleProject.Battle.Projectile;
+using IdleProject.Battle.Character.Skill.SkillAction;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
-using IdleProject.Core.ObjectPool;
 using IdleProject.Core.Resource;
 using IdleProject.Data.DynamicData;
 using IdleProject.Data.StaticData;
-using IdleProject.Data.StaticData.Skill;
-using IdleProject.Util;
+using UnityEngine;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.Spawn
@@ -202,6 +197,18 @@ namespace IdleProject.Battle.Spawn
 
         private CharacterSkill GetSkill(CharacterController controllerInstance, StaticSkillData data)
         {
+            var executeSkillList = new List<ExecuteSkill>();
+            foreach (var executeData in data.executeDataList)
+            {
+                var actionList = executeData.skillActionDataList.Select(action => SkillAction.GetSkillAction(action, controllerInstance)).ToList();
+                var skillExecute = new ExecuteSkill(actionList);
+                
+                executeSkillList.Add(skillExecute);
+            }
+            
+            return new CharacterSkill(executeSkillList);
+            
+            
             return null;
             // ISkillAction skillAction = data.skillActionType switch
             // {
@@ -296,33 +303,6 @@ namespace IdleProject.Battle.Spawn
 
             uiController.Initialized(data, controller.StatSystem);
             controller.characterUI = uiController;
-        }
-
-
-        private Func<T> GetPoolable<T>(PoolableType poolableType, string address) where T : IPoolable
-        {
-            if (string.IsNullOrEmpty(address)) return null;
-
-            if (ObjectPoolManager.Instance.HasPool(address) is false)
-            {
-                CreatePool(poolableType, address);
-            }
-
-            return () => ObjectPoolManager.Instance.Get<T>(address);
-        }
-
-        private void CreatePool(PoolableType poolableType, string address)
-        {
-            if (string.IsNullOrEmpty(address)) return;
-
-            var parent = poolableType switch
-            {
-                PoolableType.BattleEffect => _battleManager.effectParent,
-                PoolableType.Projectile => _battleManager.projectileParent,
-                _ => null
-            };
-
-            ObjectPoolManager.Instance.CreatePool(address, parent);
         }
 
         #endregion

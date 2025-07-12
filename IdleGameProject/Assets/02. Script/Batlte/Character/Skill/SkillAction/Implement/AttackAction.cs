@@ -1,5 +1,5 @@
 ﻿using IdleProject.Core;
-using IdleProject.Data.StaticData.Skill;
+using IdleProject.Data.SkillData;
 
 namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
 {
@@ -7,11 +7,15 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
     {
         private bool _canCritical;
         private readonly float _attackValue;
+
+        private EffectAction _hitEffect;
         
-        public AttackAction(AttackActionData actionData, CharacterController controller) : base(actionData, controller)
+        public AttackAction(AttackSkillActionData skillActionData, CharacterController controller) : base(skillActionData, controller)
         {
-            _canCritical = actionData.canCritical;
-            _attackValue = actionData.attackValue;
+            _canCritical = skillActionData.canCritical;
+            _attackValue = skillActionData.attackValue;
+
+            _hitEffect = new EffectAction(skillActionData.hitEffect, controller);
         }
 
         public override void ActionExecute()
@@ -21,6 +25,12 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
             foreach (var target in GetTargetList.Invoke())
             {
                 Controller.Hit(target, attackDamage);
+
+                if (_hitEffect is not null)
+                {
+                    _hitEffect.SetTarget(target);
+                    _hitEffect.ActionExecute();
+                }
             }
         }
     }

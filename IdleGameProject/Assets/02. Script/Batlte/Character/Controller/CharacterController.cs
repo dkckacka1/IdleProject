@@ -1,14 +1,14 @@
+using System;
+using Engine.Core.EventBus;
 using IdleProject.Battle.AI;
+using IdleProject.Battle.Character.EventGroup;
+using IdleProject.Battle.Character.Skill;
 using IdleProject.Battle.Effect;
+using IdleProject.Battle.Projectile;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
-using IdleProject.Battle.Projectile;
-using System;
 using UnityEngine;
 using UnityEngine.AI;
-using IdleProject.Battle.Character.Skill;
-using Engine.Core.EventBus;
-using IdleProject.Battle.Character.EventGroup;
 
 namespace IdleProject.Battle.Character
 {

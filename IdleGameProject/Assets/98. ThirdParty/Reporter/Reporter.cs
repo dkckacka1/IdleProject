@@ -15,15 +15,15 @@
 //use UNITY_CHANGE3 for unity 5.3 (fix for new SceneManger system)
 //use UNITY_CHANGE4 for unity 2018.3 (Networking system)
 
-using UnityEngine;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 #if UNITY_CHANGE3
-using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 #endif
 #if UNITY_CHANGE4
-using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 #endif
 
 

@@ -1,8 +1,8 @@
 using System.Linq;
-using UnityEngine;
 using IdleProject.Battle.AI.State;
 using IdleProject.Battle.Character.EventGroup;
 using IdleProject.Core;
+using UnityEngine;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.AI

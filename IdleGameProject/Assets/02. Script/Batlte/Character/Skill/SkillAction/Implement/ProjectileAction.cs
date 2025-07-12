@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using IdleProject.Data.StaticData.Skill;
+using IdleProject.Data.SkillData;
 
 namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
 {
@@ -8,7 +7,7 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
     {
         private List<ISkillAction> _onHitActionList;
         
-        public ProjectileAction(ProjectileActionData actionData, CharacterController controller, CharacterController currentTarget) : base(actionData, controller, currentTarget)
+        public ProjectileAction(Data.SkillData.ProjectileSkillActionData skillActionData, CharacterController controller) : base(skillActionData, controller)
         {
             // TODO
         }

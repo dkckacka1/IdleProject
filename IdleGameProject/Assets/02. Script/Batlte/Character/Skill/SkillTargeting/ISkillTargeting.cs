@@ -4,6 +4,7 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting
 {
     public interface ISkillTargeting
     {
-        public bool TargetingCharacterList(CharacterController compareTarget, CharacterController currentTarget = null);
+        public IEnumerable<CharacterController> TargetingCharacterList(List<CharacterController> compareTargetList,
+            CharacterController currentTarget = null);
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using Engine.Core.Time;
 using IdleProject.Battle.Character;
 using IdleProject.Core;
+using IdleProject.Core.ObjectPool;
 using Sirenix.OdinInspector;
 
 namespace IdleProject.Battle
@@ -73,6 +74,32 @@ namespace IdleProject.Battle
             }
             
             SetBattleResultState();
+        }
+        
+        public Func<T> GetPoolable<T>(PoolableType poolableType, string address) where T : IPoolable
+        {
+            if (string.IsNullOrEmpty(address)) return null;
+
+            if (ObjectPoolManager.Instance.HasPool(address) is false)
+            {
+                CreatePool(poolableType, address);
+            }
+
+            return () => ObjectPoolManager.Instance.Get<T>(address);
+        }
+
+        private void CreatePool(PoolableType poolableType, string address)
+        {
+            if (string.IsNullOrEmpty(address)) return;
+
+            var parent = poolableType switch
+            {
+                PoolableType.BattleEffect => effectParent,
+                PoolableType.Projectile => projectileParent,
+                _ => null
+            };
+
+            ObjectPoolManager.Instance.CreatePool(address, parent);
         }
     }
 }

@@ -1,44 +1,36 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using IdleProject.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace IdleProject.Data.StaticData.Skill
+namespace IdleProject.Data.SkillData
 {
-    [CreateAssetMenu(fileName = "SkillData", menuName = "Scriptable Objects/SkillData")]
-    public class StaticSkillData : StaticData
-    {
-        public string skillName;
-        public string skillDesc;
-
-        [SerializeReference] public List<SkillActionData> executeDataList;
-    }
-
     [System.Serializable]
     public abstract class SkillActionData
     {
         [SerializeReference] 
-        public List<SkillTargetingData> skillTargetList;
+        public List<SkillTargetingData> skillTargetList = new List<SkillTargetingData>();
     } 
     
     [System.Serializable]
-    public class EffectActionData : SkillActionData
+    public class EffectSkillActionData : SkillActionData
     {
         [SerializeReference] 
         public SkillEffectData effectData;
     }
 
     [System.Serializable]
-    public class AttackActionData : SkillActionData
+    public class AttackSkillActionData : SkillActionData
     {
         [PropertySpace(10)]
         public bool canCritical;
-        [FormerlySerializedAs("attackDamage")] public float attackValue;
+        public float attackValue;
+        public OneShotEffect hitEffect;
     }
     
     [System.Serializable]
-    public class ProjectileActionData : SkillActionData
+    public class ProjectileSkillActionData : SkillActionData
     {
         [PropertySpace(10)]
         public string projectileObjectName;
@@ -52,7 +44,7 @@ namespace IdleProject.Data.StaticData.Skill
     }
 
     [System.Serializable]
-    public class BuffActionData : SkillActionData
+    public class BuffSkillActionData : SkillActionData
     {
         [PropertySpace(10)] 
         public CharacterStatType buffStatType;
@@ -96,6 +88,18 @@ namespace IdleProject.Data.StaticData.Skill
     public class RangeTargetingData : SkillTargetingData
     {
         public float skillRange;
+    }
+
+    [System.Serializable]
+    public class CharacterStateTargetingData : SkillTargetingData
+    {
+        public enum CharacterStateTargetType
+        {
+            IsLive,
+        }
+        
+        public bool isNot;
+        public CharacterStateTargetType characterStateTargetType;
     }
 
     [System.Serializable]

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace IdleProject.Battle.Character.Skill.SkillAction
+﻿namespace IdleProject.Battle.Character.Skill.SkillAction
 {
     public interface ISkillAction
     {

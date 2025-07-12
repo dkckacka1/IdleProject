@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: "\uD788\uB85C"
   characterAttackName: DefaultMeleeAttack
-  characterSkillName: 
+  characterSkillName: HiroSkill
   characterAnimationName: HeroHiro
   stat:
     healthPoint: 200

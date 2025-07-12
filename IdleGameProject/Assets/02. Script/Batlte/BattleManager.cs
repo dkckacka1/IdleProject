@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Engine.Core.EventBus;
+using Engine.Core.Time;
 using Engine.Util.Extension;
 using IdleProject.Battle.Spawn;
 using IdleProject.Core;
@@ -134,8 +135,12 @@ namespace IdleProject.Battle
             switch (type)
             {
                 case BattleStateType.Ready:
+                    break;
                 case BattleStateType.Battle:
+                    TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, false);
+                    break;
                 case BattleStateType.Skill:
+                    TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, true);
                     break;
                 case BattleStateType.Win:
                     Win();

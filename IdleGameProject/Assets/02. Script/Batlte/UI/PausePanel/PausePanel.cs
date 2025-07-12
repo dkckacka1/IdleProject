@@ -71,7 +71,7 @@ namespace IdleProject.Battle.UI
 
         private void ClosePausePopup()
         {
-            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(BattleGameStateType.Play);
+            BattleManager.Instance<BattleManager>().GameStateEventBus.ChangeEvent(BattleGameStateType.Play);
             UIManager.Instance.GetUI<PausePanel>().ClosePanel();
         }
     }

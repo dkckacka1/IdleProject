@@ -34,7 +34,7 @@ namespace IdleProject.Battle.Spawn
 
         public void Initialize()
         {
-            _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();
+            _battleManager = BattleManager.Instance<BattleManager>();
 
             playerSpawnInfo.spawnFormation.SetDefaultSpawn(CharacterAIType.Ally);
             enemySpawnInfo.spawnFormation.SetDefaultSpawn(CharacterAIType.Enemy);

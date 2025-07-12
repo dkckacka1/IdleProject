@@ -27,7 +27,7 @@ namespace IdleProject.Battle.AI.State
 
         private bool CanUseSKill()
         {
-            return GameManager.GetCurrentSceneManager<BattleManager>().IsAnyCharacterUsingSkill is false &&
+            return BattleManager.Instance<BattleManager>().IsAnyCharacterUsingSkill is false &&
                    Controller.HasSkill && Controller.StatSystem.CanUseSkill && Controller.isNowSkill is false;
         }
     }

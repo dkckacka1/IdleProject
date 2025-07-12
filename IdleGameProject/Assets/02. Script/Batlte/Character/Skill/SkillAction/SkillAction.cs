@@ -37,7 +37,7 @@ namespace IdleProject.Battle.Character.Skill.SkillAction
         
         private List<CharacterController> GetTarget(IEnumerable<ISkillTargeting> skillTargetList, CharacterController targetController)
         {
-            var characterList = GameManager.GetCurrentSceneManager<BattleManager>().GetCharacterList();
+            var characterList = BattleManager.Instance<BattleManager>().GetCharacterList();
             var targetList = new List<CharacterController>() {targetController};
 
             foreach (var targeting in skillTargetList)

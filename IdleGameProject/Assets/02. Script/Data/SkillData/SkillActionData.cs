@@ -59,6 +59,7 @@ namespace IdleProject.Data.SkillData
     {
         public string effectName;
         public CharacterOffsetType offsetType;
+        public bool canRotate;
     }
 
     [System.Serializable]

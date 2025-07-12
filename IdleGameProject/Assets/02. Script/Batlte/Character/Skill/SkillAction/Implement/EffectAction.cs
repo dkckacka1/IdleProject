@@ -52,7 +52,10 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
                     throw new ArgumentOutOfRangeException();
             }
 
-            effect.transform.rotation = Controller.transform.rotation;
+            if (_effectData.canRotate)
+            {
+                effect.transform.rotation = Controller.transform.rotation;
+            }
         }
     }
 }

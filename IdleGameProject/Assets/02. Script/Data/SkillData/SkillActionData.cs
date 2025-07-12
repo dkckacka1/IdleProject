@@ -26,6 +26,7 @@ namespace IdleProject.Data.SkillData
         [PropertySpace(10)]
         public bool canCritical;
         public float attackValue;
+        [SerializeReference]
         public OneShotEffect hitEffect;
     }
     

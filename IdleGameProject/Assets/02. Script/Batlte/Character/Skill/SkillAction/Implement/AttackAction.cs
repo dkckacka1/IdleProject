@@ -1,5 +1,7 @@
 ﻿using IdleProject.Core;
 using IdleProject.Data.SkillData;
+using Sirenix.OdinInspector.Editor.TypeSearch;
+using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
 {
@@ -8,14 +10,17 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
         private bool _canCritical;
         private readonly float _attackValue;
 
-        private EffectAction _hitEffect;
+        private readonly EffectAction _hitEffect;
         
         public AttackAction(AttackSkillActionData skillActionData, CharacterController controller) : base(skillActionData, controller)
         {
             _canCritical = skillActionData.canCritical;
             _attackValue = skillActionData.attackValue;
 
-            _hitEffect = new EffectAction(skillActionData.hitEffect, controller);
+            if (skillActionData.hitEffect is not null)
+            {
+                _hitEffect = new EffectAction(skillActionData.hitEffect, controller);
+            }
         }
 
         public override void ActionExecute()

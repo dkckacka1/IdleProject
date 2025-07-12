@@ -27,6 +27,8 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
                 SingleTargetingData.SingleTargetType.CurrentTarget => new List<CharacterController> { targetCharacter },
                 SingleTargetingData.SingleTargetType.NealyController => checkList
                     .OrderBy(character => Vector3.Distance(character, UseSkillController)).Take(1).ToList(),
+                SingleTargetingData.SingleTargetType.FarthestController => checkList
+                    .OrderByDescending(character => Vector3.Distance(character, UseSkillController)).Take(1).ToList(),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

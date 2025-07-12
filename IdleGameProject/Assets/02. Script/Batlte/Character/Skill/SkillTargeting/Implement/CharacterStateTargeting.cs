@@ -17,7 +17,7 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
             _characterStateTargetType = targetingDataData.characterStateTargetType;
         }
 
-        public override List<CharacterController> GetTargetingCharacterList(CharacterController userCharacter,
+        public override List<CharacterController> GetTargetingCharacterList(CharacterController targetCharacter,
             List<CharacterController> allCharacterList, List<CharacterController> currentTargetList)
         {
             var checkList = GetCheckList(allCharacterList, currentTargetList);

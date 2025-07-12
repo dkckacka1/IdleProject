@@ -29,6 +29,6 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting
             };
         }
 
-        public abstract List<CharacterController> GetTargetingCharacterList(CharacterController userCharacter, List<CharacterController> allCharacterList, List<CharacterController> currentTargetList);
+        public abstract List<CharacterController> GetTargetingCharacterList(CharacterController targetCharacter, List<CharacterController> allCharacterList, List<CharacterController> currentTargetList);
     }
 }

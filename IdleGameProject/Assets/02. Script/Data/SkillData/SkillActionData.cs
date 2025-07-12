@@ -114,7 +114,7 @@ namespace IdleProject.Data.SkillData
     {
         public enum SingleTargetType
         {
-            Self,
+            CurrentTarget,
             NealyController
         }
 

@@ -17,14 +17,14 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
         }
 
 
-        public override List<CharacterController> GetTargetingCharacterList(CharacterController userCharacter,
+        public override List<CharacterController> GetTargetingCharacterList(CharacterController targetCharacter,
             List<CharacterController> allCharacterList, List<CharacterController> currentTargetList)
         {
             var checkList = GetCheckList(allCharacterList, currentTargetList);
 
             return _targetType switch
             {
-                SingleTargetingData.SingleTargetType.Self => new List<CharacterController> { userCharacter },
+                SingleTargetingData.SingleTargetType.CurrentTarget => new List<CharacterController> { targetCharacter },
                 SingleTargetingData.SingleTargetType.NealyController => checkList
                     .OrderBy(character => Vector3.Distance(character, UseSkillController)).Take(1).ToList(),
                 _ => throw new ArgumentOutOfRangeException()

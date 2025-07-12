@@ -6,7 +6,7 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting
     {
         public List<CharacterController> GetTargetingCharacterList
         (
-            CharacterController userCharacter,
+            CharacterController targetCharacter,
             List<CharacterController> allCharacterList,
             List<CharacterController> currentTargetList
         );

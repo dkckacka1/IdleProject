@@ -21,16 +21,16 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
             _range = targetingDataData.skillRange;
         }
 
-        public override List<CharacterController> GetTargetingCharacterList(CharacterController userCharacter, List<CharacterController> allCharacterList, List<CharacterController> currentTargetList)
+        public override List<CharacterController> GetTargetingCharacterList(CharacterController targetCharacter, List<CharacterController> allCharacterList, List<CharacterController> currentTargetList)
         {
             var checkList = GetCheckList(allCharacterList, currentTargetList);
             var targetList = new List<CharacterController>();
             if (_isSelf)
             {
-                targetList.AddRange(checkList.Where(target => Vector3.Distance(target, userCharacter) < _range));
+                targetList.AddRange(checkList.Where(target => Vector3.Distance(target, targetCharacter) < _range));
                 if (_hasSelf)
                 {
-                    targetList.Add(userCharacter);
+                    targetList.Add(targetCharacter);
                 }
             }
             else

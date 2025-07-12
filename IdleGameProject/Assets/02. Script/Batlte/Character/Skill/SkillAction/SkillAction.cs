@@ -15,34 +15,37 @@ namespace IdleProject.Battle.Character.Skill.SkillAction
         protected CharacterController CurrentTarget;
         protected Func<List<CharacterController>> GetTargetList;
 
+        private readonly IEnumerable<ISkillTargeting> _targetings;
+
         protected SkillAction(SkillActionData skillActionData, CharacterController controller)
         {
             Controller = controller;
 
-            GetTargetList = () => GetTarget(skillActionData.skillTargetList.Select(targetingData =>
-                SkillTargeting.SkillTargeting.GetSkillTargeting(controller, targetingData)));
+            if (skillActionData != null)
+                _targetings = skillActionData.skillTargetList?.Select(targetingData =>
+                    SkillTargeting.SkillTargeting.GetSkillTargeting(controller, targetingData));
+
+            SetTarget(Controller);
         }
-
-        private List<CharacterController> GetTarget(IEnumerable<ISkillTargeting> skillTargetList)
-        {
-            var characterList = GameManager.GetCurrentSceneManager<BattleManager>().GetCharacterList();
-            var targetList = new List<CharacterController>();
-
-            foreach (var targeting in skillTargetList)
-            {
-                targetList = targeting.GetTargetingCharacterList(Controller, characterList, targetList);
-            }
-            
-            
-            return targetList;
-        }
-
 
         public void SetTarget(CharacterController target)
         {
             CurrentTarget = target;
+            GetTargetList = () => GetTarget(_targetings, target);
+        }
 
-            GetTargetList = () => new List<CharacterController> { target };
+        
+        private List<CharacterController> GetTarget(IEnumerable<ISkillTargeting> skillTargetList, CharacterController targetController)
+        {
+            var characterList = GameManager.GetCurrentSceneManager<BattleManager>().GetCharacterList();
+            var targetList = new List<CharacterController>() {targetController};
+
+            foreach (var targeting in skillTargetList)
+            {
+                targetList = targeting.GetTargetingCharacterList(targetController, characterList, targetList);
+            }
+            
+            return targetList;
         }
 
         // 액션을 수행합니다.

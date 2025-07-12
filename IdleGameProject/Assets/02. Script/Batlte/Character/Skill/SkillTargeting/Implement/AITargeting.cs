@@ -13,7 +13,7 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
         {
             _checkAIType = aiTargetingData.targetAIType;
         }
-        public override List<CharacterController> GetTargetingCharacterList(CharacterController userCharacter, List<CharacterController> allCharacterList, List<CharacterController> currentTargetList)
+        public override List<CharacterController> GetTargetingCharacterList(CharacterController targetCharacter, List<CharacterController> allCharacterList, List<CharacterController> currentTargetList)
         {
             var targetAIType = GetTargetAIType(UseSkillController);
 

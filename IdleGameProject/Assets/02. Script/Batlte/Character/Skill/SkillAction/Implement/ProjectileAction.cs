@@ -26,7 +26,7 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
             
             foreach (var onHitAction in skillActionData.projectileOnHitAction)
             {
-                _onHitActionList.Add(SkillAction.GetSkillAction(onHitAction, controller));
+                _onHitActionList.Add(GetSkillAction(onHitAction, controller));
             }
         }
 

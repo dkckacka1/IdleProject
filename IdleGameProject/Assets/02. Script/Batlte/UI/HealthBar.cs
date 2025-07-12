@@ -39,7 +39,7 @@ namespace IdleProject.Battle.UI
         {
             if (_damageAmount > 0)
             {
-                damageFillSlider.value -= _damageAmount / damagePlayDuration * BattleManager.Instance<BattleManager>().GetCurrentBattleSpeed * Time.deltaTime;
+                damageFillSlider.value -= _damageAmount / damagePlayDuration * GameManager.GetCurrentSceneManager<BattleManager>().GetCurrentBattleSpeed * Time.deltaTime;
             }
 
             if(healthFillSlider.value >= damageFillSlider.value)

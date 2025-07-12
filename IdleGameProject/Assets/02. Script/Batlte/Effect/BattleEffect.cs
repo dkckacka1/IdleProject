@@ -38,7 +38,7 @@ namespace IdleProject.Battle.Effect
         public void OnCreateAction()
         {
             _particleList = new List<ParticleSystem>(GetComponentsInChildren<ParticleSystem>());
-            _battleManager = BattleManager.Instance<BattleManager>();
+            _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();
         }
 
         public void OnGetAction()

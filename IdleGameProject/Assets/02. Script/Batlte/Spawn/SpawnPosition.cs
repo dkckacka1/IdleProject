@@ -17,7 +17,7 @@ namespace IdleProject.Battle.Spawn
 
         private void Start()
         {
-            BattleManager.Instance<BattleManager>().BattleStateEventBus.PublishEvent(this);
+            GameManager.GetCurrentSceneManager<BattleManager>().BattleStateEventBus.PublishEvent(this);
         }
 
         public void Initialize(CharacterAIType aiType)

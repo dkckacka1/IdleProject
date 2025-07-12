@@ -23,13 +23,6 @@ namespace IdleProject.Battle.AI
         private ChaseState _chaseState;
         private DeathState _deathState;
         private BattleState _battleState;
-
-        private BattleManager _battleManager;
-
-        private BattleManager BattleManager
-        {
-            get => _battleManager ??= BattleManager.Instance<BattleManager>();
-        }
         
         public CharacterAIType GetAllyType =>
             (aiType == CharacterAIType.Ally) ? CharacterAIType.Ally : CharacterAIType.Enemy;
@@ -82,7 +75,7 @@ namespace IdleProject.Battle.AI
 
         private CharacterController GetNealyTarget()
         {
-            var enemyCharacterList = _battleManager.GetCharacterList(EnemyType()).Where(character => character.StatSystem.IsLive);
+            var enemyCharacterList = GameManager.GetCurrentSceneManager<BattleManager>().GetCharacterList(EnemyType()).Where(character => character.StatSystem.IsLive);
             var target = enemyCharacterList.OrderBy(character => Vector3.Distance(character.transform.position, _controller.transform.position)).FirstOrDefault();
             return target;
         }

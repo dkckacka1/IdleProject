@@ -18,7 +18,7 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
         
         public ProjectileAction(ProjectileSkillActionData skillActionData, CharacterController controller) : base(skillActionData, controller)
         {
-            _getBattleProjectile = BattleManager.Instance<BattleManager>().GetPoolable<BattleProjectile>(PoolableType.BattleEffect, skillActionData.projectileObjectName);
+            _getBattleProjectile = GameManager.GetCurrentSceneManager<BattleManager>().GetPoolable<BattleProjectile>(PoolableType.BattleEffect, skillActionData.projectileObjectName);
             _projectileSpeed = skillActionData.projectileSpeed;
             _projectileMoveType = skillActionData.projectileMoveType;
             _projectileCreateOffset = skillActionData.projectileCreateOffset;

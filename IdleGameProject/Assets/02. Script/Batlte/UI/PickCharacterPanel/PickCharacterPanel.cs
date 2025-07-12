@@ -28,7 +28,7 @@ namespace IdleProject.Battle.UI
         public override void Initialized()
         {
             _mainCamera = Camera.main;
-            _battleManager = BattleManager.Instance<BattleManager>();
+            _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();
 
             var userMainCharacterList = DataManager.Instance.DataController.Player.PlayerFormation.GetCharacterNameList();
             var characterList = DataManager.Instance.DataController.Player.PlayerCharacterDataDic.Values.ToList();

@@ -21,7 +21,7 @@ namespace IdleProject.Battle.Projectile
 
         public void OnCreateAction()
         {
-            _battleManager = BattleManager.Instance<BattleManager>();
+            _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();
         }
 
         public void OnGetAction()

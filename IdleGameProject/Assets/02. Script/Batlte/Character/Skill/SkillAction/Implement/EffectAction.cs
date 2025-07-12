@@ -17,14 +17,14 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
         public EffectAction(SkillEffectData effectData, CharacterController controller) : base(null, controller)
         {
             _effectData = effectData;
-            _getBattleEffect = BattleManager.Instance<BattleManager>().GetPoolable<BattleEffect>(PoolableType.BattleEffect, _effectData.effectName);
+            _getBattleEffect = GameManager.GetCurrentSceneManager<BattleManager>().GetPoolable<BattleEffect>(PoolableType.BattleEffect, _effectData.effectName);
         }
         
         public EffectAction(EffectSkillActionData actionData, CharacterController controller) : base(actionData, controller)
         {
             _effectData = actionData.effectData;
             _isUseCharacterEffect = actionData.isUseCharacterEffect;
-            _getBattleEffect = BattleManager.Instance<BattleManager>().GetPoolable<BattleEffect>(PoolableType.BattleEffect, _effectData.effectName);
+            _getBattleEffect = GameManager.GetCurrentSceneManager<BattleManager>().GetPoolable<BattleEffect>(PoolableType.BattleEffect, _effectData.effectName);
         }
 
         

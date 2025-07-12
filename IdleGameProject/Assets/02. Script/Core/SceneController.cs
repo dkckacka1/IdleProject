@@ -7,9 +7,6 @@ namespace IdleProject.Core
     // 각 씬당 하나씩 존재
     public abstract class SceneController : MonoBehaviour
     {
-        public static T Instance<T>() where T : SceneController =>
-            GameManager.GetCurrentSceneManager<T>(); 
-        
         private void Awake()
         {
             GameManager.SetCurrentSceneManager(this);

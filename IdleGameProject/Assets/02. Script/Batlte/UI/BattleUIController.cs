@@ -40,7 +40,7 @@ namespace IdleProject.Battle.UI
             UIManager.Instance.GetUI<UIButton>("SpeedButton").Button.onClick.AddListener(ChangeBattleSpeed);
             UIManager.Instance.GetUI<UIButton>("PauseButton").Button.onClick.AddListener(PauseGame);
             
-            BattleManager.Instance<BattleManager>().BattleStateEventBus.PublishEvent(this);
+            GameManager.GetCurrentSceneManager<BattleManager>().BattleStateEventBus.PublishEvent(this);
         }
 
         public PlayerCharacterBanner GetPlayerCharacterBanner()
@@ -52,19 +52,19 @@ namespace IdleProject.Battle.UI
         
         private void ChangeBattleSpeed()
         {
-            BattleManager.Instance<BattleManager>().NextBattleSpeed();
+            GameManager.GetCurrentSceneManager<BattleManager>().NextBattleSpeed();
 
             SetSpeedText();
         }
 
         private void SetSpeedText()
         {
-            UIManager.Instance.GetUI<UIText>("BattleSpeedText").Text.text = $"<size=70%>x</size>{BattleManager.Instance<BattleManager>().currentBattleSpeed:N0}";
+            UIManager.Instance.GetUI<UIText>("BattleSpeedText").Text.text = $"<size=70%>x</size>{GameManager.GetCurrentSceneManager<BattleManager>().currentBattleSpeed:N0}";
         }
 
         private void PauseGame()
         {
-            BattleManager.Instance<BattleManager>().GameStateEventBus.ChangeEvent(BattleGameStateType.Pause);
+            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.ChangeEvent(BattleGameStateType.Pause);
             UIManager.Instance.GetUI<PausePanel>().OpenPanel();
         }
 

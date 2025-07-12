@@ -19,18 +19,15 @@ namespace IdleProject.Battle.UI
         [SerializeField] private float floatingYPos = 100f;
 
         private Sequence _floatingSequence;
-
-        private BattleManager _battleManager;
         
         public void OnCreateAction()
         {
             _battleText = GetComponent<TextMeshProUGUI>();
-            _battleManager = BattleManager.Instance<BattleManager>();
         }
 
         public void OnGetAction()
         {
-            _battleManager.GameStateEventBus.PublishEvent(this);
+            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.PublishEvent(this);
         }
 
         public void OnReleaseAction()
@@ -38,7 +35,7 @@ namespace IdleProject.Battle.UI
             _battleText.transform.position = Vector3.zero;
             _floatingSequence = null;
             
-            _battleManager.GameStateEventBus.UnPublishEvent(this);
+            GameManager.GetCurrentSceneManager<BattleManager>().GameStateEventBus.UnPublishEvent(this);
         }
 
         public void ShowText(Vector3 textPosition, string text)
@@ -53,9 +50,9 @@ namespace IdleProject.Battle.UI
             _floatingSequence = DOTween.Sequence();
             
             _floatingSequence.Append(_battleText.transform.DOPunchScale(punchScaleVector,
-                punchDuration / _battleManager.GetCurrentBattleSpeed));
+                punchDuration / GameManager.GetCurrentSceneManager<BattleManager>().GetCurrentBattleSpeed));
             _floatingSequence.Join(_battleText.transform.DOMoveY(transform.position.y + floatingYPos,
-                floatingDuration / _battleManager.GetCurrentBattleSpeed));
+                floatingDuration / GameManager.GetCurrentSceneManager<BattleManager>().GetCurrentBattleSpeed));
 
             _floatingSequence.OnComplete(() =>
             {

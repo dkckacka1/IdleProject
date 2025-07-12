@@ -33,7 +33,7 @@ namespace IdleProject.Battle.Character
         private BattleManager _battleManager;
 
         private BattleManager GetBattleManager =>
-            _battleManager ??= BattleManager.Instance<BattleManager>();
+            _battleManager ??= GameManager.GetCurrentSceneManager<BattleManager>();
 
         private void Awake()
         {

@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea5386ca99c31640adf11f2d98887cc, type: 3}
+  m_Name: HiroSkill
+  m_EditorClassIdentifier: 
+  skillName: 
+  skillDesc: 
+  executeDataList:
+  - {fileID: 2410209933275554001}
+--- !u!114 &2410209933275554001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a399d173e7e48d0b3971069c8fbf493, type: 3}
+  m_Name: HiroSkill_0
+  m_EditorClassIdentifier: 
+  skillActionDataList:
+  - rid: 896382648194433249
+  - rid: 896382648194433250
+  references:
+    version: 2
+    RefIds:
+    - rid: 896382648194433249
+      type: {class: AttackBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList:
+        - rid: 896382648194433252
+        - rid: 896382648194433253
+        - rid: 896382648194433254
+        canCritical: 0
+        attackValue: 2
+        hitEffect:
+          rid: 896382648194433255
+    - rid: 896382648194433250
+      type: {class: SoundBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList: []
+        soundName: SwordSlashMiniWhite
+        volume: 1
+    - rid: 896382648194433252
+      type: {class: AITargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        targetAIType: 1
+    - rid: 896382648194433253
+      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        isNot: 0
+        characterStateTargetType: 0
+    - rid: 896382648194433254
+      type: {class: SingleTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        singleTargetType: 2
+    - rid: 896382648194433255
+      type: {class: OneShotEffect, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        effectName: SwordSlashMiniWhite
+        offsetType: 2
+        canRotate: 1

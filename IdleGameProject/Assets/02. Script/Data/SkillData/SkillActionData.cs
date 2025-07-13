@@ -38,11 +38,13 @@ namespace IdleProject.Data.SkillData
         [PropertySpace(10)]
         public string projectileObjectName;
         public float projectileSpeed;
-        public ProjectileMoveType projectileMoveType;
         public CharacterOffsetType projectileCreateOffset;
         public CharacterOffsetType projectileTargetingOffset;
+        public ProjectileMoveType projectileMoveType;
+        [ShowIf("projectileMoveType", ProjectileMoveType.Howitzer)]
+        public float arcHeight;
             
-        [FormerlySerializedAs("projectileHitExecute")] [SerializeReference]
+        [SerializeReference]
         public List<SkillActionData> projectileOnHitAction;
     }
 

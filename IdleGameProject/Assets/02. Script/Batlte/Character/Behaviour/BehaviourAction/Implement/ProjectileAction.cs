@@ -10,17 +10,17 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 {
     public class ProjectileAction : BehaviourAction
     {
-        private readonly List<IBehaviourAction> _onHitActionList = new List<IBehaviourAction>();
+        private readonly List<IBehaviourAction> _onHitActionList = new();
         private readonly Func<BattleProjectile> _getBattleProjectile;
-        private readonly float _projectileSpeed; 
         private readonly ProjectileMoveType _projectileMoveType;
         private readonly CharacterOffsetType _projectileCreateOffset;
         private readonly CharacterOffsetType _projectileTargetingOffset;
+
+        private readonly IProjectileMovement _projectileMovement;
         
         public ProjectileAction(ProjectileSkillActionData skillActionData, CharacterController controller) : base(skillActionData, controller)
         {
             _getBattleProjectile = GameManager.GetCurrentSceneManager<BattleManager>().GetPoolable<BattleProjectile>(PoolableType.BattleEffect, skillActionData.projectileObjectName);
-            _projectileSpeed = skillActionData.projectileSpeed;
             _projectileMoveType = skillActionData.projectileMoveType;
             _projectileCreateOffset = skillActionData.projectileCreateOffset;
             _projectileTargetingOffset = skillActionData.projectileTargetingOffset;
@@ -29,18 +29,20 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
             {
                 _onHitActionList.Add(GetSkillAction(onHitAction, controller));
             }
+            
+            _projectileMovement = GetProjectileMovement(skillActionData);
         }
 
         public override void ActionExecute(bool isSkillBehaviour)
         {
-            var projectileMovement = SetProjectileMovement();
+            _projectileMovement.Initialize();
             
             foreach (var target in GetTargetList.Invoke())
             {
                 // 대상에게 발사
                 var projectile = CreateBattleProjectile();
                 projectile.target = target.offset.GetOffsetTransform(_projectileTargetingOffset);
-                projectile.Movement = projectileMovement;
+                projectile.Movement = _projectileMovement;
                 projectile.hitEvent.AddListener(() =>
                 {
                     // 맞추면 OnHitAction 발동
@@ -58,21 +60,14 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
             }
         }
 
-        private IProjectileMovement SetProjectileMovement()
+        private IProjectileMovement GetProjectileMovement(ProjectileSkillActionData skillActionData)
         {
-            IProjectileMovement movement = null;
-            switch (_projectileMoveType)
+            return _projectileMoveType switch
             {
-                case ProjectileMoveType.Direct:
-                    movement = new DirectMovement(_projectileSpeed);
-                    break;
-                case ProjectileMoveType.Howitzer:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return movement;
+                ProjectileMoveType.Direct => new DirectMovement(skillActionData.projectileSpeed),
+                ProjectileMoveType.Howitzer => new HowitzerMovement(skillActionData.projectileSpeed, skillActionData.arcHeight),
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
 
         private BattleProjectile CreateBattleProjectile()

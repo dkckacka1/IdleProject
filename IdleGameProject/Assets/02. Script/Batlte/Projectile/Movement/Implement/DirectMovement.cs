@@ -11,6 +11,8 @@ namespace IdleProject.Battle.Projectile.Movement.Implement
             _projectileSpeed = projectileSpeed;
         }
 
+        public void Initialize() {}
+
         public void ProjectileMove(BattleProjectile projectile, Transform targetTransform, float deltaTime)
         {
             projectile.transform.LookAt(targetTransform);

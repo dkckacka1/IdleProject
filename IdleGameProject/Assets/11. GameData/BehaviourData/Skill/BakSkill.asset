@@ -1,0 +1,301 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8621095446737715259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a399d173e7e48d0b3971069c8fbf493, type: 3}
+  m_Name: BakSkill_1
+  m_EditorClassIdentifier: 
+  skillActionDataList:
+  - rid: 896382648194433298
+  - rid: 896382648194433299
+  - rid: 896382648194433300
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 896382648194433298
+      type: {class: EffectBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList: []
+        isUseCharacterEffect: 1
+        effectData:
+          rid: 896382648194433301
+    - rid: 896382648194433299
+      type: {class: SoundBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList: []
+        soundName: SwordSpinWhite
+        volume: 1
+    - rid: 896382648194433300
+      type: {class: AttackBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList:
+        - rid: 896382648194433302
+        - rid: 896382648194433303
+        - rid: 896382648194433304
+        canCritical: 0
+        attackValue: 0.6
+        hitEffect:
+          rid: -2
+    - rid: 896382648194433301
+      type: {class: OneShotEffect, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        effectName: SwordSpinWhite
+        offsetType: 2
+        canRotate: 0
+    - rid: 896382648194433302
+      type: {class: AITargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        targetAIType: 1
+    - rid: 896382648194433303
+      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        isNot: 0
+        characterStateTargetType: 0
+    - rid: 896382648194433304
+      type: {class: RangeTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        skillRange: 3
+        distinct: 1
+        hasSelf: 0
+        isSelf: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea5386ca99c31640adf11f2d98887cc, type: 3}
+  m_Name: BakSkill
+  m_EditorClassIdentifier: 
+  skillName: 
+  skillDesc: 
+  executeDataList:
+  - {fileID: 7435836924704514990}
+  - {fileID: -8621095446737715259}
+  - {fileID: 8912758739414672692}
+  - {fileID: 7324847722351811130}
+--- !u!114 &7324847722351811130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a399d173e7e48d0b3971069c8fbf493, type: 3}
+  m_Name: BakSkill_3
+  m_EditorClassIdentifier: 
+  skillActionDataList:
+  - rid: 896382648194433312
+  - rid: 896382648194433313
+  - rid: 896382648194433314
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 896382648194433312
+      type: {class: EffectBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList: []
+        isUseCharacterEffect: 1
+        effectData:
+          rid: 896382648194433315
+    - rid: 896382648194433313
+      type: {class: SoundBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList: []
+        soundName: SwordSpinWhite
+        volume: 1
+    - rid: 896382648194433314
+      type: {class: AttackBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList:
+        - rid: 896382648194433316
+        - rid: 896382648194433317
+        - rid: 896382648194433318
+        canCritical: 0
+        attackValue: 1
+        hitEffect:
+          rid: -2
+    - rid: 896382648194433315
+      type: {class: OneShotEffect, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        effectName: SwordSpinWhite
+        offsetType: 2
+        canRotate: 0
+    - rid: 896382648194433316
+      type: {class: AITargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        targetAIType: 1
+    - rid: 896382648194433317
+      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        isNot: 0
+        characterStateTargetType: 0
+    - rid: 896382648194433318
+      type: {class: RangeTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        skillRange: 3
+        distinct: 1
+        hasSelf: 0
+        isSelf: 1
+--- !u!114 &7435836924704514990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a399d173e7e48d0b3971069c8fbf493, type: 3}
+  m_Name: BakSkill_0
+  m_EditorClassIdentifier: 
+  skillActionDataList:
+  - rid: 896382648194433291
+  - rid: 896382648194433292
+  - rid: 896382648194433293
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 896382648194433291
+      type: {class: EffectBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList: []
+        isUseCharacterEffect: 1
+        effectData:
+          rid: 896382648194433294
+    - rid: 896382648194433292
+      type: {class: SoundBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList: []
+        soundName: SwordSpinWhite
+        volume: 1
+    - rid: 896382648194433293
+      type: {class: AttackBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList:
+        - rid: 896382648194433295
+        - rid: 896382648194433296
+        - rid: 896382648194433297
+        canCritical: 0
+        attackValue: 0.4
+        hitEffect:
+          rid: -2
+    - rid: 896382648194433294
+      type: {class: OneShotEffect, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        effectName: SwordSpinWhite
+        offsetType: 2
+        canRotate: 0
+    - rid: 896382648194433295
+      type: {class: AITargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        targetAIType: 1
+    - rid: 896382648194433296
+      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        isNot: 0
+        characterStateTargetType: 0
+    - rid: 896382648194433297
+      type: {class: RangeTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        skillRange: 3
+        distinct: 1
+        hasSelf: 0
+        isSelf: 1
+--- !u!114 &8912758739414672692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a399d173e7e48d0b3971069c8fbf493, type: 3}
+  m_Name: BakSkill_2
+  m_EditorClassIdentifier: 
+  skillActionDataList:
+  - rid: 896382648194433305
+  - rid: 896382648194433306
+  - rid: 896382648194433307
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 896382648194433305
+      type: {class: EffectBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList: []
+        isUseCharacterEffect: 1
+        effectData:
+          rid: 896382648194433308
+    - rid: 896382648194433306
+      type: {class: SoundBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList: []
+        soundName: SwordSpinWhite
+        volume: 1
+    - rid: 896382648194433307
+      type: {class: AttackBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList:
+        - rid: 896382648194433309
+        - rid: 896382648194433310
+        - rid: 896382648194433311
+        canCritical: 0
+        attackValue: 0.8
+        hitEffect:
+          rid: -2
+    - rid: 896382648194433308
+      type: {class: OneShotEffect, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        effectName: SwordSpinWhite
+        offsetType: 2
+        canRotate: 0
+    - rid: 896382648194433309
+      type: {class: AITargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        targetAIType: 1
+    - rid: 896382648194433310
+      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        isNot: 0
+        characterStateTargetType: 0
+    - rid: 896382648194433311
+      type: {class: RangeTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        skillRange: 3
+        distinct: 1
+        hasSelf: 0
+        isSelf: 1

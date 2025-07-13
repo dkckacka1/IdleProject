@@ -2,8 +2,11 @@
 {
     public interface IBehaviourAction
     {
-        public void SetTarget(CharacterController target);
-        
         public void ActionExecute(bool isSkillBehaviour);
+    }
+
+    public interface ITargetedBehaviourAction : IBehaviourAction
+    {
+        public void SetTarget(CharacterController target);
     }
 }

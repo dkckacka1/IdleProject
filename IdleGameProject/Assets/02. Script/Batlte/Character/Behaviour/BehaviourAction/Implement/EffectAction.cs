@@ -35,23 +35,38 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
     
         private void SetBattleEffect(bool isSkillBehaviour)
         {
-            var effectTarget = _isUseCharacterEffect ? Controller : CurrentTarget; 
-            if (effectTarget is null) return;
-            
-            var effect = _getBattleEffect.Invoke();
+            if (_isUseCharacterEffect)
+            {
+                var effect = _getBattleEffect.Invoke();
+                SetEffectTransform(effect, Controller);
+                BindEffectData(effect, Controller, _effectData.offsetType, isSkillBehaviour);
+            }
+            else
+            {
+                foreach (var target in GetTargetList.Invoke())
+                {
+                    var effect = _getBattleEffect.Invoke();
+                    SetEffectTransform(effect, target);
+                    BindEffectData(effect, target, _effectData.offsetType, isSkillBehaviour);
+                }
+            }
+        }
+
+        private void SetEffectTransform(BattleEffect effect, CharacterController controller)
+        {
             switch (_effectData.offsetType)
             {
                 case CharacterOffsetType.CharacterGround:
-                    effect.transform.position = effectTarget.transform.position;
+                    effect.transform.position = controller.transform.position;
                     break;
                 case CharacterOffsetType.ProjectileOffset:
-                    effect.transform.position = effectTarget.offset.GetOffsetTransform(CharacterOffsetType.ProjectileOffset).position;
+                    effect.transform.position = controller.offset.GetOffsetTransform(CharacterOffsetType.ProjectileOffset).position;
                     break;
                 case CharacterOffsetType.HitOffset:
-                    effect.transform.position = effectTarget.offset.GetOffsetTransform(CharacterOffsetType.HitOffset).position;
+                    effect.transform.position = controller.offset.GetOffsetTransform(CharacterOffsetType.HitOffset).position;
                     break;
                 case CharacterOffsetType.FluidHealthBarOffset:
-                    effect.transform.position = effectTarget.offset.GetOffsetTransform(CharacterOffsetType.FluidHealthBarOffset).position;
+                    effect.transform.position = controller.offset.GetOffsetTransform(CharacterOffsetType.FluidHealthBarOffset).position;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -59,10 +74,8 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 
             if (_effectData.canRotate)
             {
-                effect.transform.rotation = Controller.transform.rotation;
+                effect.transform.rotation = controller.transform.rotation;
             }
-            
-            BindEffectData(effect, effectTarget, _effectData.offsetType, isSkillBehaviour);
         }
 
         private void BindEffectData(BattleEffect effect, CharacterController target, CharacterOffsetType offsetType, bool isSkillBehaviour)

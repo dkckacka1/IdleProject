@@ -8,21 +8,20 @@ using IdleProject.Data.BehaviourData;
 
 namespace IdleProject.Battle.Character.Behaviour.SkillAction
 {
-    public abstract class BehaviourAction : IBehaviourAction
+    public abstract class BehaviourAction : ITargetedBehaviourAction
     {
         protected readonly CharacterController Controller;
 
-        protected CharacterController CurrentTarget;
         protected Func<List<CharacterController>> GetTargetList;
 
-        private readonly IEnumerable<IBehaviourTargeting> _targetings;
+        private readonly IEnumerable<IBehaviourTargeting> _targetList;
 
         protected BehaviourAction(BehaviourActionData behaviourActionData, CharacterController controller)
         {
             Controller = controller;
 
             if (behaviourActionData != null)
-                _targetings = behaviourActionData.skillTargetList?.Select(targetingData =>
+                _targetList = behaviourActionData.skillTargetList?.Select(targetingData =>
                     BehaviourTargeting.GetSkillTargeting(controller, targetingData));
 
             SetTarget(Controller);
@@ -30,8 +29,7 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction
 
         public void SetTarget(CharacterController target)
         {
-            CurrentTarget = target;
-            GetTargetList = () => GetTarget(_targetings, target);
+            GetTargetList = () => GetTarget(_targetList, target);
         }
 
         
@@ -63,8 +61,11 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction
                 // 이펙트 호출
                 EffectBehaviourActionData effectActionData => new EffectAction(effectActionData, controller),
                 // 투사체 발사
-                ProjectileBehaviourActionData projectileActionData =>
-                    new ProjectileAction(projectileActionData, controller),
+                ProjectileBehaviourActionData projectileActionData => new ProjectileAction(projectileActionData, controller),
+                // 스탯 변경
+                StatChangeActionData statChangeActionData => null,
+                // 사운드 호출
+                SoundBehaviourActionData soundActionData => null,
                 _ => throw new ArgumentOutOfRangeException(nameof(behaviourActionData))
             };
         }

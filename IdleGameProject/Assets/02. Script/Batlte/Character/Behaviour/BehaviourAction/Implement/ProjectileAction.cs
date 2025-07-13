@@ -48,7 +48,7 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
                     // 맞추면 OnHitAction 발동
                     foreach (var onHitAction in _onHitActionList)
                     {
-                        onHitAction.SetTarget(target);
+                        (onHitAction as ITargetedBehaviourAction)?.SetTarget(target);
                         onHitAction.ActionExecute(isSkillBehaviour);
                     }
                 });

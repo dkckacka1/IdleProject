@@ -19,6 +19,17 @@ namespace IdleProject.Core
             playerExp = 0;
         }
 
+        public void AddExp(int amount)
+        {
+            playerExp += amount;
+
+            while (playerExp >= playerLevel * DataManager.Instance.ConstData.playerLevelUpExpFactor)
+            {
+                playerExp -= playerLevel * DataManager.Instance.ConstData.playerLevelUpExpFactor;
+                ++playerLevel;
+            }
+        }
+
         public int GetMaxExp() => playerLevel * DataManager.Instance.ConstData.playerLevelUpExpFactor;
     }
     

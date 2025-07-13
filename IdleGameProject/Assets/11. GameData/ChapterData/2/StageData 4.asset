@@ -14,19 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chapterIndex: 2
   stageIndex: 4
+  stageName: 
   stageFormation:
     frontMiddlePositionInfo:
       characterName: 
       characterLevel: 0
     frontRightPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: SkeletonSoldier
+      characterLevel: 17
     frontLeftPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: SkeletonSoldier
+      characterLevel: 17
     rearRightPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: SkeletonSoldier
+      characterLevel: 17
     rearLeftPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: SkeletonSoldier
+      characterLevel: 17
+  playerExpAmount: 100
+  rewardDataList:
+  - itemData: {fileID: 11400000, guid: d07465de63e8ca64492549c0275f5968, type: 2}
+    count: 10
+  - itemData: {fileID: 11400000, guid: ec2c0b2f7ab654d4a8955e79a7a9cbbb, type: 2}
+    count: 1
+  - itemData: {fileID: 11400000, guid: 35af9dd3d81744c42bbf2571d2be5bfa, type: 2}
+    count: 1
+  - itemData: {fileID: 11400000, guid: 66d7d647182bb0447aff8a9490d2fa17, type: 2}
+    count: 1

@@ -31,16 +31,13 @@ MonoBehaviour:
     rearLeftPositionInfo:
       characterName: GoblinMale
       characterLevel: 1
-  rewardList:
-  - rewardType: 0
-    itemIndex: ExpPotion03
+  playerExpAmount: 30
+  rewardDataList:
+  - itemData: {fileID: 11400000, guid: 2dbb02f49fd6b1d40b9d5b93e4743d81, type: 2}
     count: 10
-  - rewardType: 0
-    itemIndex: ExpPotion04
+  - itemData: {fileID: 11400000, guid: ff96aeb649a2d6248bf963d3918dc721, type: 2}
     count: 1
-  - rewardType: 1
-    itemIndex: Boots_01
+  - itemData: {fileID: 11400000, guid: b4dcd28760869a443a174ccf8382347f, type: 2}
     count: 1
-  - rewardType: 1
-    itemIndex: Helmet_01
+  - itemData: {fileID: 11400000, guid: 4fc0dafc7d197be45b5f72aa40b1f766, type: 2}
     count: 1

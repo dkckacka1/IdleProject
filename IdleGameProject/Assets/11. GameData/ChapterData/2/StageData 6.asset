@@ -31,5 +31,19 @@ MonoBehaviour:
     rearLeftPositionInfo:
       characterName: TormentedSoul
       characterLevel: 20
-  rewardList: []
-  playerExpAmount: 0
+  playerExpAmount: 400
+  rewardDataList:
+  - itemData: {fileID: 11400000, guid: 0644c74135a96cd448ce518d760774b8, type: 2}
+    count: 1000
+  - itemData: {fileID: 11400000, guid: ec2c0b2f7ab654d4a8955e79a7a9cbbb, type: 2}
+    count: 1
+  - itemData: {fileID: 11400000, guid: 35af9dd3d81744c42bbf2571d2be5bfa, type: 2}
+    count: 1
+  - itemData: {fileID: 11400000, guid: 66d7d647182bb0447aff8a9490d2fa17, type: 2}
+    count: 1
+  - itemData: {fileID: 11400000, guid: 88f906a53f8644c40ae1cd0b97bbd933, type: 2}
+    count: 1
+  - itemData: {fileID: 11400000, guid: 4bd73063b5d1b2e428feec2d1f38517c, type: 2}
+    count: 1
+  - itemData: {fileID: 11400000, guid: 704286462dae0fc45a4661e18dee266c, type: 2}
+    count: 1

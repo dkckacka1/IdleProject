@@ -31,14 +31,11 @@ MonoBehaviour:
     rearLeftPositionInfo:
       characterName: 
       characterLevel: 0
-  rewardList:
-  - rewardType: 0
-    itemIndex: ExpPotion01
-    count: 10
-  - rewardType: 0
-    itemIndex: ExpPotion02
+  playerExpAmount: 10
+  rewardDataList:
+  - itemData: {fileID: 11400000, guid: ff96aeb649a2d6248bf963d3918dc721, type: 2}
     count: 1
-  - rewardType: 1
-    itemIndex: Armor_01
+  - itemData: {fileID: 11400000, guid: d462f05c92d18aa4995db13d728ec1bf, type: 2}
     count: 1
-  playerExpAmount: 40
+  - itemData: {fileID: 11400000, guid: 4ae446bf3b8b45344bab697d8c71497b, type: 2}
+    count: 1

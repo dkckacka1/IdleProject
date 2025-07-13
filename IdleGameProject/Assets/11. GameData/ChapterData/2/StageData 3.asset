@@ -31,5 +31,11 @@ MonoBehaviour:
     rearLeftPositionInfo:
       characterName: SkeletonSoldier
       characterLevel: 15
-  rewardList: []
-  playerExpAmount: 0
+  playerExpAmount: 90
+  rewardDataList:
+  - itemData: {fileID: 11400000, guid: d07465de63e8ca64492549c0275f5968, type: 2}
+    count: 10
+  - itemData: {fileID: 11400000, guid: 4bd73063b5d1b2e428feec2d1f38517c, type: 2}
+    count: 1
+  - itemData: {fileID: 11400000, guid: 0a93d460064edb047bb5be2b58163575, type: 2}
+    count: 1

@@ -31,4 +31,13 @@ MonoBehaviour:
     rearLeftPositionInfo:
       characterName: GoblinFemale
       characterLevel: 5
-  rewardList: []
+  playerExpAmount: 50
+  rewardDataList:
+  - itemData: {fileID: 11400000, guid: 2dbb02f49fd6b1d40b9d5b93e4743d81, type: 2}
+    count: 10
+  - itemData: {fileID: 11400000, guid: d64d82efcece2d64db6b5cfe03b30da0, type: 2}
+    count: 1
+  - itemData: {fileID: 11400000, guid: 437e0a6dc79e8d64e94f5fbc5225b991, type: 2}
+    count: 1
+  - itemData: {fileID: 11400000, guid: d7f62e01673e94746b815eb507892140, type: 2}
+    count: 1

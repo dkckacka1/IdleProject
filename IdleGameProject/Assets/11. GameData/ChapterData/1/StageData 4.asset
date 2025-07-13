@@ -31,19 +31,13 @@ MonoBehaviour:
     rearLeftPositionInfo:
       characterName: GoblinFemale
       characterLevel: 3
-  rewardList:
-  - rewardType: 0
-    itemIndex: ExpPotion04
+  playerExpAmount: 40
+  rewardDataList:
+  - itemData: {fileID: 11400000, guid: 2dbb02f49fd6b1d40b9d5b93e4743d81, type: 2}
+    count: 5
+  - itemData: {fileID: 11400000, guid: bc8c982f5165aac4f8aeeaf5db37ab8b, type: 2}
     count: 1
-  - rewardType: 0
-    itemIndex: ExpPotion05
+  - itemData: {fileID: 11400000, guid: e5f5c53c1c5a6b949b72dbd6961b960f, type: 2}
     count: 1
-  - rewardType: 1
-    itemIndex: Glove_01
-    count: 1
-  - rewardType: 1
-    itemIndex: Helmet_01
-    count: 1
-  - rewardType: 1
-    itemIndex: Weapon_01
+  - itemData: {fileID: 11400000, guid: fb63086b59483da4cb7885c3aa66b991, type: 2}
     count: 1

@@ -18,18 +18,26 @@ MonoBehaviour:
   stageFormation:
     frontMiddlePositionInfo:
       characterName: SkeletonSlave
-      characterLevel: 0
+      characterLevel: 19
     frontRightPositionInfo:
       characterName: SkeletonSlave
-      characterLevel: 0
+      characterLevel: 19
     frontLeftPositionInfo:
       characterName: SkeletonSlave
-      characterLevel: 0
+      characterLevel: 19
     rearRightPositionInfo:
       characterName: SkeletonSoldier
-      characterLevel: 0
+      characterLevel: 19
     rearLeftPositionInfo:
       characterName: SkeletonSoldier
-      characterLevel: 0
-  rewardList: []
-  playerExpAmount: 0
+      characterLevel: 19
+  playerExpAmount: 200
+  rewardDataList:
+  - itemData: {fileID: 11400000, guid: 0644c74135a96cd448ce518d760774b8, type: 2}
+    count: 5
+  - itemData: {fileID: 11400000, guid: 88f906a53f8644c40ae1cd0b97bbd933, type: 2}
+    count: 1
+  - itemData: {fileID: 11400000, guid: 4099b31dfb14a5c42b301c2dfedbd354, type: 2}
+    count: 1
+  - itemData: {fileID: 11400000, guid: 704286462dae0fc45a4661e18dee266c, type: 2}
+    count: 1

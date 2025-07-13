@@ -8,7 +8,7 @@ namespace IdleProject.Battle.AI.State
     {
         public ChaseState(CharacterController controller, Func<CharacterController> targetController) : base(controller, targetController) { }
 
-        public override void Excute()
+        public override void Execute()
         {
             if (Controller.isNowAttack || Controller.isNowSkill)
                 return;

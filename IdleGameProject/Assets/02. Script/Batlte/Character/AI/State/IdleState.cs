@@ -8,7 +8,7 @@ namespace IdleProject.Battle.AI.State
     {
         public IdleState(CharacterController controller, Func<CharacterController> targetController) : base(controller, targetController) { }
 
-        public override void Excute()
+        public override void Execute()
         {
             Controller.Idle();
         }

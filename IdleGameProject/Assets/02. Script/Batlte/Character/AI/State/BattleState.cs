@@ -11,7 +11,7 @@ namespace IdleProject.Battle.AI.State
         {
         }
 
-        public override void Excute()
+        public override void Execute()
         {
             if (!Controller.State.CanAttack) return;
 

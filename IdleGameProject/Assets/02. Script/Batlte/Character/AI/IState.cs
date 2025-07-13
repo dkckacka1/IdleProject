@@ -2,6 +2,6 @@ namespace IdleProject.Battle.AI.State
 {
     public interface IState
     {
-        public void Excute();
+        public void Execute();
     }
 }

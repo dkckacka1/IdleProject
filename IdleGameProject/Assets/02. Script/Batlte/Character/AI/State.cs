@@ -17,7 +17,7 @@ namespace IdleProject.Battle.AI.State
             _targetController = targetController;
         }
 
-        public abstract void Excute();
+        public abstract void Execute();
     }
 }
 

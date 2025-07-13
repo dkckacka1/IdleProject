@@ -9,9 +9,9 @@ namespace IdleProject.Battle.AI.State
             this._currentState = defaultState;
         }
 
-        public void ExcuteState()
+        public void ExecuteState()
         {
-            _currentState?.Excute();
+            _currentState?.Execute();
         }
 
         public void ChangeState(IState state)

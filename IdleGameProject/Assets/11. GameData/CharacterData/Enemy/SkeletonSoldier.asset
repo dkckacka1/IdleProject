@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee708b51cec1264fbb31a84dce962ef, type: 3}
+  m_Name: SkeletonSoldier
+  m_EditorClassIdentifier: 
+  characterName: "\uC2A4\uCF08\uB808\uD1A4 \uACBD\uBE44\uBCD1"
+  characterAttackName: DefaultMeleeAttack
+  characterSkillName: 
+  characterAnimationName: MonsterFist
+  stat:
+    healthPoint: 100
+    manaPoint: 10
+    attackDamage: 10
+    movementSpeed: 4.5
+    attackRange: 2
+    attackCoolTime: 0.1
+    defensePoint: 0
+    criticalPercent: 0
+    criticalResistance: 0.25
+  levelValue:
+    healthPointValue: 10
+    attackDamageValue: 1

@@ -38,11 +38,14 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction
             var characterList = GameManager.GetCurrentSceneManager<BattleManager>().GetCharacterList();
             var targetList = new List<CharacterController>() {targetController};
 
-            foreach (var targeting in skillTargetList)
+            if (skillTargetList is not null)
             {
-                targetList = targeting.GetTargetingCharacterList(targetController, characterList, targetList);
+                foreach (var targeting in skillTargetList)
+                {
+                    targetList = targeting.GetTargetingCharacterList(targetController, characterList, targetList);
+                }
             }
-            
+
             return targetList;
         }
 

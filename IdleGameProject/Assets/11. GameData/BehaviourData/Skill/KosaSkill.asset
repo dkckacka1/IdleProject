@@ -73,14 +73,14 @@ MonoBehaviour:
       type: {class: RangeTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
       data:
         isCheckFromTarget: 0
-        skillRange: 2
+        skillRange: 3
         distinct: 1
         hasSelf: 1
         isSelf: 1
     - rid: 896382648194433340
       type: {class: AITargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
       data:
-        isCheckFromTarget: 0
+        isCheckFromTarget: 1
         targetAIType: 1
     - rid: 896382648194433341
       type: {class: EffectBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}

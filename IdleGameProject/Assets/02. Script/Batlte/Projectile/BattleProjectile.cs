@@ -1,4 +1,5 @@
 using IdleProject.Battle.Character;
+using IdleProject.Battle.Projectile.Movement;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.ObjectPool;
@@ -9,15 +10,15 @@ using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.Projectile
 {
-    public class BattleProjectile : MonoBehaviour, IPoolable
+    public class  BattleProjectile : MonoBehaviour, IPoolable
     {
-        [HideInInspector] public CharacterController target;
+        [HideInInspector] public Transform target;
         [HideInInspector] public UnityEvent hitEvent;
         [HideInInspector] public UnityEvent releaseEvent = null;
 
+        public IProjectileMovement Movement;
+        
         [SerializeField] private Transform hitTransform;
-
-        public float projectileSpeed;
         
         private BattleManager _battleManager;
         private float _hitDistance;
@@ -42,6 +43,7 @@ namespace IdleProject.Battle.Projectile
             releaseEvent.RemoveAllListeners();
             hitEvent.RemoveAllListeners();
             target = null;
+            Movement = null;
             _battleManager.BattleObjectEventDic[BattleObjectType.Projectile].RemoveListener(OnBattleEvent);
         }
 
@@ -61,14 +63,13 @@ namespace IdleProject.Battle.Projectile
 
         private void OnBattleEvent()
         {
-            transform.LookAt(target.HitEffectOffset);
-            transform.position = Vector3.MoveTowards(transform.position, target.HitEffectOffset, projectileSpeed * _battleManager.GetCurrentBattleDeltaTime);
+            Movement?.ProjectileMove(this, target, _battleManager.GetCurrentBattleDeltaTime);
             DistanceCheck();
         }
 
         private void DistanceCheck()
         {
-            var distance = Vector3.Distance(target.HitEffectOffset, transform.position) - _hitDistance;
+            var distance = Vector3.Distance(target.position, transform.position) - _hitDistance;
             if (distance < _distanceCheckValue)
             {
                 hitEvent.Invoke();

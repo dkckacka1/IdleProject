@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using IdleProject.Battle.Effect;
 using IdleProject.Battle.Projectile;
+using IdleProject.Battle.Projectile.Movement;
+using IdleProject.Battle.Projectile.Movement.Implement;
 using IdleProject.Core;
 using IdleProject.Data.SkillData;
 
@@ -12,9 +13,9 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
         private readonly List<IBehaviourAction> _onHitActionList = new List<IBehaviourAction>();
         private readonly Func<BattleProjectile> _getBattleProjectile;
         private readonly float _projectileSpeed; 
-        private ProjectileMoveType _projectileMoveType;
+        private readonly ProjectileMoveType _projectileMoveType;
         private readonly CharacterOffsetType _projectileCreateOffset;
-        private CharacterOffsetType _projectileTargetingOffset;
+        private readonly CharacterOffsetType _projectileTargetingOffset;
         
         public ProjectileAction(ProjectileSkillActionData skillActionData, CharacterController controller) : base(skillActionData, controller)
         {
@@ -32,12 +33,14 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 
         public override void ActionExecute(bool isSkillBehaviour)
         {
+            var projectileMovement = SetProjectileMovement();
+            
             foreach (var target in GetTargetList.Invoke())
             {
                 // 대상에게 발사
                 var projectile = CreateBattleProjectile();
-                projectile.target = target;
-                projectile.projectileSpeed = _projectileSpeed;
+                projectile.target = target.offset.GetOffsetTransform(_projectileTargetingOffset);
+                projectile.Movement = projectileMovement;
                 projectile.hitEvent.AddListener(() =>
                 {
                     // 맞추면 OnHitAction 발동
@@ -53,6 +56,23 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
                     projectile.SetSkillProjectile();
                 }
             }
+        }
+
+        private IProjectileMovement SetProjectileMovement()
+        {
+            IProjectileMovement movement = null;
+            switch (_projectileMoveType)
+            {
+                case ProjectileMoveType.Direct:
+                    movement = new DirectMovement(_projectileSpeed);
+                    break;
+                case ProjectileMoveType.Howitzer:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return movement;
         }
 
         private BattleProjectile CreateBattleProjectile()

@@ -1,13 +1,11 @@
 ﻿using IdleProject.Core;
 using IdleProject.Data.BehaviourData;
-using Sirenix.OdinInspector.Editor.TypeSearch;
-using UnityEngine;
 
 namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 {
     public class AttackAction : BehaviourAction
     {
-        private bool _canCritical;
+        private readonly bool _canCritical;
         private readonly float _attackValue;
 
         private readonly EffectAction _hitEffect;

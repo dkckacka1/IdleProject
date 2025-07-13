@@ -17,8 +17,8 @@ MonoBehaviour:
   characterSkillName: BakSkill
   characterAnimationName: HeroBak
   stat:
-    healthPoint: 200
-    manaPoint: 100
+    healthPoint: 150
+    manaPoint: 70
     attackDamage: 10
     movementSpeed: 3.5
     attackRange: 2

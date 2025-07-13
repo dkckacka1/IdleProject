@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Eli
   m_EditorClassIdentifier: 
   characterName: "\uC5D8\uB9AC"
-  characterAttackName: DefaultRangeAttack
+  characterAttackName: DefaultArrowAttack
   characterSkillName: EliSkill
   characterAnimationName: HeroEli
   stat:
-    healthPoint: 1000000
-    manaPoint: 10
-    attackDamage: 20
+    healthPoint: 100
+    manaPoint: 60
+    attackDamage: 15
     movementSpeed: 4.5
     attackRange: 10
     attackCoolTime: 0.1

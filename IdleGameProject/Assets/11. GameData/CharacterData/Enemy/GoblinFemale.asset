@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: GoblinFemale
   m_EditorClassIdentifier: 
   characterName: "\uACE0\uBE14\uB9B0 \uAD81\uC218"
-  characterAttackName: DefaultRangeAttack
+  characterAttackName: DefaultArrowAttack
   characterSkillName: 
   characterAnimationName: MonsterBow
   stat:
     healthPoint: 100
     manaPoint: 10
-    attackDamage: 5
+    attackDamage: 10
     movementSpeed: 4.5
     attackRange: 10
     attackCoolTime: 0.5
-    defensePoint: 10
-    criticalPercent: 10
+    defensePoint: 0
+    criticalPercent: 0
     criticalResistance: 0.25
   levelValue:
     healthPointValue: 5

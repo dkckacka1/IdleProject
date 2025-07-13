@@ -13,16 +13,13 @@ MonoBehaviour:
   m_Name: Kosa
   m_EditorClassIdentifier: 
   characterName: "\uCF54\uC0AC"
-  addressValue:
-    characterAnimationName: HeroKosa
-    attackProjectileAddress: FireballSharpMissileFire
-    attackHitEffectAddress: ExplosionFireballSharpFire
-    skillProjectileAddress: FireballMissileFire
-    skillHitEffectAddress: ExplosionFireballFire
+  characterAttackName: DefaultMagicAttack
+  characterSkillName: KosaSkill
+  characterAnimationName: HeroKosa
   stat:
-    healthPoint: 80
-    manaPoint: 40
-    attackDamage: 30
+    healthPoint: 70
+    manaPoint: 50
+    attackDamage: 15
     movementSpeed: 3.5
     attackRange: 7
     attackCoolTime: 0.1

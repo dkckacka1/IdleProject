@@ -13,20 +13,17 @@ MonoBehaviour:
   m_Name: Dig
   m_EditorClassIdentifier: 
   characterName: "\uB514\uADF8"
-  addressValue:
-    characterAnimationName: HeroDig
-    attackProjectileAddress: 
-    attackHitEffectAddress: ExplosionSharp
-    skillProjectileAddress: 
-    skillHitEffectAddress: ShieldSoftBlue
+  characterAttackName: DefaultMeleeAttack
+  characterSkillName: DigSkill
+  characterAnimationName: HeroDig
   stat:
-    healthPoint: 250
-    manaPoint: 80
-    attackDamage: 5
+    healthPoint: 200
+    manaPoint: 100
+    attackDamage: 8
     movementSpeed: 3.5
     attackRange: 2
     attackCoolTime: 0.1
-    defensePoint: 2
+    defensePoint: 20
     criticalPercent: 0.5
     criticalResistance: 0
   levelValue:

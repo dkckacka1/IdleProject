@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3611839984793572985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a399d173e7e48d0b3971069c8fbf493, type: 3}
+  m_Name: DefaultArrowAttack_0
+  m_EditorClassIdentifier: 
+  skillActionDataList:
+  - rid: 896382648194433260
+  references:
+    version: 2
+    RefIds:
+    - rid: 896382648194433260
+      type: {class: ProjectileBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList:
+        - rid: 896382648194433261
+        - rid: 896382648194433262
+        - rid: 896382648194433263
+        projectileObjectName: Eli_Attack_Projectile
+        projectileSpeed: 20
+        projectileCreateOffset: 1
+        projectileTargetingOffset: 2
+        projectileMoveType: 0
+        arcHeight: 0
+        projectileOnHitAction:
+        - rid: 896382648194433264
+        - rid: 896382648194433268
+        - rid: 896382648194433269
+    - rid: 896382648194433261
+      type: {class: AITargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        targetAIType: 1
+    - rid: 896382648194433262
+      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        isNot: 0
+        characterStateTargetType: 0
+    - rid: 896382648194433263
+      type: {class: SingleTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        singleTargetType: 2
+    - rid: 896382648194433264
+      type: {class: AttackBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList: []
+        canCritical: 1
+        attackValue: 1
+        hitEffect:
+          rid: 896382648194433265
+    - rid: 896382648194433265
+      type: {class: OneShotEffect, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        effectName: BloodExplosionRound
+        offsetType: 2
+        canRotate: 0
+    - rid: 896382648194433268
+      type: {class: SoundBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList: []
+        soundName: BloodExplosionRound
+        volume: 1
+    - rid: 896382648194433269
+      type: {class: StatChangeActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList:
+        - rid: 896382648194433270
+        isAbsolute: 0
+        statType: 1
+        value: 10
+    - rid: 896382648194433270
+      type: {class: SingleTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        singleTargetType: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea5386ca99c31640adf11f2d98887cc, type: 3}
+  m_Name: DefaultArrowAttack
+  m_EditorClassIdentifier: 
+  skillName: 
+  skillDesc: 
+  executeDataList:
+  - {fileID: -3611839984793572985}

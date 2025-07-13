@@ -8,7 +8,7 @@ using IdleProject.Data.BehaviourData;
 
 namespace IdleProject.Battle.Character.Behaviour.SkillAction
 {
-    public abstract class BehaviourAction : ITargetedBehaviourAction
+    public abstract class BehaviourAction : ITargetChangeBehaviourAction
     {
         protected readonly CharacterController Controller;
 

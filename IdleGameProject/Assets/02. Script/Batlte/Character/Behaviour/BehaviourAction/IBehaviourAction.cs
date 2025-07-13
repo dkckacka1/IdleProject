@@ -5,7 +5,7 @@
         public void ActionExecute(bool isSkillBehaviour);
     }
 
-    public interface ITargetedBehaviourAction : IBehaviourAction
+    public interface ITargetChangeBehaviourAction : IBehaviourAction
     {
         public void SetTarget(CharacterController target);
     }

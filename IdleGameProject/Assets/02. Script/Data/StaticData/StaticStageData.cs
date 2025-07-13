@@ -16,6 +16,7 @@ namespace IdleProject.Data.StaticData
         public FormationInfo stageFormation;
 
         public List<RewardInfo> rewardList;
+        public int playerExpAmount;
         
         public override string Index => $"{chapterIndex}-{stageIndex}";
         

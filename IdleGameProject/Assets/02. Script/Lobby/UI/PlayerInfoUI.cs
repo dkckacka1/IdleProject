@@ -19,8 +19,8 @@ namespace IdleProject.Lobby.UI
             playerLevelText.text = playerInfo.playerLevel.ToString();
 
             var levelUpExpValue = playerInfo.GetMaxExp();
-            playerExpSlider.value = playerInfo.playerExp;
             playerExpSlider.maxValue = levelUpExpValue;
+            playerExpSlider.value = playerInfo.playerExp;
             playerExpValueText.text = $"{playerInfo.playerExp}/{levelUpExpValue}";
         }
     }

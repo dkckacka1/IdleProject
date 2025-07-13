@@ -58,6 +58,9 @@ namespace IdleProject.Data.DynamicData
             {
                 DataManager.Instance.SaveController.Save(stageData);
             }
+
+            PlayerInfo.AddExp(stageData.playerExpAmount);
+            DataManager.Instance.SaveController.Save(PlayerInfo);
         }
 
         public StaticStageData GetLastStage()

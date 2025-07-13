@@ -48,7 +48,15 @@ namespace IdleProject.Battle.Projectile
         public void SetSkillProjectile()
         {
             _battleManager.AddSkillObject(this);
-            releaseEvent.AddListener(() => _battleManager.RemoveSkillObject(this));
+            _battleManager.SkillObjectEventDic[BattleObjectType.Projectile].AddListener(OnBattleEvent);
+            releaseEvent.AddListener(ReleaseAction);
+            return;
+            
+            void ReleaseAction()
+            {
+                _battleManager.RemoveSkillObject(this);
+                _battleManager.SkillObjectEventDic[BattleObjectType.Projectile].RemoveListener(OnBattleEvent);
+            }
         }
 
         private void OnBattleEvent()

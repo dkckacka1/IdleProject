@@ -22,6 +22,7 @@ namespace IdleProject.Battle
         [HideInInspector] public List<CharacterController> enemyCharacterList = new List<CharacterController>();
 
         public readonly Dictionary<BattleObjectType, UnityEvent> BattleObjectEventDic = new();
+        public readonly Dictionary<BattleObjectType, UnityEvent> SkillObjectEventDic = new();
         public readonly EnumEventBus<BattleGameStateType> GameStateEventBus = new(BattleGameStateType.Play);
         public readonly EnumEventBus<BattleStateType> BattleStateEventBus = new(BattleStateType.Ready);
 
@@ -45,7 +46,12 @@ namespace IdleProject.Battle
             
             BattleStateEventBus.PublishEvent(this);
             
-            EnumExtension.Foreach<BattleObjectType>(type => { BattleObjectEventDic.Add(type, new UnityEvent()); });
+            EnumExtension.Foreach<BattleObjectType>(type =>
+            {
+                BattleObjectEventDic.Add(type, new UnityEvent());
+                SkillObjectEventDic.Add(type, new UnityEvent());
+            });
+            
             TaskChecker.StartLoading(BATTLE_INIT_TASK, SpawnCharacter);
             await TaskChecker.WaitTasking(BATTLE_INIT_TASK);
         }
@@ -81,8 +87,8 @@ namespace IdleProject.Battle
                         BattleObjectEventDic[BattleObjectType.Effect].Invoke();
                         break;
                     case BattleStateType.Skill:
-                        BattleObjectEventDic[BattleObjectType.Projectile].Invoke();
-                        BattleObjectEventDic[BattleObjectType.Effect].Invoke();
+                        SkillObjectEventDic[BattleObjectType.Projectile].Invoke();
+                        SkillObjectEventDic[BattleObjectType.Effect].Invoke();
                         break;
                     case BattleStateType.Win:
                         break;

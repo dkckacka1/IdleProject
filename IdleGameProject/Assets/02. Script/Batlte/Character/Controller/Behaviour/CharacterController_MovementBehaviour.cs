@@ -20,7 +20,7 @@ namespace IdleProject.Battle.Character
             Agent?.SetDestination(destination);
         }
 
-        public void Stop()
+        public void StopMove()
         {
             Agent.ResetPath();
         }

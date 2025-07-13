@@ -43,16 +43,10 @@ namespace IdleProject.Battle
             BattleStateEventBus.ChangeEvent(BattleStateType.Skill);
             TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, true);
 
-            foreach (var character in GetCharacterList(CharacterAIType.Ally)
-                         .Where(character => useCharacter != character))
+            foreach (var character in GetCharacterList().Where(character => useCharacter != character))
             {
                 character.AnimController.SetAnimationSpeed(0f);
-            }
-
-            foreach (var character in GetCharacterList(CharacterAIType.Enemy)
-                         .Where(character => useCharacter != character))
-            {
-                character.AnimController.SetAnimationSpeed(0f);
+                character.StopMove();
             }
         }
 
@@ -63,12 +57,7 @@ namespace IdleProject.Battle
             BattleStateEventBus.ChangeEvent(BattleStateType.Battle);
             TimeManager.Instance.SettingTimer(BATTLE_SPEED_TIME_KEY, false);
 
-            foreach (var character in GetCharacterList(CharacterAIType.Ally))
-            {
-                character.AnimController.SetAnimationSpeed(GetCurrentBattleSpeed);
-            }
-
-            foreach (var character in GetCharacterList(CharacterAIType.Enemy))
+            foreach (var character in GetCharacterList().Where(character => useCharacter != character))
             {
                 character.AnimController.SetAnimationSpeed(GetCurrentBattleSpeed);
             }

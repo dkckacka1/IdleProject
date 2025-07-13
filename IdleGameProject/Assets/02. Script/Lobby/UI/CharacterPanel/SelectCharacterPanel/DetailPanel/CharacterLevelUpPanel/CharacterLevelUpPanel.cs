@@ -115,11 +115,11 @@ namespace IdleProject.Lobby.UI.CharacterPanel
 
                 if (timer > maxLongClickTime)
                 {
-                    _usePotionInterval = DataManager.Instance.ConstData.longClickUsePotionInterval;
+                    _usePotionInterval = DataManager.Instance.ConstData.maxLongClickUsePotionInterval;
                 }
                 else if (timer > longClickTime)
                 {
-                    _usePotionInterval = DataManager.Instance.ConstData.maxLongClickUsePotionInterval;
+                    _usePotionInterval = DataManager.Instance.ConstData.longClickUsePotionInterval;
                 }
 
                 if (intervalTimer >= _usePotionInterval)

@@ -14,19 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chapterIndex: 2
   stageIndex: 6
+  stageName: 
   stageFormation:
     frontMiddlePositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: SkeletonSoldier
+      characterLevel: 20
     frontRightPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: SkeletonSoldier
+      characterLevel: 20
     frontLeftPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: SkeletonSoldier
+      characterLevel: 20
     rearRightPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: TormentedSoul
+      characterLevel: 20
     rearLeftPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: TormentedSoul
+      characterLevel: 20
+  rewardList: []
+  playerExpAmount: 0

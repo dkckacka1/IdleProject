@@ -17,7 +17,7 @@ MonoBehaviour:
   stageName: 
   stageFormation:
     frontMiddlePositionInfo:
-      characterName: GoblinMale
+      characterName: GoblinWarriorMale
       characterLevel: 10
     frontRightPositionInfo:
       characterName: GoblinMale
@@ -32,3 +32,4 @@ MonoBehaviour:
       characterName: GoblinFemale
       characterLevel: 10
   rewardList: []
+  playerExpAmount: 0

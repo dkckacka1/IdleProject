@@ -14,19 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chapterIndex: 2
   stageIndex: 1
+  stageName: 
   stageFormation:
     frontMiddlePositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: SkeletonSlave
+      characterLevel: 10
     frontRightPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: SkeletonSlave
+      characterLevel: 10
     frontLeftPositionInfo:
-      characterName: 
-      characterLevel: 0
+      characterName: SkeletonSlave
+      characterLevel: 10
     rearRightPositionInfo:
       characterName: 
       characterLevel: 0
     rearLeftPositionInfo:
       characterName: 
       characterLevel: 0
+  rewardList: []
+  playerExpAmount: 0

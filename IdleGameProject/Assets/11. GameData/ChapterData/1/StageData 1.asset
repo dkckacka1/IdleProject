@@ -41,3 +41,4 @@ MonoBehaviour:
   - rewardType: 1
     itemIndex: Armor_01
     count: 1
+  playerExpAmount: 40

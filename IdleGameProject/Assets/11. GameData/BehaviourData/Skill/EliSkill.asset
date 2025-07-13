@@ -24,7 +24,9 @@ MonoBehaviour:
         - rid: 896382648194433274
         - rid: 896382648194433275
         - rid: 896382648194433276
-        - rid: 896382648194433282
+        - rid: 896382648194433437
+        - rid: 896382648194433438
+        - rid: 896382648194433439
         projectileObjectName: Eli_Attack_Projectile
         projectileSpeed: 20
         projectileCreateOffset: 1
@@ -70,14 +72,25 @@ MonoBehaviour:
         effectName: BloodExplosionRound
         offsetType: 2
         canRotate: 0
-    - rid: 896382648194433282
+    - rid: 896382648194433437
       type: {class: RangeTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
       data:
         isCheckFromTarget: 0
-        skillRange: 1.5
+        skillRange: 3
         distinct: 1
         hasSelf: 1
         isSelf: 0
+    - rid: 896382648194433438
+      type: {class: AITargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        targetAIType: 1
+    - rid: 896382648194433439
+      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        isNot: 0
+        characterStateTargetType: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

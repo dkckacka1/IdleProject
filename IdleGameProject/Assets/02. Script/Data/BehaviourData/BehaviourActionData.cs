@@ -65,4 +65,12 @@ namespace IdleProject.Data.BehaviourData
         public string soundName;
         public float volume = 1f;
     }
+
+    [System.Serializable]
+    public class StatChangeActionData : BehaviourActionData
+    {
+        public bool isAbsolute;
+        public CharacterStatType statType;
+        public float value;
+    }
 }

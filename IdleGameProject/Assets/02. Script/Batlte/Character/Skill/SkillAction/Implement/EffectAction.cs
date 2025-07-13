@@ -28,12 +28,12 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
         }
 
         
-        public override void ActionExecute()
+        public override void ActionExecute(bool isSkillBehaviour)
         {
-            SetBattleEffect();
+            SetBattleEffect(isSkillBehaviour);
         }
     
-        private void SetBattleEffect()
+        private void SetBattleEffect(bool isSkillBehaviour)
         {
             var effectTarget = _isUseCharacterEffect ? Controller : CurrentTarget; 
             if (effectTarget is null) return;
@@ -62,15 +62,19 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
                 effect.transform.rotation = Controller.transform.rotation;
             }
             
-            BindEffectData(effect, effectTarget, _effectData.offsetType);
+            BindEffectData(effect, effectTarget, _effectData.offsetType, isSkillBehaviour);
         }
 
-        private void BindEffectData(BattleEffect effect, CharacterController target, CharacterOffsetType offsetType)
+        private void BindEffectData(BattleEffect effect, CharacterController target, CharacterOffsetType offsetType, bool isSkillBehaviour)
         {
             switch (_effectData)
             {
                 case OneShotEffect oneShotEffect:
                     effect.OneShotEffect();
+                    if (isSkillBehaviour)
+                    {
+                        effect.SetSkillEffect();
+                    }
                     break;
                 case LoopEffect loopEffect:
                     effect.LoopEffect(loopEffect.duration);

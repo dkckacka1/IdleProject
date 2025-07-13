@@ -30,7 +30,7 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
             }
         }
 
-        public override void ActionExecute()
+        public override void ActionExecute(bool isSkillBehaviour)
         {
             foreach (var target in GetTargetList.Invoke())
             {
@@ -44,9 +44,14 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
                     foreach (var onHitAction in _onHitActionList)
                     {
                         onHitAction.SetTarget(target);
-                        onHitAction.ActionExecute();
+                        onHitAction.ActionExecute(isSkillBehaviour);
                     }
                 });
+
+                if (isSkillBehaviour)
+                {
+                    projectile.SetSkillProjectile();
+                }
             }
         }
 

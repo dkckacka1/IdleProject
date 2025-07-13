@@ -144,21 +144,29 @@ namespace IdleProject.Battle.Spawn
             var characterInstance = Instantiate(controllerObj).GetComponent<CharacterController>();
             characterInstance.name = data.StaticData.Index;
 
+            // 모델 및 애니메이션 설정
             await SetModel(characterInstance, data.StaticData);
             SetAnimation(characterInstance, data.StaticData);
+            
+            // 스탯 설정
             SetStat(characterInstance, data);
 
-            characterInstance.CharacterAttack = GetBehaviour(characterInstance,
-                DataManager.Instance.GetData<StaticSkillData>(data.StaticData.characterAttackName));
+            // 공격 행동 정의
+            var characterAttackData = DataManager.Instance.GetData<StaticSkillData>(data.StaticData.characterAttackName);
+            characterInstance.CharacterAttack = GetBehaviour(characterInstance, characterAttackData, false);
 
+            // 스킬 행동 정의
             if (string.IsNullOrEmpty(data.StaticData.characterSkillName) is false)
             {
-                characterInstance.CharacterSkill = GetBehaviour(characterInstance, DataManager.Instance.GetData<StaticSkillData>(data.StaticData.characterSkillName));
+                var characterSkillData = DataManager.Instance.GetData<StaticSkillData>(data.StaticData.characterSkillName);
+                characterInstance.CharacterSkill = GetBehaviour(characterInstance, characterSkillData, true);
             }
 
+            // UI, AI 세팅
             AddCharacterUI(characterInstance, data.StaticData, aiType);
             AddCharacterAI(characterInstance, aiType);
 
+            // 초기화 작업
             characterInstance.Initialized();
             return characterInstance;
         }
@@ -194,13 +202,13 @@ namespace IdleProject.Battle.Spawn
             controller.AnimController.SetAnimationController(animationController);
         }
 
-        private CharacterBehaviour GetBehaviour(CharacterController controllerInstance, StaticSkillData data)
+        private CharacterBehaviour GetBehaviour(CharacterController controllerInstance, StaticSkillData data, bool isSkill)
         {
             var executeBehaviourList = new List<ExecuteBehaviour>();
             foreach (var executeData in data.executeDataList)
             {
                 var actionList = executeData.skillActionDataList.Select(action => BehaviourAction.GetSkillAction(action, controllerInstance)).ToList();
-                var skillExecute = new ExecuteBehaviour(actionList);
+                var skillExecute = new ExecuteBehaviour(actionList, isSkill);
                 
                 executeBehaviourList.Add(skillExecute);
             }

@@ -49,7 +49,7 @@ namespace IdleProject.Battle.Character.Skill.SkillAction
         }
 
         // 액션을 수행합니다.
-        public abstract void ActionExecute();
+        public abstract void ActionExecute(bool isSkillBehaviour);
 
 
         public static IBehaviourAction GetSkillAction(SkillActionData skillActionData, CharacterController controller)

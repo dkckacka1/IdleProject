@@ -4,6 +4,6 @@
     {
         public void SetTarget(CharacterController target);
         
-        public void ActionExecute();
+        public void ActionExecute(bool isSkillBehaviour);
     }
 }

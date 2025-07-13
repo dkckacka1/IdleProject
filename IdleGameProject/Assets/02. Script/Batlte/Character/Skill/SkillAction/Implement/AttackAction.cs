@@ -23,7 +23,7 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
             }
         }
 
-        public override void ActionExecute()
+        public override void ActionExecute(bool isSkillBehaviour)
         {
             var attackDamage = Controller.StatSystem.GetStatValue(CharacterStatType.AttackDamage) * _attackValue;
             
@@ -34,7 +34,7 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
                 if (_hitEffect is not null)
                 {
                     _hitEffect.SetTarget(target);
-                    _hitEffect.ActionExecute();
+                    _hitEffect.ActionExecute(isSkillBehaviour);
                 }
             }
         }

@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea5386ca99c31640adf11f2d98887cc, type: 3}
+  m_Name: DigSkill
+  m_EditorClassIdentifier: 
+  skillName: 
+  skillDesc: 
+  executeDataList:
+  - {fileID: 4628282147425356189}
+--- !u!114 &4628282147425356189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a399d173e7e48d0b3971069c8fbf493, type: 3}
+  m_Name: DigSkill_0
+  m_EditorClassIdentifier: 
+  skillActionDataList:
+  - rid: 896382648194433347
+  - rid: 896382648194433351
+  references:
+    version: 2
+    RefIds:
+    - rid: 896382648194433347
+      type: {class: BuffBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList:
+        - rid: 896382648194433348
+        - rid: 896382648194433349
+        buffStatType: 6
+        value: 10
+        duration: 10
+        buffEffect:
+          rid: 896382648194433350
+    - rid: 896382648194433348
+      type: {class: AITargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        targetAIType: 0
+    - rid: 896382648194433349
+      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        isNot: 0
+        characterStateTargetType: 0
+    - rid: 896382648194433350
+      type: {class: LoopEffect, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        effectName: ShieldSoftBlue
+        offsetType: 2
+        canRotate: 0
+        duration: 10
+    - rid: 896382648194433351
+      type: {class: SoundBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList: []
+        soundName: ShieldSoftBlue
+        volume: 1

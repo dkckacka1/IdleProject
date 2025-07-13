@@ -4,7 +4,7 @@ using System.Linq;
 using IdleProject.Data.SkillData;
 using UnityEngine;
 
-namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
+namespace IdleProject.Battle.Character.Behaviour.Targeting.Implement
 {
     public class SingleTargeting : BehaviourTargeting
     {

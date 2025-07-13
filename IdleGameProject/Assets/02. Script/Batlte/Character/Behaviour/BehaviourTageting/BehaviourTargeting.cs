@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using IdleProject.Data.SkillData;
 
-namespace IdleProject.Battle.Character.Skill.SkillTargeting
+namespace IdleProject.Battle.Character.Behaviour.Targeting
 {
     public abstract class BehaviourTargeting : IBehaviourTargeting
     {

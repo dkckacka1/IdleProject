@@ -3,7 +3,7 @@ using IdleProject.Data.SkillData;
 using Sirenix.OdinInspector.Editor.TypeSearch;
 using UnityEngine;
 
-namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
+namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 {
     public class AttackAction : BehaviourAction
     {

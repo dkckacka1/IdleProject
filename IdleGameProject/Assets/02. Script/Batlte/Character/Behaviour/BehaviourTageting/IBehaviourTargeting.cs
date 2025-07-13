@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace IdleProject.Battle.Character.Skill.SkillTargeting
+namespace IdleProject.Battle.Character.Behaviour.Targeting
 {
     public interface IBehaviourTargeting
     {

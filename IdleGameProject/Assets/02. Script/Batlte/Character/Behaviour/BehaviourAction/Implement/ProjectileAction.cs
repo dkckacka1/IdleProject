@@ -5,7 +5,7 @@ using IdleProject.Battle.Projectile;
 using IdleProject.Core;
 using IdleProject.Data.SkillData;
 
-namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
+namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 {
     public class ProjectileAction : BehaviourAction
     {

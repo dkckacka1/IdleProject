@@ -5,7 +5,7 @@ using IdleProject.Core;
 using IdleProject.Data.SkillData;
 using UnityEngine;
 
-namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
+namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 {
     public class EffectAction : BehaviourAction
     {

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Engine.Util.Extension;
-using IdleProject.Battle.Character.Skill.SkillAction;
+using IdleProject.Battle.Character.Behaviour.SkillAction;
 using UnityEngine;
 
-namespace IdleProject.Battle.Character.Skill
+namespace IdleProject.Battle.Character.Behaviour
 {
     public class CharacterBehaviour 
     {

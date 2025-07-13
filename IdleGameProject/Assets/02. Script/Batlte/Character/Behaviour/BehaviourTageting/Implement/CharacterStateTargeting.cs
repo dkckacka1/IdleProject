@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using IdleProject.Data.SkillData;
 
-namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
+namespace IdleProject.Battle.Character.Behaviour.Targeting.Implement
 {
     public class CharacterStateTargeting : BehaviourTargeting
     {

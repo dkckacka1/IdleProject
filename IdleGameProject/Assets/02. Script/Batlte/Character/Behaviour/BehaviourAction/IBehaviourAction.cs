@@ -1,4 +1,4 @@
-﻿namespace IdleProject.Battle.Character.Skill.SkillAction
+﻿namespace IdleProject.Battle.Character.Behaviour.SkillAction
 {
     public interface IBehaviourAction
     {

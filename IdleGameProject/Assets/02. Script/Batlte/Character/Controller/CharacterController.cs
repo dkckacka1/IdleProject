@@ -2,7 +2,7 @@ using System;
 using Engine.Core.EventBus;
 using IdleProject.Battle.AI;
 using IdleProject.Battle.Character.EventGroup;
-using IdleProject.Battle.Character.Skill;
+using IdleProject.Battle.Character.Behaviour;
 using IdleProject.Battle.Effect;
 using IdleProject.Battle.Projectile;
 using IdleProject.Battle.UI;

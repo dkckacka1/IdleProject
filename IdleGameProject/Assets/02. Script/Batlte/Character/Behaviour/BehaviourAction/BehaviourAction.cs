@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using IdleProject.Battle.Character.Skill.SkillAction.Implement;
-using IdleProject.Battle.Character.Skill.SkillTargeting;
+using IdleProject.Battle.Character.Behaviour.SkillAction.Implement;
+using IdleProject.Battle.Character.Behaviour.Targeting;
 using IdleProject.Core;
 using IdleProject.Data.SkillData;
 
-namespace IdleProject.Battle.Character.Skill.SkillAction
+namespace IdleProject.Battle.Character.Behaviour.SkillAction
 {
     public abstract class BehaviourAction : IBehaviourAction
     {
@@ -23,7 +23,7 @@ namespace IdleProject.Battle.Character.Skill.SkillAction
 
             if (skillActionData != null)
                 _targetings = skillActionData.skillTargetList?.Select(targetingData =>
-                    SkillTargeting.BehaviourTargeting.GetSkillTargeting(controller, targetingData));
+                    BehaviourTargeting.GetSkillTargeting(controller, targetingData));
 
             SetTarget(Controller);
         }

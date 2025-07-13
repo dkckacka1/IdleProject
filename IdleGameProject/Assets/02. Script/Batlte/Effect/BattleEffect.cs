@@ -39,7 +39,6 @@ namespace IdleProject.Battle.Effect
             _battleManager.GetChangeBattleSpeedEvent.AddListener(OnTimeFactorChange);
             _battleManager.GameStateEventBus.PublishEvent(this);
             _battleManager.BattleObjectEventDic[BattleObjectType.Effect].AddListener(OnBattleEvent);
-            SoundManager.Instance.PlaySfx(name);
         }
 
         public void OnReleaseAction()

@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1390421561012659419
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 11566021934885537}
+  m_Layer: 0
+  m_Name: HitTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &11566021934885537
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1390421561012659419}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.732}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6273550651503820412}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4415558843894321087
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,7 +42,6 @@ GameObject:
   - component: {fileID: 2290692919870847965}
   - component: {fileID: 8511336011875038282}
   - component: {fileID: 3540168078972225654}
-  - component: {fileID: 120768785734654335}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -28,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 4415558843894321087}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0.1, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -87,27 +117,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &120768785734654335
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4415558843894321087}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.026375474, y: 0.26036328, z: 0.024542034}
-  m_Center: {x: 0, y: 0.1301817, z: -1.8499928e-15}
 --- !u!1 &8577741447535429103
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,7 +128,6 @@ GameObject:
   - component: {fileID: 6273550651503820412}
   - component: {fileID: 788781400479559117}
   - component: {fileID: 8920067324697447715}
-  - component: {fileID: 1208705575498844345}
   m_Layer: 0
   m_Name: Eli_Attack_Projectile
   m_TagString: Untagged
@@ -141,6 +149,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2290692919870847965}
+  - {fileID: 11566021934885537}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &788781400479559117
@@ -155,16 +164,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c368d224a8681c147b173223256dacd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
   hitEvent:
     m_PersistentCalls:
       m_Calls: []
   releaseEvent:
     m_PersistentCalls:
       m_Calls: []
-  projectileInfo:
-    projectileSpeed: 10
-    moveType: 0
-    checkType: 0
+  hitTransform: {fileID: 11566021934885537}
+  projectileSpeed: 0
 --- !u!114 &8920067324697447715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,30 +187,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   address: Eli_Attack_Projectile
   defaultPoolCount: 5
---- !u!54 &1208705575498844345
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8577741447535429103}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0

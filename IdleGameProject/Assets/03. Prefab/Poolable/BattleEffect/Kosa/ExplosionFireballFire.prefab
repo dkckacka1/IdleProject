@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 19983730}
   - component: {fileID: 1568231580027379227}
   - component: {fileID: 3791026804218866905}
-  - component: {fileID: 5926594867179500809}
   m_Layer: 0
   m_Name: ExplosionFireballFire
   m_TagString: Untagged
@@ -4868,7 +4867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ac056f021ea30746b49ec27d22b94ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectTriggerEnterEvent:
+  onBattleEvent:
     m_PersistentCalls:
       m_Calls: []
   releaseEvent:
@@ -4888,27 +4887,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   address: ExplosionFireballFire
   defaultPoolCount: 2
---- !u!135 &5926594867179500809
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 130848}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &134072
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: "\uACE0\uBE14\uB9B0 \uB300\uC7A5"
   characterAttackName: DefaultMeleeAttack
   characterSkillName: 
-  characterAnimationName: MonsterFist
+  characterAnimationName: MonsterTwoHanded
   stat:
     healthPoint: 100
     manaPoint: 10

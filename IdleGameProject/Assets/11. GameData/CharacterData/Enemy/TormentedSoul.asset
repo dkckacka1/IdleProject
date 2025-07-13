@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee708b51cec1264fbb31a84dce962ef, type: 3}
   m_Name: TormentedSoul
   m_EditorClassIdentifier: 
-  characterName: "\uC2A4\uCF08\uB808\uD1A4 \uACBD\uBE44\uBCD1"
-  characterAttackName: DefaultMeleeAttack
+  characterName: "\uACE0\uB300 \uC720\uB839"
+  characterAttackName: DefaultMagicAttack
   characterSkillName: 
-  characterAnimationName: MonsterFist
+  characterAnimationName: MonsterMagic
   stat:
     healthPoint: 100
     manaPoint: 10
     attackDamage: 10
     movementSpeed: 4.5
-    attackRange: 2
+    attackRange: 10
     attackCoolTime: 0.1
     defensePoint: 0
     criticalPercent: 0

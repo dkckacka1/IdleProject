@@ -96,7 +96,13 @@ MonoBehaviour:
     - rid: 896382648194433328
       type: {class: StatChangeActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
       data:
-        skillTargetList: []
+        skillTargetList:
+        - rid: 896382648194433345
         isAbsolute: 0
         statType: 1
         value: 10
+    - rid: 896382648194433345
+      type: {class: SingleTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        singleTargetType: 0

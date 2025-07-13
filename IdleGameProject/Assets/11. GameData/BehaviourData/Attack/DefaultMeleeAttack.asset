@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5525191785342742889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a399d173e7e48d0b3971069c8fbf493, type: 3}
+  m_Name: DefaultMeleeAttack_0
+  m_EditorClassIdentifier: 
+  skillActionDataList:
+  - rid: 896382648194433237
+  - rid: 896382648194433243
+  - rid: 896382648194433244
+  references:
+    version: 2
+    RefIds:
+    - rid: 896382648194433237
+      type: {class: AttackBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList:
+        - rid: 896382648194433238
+        - rid: 896382648194433240
+        - rid: 896382648194433241
+        canCritical: 1
+        attackValue: 1
+        hitEffect:
+          rid: 896382648194433242
+    - rid: 896382648194433238
+      type: {class: AITargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        targetAIType: 1
+    - rid: 896382648194433240
+      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        isNot: 0
+        characterStateTargetType: 0
+    - rid: 896382648194433241
+      type: {class: SingleTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        singleTargetType: 2
+    - rid: 896382648194433242
+      type: {class: OneShotEffect, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        effectName: ExplosionSharp
+        offsetType: 2
+        canRotate: 1
+    - rid: 896382648194433243
+      type: {class: SoundBehaviourActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList: []
+        soundName: ExplosionSharp
+        volume: 1
+    - rid: 896382648194433244
+      type: {class: StatChangeActionData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        skillTargetList:
+        - rid: 896382648194433245
+        isAbsolute: 0
+        statType: 1
+        value: 10
+    - rid: 896382648194433245
+      type: {class: SingleTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        singleTargetType: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea5386ca99c31640adf11f2d98887cc, type: 3}
+  m_Name: DefaultMeleeAttack
+  m_EditorClassIdentifier: 
+  skillName: 
+  skillDesc: 
+  executeDataList:
+  - {fileID: -5525191785342742889}

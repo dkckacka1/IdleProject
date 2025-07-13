@@ -63,9 +63,9 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction
                 // 투사체 발사
                 ProjectileBehaviourActionData projectileActionData => new ProjectileAction(projectileActionData, controller),
                 // 스탯 변경
-                StatChangeActionData statChangeActionData => null,
+                StatChangeActionData statChangeActionData => new StatChangeAction(statChangeActionData, controller),
                 // 사운드 호출
-                SoundBehaviourActionData soundActionData => null,
+                SoundBehaviourActionData soundActionData => new SoundAction(soundActionData),
                 _ => throw new ArgumentOutOfRangeException(nameof(behaviourActionData))
             };
         }

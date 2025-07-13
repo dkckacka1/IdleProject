@@ -67,7 +67,7 @@ namespace IdleProject.Core.Sound
             bgmSource.Pause();
         }
 
-        public void PlaySfx(string clipName)
+        public void PlaySfx(string clipName, float volume = 1f)
         {
             if (_sfxPlaySet.Contains(clipName)) return;
             

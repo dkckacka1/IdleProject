@@ -58,4 +58,11 @@ namespace IdleProject.Data.BehaviourData
         [SerializeReference]
         public LoopEffect buffEffect;
     }
+
+    [System.Serializable]
+    public class SoundBehaviourActionData : BehaviourActionData
+    {
+        public string soundName;
+        public float volume = 1f;
+    }
 }

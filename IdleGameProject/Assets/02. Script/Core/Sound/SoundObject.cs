@@ -27,8 +27,9 @@ namespace IdleProject.Core.Sound
             _onPlayEnd?.Invoke();
         }
 
-        public void PlayAudio(AudioClip audioClip)
+        public void PlayAudio(AudioClip audioClip, float volume = 1f)
         {
+            _source.volume = volume;
             _source.PlayOneShot(audioClip);
             _source.ObserveEveryValueChanged(source => source.isPlaying)
                 .Pairwise()

@@ -29,7 +29,7 @@ namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
             
             foreach (var target in GetTargetList.Invoke())
             {
-                Controller.Hit(target, attackDamage);
+                Controller.Hit(target, attackDamage, _canCritical);
 
                 if (_hitEffect is not null)
                 {

@@ -64,6 +64,9 @@ namespace IdleProject.Core.GameData
         [FoldoutGroup("Battle"), BoxGroup("Battle/Character")]
         public float attackRangeCorrectionValue = 0.1f;
 
+        [FoldoutGroup("Battle"), BoxGroup("Battle/Character")]
+        public float criticalAttackFactor = 1.5f;
+
         #endregion
 
         #region UI

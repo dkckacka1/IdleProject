@@ -54,10 +54,16 @@ namespace IdleProject.Battle.Character
             GetMana();
         }
 
-        public virtual void Hit(ITakeDamagedAble iTakeDamage, float attackDamage)
+        public virtual void Hit(ITakeDamagedAble iTakeDamage, float attackDamage, bool canCritical)
         {
             if (iTakeDamage.CanTakeDamage)
             {
+                if (canCritical && iTakeDamage is ITakeCriticalAble takeCritical &&
+                    CheckCritical(StatSystem.GetStatValue(CharacterStatType.CriticalPercent), takeCritical))
+                {
+                    attackDamage = attackDamage * DataManager.Instance.ConstData.criticalAttackFactor;
+                }
+
                 iTakeDamage.TakeDamage(attackDamage);
             }
         }

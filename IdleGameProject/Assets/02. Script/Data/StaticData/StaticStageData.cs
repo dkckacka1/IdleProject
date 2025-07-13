@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using IdleProject.Core;
+using IdleProject.Data.SerializableData;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -15,33 +16,10 @@ namespace IdleProject.Data.StaticData
         
         public FormationInfo stageFormation;
 
-        public List<RewardInfo> rewardList;
         public int playerExpAmount;
+
+        public List<RewardData> rewardDataList;
         
         public override string Index => $"{chapterIndex}-{stageIndex}";
-        
-        [BoxGroup("Creator"), Button]
-        private void CreateRewardConsumableItem()
-        {
-            rewardList.Add(new RewardInfo
-            {
-                rewardType = RewardType.ConsumableItem,
-                count = 1
-            });
-            
-            rewardList = rewardList.OrderBy(info => (int)info.rewardType).ToList();
-        }
-
-        [BoxGroup("Creator"), Button]
-        private void CreateRewardEquipmentItem()
-        {
-            rewardList.Add(new RewardInfo
-            {
-                rewardType = RewardType.EquipmentItem,
-                count = 1
-            });
-            
-            rewardList = rewardList.OrderBy(info => (int)info.rewardType).ToList();
-        }
     }
 }

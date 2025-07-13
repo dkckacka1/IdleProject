@@ -10,6 +10,7 @@ using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.Loading;
 using IdleProject.Core.Sound;
+using IdleProject.Data.StaticData;
 using UnityEngine;
 using UnityEngine.Events;
 using CharacterController = IdleProject.Battle.Character.CharacterController;
@@ -166,15 +167,15 @@ namespace IdleProject.Battle
         {
             var currentStage = DataManager.Instance.DataController.selectStaticStageData;
             DataManager.Instance.DataController.Player.ClearStage(currentStage);
-            foreach (var reward in currentStage.rewardList)
+            foreach (var reward in currentStage.rewardDataList)
             {
-                switch (reward.rewardType)
+                switch (reward.itemData)
                 {
-                    case RewardType.ConsumableItem:
-                        DataManager.Instance.DataController.Player.AddConsumableItem(reward.itemIndex, reward.count);
+                    case StaticConsumableItemData consumableItem:
+                        DataManager.Instance.DataController.Player.AddConsumableItem(consumableItem.Index, reward.count);
                         break;
-                    case RewardType.EquipmentItem:
-                        DataManager.Instance.DataController.Player.AddEquipmentItem(reward.itemIndex);
+                    case StaticEquipmentItemData equipmentItem:
+                        DataManager.Instance.DataController.Player.AddEquipmentItem(equipmentItem.Index);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

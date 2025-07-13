@@ -8,6 +8,7 @@ namespace IdleProject.Core.GameData
         private const string BGM_SOUND_VALUE_KEY = "bgmSoundValueKey";
         private const string SFX_SOUND_VALUE_KEY = "sfxSoundValueKey";
         
+        
         public static float BgmSoundVolume
         {
             get => PlayerPrefs.GetFloat(BGM_SOUND_VALUE_KEY, 1);

@@ -148,10 +148,4 @@
         Character,
         EquipmentItem,
     }
-
-    public enum RewardType
-    {
-        ConsumableItem,
-        EquipmentItem
-    }
 }

@@ -6,6 +6,7 @@ using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
+using IdleProject.Data.SerializableData;
 using IdleProject.Data.StaticData;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -84,7 +85,7 @@ namespace IdleProject.Lobby.UI.StagePanel
             SetEnemy(enemySlotList[3], selectStage.stageFormation.rearLeftPositionInfo);
             SetEnemy(enemySlotList[4], selectStage.stageFormation.rearRightPositionInfo);
 
-            SetReward(selectStage.rewardList);
+            SetReward(selectStage.rewardDataList);
         }
 
         private void SetEnemy(CharacterSlot enemySlot, PositionInfo positionInfo)
@@ -102,13 +103,13 @@ namespace IdleProject.Lobby.UI.StagePanel
             }
         }
 
-        private void SetReward(List<RewardInfo> rewardList)
+        private void SetReward(List<RewardData> rewardList)
         {
             CreateRewardSlot(rewardList);
             BindRewardData(rewardList);
         }
 
-        private void BindRewardData(List<RewardInfo> rewardList)
+        private void BindRewardData(List<RewardData> rewardList)
         {
             // Consumable 처리
             var consumableSlots = _rewardSlotList
@@ -117,7 +118,7 @@ namespace IdleProject.Lobby.UI.StagePanel
                 .ToList();
 
             var consumableRewards = rewardList
-                .Where(info => info.rewardType == RewardType.ConsumableItem)
+                .Where(rewardData => rewardData.itemData is StaticConsumableItemData)
                 .ToList();
 
             for (int i = 0; i < consumableSlots.Count; ++i)
@@ -125,9 +126,8 @@ namespace IdleProject.Lobby.UI.StagePanel
                 if (i < consumableRewards.Count)
                 {
                     var reward = consumableRewards[i];
-                    var data = DataManager.Instance.GetData<StaticConsumableItemData>(reward.itemIndex);
 
-                    consumableSlots[i].SlotUI.BindData(data);
+                    consumableSlots[i].SlotUI.BindData(reward.itemData);
                     consumableSlots[i].SetCount(reward.count);
                     consumableSlots[i].SetShadow(false);
                     consumableSlots[i].gameObject.SetActive(true);
@@ -145,7 +145,7 @@ namespace IdleProject.Lobby.UI.StagePanel
                 .ToList();
 
             var equipmentRewards = rewardList
-                .Where(info => info.rewardType == RewardType.EquipmentItem)
+                .Where(rewardData => rewardData.itemData is StaticEquipmentItemData)
                 .ToList();
 
             for (int i = 0; i < equipmentSlots.Count; ++i)
@@ -153,9 +153,8 @@ namespace IdleProject.Lobby.UI.StagePanel
                 if (i < equipmentRewards.Count)
                 {
                     var reward = equipmentRewards[i];
-                    var data = DataManager.Instance.GetData<StaticEquipmentItemData>(reward.itemIndex);
 
-                    equipmentSlots[i].SlotUI.BindData(data);
+                    equipmentSlots[i].SlotUI.BindData(reward.itemData);
                     equipmentSlots[i].SetEquipmentObject(false);
                     equipmentSlots[i].gameObject.SetActive(true);
                 }
@@ -166,15 +165,15 @@ namespace IdleProject.Lobby.UI.StagePanel
             }
         }
 
-        private void CreateRewardSlot(List<RewardInfo> rewardList)
+        private void CreateRewardSlot(List<RewardData> rewardList)
         {
             // 슬롯 생성
             var consumableItemSlotCount = _rewardSlotList.Count(slot => slot.hasSlotParts<ConsumableItemSlot>());
-            var consumableItemRewardCount = rewardList.Count(reward => reward.rewardType == RewardType.ConsumableItem);
+            var consumableItemRewardCount = rewardList.Count(rewardData => rewardData.itemData is StaticConsumableItemData);
             CreateSlots<ConsumableItemSlot>(consumableItemSlotCount, consumableItemRewardCount);
 
             var equipmentItemSlotCount = _rewardSlotList.Count(slot => slot.hasSlotParts<EquipmentItemSlot>());
-            var equipmentItemRewardCount = rewardList.Count(info => info.rewardType == RewardType.EquipmentItem);
+            var equipmentItemRewardCount = rewardList.Count(rewardData => rewardData.itemData is StaticEquipmentItemData);
             CreateSlots<EquipmentItemSlot>(equipmentItemSlotCount, equipmentItemRewardCount);
 
             // 슬롯 정렬

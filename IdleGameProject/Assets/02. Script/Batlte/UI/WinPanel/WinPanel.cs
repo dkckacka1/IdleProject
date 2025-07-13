@@ -5,6 +5,7 @@ using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
+using IdleProject.Data.SerializableData;
 using IdleProject.Data.StaticData;
 using IdleProject.Util;
 using Sirenix.OdinInspector;
@@ -69,7 +70,7 @@ namespace IdleProject.Battle.UI
         private Sequence SetRewardSequence()
         {
             var rewardSequence = DOTween.Sequence();
-            var rewardList = DataManager.Instance.DataController.selectStaticStageData.rewardList;
+            var rewardList = DataManager.Instance.DataController.selectStaticStageData.rewardDataList;
             
             for (int i = 0; i < rewardList.Count; ++i)
             {
@@ -86,26 +87,24 @@ namespace IdleProject.Battle.UI
             return rewardSequence;
         }
 
-        private SlotUI CreateSlot(RewardInfo info)
+        private SlotUI CreateSlot(RewardData rewardData)
         {
             SlotUI slot = null;
 
-            switch (info.rewardType)
+            switch (rewardData.itemData)
             {
-                case RewardType.ConsumableItem:
+                case StaticConsumableItemData consumableItem:
                     {
-                        var data = DataManager.Instance.GetData<StaticConsumableItemData>(info.itemIndex);
                         slot = SlotUI.GetSlotUI<ConsumableItemSlot>(rewardScroll.content);
-                        slot.BindData(data);
-                        slot.GetSlotParts<ConsumableItemSlot>().SetCount(info.count);
+                        slot.BindData(consumableItem);
+                        slot.GetSlotParts<ConsumableItemSlot>().SetCount(rewardData.count);
                         slot.GetSlotParts<ConsumableItemSlot>().SetShadow(false);
                     }
                     break;
-                case RewardType.EquipmentItem:
+                case StaticEquipmentItemData equipmentItem:
                     {
-                        var data = DataManager.Instance.GetData<StaticEquipmentItemData>(info.itemIndex);
                         slot = SlotUI.GetSlotUI<EquipmentItemSlot>(rewardScroll.content);
-                        slot.BindData(data);
+                        slot.BindData(equipmentItem);
                         slot.GetSlotParts<EquipmentItemSlot>().SetEquipmentObject(false);
                     }
                     break;

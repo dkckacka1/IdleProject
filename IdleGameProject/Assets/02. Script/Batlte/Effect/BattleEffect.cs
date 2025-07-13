@@ -73,12 +73,15 @@ namespace IdleProject.Battle.Effect
                 particleMain.loop = true;
             });
             
-            LoopTimer(loopTime).Forget();
+            LoopTimer(loopTime, this).Forget();
             return;
 
-            async UniTaskVoid LoopTimer(float time)
+            async UniTaskVoid LoopTimer(float time, BattleEffect loopEffect)
             {
                 await _battleManager.GetBattleTimer(time);
+                if (!loopEffect || !loopEffect.gameObject)
+                    return;
+                
                 var poolableObject = GetComponent<PoolableObject>();
                 ObjectPoolManager.Instance.Release(poolableObject);
             }

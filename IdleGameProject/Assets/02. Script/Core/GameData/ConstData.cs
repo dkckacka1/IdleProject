@@ -56,9 +56,6 @@ namespace IdleProject.Core.GameData
         public float maxBattleSpeed = 3f;
         
         [FoldoutGroup("Battle"), BoxGroup("Battle/Character")]
-        public float defaultGetManaValue = 10f;
-        
-        [FoldoutGroup("Battle"), BoxGroup("Battle/Character")]
         public float defenseScalingFactor = 100f;
         
         [FoldoutGroup("Battle"), BoxGroup("Battle/Character")]

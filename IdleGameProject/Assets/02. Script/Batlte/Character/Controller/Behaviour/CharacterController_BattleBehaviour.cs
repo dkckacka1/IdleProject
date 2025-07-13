@@ -51,7 +51,6 @@ namespace IdleProject.Battle.Character
         public void OnAttackAction(int attackNumber)
         {
             CharacterAttack.ExecuteSkill();
-            GetMana();
         }
 
         public virtual void Hit(ITakeDamagedAble iTakeDamage, float attackDamage, bool canCritical)
@@ -145,13 +144,6 @@ namespace IdleProject.Battle.Character
             State.CanAttack = false;
             await GetBattleManager.GetBattleTimer(StatSystem.GetStatValue(CharacterStatType.AttackCoolTime));
             State.CanAttack = true;
-        }
-
-        private void GetMana()
-        {
-            StatSystem.SetStatValue(CharacterStatType.ManaPoint,
-                StatSystem.GetStatValue(CharacterStatType.ManaPoint) +
-                DataManager.Instance.ConstData.defaultGetManaValue);
         }
 
         #endregion

@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using IdleProject.Core;
-using IdleProject.Data.SkillData;
+using IdleProject.Data.BehaviourData;
 
 namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 {
@@ -14,17 +14,17 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 
         private readonly string _buffName; 
         
-        public BuffAction(BuffSkillActionData skillActionData, CharacterController controller) : base(skillActionData, controller)
+        public BuffAction(BuffBehaviourActionData behaviourActionData, CharacterController controller) : base(behaviourActionData, controller)
         {
-            _characterStatType = skillActionData.buffStatType;
-            _buffValue = skillActionData.value;
-            _buffDuration = skillActionData.duration;
+            _characterStatType = behaviourActionData.buffStatType;
+            _buffValue = behaviourActionData.value;
+            _buffDuration = behaviourActionData.duration;
 
             _buffName = controller.name;
             
-            if (skillActionData.buffEffect is not null)
+            if (behaviourActionData.buffEffect is not null)
             {
-                _buffLoopEffect = new EffectAction(skillActionData.buffEffect, controller);
+                _buffLoopEffect = new EffectAction(behaviourActionData.buffEffect, controller);
             }
         }
 

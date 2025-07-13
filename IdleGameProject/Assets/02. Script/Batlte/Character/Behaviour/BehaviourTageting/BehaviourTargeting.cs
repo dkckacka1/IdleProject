@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using IdleProject.Data.SkillData;
+using IdleProject.Data.BehaviourData;
 
 namespace IdleProject.Battle.Character.Behaviour.Targeting
 {
@@ -11,13 +11,13 @@ namespace IdleProject.Battle.Character.Behaviour.Targeting
         protected List<CharacterController> GetCheckList(List<CharacterController> allCharacterList,
             List<CharacterController> targetList) => _isCheckFromTarget ? targetList : allCharacterList;
 
-        protected BehaviourTargeting(CharacterController useSkillController, SkillTargetingData targetingDataData)
+        protected BehaviourTargeting(CharacterController useSkillController, BehaviourTargetingData targetingDataData)
         {
             UseSkillController = useSkillController;
             _isCheckFromTarget = targetingDataData.isCheckFromTarget;
         }
 
-        public static IBehaviourTargeting GetSkillTargeting(CharacterController useSkillController, SkillTargetingData targetingData)
+        public static IBehaviourTargeting GetSkillTargeting(CharacterController useSkillController, BehaviourTargetingData targetingData)
         {
             return targetingData switch
             {

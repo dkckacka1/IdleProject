@@ -4,7 +4,7 @@ using System.Linq;
 using IdleProject.Battle.Character.Behaviour.SkillAction.Implement;
 using IdleProject.Battle.Character.Behaviour.Targeting;
 using IdleProject.Core;
-using IdleProject.Data.SkillData;
+using IdleProject.Data.BehaviourData;
 
 namespace IdleProject.Battle.Character.Behaviour.SkillAction
 {
@@ -17,12 +17,12 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction
 
         private readonly IEnumerable<IBehaviourTargeting> _targetings;
 
-        protected BehaviourAction(SkillActionData skillActionData, CharacterController controller)
+        protected BehaviourAction(BehaviourActionData behaviourActionData, CharacterController controller)
         {
             Controller = controller;
 
-            if (skillActionData != null)
-                _targetings = skillActionData.skillTargetList?.Select(targetingData =>
+            if (behaviourActionData != null)
+                _targetings = behaviourActionData.skillTargetList?.Select(targetingData =>
                     BehaviourTargeting.GetSkillTargeting(controller, targetingData));
 
             SetTarget(Controller);
@@ -52,20 +52,20 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction
         public abstract void ActionExecute(bool isSkillBehaviour);
 
 
-        public static IBehaviourAction GetSkillAction(SkillActionData skillActionData, CharacterController controller)
+        public static IBehaviourAction GetSkillAction(BehaviourActionData behaviourActionData, CharacterController controller)
         {
-            return skillActionData switch
+            return behaviourActionData switch
             {
                 // 공격 수행
-                AttackSkillActionData attackActionData => new AttackAction(attackActionData, controller),
+                AttackBehaviourActionData attackActionData => new AttackAction(attackActionData, controller),
                 // 버프 발동
-                BuffSkillActionData buffActionData => new BuffAction(buffActionData, controller),
+                BuffBehaviourActionData buffActionData => new BuffAction(buffActionData, controller),
                 // 이펙트 호출
-                EffectSkillActionData effectActionData => new EffectAction(effectActionData, controller),
+                EffectBehaviourActionData effectActionData => new EffectAction(effectActionData, controller),
                 // 투사체 발사
-                ProjectileSkillActionData projectileActionData =>
+                ProjectileBehaviourActionData projectileActionData =>
                     new ProjectileAction(projectileActionData, controller),
-                _ => throw new ArgumentOutOfRangeException(nameof(skillActionData))
+                _ => throw new ArgumentOutOfRangeException(nameof(behaviourActionData))
             };
         }
     }

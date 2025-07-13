@@ -2,25 +2,25 @@
 using Cysharp.Threading.Tasks.Triggers;
 using IdleProject.Battle.Effect;
 using IdleProject.Core;
-using IdleProject.Data.SkillData;
+using IdleProject.Data.BehaviourData;
 using UnityEngine;
 
 namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 {
     public class EffectAction : BehaviourAction
     {
-        private readonly SkillEffectData _effectData;
+        private readonly BehaviourEffectData _effectData;
         private readonly Func<BattleEffect> _getBattleEffect;
 
         private readonly bool _isUseCharacterEffect;
         
-        public EffectAction(SkillEffectData effectData, CharacterController controller) : base(null, controller)
+        public EffectAction(BehaviourEffectData effectData, CharacterController controller) : base(null, controller)
         {
             _effectData = effectData;
             _getBattleEffect = GameManager.GetCurrentSceneManager<BattleManager>().GetPoolable<BattleEffect>(PoolableType.BattleEffect, _effectData.effectName);
         }
         
-        public EffectAction(EffectSkillActionData actionData, CharacterController controller) : base(actionData, controller)
+        public EffectAction(EffectBehaviourActionData actionData, CharacterController controller) : base(actionData, controller)
         {
             _effectData = actionData.effectData;
             _isUseCharacterEffect = actionData.isUseCharacterEffect;

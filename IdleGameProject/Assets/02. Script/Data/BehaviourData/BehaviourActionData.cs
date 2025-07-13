@@ -2,28 +2,27 @@
 using IdleProject.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace IdleProject.Data.SkillData
+namespace IdleProject.Data.BehaviourData
 {
     [System.Serializable]
-    public abstract class SkillActionData
+    public abstract class BehaviourActionData
     {
         [SerializeReference] 
-        public List<SkillTargetingData> skillTargetList = new List<SkillTargetingData>();
+        public List<BehaviourTargetingData> skillTargetList = new List<BehaviourTargetingData>();
     } 
     
     [System.Serializable]
-    public class EffectSkillActionData : SkillActionData
+    public class EffectBehaviourActionData : BehaviourActionData
     {
         public bool isUseCharacterEffect;
         
         [SerializeReference] 
-        public SkillEffectData effectData;
+        public BehaviourEffectData effectData;
     }
 
     [System.Serializable]
-    public class AttackSkillActionData : SkillActionData
+    public class AttackBehaviourActionData : BehaviourActionData
     {
         [PropertySpace(10)]
         public bool canCritical;
@@ -33,7 +32,7 @@ namespace IdleProject.Data.SkillData
     }
     
     [System.Serializable]
-    public class ProjectileSkillActionData : SkillActionData
+    public class ProjectileBehaviourActionData : BehaviourActionData
     {
         [PropertySpace(10)]
         public string projectileObjectName;
@@ -45,11 +44,11 @@ namespace IdleProject.Data.SkillData
         public float arcHeight;
             
         [SerializeReference]
-        public List<SkillActionData> projectileOnHitAction;
+        public List<BehaviourActionData> projectileOnHitAction;
     }
 
     [System.Serializable]
-    public class BuffSkillActionData : SkillActionData
+    public class BuffBehaviourActionData : BehaviourActionData
     {
         [PropertySpace(10)] 
         public CharacterStatType buffStatType;
@@ -61,7 +60,7 @@ namespace IdleProject.Data.SkillData
     }
 
     [System.Serializable]
-    public abstract class SkillEffectData
+    public abstract class BehaviourEffectData
     {
         public string effectName;
         public CharacterOffsetType offsetType;
@@ -69,31 +68,31 @@ namespace IdleProject.Data.SkillData
     }
 
     [System.Serializable]
-    public class LoopEffect : SkillEffectData
+    public class LoopEffect : BehaviourEffectData
     {
         public float duration;
     }
 
     [System.Serializable]
-    public class OneShotEffect : SkillEffectData
+    public class OneShotEffect : BehaviourEffectData
     {
         
     }
 
     [System.Serializable]
-    public abstract class SkillTargetingData
+    public abstract class BehaviourTargetingData
     {
         public bool isCheckFromTarget;
     }
 
     [System.Serializable]
-    public class AITargetingData : SkillTargetingData
+    public class AITargetingData : BehaviourTargetingData
     {
         public CharacterAIType targetAIType;
     }
     
     [System.Serializable]
-    public class RangeTargetingData : SkillTargetingData
+    public class RangeTargetingData : BehaviourTargetingData
     {
         public float skillRange;
         public bool distinct;
@@ -102,7 +101,7 @@ namespace IdleProject.Data.SkillData
     }
 
     [System.Serializable]
-    public class CharacterStateTargetingData : SkillTargetingData
+    public class CharacterStateTargetingData : BehaviourTargetingData
     {
         public enum CharacterStateTargetType
         {
@@ -114,7 +113,7 @@ namespace IdleProject.Data.SkillData
     }
 
     [System.Serializable]
-    public class SingleTargetingData : SkillTargetingData
+    public class SingleTargetingData : BehaviourTargetingData
     {
         public enum SingleTargetType
         {

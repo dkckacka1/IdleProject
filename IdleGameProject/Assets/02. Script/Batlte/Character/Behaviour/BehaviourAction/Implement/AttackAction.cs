@@ -1,5 +1,5 @@
 ﻿using IdleProject.Core;
-using IdleProject.Data.SkillData;
+using IdleProject.Data.BehaviourData;
 using Sirenix.OdinInspector.Editor.TypeSearch;
 using UnityEngine;
 
@@ -12,14 +12,14 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 
         private readonly EffectAction _hitEffect;
         
-        public AttackAction(AttackSkillActionData skillActionData, CharacterController controller) : base(skillActionData, controller)
+        public AttackAction(AttackBehaviourActionData behaviourActionData, CharacterController controller) : base(behaviourActionData, controller)
         {
-            _canCritical = skillActionData.canCritical;
-            _attackValue = skillActionData.attackValue;
+            _canCritical = behaviourActionData.canCritical;
+            _attackValue = behaviourActionData.attackValue;
 
-            if (skillActionData.hitEffect is not null)
+            if (behaviourActionData.hitEffect is not null)
             {
-                _hitEffect = new EffectAction(skillActionData.hitEffect, controller);
+                _hitEffect = new EffectAction(behaviourActionData.hitEffect, controller);
             }
         }
 

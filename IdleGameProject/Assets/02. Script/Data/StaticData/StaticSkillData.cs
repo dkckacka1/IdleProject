@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using IdleProject.Data.SkillData;
+using IdleProject.Data.BehaviourData;
 using Sirenix.OdinInspector;
 #if UNITY_EDITOR
 using IdleProject.EditorClass;
@@ -15,7 +15,7 @@ namespace IdleProject.Data.StaticData
         public string skillName;
         public string skillDesc;
 
-        [FormerlySerializedAs("actionDataList")] [SerializeReference] public List<SkillExecuteData> executeDataList = new List<SkillExecuteData>();
+        [FormerlySerializedAs("actionDataList")] [SerializeReference] public List<BehaviourExecuteData> executeDataList = new List<BehaviourExecuteData>();
 
 #if UNITY_EDITOR
         [Button]

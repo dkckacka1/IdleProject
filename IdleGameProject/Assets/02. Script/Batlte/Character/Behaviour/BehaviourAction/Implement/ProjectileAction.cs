@@ -4,7 +4,7 @@ using IdleProject.Battle.Projectile;
 using IdleProject.Battle.Projectile.Movement;
 using IdleProject.Battle.Projectile.Movement.Implement;
 using IdleProject.Core;
-using IdleProject.Data.SkillData;
+using IdleProject.Data.BehaviourData;
 
 namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 {
@@ -18,19 +18,19 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 
         private readonly IProjectileMovement _projectileMovement;
         
-        public ProjectileAction(ProjectileSkillActionData skillActionData, CharacterController controller) : base(skillActionData, controller)
+        public ProjectileAction(ProjectileBehaviourActionData behaviourActionData, CharacterController controller) : base(behaviourActionData, controller)
         {
-            _getBattleProjectile = GameManager.GetCurrentSceneManager<BattleManager>().GetPoolable<BattleProjectile>(PoolableType.BattleEffect, skillActionData.projectileObjectName);
-            _projectileMoveType = skillActionData.projectileMoveType;
-            _projectileCreateOffset = skillActionData.projectileCreateOffset;
-            _projectileTargetingOffset = skillActionData.projectileTargetingOffset;
+            _getBattleProjectile = GameManager.GetCurrentSceneManager<BattleManager>().GetPoolable<BattleProjectile>(PoolableType.BattleEffect, behaviourActionData.projectileObjectName);
+            _projectileMoveType = behaviourActionData.projectileMoveType;
+            _projectileCreateOffset = behaviourActionData.projectileCreateOffset;
+            _projectileTargetingOffset = behaviourActionData.projectileTargetingOffset;
             
-            foreach (var onHitAction in skillActionData.projectileOnHitAction)
+            foreach (var onHitAction in behaviourActionData.projectileOnHitAction)
             {
                 _onHitActionList.Add(GetSkillAction(onHitAction, controller));
             }
             
-            _projectileMovement = GetProjectileMovement(skillActionData);
+            _projectileMovement = GetProjectileMovement(behaviourActionData);
         }
 
         public override void ActionExecute(bool isSkillBehaviour)
@@ -60,12 +60,12 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
             }
         }
 
-        private IProjectileMovement GetProjectileMovement(ProjectileSkillActionData skillActionData)
+        private IProjectileMovement GetProjectileMovement(ProjectileBehaviourActionData behaviourActionData)
         {
             return _projectileMoveType switch
             {
-                ProjectileMoveType.Direct => new DirectMovement(skillActionData.projectileSpeed),
-                ProjectileMoveType.Howitzer => new HowitzerMovement(skillActionData.projectileSpeed, skillActionData.arcHeight),
+                ProjectileMoveType.Direct => new DirectMovement(behaviourActionData.projectileSpeed),
+                ProjectileMoveType.Howitzer => new HowitzerMovement(behaviourActionData.projectileSpeed, behaviourActionData.arcHeight),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }

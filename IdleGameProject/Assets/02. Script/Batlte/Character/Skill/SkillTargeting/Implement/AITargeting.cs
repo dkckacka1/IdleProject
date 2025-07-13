@@ -5,7 +5,7 @@ using IdleProject.Data.SkillData;
 
 namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
 {
-    public class AITargeting : SkillTargeting
+    public class AITargeting : BehaviourTargeting
     {
         private readonly CharacterAIType _checkAIType;
         

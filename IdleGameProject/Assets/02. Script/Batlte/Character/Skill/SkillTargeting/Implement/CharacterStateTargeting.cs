@@ -5,7 +5,7 @@ using IdleProject.Data.SkillData;
 
 namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
 {
-    public class CharacterStateTargeting : SkillTargeting
+    public class CharacterStateTargeting : BehaviourTargeting
     {
         private readonly bool _isNot;
         private readonly CharacterStateTargetingData.CharacterStateTargetType _characterStateTargetType;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
 {
-    public class RangeTargeting : SkillTargeting
+    public class RangeTargeting : BehaviourTargeting
     {
         private readonly bool _isSelf;
         private readonly bool _hasSelf;

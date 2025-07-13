@@ -8,22 +8,22 @@ using IdleProject.Data.SkillData;
 
 namespace IdleProject.Battle.Character.Skill.SkillAction
 {
-    public abstract class SkillAction : ISkillAction
+    public abstract class BehaviourAction : IBehaviourAction
     {
         protected readonly CharacterController Controller;
 
         protected CharacterController CurrentTarget;
         protected Func<List<CharacterController>> GetTargetList;
 
-        private readonly IEnumerable<ISkillTargeting> _targetings;
+        private readonly IEnumerable<IBehaviourTargeting> _targetings;
 
-        protected SkillAction(SkillActionData skillActionData, CharacterController controller)
+        protected BehaviourAction(SkillActionData skillActionData, CharacterController controller)
         {
             Controller = controller;
 
             if (skillActionData != null)
                 _targetings = skillActionData.skillTargetList?.Select(targetingData =>
-                    SkillTargeting.SkillTargeting.GetSkillTargeting(controller, targetingData));
+                    SkillTargeting.BehaviourTargeting.GetSkillTargeting(controller, targetingData));
 
             SetTarget(Controller);
         }
@@ -35,7 +35,7 @@ namespace IdleProject.Battle.Character.Skill.SkillAction
         }
 
         
-        private List<CharacterController> GetTarget(IEnumerable<ISkillTargeting> skillTargetList, CharacterController targetController)
+        private List<CharacterController> GetTarget(IEnumerable<IBehaviourTargeting> skillTargetList, CharacterController targetController)
         {
             var characterList = GameManager.GetCurrentSceneManager<BattleManager>().GetCharacterList();
             var targetList = new List<CharacterController>() {targetController};
@@ -52,7 +52,7 @@ namespace IdleProject.Battle.Character.Skill.SkillAction
         public abstract void ActionExecute();
 
 
-        public static ISkillAction GetSkillAction(SkillActionData skillActionData, CharacterController controller)
+        public static IBehaviourAction GetSkillAction(SkillActionData skillActionData, CharacterController controller)
         {
             return skillActionData switch
             {

@@ -3,11 +3,11 @@ using IdleProject.Battle.Character.Skill.SkillAction;
 
 namespace IdleProject.Battle.Character.Skill
 {
-    public class ExecuteSkill
+    public class ExecuteBehaviour
     {
-        private readonly List<ISkillAction> _skillActionList;
+        private readonly List<IBehaviourAction> _skillActionList;
         
-        public ExecuteSkill(List<ISkillAction> skillActionList)
+        public ExecuteBehaviour(List<IBehaviourAction> skillActionList)
         {
             _skillActionList = skillActionList;
         }

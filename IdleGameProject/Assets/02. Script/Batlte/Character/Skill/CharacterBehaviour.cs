@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill
 {
-    public class CharacterSkill 
+    public class CharacterBehaviour 
     {
-        private readonly IEnumerator<ExecuteSkill> _skillActionList;
+        private readonly IEnumerator<ExecuteBehaviour> _skillActionList;
 
-        public CharacterSkill(List<ExecuteSkill> skillActionList)
+        public CharacterBehaviour(List<ExecuteBehaviour> skillActionList)
         {
             _skillActionList = skillActionList.ListLoop().GetEnumerator();
         }

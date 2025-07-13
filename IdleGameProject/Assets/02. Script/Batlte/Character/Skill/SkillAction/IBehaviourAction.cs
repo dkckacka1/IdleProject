@@ -1,6 +1,6 @@
 ﻿namespace IdleProject.Battle.Character.Skill.SkillAction
 {
-    public interface ISkillAction
+    public interface IBehaviourAction
     {
         public void SetTarget(CharacterController target);
         

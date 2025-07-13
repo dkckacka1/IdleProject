@@ -22,8 +22,8 @@ namespace IdleProject.Battle.Character
         [HideInInspector] public CharacterAIController characterAI;
 
         public CharacterBattleAnimationController AnimController;
-        public CharacterSkill CharacterSkill;
-        public CharacterSkill CharacterAttack;
+        public CharacterBehaviour CharacterSkill;
+        public CharacterBehaviour CharacterAttack;
         public StatSystem StatSystem;
         public CharacterState State;
         public EventGroup<BattleManager> BattleEventGroup;

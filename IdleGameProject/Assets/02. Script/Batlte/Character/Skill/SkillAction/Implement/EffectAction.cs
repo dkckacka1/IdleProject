@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
 {
-    public class EffectAction : SkillAction
+    public class EffectAction : BehaviourAction
     {
         private readonly SkillEffectData _effectData;
         private readonly Func<BattleEffect> _getBattleEffect;

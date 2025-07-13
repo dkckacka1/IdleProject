@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill.SkillTargeting.Implement
 {
-    public class SingleTargeting : SkillTargeting
+    public class SingleTargeting : BehaviourTargeting
     {
         private readonly SingleTargetingData.SingleTargetType _targetType;
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
 {
-    public class AttackAction : SkillAction
+    public class AttackAction : BehaviourAction
     {
         private bool _canCritical;
         private readonly float _attackValue;

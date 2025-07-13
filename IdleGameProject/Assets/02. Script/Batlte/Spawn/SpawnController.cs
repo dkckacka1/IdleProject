@@ -148,13 +148,12 @@ namespace IdleProject.Battle.Spawn
             SetAnimation(characterInstance, data.StaticData);
             SetStat(characterInstance, data);
 
-            characterInstance.CharacterAttack = GetSkill(characterInstance,
+            characterInstance.CharacterAttack = GetBehaviour(characterInstance,
                 DataManager.Instance.GetData<StaticSkillData>(data.StaticData.characterAttackName));
 
             if (string.IsNullOrEmpty(data.StaticData.characterSkillName) is false)
             {
-                characterInstance.CharacterSkill = GetSkill(characterInstance,
-                    DataManager.Instance.GetData<StaticSkillData>(data.StaticData.characterSkillName));
+                characterInstance.CharacterSkill = GetBehaviour(characterInstance, DataManager.Instance.GetData<StaticSkillData>(data.StaticData.characterSkillName));
             }
 
             AddCharacterUI(characterInstance, data.StaticData, aiType);
@@ -195,18 +194,18 @@ namespace IdleProject.Battle.Spawn
             controller.AnimController.SetAnimationController(animationController);
         }
 
-        private CharacterSkill GetSkill(CharacterController controllerInstance, StaticSkillData data)
+        private CharacterBehaviour GetBehaviour(CharacterController controllerInstance, StaticSkillData data)
         {
-            var executeSkillList = new List<ExecuteSkill>();
+            var executeBehaviourList = new List<ExecuteBehaviour>();
             foreach (var executeData in data.executeDataList)
             {
-                var actionList = executeData.skillActionDataList.Select(action => SkillAction.GetSkillAction(action, controllerInstance)).ToList();
-                var skillExecute = new ExecuteSkill(actionList);
+                var actionList = executeData.skillActionDataList.Select(action => BehaviourAction.GetSkillAction(action, controllerInstance)).ToList();
+                var skillExecute = new ExecuteBehaviour(actionList);
                 
-                executeSkillList.Add(skillExecute);
+                executeBehaviourList.Add(skillExecute);
             }
             
-            return new CharacterSkill(executeSkillList);
+            return new CharacterBehaviour(executeBehaviourList);
         }
 
         private void AddCharacterAI(CharacterController controller, CharacterAIType aiType)

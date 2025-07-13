@@ -2,7 +2,7 @@
 
 namespace IdleProject.Battle.Character.Skill.SkillTargeting
 {
-    public interface ISkillTargeting
+    public interface IBehaviourTargeting
     {
         public List<CharacterController> GetTargetingCharacterList
         (

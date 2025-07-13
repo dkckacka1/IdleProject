@@ -7,9 +7,9 @@ using IdleProject.Data.SkillData;
 
 namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
 {
-    public class ProjectileAction : SkillAction
+    public class ProjectileAction : BehaviourAction
     {
-        private readonly List<ISkillAction> _onHitActionList = new List<ISkillAction>();
+        private readonly List<IBehaviourAction> _onHitActionList = new List<IBehaviourAction>();
         private readonly Func<BattleProjectile> _getBattleProjectile;
         private readonly float _projectileSpeed; 
         private ProjectileMoveType _projectileMoveType;

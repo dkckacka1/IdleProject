@@ -3,7 +3,7 @@ using IdleProject.Data.SkillData;
 
 namespace IdleProject.Battle.Character.Skill.SkillTargeting
 {
-    public abstract class SkillTargeting : ISkillTargeting
+    public abstract class BehaviourTargeting : IBehaviourTargeting
     {
         private readonly bool _isCheckFromTarget;
         protected readonly CharacterController UseSkillController;
@@ -11,13 +11,13 @@ namespace IdleProject.Battle.Character.Skill.SkillTargeting
         protected List<CharacterController> GetCheckList(List<CharacterController> allCharacterList,
             List<CharacterController> targetList) => _isCheckFromTarget ? targetList : allCharacterList;
 
-        protected SkillTargeting(CharacterController useSkillController, SkillTargetingData targetingDataData)
+        protected BehaviourTargeting(CharacterController useSkillController, SkillTargetingData targetingDataData)
         {
             UseSkillController = useSkillController;
             _isCheckFromTarget = targetingDataData.isCheckFromTarget;
         }
 
-        public static ISkillTargeting GetSkillTargeting(CharacterController useSkillController, SkillTargetingData targetingData)
+        public static IBehaviourTargeting GetSkillTargeting(CharacterController useSkillController, SkillTargetingData targetingData)
         {
             return targetingData switch
             {

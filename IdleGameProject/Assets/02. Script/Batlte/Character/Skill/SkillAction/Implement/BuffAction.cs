@@ -4,7 +4,7 @@ using IdleProject.Data.SkillData;
 
 namespace IdleProject.Battle.Character.Skill.SkillAction.Implement
 {
-    public class BuffAction : SkillAction
+    public class BuffAction : BehaviourAction
     {
         private readonly CharacterStatType _characterStatType;
         private readonly float _buffDuration;

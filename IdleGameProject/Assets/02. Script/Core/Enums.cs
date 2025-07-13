@@ -53,6 +53,13 @@
         FluidHealthBarOffset,
     }
     
+    public enum SingleTargetType
+    {
+        Self,
+        CurrentTarget,
+        NealyController,
+        FarthestController,
+    }
     #endregion
 
     #region Skill

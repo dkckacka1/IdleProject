@@ -38,13 +38,6 @@ namespace IdleProject.Data.BehaviourData
     [System.Serializable]
     public class SingleTargetingData : BehaviourTargetingData
     {
-        public enum SingleTargetType
-        {
-            CurrentTarget,
-            NealyController,
-            FarthestController,
-        }
-
         public SingleTargetType singleTargetType;
     }
 }

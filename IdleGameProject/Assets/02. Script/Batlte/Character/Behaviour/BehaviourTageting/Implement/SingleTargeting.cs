@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IdleProject.Core;
 using IdleProject.Data.BehaviourData;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace IdleProject.Battle.Character.Behaviour.Targeting.Implement
 {
     public class SingleTargeting : BehaviourTargeting
     {
-        private readonly SingleTargetingData.SingleTargetType _targetType;
+        private readonly SingleTargetType _targetType;
 
         public SingleTargeting(CharacterController useSkillController, SingleTargetingData targetingDataData) : base(
             useSkillController, targetingDataData)
@@ -24,10 +25,11 @@ namespace IdleProject.Battle.Character.Behaviour.Targeting.Implement
 
             return _targetType switch
             {
-                SingleTargetingData.SingleTargetType.CurrentTarget => new List<CharacterController> { targetCharacter },
-                SingleTargetingData.SingleTargetType.NealyController => checkList
+                SingleTargetType.Self => new List<CharacterController> { UseSkillController },
+                SingleTargetType.CurrentTarget => new List<CharacterController> { targetCharacter },
+                SingleTargetType.NealyController => checkList
                     .OrderBy(character => Vector3.Distance(character, UseSkillController)).Take(1).ToList(),
-                SingleTargetingData.SingleTargetType.FarthestController => checkList
+                SingleTargetType.FarthestController => checkList
                     .OrderByDescending(character => Vector3.Distance(character, UseSkillController)).Take(1).ToList(),
                 _ => throw new ArgumentOutOfRangeException()
             };

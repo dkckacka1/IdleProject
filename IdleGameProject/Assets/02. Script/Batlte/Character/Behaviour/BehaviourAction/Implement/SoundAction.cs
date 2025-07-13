@@ -1,4 +1,5 @@
 ﻿using IdleProject.Core.Sound;
+using IdleProject.Data.BehaviourData;
 
 namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 {
@@ -7,10 +8,10 @@ namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
         private readonly string _soundName;
         private readonly float _soundVolume;
 
-        public SoundAction(string soundName, float soundVolume)
+        public SoundAction(SoundBehaviourActionData actionData)
         {
-            _soundName = soundName;
-            _soundVolume = soundVolume;
+            _soundName = actionData.soundName;
+            _soundVolume = actionData.volume;
         }
 
         public void ActionExecute(bool isSkillBehaviour)

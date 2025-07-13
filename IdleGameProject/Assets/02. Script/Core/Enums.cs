@@ -45,6 +45,16 @@
         Projectile,
     }
 
+    #endregion
+
+    #region Skill
+
+    public enum ProjectileMoveType
+    {
+        Direct,
+        Howitzer
+    }
+    
     public enum CharacterOffsetType
     {
         CharacterGround,
@@ -59,49 +69,6 @@
         CurrentTarget,
         NealyController,
         FarthestController,
-    }
-    #endregion
-
-    #region Skill
-
-    public enum SkillActionType
-    {
-        ImmediatelyAttack,
-        ProjectileAttack,
-        Buff
-    }
-
-    public enum SkillRangeType
-    {
-        InAttackRange,
-        All,
-        SelfRange,
-        TargetRange,
-    }
-    
-    public enum SkillTargetType
-    {
-        CurrentTarget,
-        AllEnemy,
-        AllAlly
-    }
-
-    public enum ProjectileMoveType
-    {
-        Direct,
-        Howitzer
-    }
-
-    public enum EffectCallTargetType
-    {
-        Controller,
-        Target,
-    }
-
-    public enum EffectCallOffsetType
-    {
-        HitOffset,
-        Ground,
     }
 
     #endregion

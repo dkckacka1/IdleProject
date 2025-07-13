@@ -1,5 +1,6 @@
 using IdleProject.Battle.Character;
 using IdleProject.Core;
+using IdleProject.Core.GameData;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,18 +11,24 @@ namespace IdleProject.Battle.Projectile
 {
     public class BattleProjectile : MonoBehaviour, IPoolable
     {
-        [HideInInspector] public UnityEvent hitEvent;
         [HideInInspector] public CharacterController target;
+        [HideInInspector] public UnityEvent hitEvent;
         [HideInInspector] public UnityEvent releaseEvent = null;
+
+        [SerializeField] private Transform hitTransform;
 
         public float projectileSpeed;
         
         private BattleManager _battleManager;
-        private Vector3 _targetPosition;
+        private float _hitDistance;
+        private float _distanceCheckValue;
 
         public void OnCreateAction()
         {
             _battleManager = GameManager.GetCurrentSceneManager<BattleManager>();
+
+            _hitDistance = hitTransform ? Vector3.Distance(transform.position, hitTransform.position) : 0;
+            _distanceCheckValue = DataManager.Instance.ConstData.projectileDistanceCheckCorrectionValue;
         }
 
         public void OnGetAction()
@@ -48,22 +55,13 @@ namespace IdleProject.Battle.Projectile
         {
             transform.LookAt(target.HitEffectOffset);
             transform.position = Vector3.MoveTowards(transform.position, target.HitEffectOffset, projectileSpeed * _battleManager.GetCurrentBattleDeltaTime);
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            var character = other.GetComponent<CharacterController>();
-            if (character is not null && character == target)
-            {
-                hitEvent.Invoke();
-                ObjectPoolManager.Instance.Release(GetComponent<PoolableObject>());
-            }
+            DistanceCheck();
         }
 
         private void DistanceCheck()
         {
-            var distance = Vector3.Distance(target.HitEffectOffset, this.transform.position);
-            if (distance < 0.5f)
+            var distance = Vector3.Distance(target.HitEffectOffset, transform.position) - _hitDistance;
+            if (distance < _distanceCheckValue)
             {
                 hitEvent.Invoke();
                 ObjectPoolManager.Instance.Release(GetComponent<PoolableObject>());

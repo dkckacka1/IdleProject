@@ -415,27 +415,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5581494103662004182, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5581494103662004182, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5581494103662004182, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5581494103662004182, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5581494103662004182, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5581494103662004182, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5581494103662004182, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
       propertyPath: m_SizeDelta.x
@@ -475,11 +475,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5581494103662004182, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 862
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 5581494103662004182, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -436
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5581494103662004182, guid: 692b1eb3561552e45acac8d244dd72a2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -535,10 +535,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 177288743}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -345}
-  m_SizeDelta: {x: 388.1616, y: 288.0614}
+  m_AnchorMin: {x: 0.38546407, y: 0.106250905}
+  m_AnchorMax: {x: 0.6145381, y: 0.40865257}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1357506067
 MonoBehaviour:

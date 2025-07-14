@@ -164,24 +164,24 @@ namespace IdleProject.Core.GameData
         private static void SavePlayerData(PlayerData playerData)
         {
             var json = JsonConvert.SerializeObject(playerData);
+            Debug.Log(json);
             PlayerPrefs.SetString(PLAYER_DATA_PLAYER_PREFS_NAME, json);
         }
 
         public static PlayerData LoadPlayerData()
         {
             var json = PlayerPrefs.GetString(PLAYER_DATA_PLAYER_PREFS_NAME, string.Empty);
-
-            try
-            {
-                var playerData =  JsonConvert.DeserializeObject<PlayerData>(json);
-                return playerData;
-            }
-            catch (Exception e)
-            {
-                var playerData = Resources.Load<PlayerData>(DEFAULT_PLAYER_DATA_NAME);
-                json = JsonConvert.SerializeObject(playerData);
-            }
             
+            Debug.Log(json);
+            
+            var playerData =  JsonConvert.DeserializeObject<PlayerData>(json);
+            
+            if (playerData is null)
+            {
+                var defaultData = Resources.Load<PlayerData>(DEFAULT_PLAYER_DATA_NAME);
+                json = JsonConvert.SerializeObject(defaultData);
+            }
+                
             return JsonConvert.DeserializeObject<PlayerData>(json);
         }
 

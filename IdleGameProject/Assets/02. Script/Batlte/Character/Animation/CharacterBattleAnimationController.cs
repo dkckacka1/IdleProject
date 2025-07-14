@@ -31,28 +31,6 @@ namespace IdleProject.Battle.Character
             _animator.Rebind();
         }
 
-        public List<string> GetBattleAnimationEffectList()
-        {
-            var result = new List<string>();
-
-            var attackClip =
-                _animator.runtimeAnimatorController.animationClips.First(clip => clip.name.Contains("Attack"));
-            var skillClip =
-                _animator.runtimeAnimatorController.animationClips.First(clip => clip.name.Contains("Skill"));
-
-            var attackEffectNames = attackClip.events
-                .Where(animEvent => string.IsNullOrEmpty(animEvent.stringParameter) is false)
-                .Select(animEvent => animEvent.stringParameter);
-            result.AddRange(attackEffectNames);
-            
-            var skillEffectNames = skillClip.events
-                .Where(animEvent => string.IsNullOrEmpty(animEvent.stringParameter) is false)
-                .Select(animEvent => animEvent.stringParameter);
-            result.AddRange(skillEffectNames);
-
-            return result;
-        }
-
         public void SetSkill()
         {
             _animator.SetTrigger(_skillAnimHash);

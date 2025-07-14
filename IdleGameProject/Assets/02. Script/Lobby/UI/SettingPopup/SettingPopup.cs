@@ -3,6 +3,7 @@ using IdleProject.Core.Sound;
 using IdleProject.Core.UI;
 using IdleProject.Lobby.UI;
 using IdleProject.Lobby.UI.SettingPopup;
+using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;

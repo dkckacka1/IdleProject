@@ -165,6 +165,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.4
   androidMinAspectRatio: 1
   applicationIdentifier:
+    Android: com.Kimhawon.IdleGameProject
     Standalone: com.DefaultCompany.3D-Project
   buildNumber:
     Standalone: 0
@@ -863,7 +864,7 @@ PlayerSettings:
   qnxGraphicConfPath: 
   apiCompatibilityLevel: 6
   captureStartupLogs: {}
-  activeInputHandler: 2
+  activeInputHandler: 1
   windowsGamepadBackendHint: 0
   cloudProjectId: f0c52010-03ba-49b6-b54b-65329c788b93
   framebufferDepthMemorylessMode: 0

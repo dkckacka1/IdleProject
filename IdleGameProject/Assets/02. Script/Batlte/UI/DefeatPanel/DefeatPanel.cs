@@ -28,14 +28,12 @@ namespace IdleProject.Battle.UI
         public override void OpenPanel()
         {
             base.OpenPanel();
+            
+            reinforce.gameObject.SetActive(false);
+            buttonsObject.gameObject.SetActive(false);
+            title.anchoredPosition = new Vector3(0, 750, 0);
+            
             var openSequence = DOTween.Sequence();
-            openSequence.OnStart(() =>
-            {
-                reinforce.gameObject.SetActive(false);
-                buttonsObject.gameObject.SetActive(false);
-                 
-                title.anchoredPosition = new Vector3(0, 750, 0);
-            });
             openSequence.Append(title.DOAnchorPosY(400, titleDuration).SetEase(Ease.OutBack));
             openSequence.AppendInterval(openActiveInterval);
             openSequence.AppendCallback(() =>

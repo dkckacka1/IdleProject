@@ -18,7 +18,7 @@ MonoBehaviour:
     playerExp: 0
   playerCharacterList:
   - characterName: Hiro
-    level: 10
+    level: 1
     exp: 0
     equipmentWeaponIndex: 
     equipmentHelmetIndex: 
@@ -27,7 +27,7 @@ MonoBehaviour:
     equipmentBootsIndex: 
     equipmentAccessoryIndex: 
   - characterName: Bak
-    level: 10
+    level: 1
     exp: 0
     equipmentWeaponIndex: 
     equipmentHelmetIndex: 
@@ -36,7 +36,7 @@ MonoBehaviour:
     equipmentBootsIndex: 
     equipmentAccessoryIndex: 
   - characterName: Eli
-    level: 10
+    level: 1
     exp: 0
     equipmentWeaponIndex: 
     equipmentHelmetIndex: 
@@ -45,7 +45,7 @@ MonoBehaviour:
     equipmentBootsIndex: 
     equipmentAccessoryIndex: 
   - characterName: Kosa
-    level: 10
+    level: 1
     exp: 0
     equipmentWeaponIndex: 
     equipmentHelmetIndex: 
@@ -54,7 +54,7 @@ MonoBehaviour:
     equipmentBootsIndex: 
     equipmentAccessoryIndex: 
   - characterName: Dig
-    level: 10
+    level: 1
     exp: 0
     equipmentWeaponIndex: 
     equipmentHelmetIndex: 
@@ -64,24 +64,20 @@ MonoBehaviour:
     equipmentAccessoryIndex: 
   playerConsumableItemList:
   - itemName: ExpPotion01
-    itemCount: 825
+    itemCount: 0
   - itemName: ExpPotion02
-    itemCount: 353
+    itemCount: 0
   - itemName: ExpPotion03
-    itemCount: 11
+    itemCount: 0
   - itemName: ExpPotion04
-    itemCount: 7
+    itemCount: 0
   - itemName: ExpPotion05
-    itemCount: 6
+    itemCount: 0
   playerEquipmentItemList: []
-  playerClearStageList:
-  - 1-1
-  - 1-2
-  - 1-3
-  - 1-4
-  frontMiddleCharacterName: Hiro
-  frontRightCharacterName: Bak
-  frontLeftCharacterName: Dig
-  rearRightCharacterName: Kosa
-  rearLeftCharacterName: Eli
+  playerClearStageList: []
+  frontMiddleCharacterName: 
+  frontRightCharacterName: Hiro
+  frontLeftCharacterName: 
+  rearRightCharacterName: 
+  rearLeftCharacterName: 
   equipmentItemData: {fileID: 11400000, guid: d462f05c92d18aa4995db13d728ec1bf, type: 2}

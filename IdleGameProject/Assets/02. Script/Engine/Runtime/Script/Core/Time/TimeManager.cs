@@ -1,7 +1,7 @@
 #if UNITASK_INSTALLED
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Engine.Util;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;

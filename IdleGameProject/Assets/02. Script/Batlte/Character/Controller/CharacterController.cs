@@ -1,8 +1,8 @@
 using System;
 using Engine.Core.EventBus;
 using IdleProject.Battle.AI;
-using IdleProject.Battle.Character.EventGroup;
 using IdleProject.Battle.Character.Behaviour;
+using IdleProject.Battle.Character.EventGroup;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
 using UnityEngine;

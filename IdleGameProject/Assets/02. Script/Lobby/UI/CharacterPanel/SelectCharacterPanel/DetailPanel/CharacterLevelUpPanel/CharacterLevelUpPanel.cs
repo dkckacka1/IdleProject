@@ -81,7 +81,7 @@ namespace IdleProject.Lobby.UI.CharacterPanel
             
             // 들어온 경험치양 만큼 캐릭터 레벨업
             // 레벨업 된 캐릭터 플레이어에 적용
-            selectCharacter.AddExp(_expAmount);
+            DataManager.Instance.DataController.Player.AddExp(selectCharacter.StaticData.Index, _expAmount);
             _expAmount = 0;
             
             // 소비아이템 사용해주기
@@ -93,9 +93,6 @@ namespace IdleProject.Lobby.UI.CharacterPanel
             // UI 업데이트
             UIManager.Instance.GetUIsOfType<IUIUpdatable>()
                 .ForEach(ui => ui.UpdateUI());
-            
-            // 세이브
-            DataManager.Instance.SaveController.Save(selectCharacter);
 
         }
 

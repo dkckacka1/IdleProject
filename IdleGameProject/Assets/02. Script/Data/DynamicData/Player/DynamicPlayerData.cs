@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Engine.Util.Extension;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Data.Player;
@@ -104,6 +105,26 @@ namespace IdleProject.Data.DynamicData
             PlayerEquipmentItemDataDic.Add(key, newItem);
             
             DataManager.Instance.SaveController.Save(newItem);
+        }
+
+        public void AddExp(string characterName, int expAmount)
+        {
+            var selectCharacter = PlayerCharacterDataDic[characterName];
+            selectCharacter.AddExp(expAmount);
+            
+            // 포지션내의 캐릭터 레벨 값 변경
+            EnumExtension.Foreach<SpawnPositionType>(type =>
+            {
+                PlayerFormation.GetPositionInfo(type, out var info);
+                if (characterName == info.characterName)
+                {
+                    info.characterLevel = selectCharacter.Level;
+                    PlayerFormation.SetPositionInfo(type, info);
+                }
+            });
+            
+            // 세이브
+            DataManager.Instance.SaveController.Save(selectCharacter);
         }
 
         public void ChangePlayerFormation(List<(SpawnPositionType, string)> getPlayerFormation)

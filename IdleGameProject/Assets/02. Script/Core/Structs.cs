@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Engine.Util.Extension;
 using IdleProject.Core.GameData;
 using UnityEngine;
 
@@ -52,6 +53,7 @@ namespace IdleProject.Core
         public List<string> GetCharacterNameList()
         {
             var result = new List<string>();
+            
             AddString(frontMiddlePositionInfo);
             AddString(frontRightPositionInfo);
             AddString(frontLeftPositionInfo);
@@ -66,6 +68,32 @@ namespace IdleProject.Core
                 {
                     result.Add(info.characterName);
                 }
+            }
+        }
+
+        public void GetPositionInfo(SpawnPositionType positionType, out PositionInfo positionInfo)
+        {
+            positionInfo =  positionType switch
+            {
+                SpawnPositionType.FrontMiddle => frontMiddlePositionInfo,
+                SpawnPositionType.FrontRight => frontRightPositionInfo,
+                SpawnPositionType.FrontLeft => frontLeftPositionInfo,
+                SpawnPositionType.RearRight => rearRightPositionInfo,
+                SpawnPositionType.RearLeft => rearLeftPositionInfo,
+                _ => throw new ArgumentOutOfRangeException(nameof(positionType), positionType, null)
+            };
+        }
+        
+        public void SetPositionInfo(SpawnPositionType positionType, PositionInfo newInfo)
+        {
+            switch (positionType)
+            {
+                case SpawnPositionType.FrontMiddle: frontMiddlePositionInfo = newInfo; break;
+                case SpawnPositionType.FrontRight: frontRightPositionInfo = newInfo; break;
+                case SpawnPositionType.FrontLeft: frontLeftPositionInfo = newInfo; break;
+                case SpawnPositionType.RearRight: rearRightPositionInfo = newInfo; break;
+                case SpawnPositionType.RearLeft: rearLeftPositionInfo = newInfo; break;
+                default: throw new ArgumentOutOfRangeException(nameof(positionType), positionType, null);
             }
         }
     }

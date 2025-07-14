@@ -27,9 +27,6 @@ namespace IdleProject.Lobby.UI.CharacterPanel
 
         public void SelectEquipmentItem(DynamicEquipmentItemData selectEquipmentItem)
         {
-            if (SelectedEquipmentItem == selectEquipmentItem)
-                return;
-            
             SelectedEquipmentItem = selectEquipmentItem;
             foreach (var updatable in UIManager.Instance.GetUIsOfType<IUISelectEquipmentItemUpdatable>())
             {

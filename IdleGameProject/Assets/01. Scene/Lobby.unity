@@ -4267,6 +4267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd59adbafb3909b47a70c82b26b7029e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  setEquipmentSoundName: SetEquipoment
   itemSlot: {fileID: 1621924775}
 --- !u!1 &740407806
 GameObject:
@@ -4352,6 +4353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e22dd4b10ebb9240b4d59a15979277a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelOpenSoundName: PanelOpen
 --- !u!1 &751573365
 GameObject:
   m_ObjectHideFlags: 0
@@ -5567,6 +5569,7 @@ MonoBehaviour:
   slotContent: {fileID: 500473742}
   longClickTime: 0.5
   maxLongClickTime: 1
+  levelUpSoundName: CharacterLevelUp
 --- !u!1001 &1126041903
 PrefabInstance:
   m_ObjectHideFlags: 0

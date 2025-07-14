@@ -1673,6 +1673,7 @@ MonoBehaviour:
   buttonsObject: {fileID: 3707351490055932004}
   rewardScroll: {fileID: 3994196307338196742}
   slotUIPrefab: {fileID: 4836674976611164553, guid: cc98ce945e4c2f1438dd17896557c4dd, type: 3}
+  getItemSoundName: GetItem
   openActiveInterval: 0.3
   titleDuration: 0.5
   createSlotInterval: 0.1

@@ -1,4 +1,5 @@
 using IdleProject.Core.GameData;
+using IdleProject.Core.Sound;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
 using IdleProject.Data.DynamicData;
@@ -10,6 +11,8 @@ namespace IdleProject.Lobby.UI.CharacterPanel
 {
     public class SelectEquipmentItemPanel : UIPanel, IUISelectEquipmentItemUpdatable, IUIUpdatable
     {
+        [SerializeField] private string setEquipmentSoundName;
+        
         [SerializeField] private EquipmentItemSlot itemSlot;
 
         private UIText _equipmentItemNameText;
@@ -87,6 +90,8 @@ namespace IdleProject.Lobby.UI.CharacterPanel
                     .ForEach(updatable => updatable.UpdateUI());
                 DataManager.Instance.SaveController.Save(selectedCharacter, selectedEquipmentItem, prevEquipmentItem);
             }
+            
+            SoundManager.Instance.PlaySfx(setEquipmentSoundName);
         }
         
         private void ReleaseItem()
@@ -101,6 +106,8 @@ namespace IdleProject.Lobby.UI.CharacterPanel
                 .ForEach(updatable => updatable.UpdateUI());
             
             DataManager.Instance.SaveController.Save(selectedEquipmentItem, prevEquippedCharacter);
+            
+            SoundManager.Instance.PlaySfx(setEquipmentSoundName);
         }
         
         public void SelectEquipmentItemUpdatable(DynamicEquipmentItemData item)

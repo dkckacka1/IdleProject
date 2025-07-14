@@ -1,11 +1,15 @@
 using Cysharp.Threading.Tasks;
 using IdleProject.Core.GameData;
+using IdleProject.Core.Sound;
 using IdleProject.Core.UI;
+using UnityEngine;
 
 namespace IdleProject.Lobby.UI
 {
     public class LobbyUIController : UIController
     {
+        [SerializeField] private string panelOpenSoundName;
+        
         private readonly PanelRadioGroup _lobbyPanelRadioGroup = new();
         
         public override async UniTask Initialized()
@@ -35,6 +39,7 @@ namespace IdleProject.Lobby.UI
         private void GoToDungeon()
         {
             UIManager.Instance.GetUI<StagePanel.StagePanel>().OpenPanel();
+            SoundManager.Instance.PlaySfx(panelOpenSoundName);
         }
 
         private void OpenEquipmentPanel()

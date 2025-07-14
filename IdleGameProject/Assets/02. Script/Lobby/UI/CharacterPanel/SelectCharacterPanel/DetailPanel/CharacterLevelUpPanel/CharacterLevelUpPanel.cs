@@ -3,6 +3,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
+using IdleProject.Core.Sound;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
 using IdleProject.Data.DynamicData;
@@ -18,6 +19,8 @@ namespace IdleProject.Lobby.UI.CharacterPanel
         [SerializeField] private Transform slotContent;
         [SerializeField] private float longClickTime = 2f;
         [SerializeField] private float maxLongClickTime = 4f;
+
+        [SerializeField] private string levelUpSoundName;
 
         private readonly List<SlotUI> _slotList = new();
 
@@ -69,6 +72,12 @@ namespace IdleProject.Lobby.UI.CharacterPanel
         private void LevelUp()
         {
             var selectCharacter = GetSelectCharacter;
+
+            // 증가할 경험치 양이 있다면 사운드 출력
+            if (_expAmount > 0)
+            {
+                SoundManager.Instance.PlaySfx(levelUpSoundName);
+            }
             
             // 들어온 경험치양 만큼 캐릭터 레벨업
             // 레벨업 된 캐릭터 플레이어에 적용
@@ -87,6 +96,7 @@ namespace IdleProject.Lobby.UI.CharacterPanel
             
             // 세이브
             DataManager.Instance.SaveController.Save(selectCharacter);
+
         }
 
         private void OnSlotPointerDown(PointerEventData eventData, SlotUI slot)

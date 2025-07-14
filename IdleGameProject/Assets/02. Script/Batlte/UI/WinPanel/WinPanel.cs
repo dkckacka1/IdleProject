@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
+using IdleProject.Core.Sound;
 using IdleProject.Core.UI;
 using IdleProject.Core.UI.Slot;
 using IdleProject.Data.SerializableData;
@@ -22,6 +23,8 @@ namespace IdleProject.Battle.UI
 
         [SerializeField] private ScrollRect rewardScroll;
         [SerializeField] private SlotUI slotUIPrefab;
+
+        [SerializeField] private string getItemSoundName;
         
         [BoxGroup("OpenTween"), SerializeField] private float openActiveInterval;
         [BoxGroup("OpenTween"), SerializeField] private float titleDuration;
@@ -80,6 +83,7 @@ namespace IdleProject.Battle.UI
                     var slot = CreateSlot(rewardInfo);
                     ((RectTransform)slot.transform).DOPunchScale(Vector3.one * slotPunchScale,
                         slotPunchDuration, 1, 0.3f);
+                    SoundManager.Instance.PlaySfx(getItemSoundName);
                 });
                 rewardSequence.AppendInterval(createSlotInterval);
             }

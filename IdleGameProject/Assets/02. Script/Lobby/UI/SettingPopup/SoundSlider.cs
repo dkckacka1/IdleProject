@@ -31,6 +31,7 @@ namespace IdleProject.Lobby.UI.SettingPopup
         public void SetSlider(float value)
         {
             soundSlider.value = value;
+            CheckMute(value);
         }
     }
 }   

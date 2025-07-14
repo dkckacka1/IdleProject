@@ -2229,6 +2229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 121c4a9962f0123498b8163816b6d1ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerData: {fileID: 11400000, guid: 1e26dfa725fe136429ef2fe3d7983bc2, type: 2}
 --- !u!4 &1359599638
 Transform:
   m_ObjectHideFlags: 0
@@ -2500,7 +2501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc90041e7d1eec42b23bc063003e11f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTestPlay: 1
+  isTestPlay: 0
   testPlayerData: {fileID: 11400000, guid: 40a1d2a0186a80648958473b72f83ac8, type: 2}
   moveSceneType: 0
 --- !u!4 &1657019844

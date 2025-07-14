@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using Engine.Util;
+using IdleProject.Data.Player;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -38,9 +39,19 @@ namespace IdleProject.Core.GameData
                 
                 AddData(locate.ResourceType, loadData);                
             }
-            
-            SaveController = TestManager.Instance.isTestPlay is false ? new SaveController() : new SaveController(TestManager.Instance.testPlayerData);
-            DataController = TestManager.Instance.isTestPlay is false ? new DataController() : new DataController(TestManager.Instance.testPlayerData);
+
+            if (!TestManager.Instance.isTestPlay)
+            {
+                var playerData = SaveController.LoadPlayerData();
+
+                SaveController = new SaveController(playerData);
+                DataController = new DataController(playerData);
+            }
+            else
+            {
+                SaveController = new SaveController(TestManager.Instance.testPlayerData);
+                DataController = new DataController(TestManager.Instance.testPlayerData);
+            }
         }
 
         public void AddData(Type type, Data.StaticData.StaticData staticData)
@@ -101,6 +112,12 @@ namespace IdleProject.Core.GameData
         public List<T> GetDataList<T>() where T : Data.StaticData.StaticData
         {
             return _dataDictionary.TryGetValue(typeof(T), out var targetDic) ? targetDic.Values.Select(data => data as T).ToList() : null;
+        }
+
+        [Button]
+        private void ClearPlayerData()
+        {
+            SaveController.ClearPlayerData();
         }
     }
 }

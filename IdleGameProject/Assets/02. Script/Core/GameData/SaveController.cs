@@ -1,19 +1,21 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using IdleProject.Data;
 using IdleProject.Data.DynamicData;
 using IdleProject.Data.Player;
 using IdleProject.Data.StaticData;
+using Newtonsoft.Json;
+using UnityEngine;
 
 namespace IdleProject.Core.GameData
 {
     public class SaveController
     {
+        private const string PLAYER_DATA_PLAYER_PREFS_NAME = "PLAYER_DATA_PLAYERPREFS";
+        private const string DEFAULT_PLAYER_DATA_NAME = "DefaultPlayerData";
+        
         private readonly PlayerData _playerData;
 
-        public SaveController()
-        {
-        }
-        
         public SaveController(PlayerData playerData)
         {
             _playerData = playerData;
@@ -22,6 +24,8 @@ namespace IdleProject.Core.GameData
         public void Save(PlayerInfo playerInfo)
         {
             _playerData.PlayerInfo = playerInfo;
+            
+            SavePlayerData(_playerData);
         }
         
         public void Save(params IData[] dataParams)
@@ -61,6 +65,7 @@ namespace IdleProject.Core.GameData
                     }
                 }
             }
+            SavePlayerData(_playerData);
         }
 
         private void SaveCharacter(DynamicCharacterData characterData)
@@ -154,6 +159,35 @@ namespace IdleProject.Core.GameData
             _playerData.frontRightCharacterName = formation.frontRightPositionInfo.characterName;
             _playerData.rearLeftCharacterName = formation.rearLeftPositionInfo.characterName;
             _playerData.rearRightCharacterName = formation.rearRightPositionInfo.characterName;
+        }
+
+        private static void SavePlayerData(PlayerData playerData)
+        {
+            var json = JsonConvert.SerializeObject(playerData);
+            PlayerPrefs.SetString(PLAYER_DATA_PLAYER_PREFS_NAME, json);
+        }
+
+        public static PlayerData LoadPlayerData()
+        {
+            var json = PlayerPrefs.GetString(PLAYER_DATA_PLAYER_PREFS_NAME, string.Empty);
+
+            try
+            {
+                var playerData =  JsonConvert.DeserializeObject<PlayerData>(json);
+                return playerData;
+            }
+            catch (Exception e)
+            {
+                var playerData = Resources.Load<PlayerData>(DEFAULT_PLAYER_DATA_NAME);
+                json = JsonConvert.SerializeObject(playerData);
+            }
+            
+            return JsonConvert.DeserializeObject<PlayerData>(json);
+        }
+
+        public static void ClearPlayerData()
+        {
+            PlayerPrefs.DeleteKey(PLAYER_DATA_PLAYER_PREFS_NAME);
         }
     }
 }

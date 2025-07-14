@@ -119,6 +119,9 @@ namespace IdleProject.Battle
 
         public void DeathCharacter()
         {
+            if (BattleStateEventBus.IsSameCurrentType(BattleStateType.Defeat, BattleStateType.Win))
+                return;
+            
             if (BattleStateEventBus.IsSameCurrentType(BattleStateType.Skill) is false)
             {
                 SetBattleResultState();

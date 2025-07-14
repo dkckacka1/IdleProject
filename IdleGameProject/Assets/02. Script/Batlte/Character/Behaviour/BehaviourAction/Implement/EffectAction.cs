@@ -1,9 +1,7 @@
 ﻿using System;
-using Cysharp.Threading.Tasks.Triggers;
 using IdleProject.Battle.Effect;
 using IdleProject.Core;
 using IdleProject.Data.BehaviourData;
-using UnityEngine;
 
 namespace IdleProject.Battle.Character.Behaviour.SkillAction.Implement
 {

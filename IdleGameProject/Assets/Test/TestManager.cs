@@ -1,4 +1,3 @@
-using System;
 using Engine.Util;
 using IdleProject.Battle;
 using IdleProject.Core;

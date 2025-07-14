@@ -1,12 +1,9 @@
-using IdleProject.Battle.Character;
 using IdleProject.Battle.Projectile.Movement;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
 using IdleProject.Core.ObjectPool;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
-using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.Projectile
 {

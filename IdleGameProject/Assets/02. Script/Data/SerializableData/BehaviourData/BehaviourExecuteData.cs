@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using IdleProject.Battle.Character.Behaviour.SkillAction;
 using UnityEngine;
 
 namespace IdleProject.Data.BehaviourData

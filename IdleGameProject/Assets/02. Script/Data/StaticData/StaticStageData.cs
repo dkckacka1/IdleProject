@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 using IdleProject.Core;
 using IdleProject.Data.SerializableData;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace IdleProject.Data.StaticData

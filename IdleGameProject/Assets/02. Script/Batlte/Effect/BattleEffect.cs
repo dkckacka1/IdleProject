@@ -2,13 +2,10 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Engine.Core.EventBus;
-using IdleProject.Battle.Character;
 using IdleProject.Core;
 using IdleProject.Core.ObjectPool;
-using IdleProject.Core.Sound;
 using UnityEngine;
 using UnityEngine.Events;
-using CharacterController = IdleProject.Battle.Character.CharacterController;
 
 namespace IdleProject.Battle.Effect
 {

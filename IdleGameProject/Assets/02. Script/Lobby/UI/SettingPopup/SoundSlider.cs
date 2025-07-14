@@ -1,7 +1,6 @@
 using IdleProject.Core.UI;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace IdleProject.Lobby.UI.SettingPopup

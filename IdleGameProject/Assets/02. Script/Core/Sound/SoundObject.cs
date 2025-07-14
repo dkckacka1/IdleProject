@@ -29,10 +29,11 @@ namespace IdleProject.Core.Sound
         public void PlayAudio(AudioClip audioClip, float volume = 1f)
         {
             _source.volume = volume;
-            _source.PlayOneShot(audioClip);
+            _source.clip = audioClip;
+            _source.Play();
             _source.ObserveEveryValueChanged(source => source.isPlaying)
                 .Pairwise()
-                .Where(pair => pair.Previous == true && pair.Current == false)
+                .Where(pair => pair is { Previous: true, Current: false })
                 .Take(1) // 한 번만 실행되도록 제한
                 .Subscribe(_ =>
                 {

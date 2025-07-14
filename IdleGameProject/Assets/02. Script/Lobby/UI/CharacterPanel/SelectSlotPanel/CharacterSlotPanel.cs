@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace IdleProject.Lobby.UI.CharacterPanel
 {
-    public class CharacterSlotPanel : UIPanel
+    public class CharacterSlotPanel : UIPanel, IUIUpdatable
     {
         [SerializeField] private ScrollRect slotScrollRect;
         
@@ -91,6 +91,14 @@ namespace IdleProject.Lobby.UI.CharacterPanel
         private SlotUI CreateSlot()
         {
             return SlotUI.GetSlotUI<CharacterSlot>(slotScrollRect.content);
+        }
+
+        public void UpdateUI()
+        {
+            foreach (var slot in _slotList)
+            {
+                slot.RefreshUI();
+            }
         }
     }
 }

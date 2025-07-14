@@ -155,7 +155,7 @@ namespace IdleProject.Battle.Character
             State.IsDead = true;
             AnimController.SetDeath();
             GetComponent<Collider>().enabled = false;
-            Agent.enabled = false;
+            SetAgent(false);
         }
 
         public static bool IsTargetInsideAttackRange(CharacterController mine, ITargetedAble targetCharacter)

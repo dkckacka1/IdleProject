@@ -91,10 +91,10 @@ namespace IdleProject.Battle.Character
             switch (type)
             {
                 case BattleGameStateType.Play:
-                    Agent.enabled = true;
+                    SetAgent(true);
                     break;
                 case BattleGameStateType.Pause:
-                    Agent.enabled = false;
+                    SetAgent(false);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

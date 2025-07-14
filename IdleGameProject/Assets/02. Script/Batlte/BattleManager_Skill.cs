@@ -46,7 +46,7 @@ namespace IdleProject.Battle
             foreach (var character in GetCharacterList().Where(character => useCharacter != character))
             {
                 character.AnimController.SetAnimationSpeed(0f);
-                character.StopMove();
+                character.SetAgent(false);
             }
         }
 
@@ -60,6 +60,7 @@ namespace IdleProject.Battle
             foreach (var character in GetCharacterList().Where(character => useCharacter != character))
             {
                 character.AnimController.SetAnimationSpeed(GetCurrentBattleSpeed);
+                character.SetAgent(true);
             }
             
             SetBattleResultState();

@@ -17,12 +17,15 @@ namespace IdleProject.Battle.Character
 
         public void Move(Vector3 destination, Action moveEndAction)
         {
-            Agent?.SetDestination(destination);
+            if (Agent.enabled)
+            {
+                Agent?.SetDestination(destination);
+            }
         }
 
-        public void StopMove()
+        public void SetAgent(bool isEnable)
         {
-            Agent.ResetPath();
+            Agent.enabled = isEnable;
         }
     }
 }

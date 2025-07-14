@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbccaee41524d2b85b41f9a4c3671b1, type: 3}
   m_Name: Glove_05
   m_EditorClassIdentifier: 
-  itemName: Glove_01
+  itemName: "\uD53C\uC758 \uCC44\uCC0D\uC7A5\uAC11"
   itemType: 3
   firstValueStatType: 7
   itemFirstValue: 25

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbccaee41524d2b85b41f9a4c3671b1, type: 3}
   m_Name: Armor_02
   m_EditorClassIdentifier: 
-  itemName: Armor_01
+  itemName: "\uBD88\uAD74\uC758 \uBBF8\uB298\uAC11"
   itemType: 2
   firstValueStatType: 0
   itemFirstValue: 20

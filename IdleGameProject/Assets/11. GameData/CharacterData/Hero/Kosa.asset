@@ -24,7 +24,7 @@ MonoBehaviour:
     attackRange: 7
     attackCoolTime: 0.1
     defensePoint: 0
-    criticalPercent: 0.5
+    criticalPercent: 0
     criticalResistance: 0
   levelValue:
     healthPointValue: 10

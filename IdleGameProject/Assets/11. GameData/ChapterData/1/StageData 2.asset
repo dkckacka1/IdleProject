@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chapterIndex: 1
   stageIndex: 2
-  stageName: 
+  stageName: "\uD478\uB978 \uCD08\uC6D0"
   stageFormation:
     frontMiddlePositionInfo:
       characterName: GoblinMale

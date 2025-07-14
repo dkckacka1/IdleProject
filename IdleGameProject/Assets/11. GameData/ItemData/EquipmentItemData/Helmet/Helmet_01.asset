@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbccaee41524d2b85b41f9a4c3671b1, type: 3}
   m_Name: Helmet_01
   m_EditorClassIdentifier: 
-  itemName: Helmet_01
+  itemName: "\uADF8\uB9BC\uC790\uC758 \uB9DD\uD1A0\uD22C\uAD6C"
   itemType: 1
   firstValueStatType: 0
   itemFirstValue: 50

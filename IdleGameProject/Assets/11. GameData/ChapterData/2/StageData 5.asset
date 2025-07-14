@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chapterIndex: 2
   stageIndex: 5
-  stageName: 
+  stageName: "\uD574\uACE8 \uCD08\uC6D0"
   stageFormation:
     frontMiddlePositionInfo:
       characterName: SkeletonSlave

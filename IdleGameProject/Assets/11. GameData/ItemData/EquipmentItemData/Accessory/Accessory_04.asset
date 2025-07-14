@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbccaee41524d2b85b41f9a4c3671b1, type: 3}
   m_Name: Accessory_04
   m_EditorClassIdentifier: 
-  itemName: Accessory_04
+  itemName: "\uC2DC\uAC04\uC758 \uBAA9\uAC78\uC774"
   itemType: 5
   firstValueStatType: 7
   itemFirstValue: 20

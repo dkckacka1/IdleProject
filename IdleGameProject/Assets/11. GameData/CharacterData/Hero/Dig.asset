@@ -18,14 +18,14 @@ MonoBehaviour:
   characterAnimationName: HeroDig
   stat:
     healthPoint: 200
-    manaPoint: 100
+    manaPoint: 80
     attackDamage: 8
     movementSpeed: 3.5
     attackRange: 2
     attackCoolTime: 0.1
     defensePoint: 20
-    criticalPercent: 0.5
+    criticalPercent: 0
     criticalResistance: 0
   levelValue:
-    healthPointValue: 10
-    attackDamageValue: 2
+    healthPointValue: 20
+    attackDamageValue: 1

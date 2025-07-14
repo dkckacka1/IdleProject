@@ -16,15 +16,6 @@
       "dependencies": {},
       "hash": "8042b29ff87dd5506d7aad72bd6d8d7405985f27"
     },
-    "com.kimhawon.engine": {
-      "version": "https://github.com/dkckacka1/Engine.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.addressables": "2.2.2"
-      },
-      "hash": "c0ffecfe76d8598aa59962f1121963a06588ae04"
-    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

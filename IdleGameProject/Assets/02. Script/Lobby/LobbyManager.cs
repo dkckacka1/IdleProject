@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
@@ -31,6 +32,8 @@ namespace IdleProject.Lobby
         [BoxGroup("LobbyMainCharacter"), SerializeField]
         private LobbyCharacter rearLeftCharacter;
 
+        private bool _isTestToggle;
+        
         public override async UniTask Initialize()
         {
             TaskChecker.StartLoading(LOBBY_INIT_TASK, SetMainCharacter);
@@ -75,6 +78,22 @@ namespace IdleProject.Lobby
                 ResourceManager.Instance.GetAsset<RuntimeAnimatorController>(data.characterAnimationName);
 
             character.SetAnimation(animatorController).Forget();
+        }
+        
+        private void OnGUI()
+        {
+            if (GUI.Button(new Rect(10, 10, 50, 50), "TestToggle"))
+            {
+                _isTestToggle = !_isTestToggle;
+            }
+
+            if (_isTestToggle)
+            {
+                if (GUI.Button(new Rect(10, 60, 100, 100), "AddExpPotion"))
+                {
+                    DataManager.Instance.DataController.Player.AddConsumableItem("ExpPotion05", 100);
+                }
+            }
         }
     }
 }

@@ -9,7 +9,5 @@ namespace IdleProject.Data.Player
         public string index;
         public string itemIndex;
         public string equipmentCharacterName;
-
-        public StaticEquipmentItemData GetData => DataManager.Instance.GetData<StaticEquipmentItemData>(itemIndex);
     }
 }

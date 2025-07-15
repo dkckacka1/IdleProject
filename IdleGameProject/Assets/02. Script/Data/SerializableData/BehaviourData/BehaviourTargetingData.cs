@@ -26,11 +26,6 @@ namespace IdleProject.Data.BehaviourData
     [System.Serializable]
     public class CharacterStateTargetingData : BehaviourTargetingData
     {
-        public enum CharacterStateTargetType
-        {
-            IsLive,
-        }
-        
         public bool isNot;
         public CharacterStateTargetType characterStateTargetType;
     }

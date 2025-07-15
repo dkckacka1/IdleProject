@@ -47,7 +47,7 @@
 
     #endregion
 
-    #region Skill
+    #region Behaviour
 
     public enum ProjectileMoveType
     {
@@ -69,6 +69,12 @@
         CurrentTarget,
         NealyController,
         FarthestController,
+    }
+    
+    public enum CharacterStateTargetType
+    {
+        IsLive,
+        IsInAttackRange
     }
 
     #endregion

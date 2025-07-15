@@ -26,6 +26,7 @@ MonoBehaviour:
         - rid: 896382648194433238
         - rid: 896382648194433240
         - rid: 896382648194433241
+        - rid: 896382692221255791
         canCritical: 1
         attackValue: 1
         hitEffect:
@@ -71,6 +72,12 @@ MonoBehaviour:
       data:
         isCheckFromTarget: 0
         singleTargetType: 0
+    - rid: 896382692221255791
+      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        isNot: 0
+        characterStateTargetType: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

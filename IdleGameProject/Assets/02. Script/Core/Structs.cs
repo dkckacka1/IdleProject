@@ -71,9 +71,9 @@ namespace IdleProject.Core
             }
         }
 
-        public void GetPositionInfo(SpawnPositionType positionType, out PositionInfo positionInfo)
+        public PositionInfo GetPositionInfo(SpawnPositionType positionType)
         {
-            positionInfo =  positionType switch
+            return positionType switch
             {
                 SpawnPositionType.FrontMiddle => frontMiddlePositionInfo,
                 SpawnPositionType.FrontRight => frontRightPositionInfo,

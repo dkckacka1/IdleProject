@@ -23,7 +23,7 @@ namespace IdleProject.Data.DynamicData
         
         public DynamicPlayerData(PlayerData playerData)
         {
-            PlayerInfo = playerData.PlayerInfo;
+            PlayerInfo = playerData.playerInfo;
             
             PlayerEquipmentItemDataDic =
                 playerData.playerEquipmentItemList.ToDictionary
@@ -115,7 +115,7 @@ namespace IdleProject.Data.DynamicData
             // 포지션내의 캐릭터 레벨 값 변경
             EnumExtension.Foreach<SpawnPositionType>(type =>
             {
-                PlayerFormation.GetPositionInfo(type, out var info);
+                var info = PlayerFormation.GetPositionInfo(type);
                 if (characterName == info.characterName)
                 {
                     info.characterLevel = selectCharacter.Level;
@@ -156,6 +156,27 @@ namespace IdleProject.Data.DynamicData
             DataManager.Instance.SaveController.SaveFormation(PlayerFormation);
         }
         
+        public FormationInfo GetFormation()
+        {
+            var formation = new FormationInfo
+            {
+                frontMiddlePositionInfo = GetPositionInfo(SpawnPositionType.FrontMiddle),
+                frontRightPositionInfo = GetPositionInfo(SpawnPositionType.FrontRight),
+                frontLeftPositionInfo = GetPositionInfo(SpawnPositionType.FrontLeft),
+                rearRightPositionInfo = GetPositionInfo(SpawnPositionType.RearRight),
+                rearLeftPositionInfo = GetPositionInfo(SpawnPositionType.RearLeft),
+            };
+
+            return formation;
+
+            PositionInfo GetPositionInfo(SpawnPositionType position)
+            {
+                var info = PlayerFormation.GetPositionInfo(position);
+                info.characterLevel = PlayerCharacterDataDic.TryGetValue(info.characterName, out var characterData) ? characterData.Level : 0;
+                return info;
+            }
+        }
+        
         private FormationInfo GetPlayerFormation(PlayerData playerData)
         {
             var formation = new FormationInfo
@@ -182,5 +203,6 @@ namespace IdleProject.Data.DynamicData
                 return position;
             }
         }
+
     }
 }

@@ -60,7 +60,7 @@ namespace IdleProject.Battle
         private async UniTask SpawnCharacter()
         {
             await spawnController.SpawnCharacterByFormation(CharacterAIType.Ally,
-                DataManager.Instance.DataController.Player.PlayerFormation);
+                DataManager.Instance.DataController.Player.GetFormation());
             await spawnController.SpawnCharacterByFormation(CharacterAIType.Enemy,
                 DataManager.Instance.DataController.selectStaticStageData.stageFormation);
         }

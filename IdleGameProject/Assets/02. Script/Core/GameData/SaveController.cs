@@ -23,7 +23,7 @@ namespace IdleProject.Core.GameData
 
         public void Save(PlayerInfo playerInfo)
         {
-            _playerData.PlayerInfo = playerInfo;
+            _playerData.playerInfo = playerInfo;
             
             SavePlayerData(_playerData);
         }

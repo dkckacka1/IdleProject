@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using IdleProject.Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace IdleProject.Data.Player
 {
     [CreateAssetMenu(fileName = "PlayerData", menuName = "Create/PlayerData")]
     public class PlayerData : ScriptableObject
     {
-        public PlayerInfo PlayerInfo;
+        public PlayerInfo playerInfo;
         
         public List<PlayerCharacterData> playerCharacterList;
         public List<PlayerConsumableItemData> playerConsumableItemList;

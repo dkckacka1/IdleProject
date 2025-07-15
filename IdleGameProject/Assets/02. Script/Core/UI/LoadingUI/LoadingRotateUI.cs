@@ -10,13 +10,19 @@ namespace IdleProject.Core.UI.Loading
         
         private Tween _rotateTween;
 
+        private bool _isNowLoading = false;
+        
         private void Start()
         {
-            gameObject.SetActive(false);
+            if (_isNowLoading is false)
+            {
+                gameObject.SetActive(false);
+            }
         }
 
         public async UniTask StartLoading(UniTask loadingTask)
         {
+            _isNowLoading = true;
             gameObject.SetActive(true);
             _rotateTween = RectTransform.DORotate(new Vector3(0, 0, -360f), rotateDuration, RotateMode.FastBeyond360)
                 .SetEase(Ease.Linear)
@@ -24,7 +30,8 @@ namespace IdleProject.Core.UI.Loading
                 .OnKill(() => { RectTransform.Rotate(Vector3.zero); });
 
             await loadingTask;
-            
+
+            _isNowLoading = false;
             _rotateTween.Kill();
             gameObject.SetActive(false);
         }

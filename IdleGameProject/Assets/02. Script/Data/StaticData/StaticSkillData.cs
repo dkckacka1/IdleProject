@@ -15,6 +15,9 @@ namespace IdleProject.Data.StaticData
         public string skillName;
         public string skillDesc;
 
+        [SerializeReference]
+        public List<BehaviourTargetingData> defaultTargeting = new();
+
         [FormerlySerializedAs("actionDataList")] [SerializeReference] public List<BehaviourExecuteData> executeDataList = new List<BehaviourExecuteData>();
 
 #if UNITY_EDITOR

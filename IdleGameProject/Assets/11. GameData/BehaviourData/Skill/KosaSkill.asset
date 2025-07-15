@@ -145,6 +145,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: 
   skillDesc: 
+  defaultTargeting:
+  - rid: 896382692221255832
+  - rid: 896382692221255833
+  - rid: 896382692221255834
   executeDataList:
   - {fileID: -1432488937544229660}
   - {fileID: -2332266856303270159}
+  references:
+    version: 2
+    RefIds:
+    - rid: 896382692221255832
+      type: {class: AITargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        targetAIType: 1
+    - rid: 896382692221255833
+      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        isNot: 0
+        characterStateTargetType: 0
+    - rid: 896382692221255834
+      type: {class: SingleTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        singleTargetType: 2

@@ -7,6 +7,7 @@ using IdleProject.Battle.AI;
 using IdleProject.Battle.Character;
 using IdleProject.Battle.Character.Behaviour;
 using IdleProject.Battle.Character.Behaviour.SkillAction;
+using IdleProject.Battle.Character.Behaviour.Targeting;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
@@ -147,18 +148,20 @@ namespace IdleProject.Battle.Spawn
             // 모델 및 애니메이션 설정
             await SetModel(characterInstance, data.StaticData);
             SetAnimation(characterInstance, data.StaticData);
-            
+
             // 스탯 설정
             SetStat(characterInstance, data);
 
             // 공격 행동 정의
-            var characterAttackData = DataManager.Instance.GetData<StaticSkillData>(data.StaticData.characterAttackName);
+            var characterAttackData =
+                DataManager.Instance.GetData<StaticSkillData>(data.StaticData.characterAttackName);
             characterInstance.CharacterAttack = GetBehaviour(characterInstance, characterAttackData, false);
 
             // 스킬 행동 정의
             if (string.IsNullOrEmpty(data.StaticData.characterSkillName) is false)
             {
-                var characterSkillData = DataManager.Instance.GetData<StaticSkillData>(data.StaticData.characterSkillName);
+                var characterSkillData =
+                    DataManager.Instance.GetData<StaticSkillData>(data.StaticData.characterSkillName);
                 characterInstance.CharacterSkill = GetBehaviour(characterInstance, characterSkillData, true);
             }
 
@@ -202,18 +205,24 @@ namespace IdleProject.Battle.Spawn
             controller.AnimController.SetAnimationController(animationController);
         }
 
-        private CharacterBehaviour GetBehaviour(CharacterController controllerInstance, StaticSkillData data, bool isSkill)
+        private CharacterBehaviour GetBehaviour(CharacterController controllerInstance, StaticSkillData data,
+            bool isSkill)
         {
             var executeBehaviourList = new List<ExecuteBehaviour>();
             foreach (var executeData in data.executeDataList)
             {
-                var actionList = executeData.skillActionDataList.Select(action => BehaviourAction.GetSkillAction(action, controllerInstance)).ToList();
+                var actionList = executeData.skillActionDataList
+                    .Select(action => BehaviourAction.GetSkillAction(action, controllerInstance)).ToList();
                 var skillExecute = new ExecuteBehaviour(actionList, isSkill);
-                
+
                 executeBehaviourList.Add(skillExecute);
             }
-            
-            return new CharacterBehaviour(executeBehaviourList);
+
+            var defaultTargeting = data.defaultTargeting?.Select(targetingData =>
+                BehaviourTargeting.GetSkillTargeting(controllerInstance, targetingData));
+
+
+            return new CharacterBehaviour(controllerInstance, executeBehaviourList, defaultTargeting);
         }
 
         private void AddCharacterAI(CharacterController controller, CharacterAIType aiType)

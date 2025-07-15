@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using Cysharp.Threading.Tasks;
+using Engine.Util.Extension;
 using IdleProject.Battle.UI;
 using IdleProject.Core;
 using IdleProject.Core.GameData;
@@ -27,7 +29,7 @@ namespace IdleProject.Battle.Character
             AnimController.AnimEventHandler.AttackEndEvent += OnAttackEnd;
             AnimController.AnimEventHandler.SkillStartEvent += OnSkillStart;
             AnimController.AnimEventHandler.SkillEndEvent += OnSkillEnd;
-            
+
             if (CharacterSkill is not null)
             {
                 AnimController.AnimEventHandler.SkillActionEvent += CharacterSkill.ExecuteSkill;
@@ -117,6 +119,10 @@ namespace IdleProject.Battle.Character
 
         private void OnSkillStart()
         {
+            var centerPos = TransformExtension.GetCenterPoint(CharacterSkill.GetDefaultTargetList()
+                .Select(target => target.transform).ToList());
+            
+            transform.LookAt(centerPos);
         }
 
         private void OnSkillEnd()

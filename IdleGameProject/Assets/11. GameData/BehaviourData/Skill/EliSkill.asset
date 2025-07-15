@@ -105,5 +105,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: 
   skillDesc: 
+  defaultTargeting:
+  - rid: 896382692221255823
+  - rid: 896382692221255824
+  - rid: 896382692221255825
+  - rid: 896382692221255826
+  - rid: 896382692221255827
+  - rid: 896382692221255828
   executeDataList:
   - {fileID: -8421838062482530445}
+  references:
+    version: 2
+    RefIds:
+    - rid: 896382692221255823
+      type: {class: AITargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        targetAIType: 1
+    - rid: 896382692221255824
+      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        isNot: 0
+        characterStateTargetType: 0
+    - rid: 896382692221255825
+      type: {class: SingleTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        singleTargetType: 3
+    - rid: 896382692221255826
+      type: {class: RangeTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 0
+        skillRange: 3
+        distinct: 1
+        hasSelf: 1
+        isSelf: 0
+    - rid: 896382692221255827
+      type: {class: AITargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        targetAIType: 1
+    - rid: 896382692221255828
+      type: {class: CharacterStateTargetingData, ns: IdleProject.Data.BehaviourData, asm: Assembly-CSharp}
+      data:
+        isCheckFromTarget: 1
+        isNot: 0
+        characterStateTargetType: 0

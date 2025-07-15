@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd8c69bf2bd0f3340abcecbb162b787e, type: 3}
   m_Name: DefaultPlayerData
   m_EditorClassIdentifier: 
-  PlayerInfo:
+  playerInfo:
     playerName: Kimhawon
     playerLevel: 1
     playerExp: 0

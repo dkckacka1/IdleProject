@@ -5016,7 +5016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ac056f021ea30746b49ec27d22b94ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectTriggerEnterEvent:
+  onBattleEvent:
     m_PersistentCalls:
       m_Calls: []
   releaseEvent:
@@ -5448,8 +5448,8 @@ ParticleSystem:
     startRotationY:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.5707963
-      minScalar: 1.5707963
+      scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:

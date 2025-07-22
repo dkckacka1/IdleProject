@@ -29,8 +29,11 @@
 
 [구들 드라이브 다운로드 링크](https://drive.google.com/file/d/1vnsi8QgScpX-oDQyQ-kEFtyXIS44Ymgl/view?usp=drive_link)
 ## 사용 서드파티
-* Dotween
-* TextMeshPro
+* Dowteen
+* UI Soft Mask
+* Odin Inspector
+* UniTask
+* Unirx
 
 ## 포트폴리오 설명
 [포트폴리오 설명](https://comfortable-reptile-21e.notion.site/IdleProejct-RPG-206126f0530480968fb7e854344447d1?source=copy_link)

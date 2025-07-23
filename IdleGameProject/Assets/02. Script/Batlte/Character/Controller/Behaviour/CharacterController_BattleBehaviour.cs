@@ -32,7 +32,7 @@ namespace IdleProject.Battle.Character
 
             if (CharacterSkill is not null)
             {
-                AnimController.AnimEventHandler.SkillActionEvent += CharacterSkill.ExecuteSkill;
+                AnimController.AnimEventHandler.SkillActionEvent += CharacterSkill.ExecuteBehaviour;
             }
         }
 
@@ -52,7 +52,7 @@ namespace IdleProject.Battle.Character
 
         public void OnAttackAction(int attackNumber)
         {
-            CharacterAttack.ExecuteSkill();
+            CharacterAttack.ExecuteBehaviour();
         }
 
         public virtual void Hit(ITakeDamagedAble iTakeDamage, float attackDamage, bool canCritical)

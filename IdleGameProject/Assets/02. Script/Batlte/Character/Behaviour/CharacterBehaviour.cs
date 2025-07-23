@@ -8,29 +8,29 @@ namespace IdleProject.Battle.Character.Behaviour
 {
     public class CharacterBehaviour
     {
-        private readonly IEnumerator<ExecuteBehaviour> _skillActionList;
+        private readonly IEnumerator<ExecuteBehaviour> _behaviourActionList;
         private readonly IEnumerable<IBehaviourTargeting> _behaviourTargetingList;
 
         private readonly CharacterController _useCharacter;
 
-        public CharacterBehaviour(CharacterController useCharacter, List<ExecuteBehaviour> skillActionList,
+        public CharacterBehaviour(CharacterController useCharacter, List<ExecuteBehaviour> behaviourActionList,
             IEnumerable<IBehaviourTargeting> behaviourTargetingList)
         {
-            _skillActionList = skillActionList.ListLoop().GetEnumerator();
+            _behaviourActionList = behaviourActionList.ListLoop().GetEnumerator();
             _behaviourTargetingList = behaviourTargetingList;
             _useCharacter = useCharacter;
         }
 
         // 스킬을 사용한다.
-        public void ExecuteSkill()
+        public void ExecuteBehaviour()
         {
             // 무한 순회
-            if (_skillActionList is not null && _skillActionList.MoveNext())
+            if (_behaviourActionList is not null && _behaviourActionList.MoveNext())
             {
-                var currentSkill = _skillActionList.Current;
+                var currentBehaviour = _behaviourActionList.Current;
 
                 // 각 액션을 실행
-                currentSkill.Execute();
+                currentBehaviour.Execute();
             }
         }
 

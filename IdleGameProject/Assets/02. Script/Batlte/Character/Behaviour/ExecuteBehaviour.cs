@@ -5,18 +5,18 @@ namespace IdleProject.Battle.Character.Behaviour
 {
     public class ExecuteBehaviour
     {
-        private readonly List<IBehaviourAction> _skillActionList;
+        private readonly List<IBehaviourAction> _behaviourActions;
         private readonly bool _isSkillBehaviour;
         
-        public ExecuteBehaviour(List<IBehaviourAction> skillActionList, bool isSkillBehaviour)
+        public ExecuteBehaviour(List<IBehaviourAction> behaviourActions, bool isSkillBehaviour)
         {
-            _skillActionList = skillActionList;
+            _behaviourActions = behaviourActions;
             _isSkillBehaviour = isSkillBehaviour;
         }
 
         public void Execute()
         {
-            foreach (var action in _skillActionList)
+            foreach (var action in _behaviourActions)
             {
                 action.ActionExecute(_isSkillBehaviour);
             }

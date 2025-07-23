@@ -21,9 +21,13 @@ namespace IdleProject.Battle.Character.Behaviour.Targeting
         {
             return targetingData switch
             {
+                // 대상 AI 타겟팅
                 AITargetingData aiTargeting => new Implement.AITargeting(useSkillController, aiTargeting),
+                // 대상 상태 타겟팅
                 CharacterStateTargetingData characterStateTargetingData => new Implement.CharacterStateTargeting(useSkillController, characterStateTargetingData),
+                // 대상 사거리 타겟팅
                 RangeTargetingData rangeTargeting => new Implement.RangeTargeting(useSkillController, rangeTargeting),
+                // 한명만 타겟팅
                 SingleTargetingData singleTargeting => new Implement.SingleTargeting(useSkillController, singleTargeting),
                 _ => null
             };
